@@ -57,6 +57,11 @@
 		<div class="label">Image Path:</div>
 		<div class="value"><%= @product.logo %></div>
 	</div>
+  
+    <div class="container">
+        <div class="label">Pending:</div>
+        <div class="value"><%= @product.pending %></div>
+    </div>
 </div>
 <%= link_to "Edit", edit_admin_product_path(@product) %>
 
