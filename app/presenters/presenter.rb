@@ -1,10 +1,10 @@
 class Presenter
 	def corporate_logo_url(base)
-		(base.nil? || base.empty?) ? "/images/corporate_logos/not_found_128_128.png" : "/images/corporate_logos/#{base}_128_128.png"
+		(base.nil? || base.empty?) ? "/images/corporate_logos/128_128/not_found.png" : "/images/corporate_logos/128_128/#{base}.png"
 	end
 
 	def product_logo_url(base)
-		(base.nil? || base.empty?) ? "/images/product_logos/not_found_128_128.png" : "/images/product_logos/#{base}_128_128.png"
+		(base.nil? || base.empty?) ? "/images/product_logos/128_128/not_found.png" : "/images/product_logos/128_128/#{base}.png"
 	end
 
 	def thumbs_up_support_class(support_type)

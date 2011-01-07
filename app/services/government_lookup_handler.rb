@@ -29,7 +29,7 @@ class GovernmentLookupHandler < LookupHandlerBase
 			else
 				body["Name"] = self.item.first_name + " " + self.item.last_name
 			end
-			body["ImageUrl"] = "http://#{self.domain}/images/products/not_found_128_128.gif"
+			body["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
 			body["Wikipedia"] = self.item.wikipedia
 			body["Website"] = self.item.website
 			body["ParticipationRate"] = participation_rate_image(self.item.participation_rate)

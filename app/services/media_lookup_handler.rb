@@ -29,7 +29,7 @@ class MediaLookupHandler < LookupHandlerBase
 			body["MediaType"] = self.item.media_type_id
 			body["Wikipedia"] = self.item.wikipedia
 			body["Website"] = self.item.website
-			body["ImageUrl"] = "http://#{self.domain}/images/products/not_found_128_128.gif"
+			body["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
 			body["ParticipationRate"] = participation_rate_image(self.item.participation_rate)
 			body["SocialScore"] = self.item.social_score
 		end

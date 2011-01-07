@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110104211329) do
+ActiveRecord::Schema.define(:version => 20110107195728) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -143,13 +143,12 @@ ActiveRecord::Schema.define(:version => 20110104211329) do
   end
 
   create_table "pending_products", :force => true do |t|
-    t.string   "upc"
     t.string   "name"
     t.string   "description"
     t.integer  "user_id"
-    t.integer  "support_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "product_id"
   end
 
   create_table "product_audits", :force => true do |t|
@@ -189,6 +188,7 @@ ActiveRecord::Schema.define(:version => 20110104211329) do
     t.string   "logo"
     t.integer  "social_score"
     t.integer  "participation_rate"
+    t.integer  "pending"
   end
 
   create_table "states", :force => true do |t|

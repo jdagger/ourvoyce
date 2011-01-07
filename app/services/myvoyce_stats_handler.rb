@@ -28,11 +28,11 @@ class MyvoyceStatsHandler < HandlerBase
 		self.this_month_votes = ProductSupport.where("user_id = ? AND updated_at > ?", self.user.id, Time.now.beginning_of_month).count
 		self.this_year_votes = ProductSupport.where("user_id = ? AND updated_at > ?", self.user.id, Time.now.beginning_of_year).count
 
-		self.total_votes_image = "http://#{self.domain}/images/corporate_logos/not_found_128_128.gif"
-		self.today_votes_image = "http://#{self.domain}/images/corporate_logos/not_found_128_128.gif"
-		self.this_week_votes_image = "http://#{self.domain}/images/corporate_logos/not_found_128_128.gif"
-		self.this_month_votes_image = "http://#{self.domain}/images/corporate_logos/not_found_128_128.gif"
-		self.this_year_votes_image = "http://#{self.domain}/images/corporate_logos/not_found_128_128.gif"
+		self.total_votes_image = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
+		self.today_votes_image = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
+		self.this_week_votes_image = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
+		self.this_month_votes_image = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
+		self.this_year_votes_image = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
 
 		self.member_since = self.user.created_at.strftime("%B %d, %Y")
 		self.username = self.user.username

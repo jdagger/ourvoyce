@@ -15,12 +15,26 @@ class ProductLookupHandler < LookupHandlerBase
 			self.status = 1
 			self.item = products.first
 
+      #Load default text if pending item
+      if(self.item.pending)
+        self.item.name = self.item.description = "Pending"
+      end
+
 			if(load_user)
 				load_support(ProductSupport.where("user_id = ? AND product_id = ?", self.user.id, self.item.id))
 
 				#Save the product scan
 				ps = ProductScan.new(:user_id => self.user.id, :product_id => self.item.id)
 				ps.save
+
+        #If pending product, load user's description
+        if(self.item.pending)
+            pp = PendingProduct.where(:product_id => self.item.id).first
+            if !pp.nil?
+              self.item.name = pp.name
+              self.item.description = pp.description
+            end
+        end
 			end
 		end
 
@@ -35,8 +49,9 @@ class ProductLookupHandler < LookupHandlerBase
 		if(self.status != 0)
 			body["ProductId"] = self.item.id
 			body["Name"] = self.item.name
+      body["UPC"] = self.item.upc
 			body["Description"] = self.item.description
-			body["ImageUrl"] = "http://#{self.domain}/images/products/not_found_128_128.gif"
+			body["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
 		end
 
 		#if user token specified, return the support

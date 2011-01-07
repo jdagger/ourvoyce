@@ -27,9 +27,9 @@ class CorporationSearchHandler < SearchHandlerBase
 				c["SocialScore"] = corporation.social_score
 				c["ParticipationRate"] = participation_rate_image(corporation.participation_rate)
 				if corporation.logo.nil?
-					c["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/not_found_128_128.png"
+					c["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/128_128/not_found.png"
 				else
-					c["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/#{corporation.logo}_128_128.png"
+					c["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/128_128/#{corporation.logo}.png"
 				end
 				if(!self.user.nil?)
 					c["SupportType"] = corporation.support_type.nil? ? "-1" : corporation.support_type

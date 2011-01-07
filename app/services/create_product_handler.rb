@@ -22,20 +22,26 @@ class CreateProductHandler < HandlerBase
 
 	def handle_request(domain)
     super(domain)
+
+    #Try to load to product to see if it exists
 		product = Product.where("upc = ? OR ean = ?", self.upc, self.upc)
 		if(product.count > 0)
 			self.status = 0
-		else
+    else
+      #Product not found, so create and mark as pending
+      product = Product.new(:upc => self.upc, :ean => self.ean, :pending => 1)
+      product.save
+
+      #If user is authenticated, store vote and description
 			user_id = nil
 			if(load_user)
 				user_id = self.user.id
+        ProductSupport.change_support(product.id, user_id, self.support_type)
+        
+        pending_product = PendingProduct.new(:product_id => product.id, :name => self.name, :description => self.description, :user_id => user_id)
+        pending_product.save
 			end
 
-			product = Product.new(:upc => self.upc, :name => self.name, :description => self.description)
-			product.save
-
-			pending_product = PendingProduct.new(:upc => self.upc, :name => self.name, :description => self.description, :support_type => self.support_type, :user_id => user_id)
-			pending_product.save
 			self.status = 1
 		end
 	end

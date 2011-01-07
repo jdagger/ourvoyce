@@ -1,7 +1,7 @@
 class ProductSearchHandler < SearchHandlerBase
 	def handle_request(domain)
 		self.search_options = {
-			:select => %w{products.id name description logo social_score participation_rate},
+			:select => %w{products.id upc name description logo social_score participation_rate},
 			:filters => {}
 		}
 
@@ -22,11 +22,17 @@ class ProductSearchHandler < SearchHandlerBase
 				p = {}
 				prod_hash.push(p)
 				p["ProductId"] = product.id
-				p["Name"] = product.name
-				p["Description"] = product.description
+        if product.pending
+          p["Name"] = "Pending"
+          p["Description"] = "Pending"
+        else
+          p["Name"] = product.name
+          p["Description"] = product.description
+        end
+        p["UPC"] = product.upc
 				p["SocialScore"] = product.social_score
 				p["ParticipationRate"] = participation_rate_image(product.participation_rate)
-				p["ImageUrl"] = "http://#{self.domain}/images/products/not_found_128_128.gif"
+				p["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
 				if(!self.user.nil?)
 					p["SupportType"] = product.support_type.nil? ? "-1" : product.support_type
 				end

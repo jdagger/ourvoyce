@@ -25,7 +25,7 @@ class MediaSearchHandler < SearchHandlerBase
 				m["MediaType"] = media.media_type_id
 				m["SocialScore"] = media.social_score
 				m["ParticipationRate"] = participation_rate_image(media.participation_rate)
-				m["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/not_found_128_128.gif"
+				m["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
 				if(!self.user.nil?)
 					m["SupportType"] = media.support_type.nil? ? "-1" : media.support_type
 				end

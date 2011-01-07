@@ -28,7 +28,7 @@ class GovernmentSearchHandler < SearchHandlerBase
 				g["SocialScore"] = government.social_score
 				g["ParticipationRate"] = participation_rate_image(government.participation_rate)
 				g["Type"] = government.government_type_id
-				g["ImageUrl"] = "http://#{self.domain}/images/products/not_found_128_128.gif"
+				g["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
 				if(!self.user.nil?)
 					g["SupportType"] = government.support_type.nil? ? "-1" : government.support_type
 				end
