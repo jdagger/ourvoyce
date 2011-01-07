@@ -1,0 +1,42 @@
+= render :partial => "shared/government_menu"
+.span-12
+  %table
+    %caption Senate
+    %thead
+      %tr
+        %th Vote
+        %th Picture
+        %th Name
+        %th Title
+        %th SS
+        %th PR
+      - @presenter.senators.each do |senator|
+        %tr
+          %td
+          %td= senator.logo
+          %td= senator.first_name + " " + senator.last_name
+          %td= senator.title
+          %td= senator.social_score
+          %td= senator.participation_rate
+
+
+  %table
+    %caption House of Representatives
+    %thead
+      %tr
+        %th Vote
+        %th Picture
+        %th Name
+        %th District
+        %th SS
+        %th PR
+      - @presenter.representatives.each do |rep|
+        %tr
+          %td
+          %td= rep.logo
+          %td= rep.first_name + " " + rep.last_name
+          %td= rep.district
+          %td= rep.social_score
+          %td= rep.participation_rate
+.span-12.last
+  Maps/Graphs

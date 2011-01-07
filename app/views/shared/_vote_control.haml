@@ -1,0 +1,7 @@
+= form_tag data[:post_url] do
+  %input{:type => "hidden", :name => "item_id", :value => data[:item].id}
+  %input{:type => "submit", :class => "jq-thumbs-up-#{data[:item].id} #{data[:presenter].thumbs_up_support_class(data[:item].support_type)}", :name => "thumbs_up", :value => ""}
+  %input{:type => "submit", :class => "jq-neutral-#{data[:item].id} #{data[:presenter].neutral_support_class(data[:item].support_type)}", :name => "neutral", :value => ""}
+  %input{:type => "submit", :class => "jq-thumbs-down-#{data[:item].id} #{data[:presenter].thumbs_down_support_class(data[:item].support_type)}", :name => "thumbs_down", :value => ""}
+  %input{:type => "submit", :class => "jq-clear-vote-#{data[:item].id} support", :name => "clear_vote", :value => "Clear"}
+

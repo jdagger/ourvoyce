@@ -1,0 +1,2 @@
+module MyvoyceHelper
+end

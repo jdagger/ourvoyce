@@ -1,0 +1,47 @@
+.span-12
+  %table
+    %caption
+      Media Type
+      = link_to "(reset)", :type => nil, :network => nil
+    %thead
+      %tr
+        %th Name
+        %th SS
+        %th PR
+    %tbody
+    - @presenter.media_types.each do |media_type|
+      %tr
+        %td= link_to media_type.name, :type => media_type.name
+        %td 45
+        %td 75
+
+  - if @presenter.second_level.count > 0
+    %table
+      %thead
+        %tr
+          %th Name
+          %th SS
+          %th PR
+      %tbody
+      - @presenter.second_level.each do |second|
+        %tr
+          %td= link_to second.name, :type => @presenter.media_types[0].name, :network => second.name
+          %td 45
+          %td 75
+
+  - if @presenter.third_level.count > 0
+    %table
+      %thead
+        %tr
+          %th Name
+          %th SS
+          %th PR
+      %tbody
+      - @presenter.third_level.each do |third|
+        %tr
+          %td= third.name
+          %td 45
+          %td 75
+
+.span-12.last
+  Maps/Graphs

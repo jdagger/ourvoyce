@@ -1,0 +1,401 @@
+/*
+body
+{
+    background-color: #5c87b2;
+    font-size: .75em;
+    font-family: Verdana, Helvetica, Sans-Serif;
+    margin: 0px auto 0px auto;
+    padding: 0px;
+    color: #696969;
+    width: 1030px;
+}
+
+a > img
+{
+    border: none;
+}
+
+a:link
+{
+    color: #034af3;
+    text-decoration: underline;
+}
+a:visited
+{
+    color: #505abc;
+}
+a:hover
+{
+    color: #1d60ff;
+    text-decoration: none;
+    cursor: pointer;
+}
+a:active
+{
+    color: #12eb87;
+}
+
+p, ul
+{
+    margin-bottom: 20px;
+    line-height: 1.6em;
+}
+
+h1, h2, h3, h4, h5, h6
+{
+    font-size: 1.5em;
+    color: #000;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+h1
+{
+    font-size: 2em;
+    padding-bottom: 0;
+    margin-bottom: 0;
+}
+h2
+{
+    padding: 0 0 10px 0;
+}
+h3
+{
+    font-size: 1.2em;
+}
+h4
+{
+    font-size: 1.1em;
+}
+h5, h6
+{
+    font-size: 1em;
+}
+
+.rightColumn > h1, .rightColumn > h2, .leftColumn > h1, .leftColumn > h2
+{
+    margin-top: 0;
+}
+
+
+.page
+{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#header
+{
+    position: relative;
+    background-color: #fff;
+    color: #000;
+}
+
+#header h1
+{
+    font-weight: bold;
+    padding: 5px 0;
+    margin: 0;
+    color: #fff;
+    border: none;
+    line-height: 2em;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 32px !important;
+}
+
+#main
+{
+    padding: 10px;
+    background-color: #fff;
+    margin-bottom: 10px;
+    _height: 1px; 
+}
+
+#footer
+{
+    color: #999;
+    padding: 0px 0px;
+    text-align: center;
+    line-height: normal;
+    margin: 0px;
+    font-size: .9em;
+}
+
+ul#menu
+{
+    position: relative;
+    padding-top: 35px;
+    margin-bottom: 3px;
+    text-align: right;
+}
+
+ul#menu li
+{
+    display: inline;
+    list-style: none;
+}
+
+ul#menu li#greeting
+{
+    padding: 20px 20px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    color: #fff;
+}
+
+ul#menu li a
+{
+    padding: 10px 15px;
+    font-weight: bold;
+    text-decoration: none;
+    line-height: 2.8em;
+    border: 1px solid #e8eef4;
+    border-bottom: 0px;
+    background-color: #e8eef4;
+    color: #034af3;
+}
+
+ul#menu li a:hover
+{
+    border: 1px solid #5C87B2;
+    text-decoration: none;
+}
+
+ul#menu li a:active
+{
+    background-color: #fff;
+    text-decoration: none;
+}
+
+ul#menu li.selected a
+{
+    border: 1px solid #5C87B2;
+    background-color: #5C87B2;
+    color: #fff;
+}
+
+
+fieldset
+{
+    margin: 1em 0;
+    padding: 1em;
+    border: 1px solid #CCC;
+}
+
+fieldset p
+{
+    margin: 2px 12px 10px 10px;
+}
+
+legend
+{
+    font-size: 1.1em;
+    font-weight: 600;
+    padding: 2px 4px 8px 4px;
+}
+
+input[type="text"]
+{
+    width: 200px;
+    border: 1px solid #CCC;
+}
+
+input[type="password"]
+{
+    width: 200px;
+    border: 1px solid #CCC;
+}
+
+
+.clear
+{
+    clear: both;
+}
+
+.error
+{
+    color: Red;
+}
+
+#menucontainer
+{
+}
+
+div#title
+{
+    display: block;
+    float: left;
+    text-align: left;
+}
+
+#logindisplay
+{
+    font-size: 1.1em;
+    display: block;
+    text-align: right;
+    margin: 10px;
+    color: black;
+}
+
+#logindisplay a:link
+{
+    color: black;
+    text-decoration: underline;
+}
+
+#logindisplay a:visited
+{
+    color: black;
+    text-decoration: underline;
+}
+
+#logindisplay a:hover
+{
+    color: black;
+    text-decoration: none;
+}
+
+.field-validation-error
+{
+    color: #ff0000;
+}
+
+.field-validation-valid
+{
+    display: none;
+}
+
+.input-validation-error
+{
+    border: 1px solid #ff0000;
+    background-color: #ffeeee;
+}
+
+.validation-summary-errors
+{
+    font-weight: bold;
+    color: #ff0000;
+}
+
+.validation-summary-valid
+{
+    display: none;
+}
+
+.display-label, .editor-label, .display-field, .editor-field
+{
+    margin: 0.5em 0;
+}
+
+.text-box
+{
+    width: 30em;
+}
+
+.text-box.multi-line
+{
+    height: 6.5em;
+}
+
+.tri-state
+{
+    width: 6em;
+}
+
+
+div.paging
+{
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
+div.paging a
+{
+    margin: 0px 3px 0px 3px;
+}
+div.paging .currentPage
+{
+    margin: 0px 3px 0px 3px;
+}
+
+
+a.thumbs_up
+{
+    display: block;
+    background: url(../images/thumbs_up.png) no-repeat;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
+
+a.thumbs_down
+{
+    display: block;
+    background: url(../images/thumbs_down.png) no-repeat;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
+
+a.thumbs_up_selected
+{
+    display: block;
+    background: url(../images/thumbs_up_selected.png) no-repeat;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
+
+a.thumbs_down_selected
+{
+    display: block;
+    background: url(../images/thumbs_down_selected.png) no-repeat;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
+
+a.thumbs_up_not_selected
+{
+    display: block;
+    background: url(../images/thumbs_up_not_selected.png) no-repeat;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
+
+a.thumbs_down_not_selected
+{
+    display: block;
+    background: url(../images/thumbs_down_not_selected.png) no-repeat;
+    width: 30px;
+    height: 30px;
+    text-decoration: none;
+}
+
+
+table.CreateYouser
+{
+    vertical-align: middle;
+    border-collapse: collapse;
+}
+
+tr.CreateYouserRow
+{
+    height: 100px;
+    border-top: 1px solid #5c87b2;
+    border-bottom: 1px solid #5c87b2;
+}
+
+td.CreateYouserLabelCell
+{
+    font-weight: bold;
+}
+
+td.CreateYouserUpcCell
+{
+    font-size: 20px;
+    background-image: url('/images/UpcArrow.png');
+    background-repeat: no-repeat;
+    height: 42px;
+}
+*/

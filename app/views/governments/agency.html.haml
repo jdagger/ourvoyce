@@ -1,0 +1,21 @@
+= render :partial => "shared/government_menu"
+
+.span-12
+  %table
+    %thead
+      %tr
+        %th Vote
+        %th Picture
+        %th Name
+        %th SS
+        %th PR
+    %tbody
+    - @presenter.agencies.each do |agency|
+      %tr
+        %td= render :partial => "shared/vote_control", :object =>{:presenter => @presenter, :item => agency, :post_url => :government_vote}, :as => :data
+        %td= agency.logo
+        %td= agency.name
+        %td= agency.social_score
+        %td= agency.participation_rate
+.span-12.last
+  Maps/Reports

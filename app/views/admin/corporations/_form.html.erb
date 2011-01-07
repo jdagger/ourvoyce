@@ -1,0 +1,60 @@
+
+
+<%= form_for [:admin, @corporation] do |f| %>
+  <% if @corporation.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@corporation.errors.count, "error") %> prohibited this corporation from being saved:</h2>
+
+      <ul>
+      <% @corporation.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+<table>
+	<tr>
+		<td><%= f.label :name %></td>
+		<td><%= f.text_field :name %></td>
+	</tr>
+	<tr>
+		<td><%= f.label :logo %></td>
+		<td><%= f.text_field :logo %></td>
+	</tr>
+
+	<tr>
+		<td><%= f.label :corporate_url %></td>
+		<td><%= f.text_field :corporate_url, :style=>'width: 400px;' %></td>
+	</tr>
+	
+	<tr>
+		<td><%= f.label :wikipedia_url %></td>
+		<td><%= f.text_field :wikipedia_url, :style=>'width: 400px;' %></td>
+	</tr>
+	
+	<tr>
+		<td><%= f.label :revenue %></td>
+		<td><%= f.text_field :revenue %></td>
+	</tr>
+	
+	<tr>
+		<td><%= f.label :profit %></td>
+		<td><%= f.text_field :profit %></td>
+	</tr>
+	
+	<tr>
+		<td><%= f.label :social_score %></td>
+		<td><%= f.text_field :social_score %></td>
+	</tr>
+	
+	<tr>
+		<td><%= f.label :participation_rate %></td>
+		<td><%= f.text_field :participation_rate %></td>
+	</tr>
+</table>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

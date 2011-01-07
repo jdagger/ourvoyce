@@ -1,0 +1,34 @@
+<h1>Products</h1>
+
+<%= link_to "New Product", new_admin_product_path %>
+<br />
+<br />
+<%= @product_count %> products
+<br />
+<%= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data %>
+<%= @page_links %>
+<table>
+	<tr>
+		<th>UPC</th>
+		<th>EAN</th>
+		<th>Description</th>
+		<th>Links</th>
+		<th></th>
+	</tr>
+
+<% @presenter.products.each do |product|  %>
+	<tr>
+		<td><%= product.upc %></td>
+		<td><%= product.ean %></td>
+		<td><%= product.description %></td>
+		<td>
+			<a href="http://www.thefind.com/search?query=<%= product.upc.blank? ? product.ean : product.upc %>" target="_blank">TheFind</a>
+		</td>
+		<td>
+			<%= link_to "Show", admin_product_path(product) %>
+			<%= link_to "Edit", edit_admin_product_path(product) %>
+			<%= link_to "Delete", admin_product_path(product), :confirm=>'Are you sure you want to delete?', :method => :delete  %>
+		</td>
+	</tr>
+<% end %>
+</table>

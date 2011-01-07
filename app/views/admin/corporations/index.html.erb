@@ -1,0 +1,44 @@
+<h1>Listing corporations</h1>
+
+<table>
+  <tr>
+	<th></th>
+    <th>Name</th>
+    <th>Logo</th>
+    <th>Logo Filename</th>
+	<th>Revenue</th>
+	<th>Profit</th>
+	<th>Website</th>
+	<th>Wiki</th>
+	<th>SS</th>
+	<th>PR</th>
+	<th></th>
+  </tr>
+
+<% @corporations.each do |corporation| %>
+  <tr>
+    <td>
+		<%= link_to 'Edit', edit_admin_corporation_path(corporation) %>
+	</td>
+    <td><%= corporation.name %></td>
+	
+<%-# Ryan - please correct my code so this shows the actual corporate logo -%>
+	<td><%= corporation.logo %></td> 
+	
+    <td><%= corporation.logo %></td>
+	<td><%= corporation.revenue %></td>
+	<td><%= corporation.profit %></td>
+	<td><a href="<%= corporation.corporate_url %>"><%= corporation.corporate_url %></a></td>
+	<td><a href="<%= corporation.wikipedia_url %>"><%= corporation.wikipedia_url %></a></td>
+	<td><%= corporation.social_score %></td>
+	<td><%= corporation.participation_rate %></td>
+    <td>
+		<%= link_to 'Delete', admin_corporation_path(corporation), :confirm => 'Are you sure?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Corporation', new_admin_corporation_path %>

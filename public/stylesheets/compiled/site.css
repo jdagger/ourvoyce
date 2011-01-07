@@ -1,0 +1,136 @@
+#header {
+  margin-bottom: 1.5em;
+}
+
+#footer {
+  border-top: dotted 1px #777;
+  border-bottom: dotted 1px #777;
+}
+
+#government-navigation .link-box {
+  text-align: center;
+  padding: 1.5em;
+  border: solid 1px black;
+}
+
+#stylized-form .messages {
+  margin-top: 2.0em;
+  color: #ff3333;
+}
+#stylized-form .password_strength {
+  padding: 0.5em 1em 0.5em 1em;
+  display: inline;
+}
+#stylized-form .password_strength_1 {
+  background-color: #fcb6b1;
+}
+#stylized-form .password_strength_2 {
+  background-color: #fccab1;
+}
+#stylized-form .password_strength_3 {
+  background-color: #fcfbb1;
+}
+#stylized-form .password_strength_4 {
+  background-color: #dafcb1;
+}
+#stylized-form .password_strength_5 {
+  background-color: #bcfcb1;
+}
+
+#header {
+  display: inline;
+  float: left;
+  margin-right: 10px;
+  width: 950px;
+  background-color: white;
+}
+* html #header {
+  overflow-x: hidden;
+}
+
+#top-menu {
+  background-color: #5555ff;
+}
+#top-menu li {
+  float: left;
+  list-style-type: none;
+  padding-right: 7px;
+  padding-left: 3px;
+  color: white;
+}
+#top-menu li a {
+  color: white;
+  text-decoration: none;
+}
+
+.thumbs-up {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/thumbs_up.png);
+}
+
+.thumbs-up-selected {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/thumbs_up_selected.png);
+}
+
+.thumbs-up-not-selected {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/thumbs_up_not_selected.png);
+}
+
+.thumbs-down {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/thumbs_down.png);
+}
+
+.thumbs-down-selected {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/thumbs_down_selected.png);
+}
+
+.thumbs-down-not-selected {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/thumbs_down_not_selected.png);
+}
+
+.neutral {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/neutral.png);
+}
+
+.neutral-selected {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/neutral.png);
+}
+
+.neutral-not-selected {
+  width: 30px;
+  height: 30px;
+  border: solid 0px black;
+  cursor: pointer;
+  background-image: url(../../images/site/neutral_not_selected.png);
+}

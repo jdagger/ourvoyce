@@ -1,0 +1,22 @@
+= render :partial => "shared/government_menu"
+.span-12
+  %table
+    %thead
+      %tr
+        %th Vote
+        %th Picture
+        %th Name
+        %th Title
+        %th SS
+        %th PR
+      %tbody
+      - @presenter.executives.each do |executive|
+        %tr
+          %td= render :partial => 'shared/vote_control', :object =>{:presenter => @presenter, :item => executive, :post_url => :government_vote}, :as => :data
+          %td= executive.logo
+          %td= "#{executive.first_name} #{executive.last_name}"
+          %td= executive.title
+          %td= executive.social_score
+          %td= executive.participation_rate
+.span-12.last
+  Maps/Graphs

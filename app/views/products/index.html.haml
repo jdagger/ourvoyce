@@ -1,0 +1,47 @@
+- content_for :scripts do
+  = javascript_include_tag "change_support.js"
+
+.span-12
+  %fieldset
+    %legend Sorting:
+    %a{:href => "/products?sort=description_asc"}Description Asc
+    |
+    %a{:href => "/products?sort=description_desc"}Description Desc
+    %br
+    %a{:href => "/products?sort=votedate_asc"}Vote Date Asc
+    |
+    %a{:href => "/products?sort=votedate_desc"}Vote Date Desc
+
+  %fieldset
+    %legend Filtering:
+    %a{:href => "/products?filter=thumbsup"}Thumbs Up
+    |
+    %a{:href => "/products?filter=thumbsdown"}Thumbs Down
+    |
+    %a{:href => "/products?filter=neutral"}Neutral
+    |
+    %a{:href => "/products?filter=voted"}Voted
+    |
+    %a{:href => "/products?filter=novote"}No Vote
+    |
+    %a{:href => "/products?"}All Records
+
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+
+  %table
+    %thead
+      %tr
+        %th Vote
+        %th Description
+        %th Logo
+        %th Vote Date
+    %tbody
+    - @presenter.products.each do |c|
+      %tr
+        %td= render :partial => 'shared/vote_control', :object => {:presenter => @presenter, :item => c, :post_url => :product_vote}, :as => :data
+        %td= c.description
+        %td
+          %img{:src => @presenter.product_logo_url(c.logo), :alt => c.description}
+        %td= c.updated_at
+.span-12.last
+  Maps/Graphs

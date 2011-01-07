@@ -1,0 +1,5 @@
+- paging_data.links.each do |link|
+  - if paging_data.current_page.to_i == link[:page].to_i
+    %b= link[:page]
+  - else
+    %a{:href => link[:link_url]}=link[:page]

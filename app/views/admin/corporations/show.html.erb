@@ -1,0 +1,45 @@
+<p id="notice"><%= notice %></p>
+
+<table>
+	<tr>
+		<td>Name</td>
+		<td><%= @corporation.name %></td>
+	</tr>
+	<tr>
+		<td>Logo</td>
+		<td><%= @corporation.logo %></td>
+	</tr>
+
+	<tr>
+		<td>Website</td>
+		<td><%= @corporation.corporate_url %></td>
+	</tr>
+	
+	<tr>
+		<td>Wiki</td>
+		<td><%= @corporation.wikipedia_url %></td>
+	</tr>
+	
+	<tr>
+		<td>Revenue</td>
+		<td><%= @corporation.revenue %></td>
+	</tr>
+	
+	<tr>
+		<td>Profit</td>
+		<td><%= @corporation.profit %></td>
+	</tr>
+	
+	<tr>
+		<td>SS</td>
+		<td><%= @corporation.social_score %></td>
+	</tr>
+	
+	<tr>
+		<td>PR</td>
+		<td><%= @corporation.participation_rate %></td>
+	</tr>
+</table>
+
+<%= link_to 'Edit', edit_admin_corporation_path(@corporation) %> |
+<%= link_to 'Back', admin_corporations_path %>

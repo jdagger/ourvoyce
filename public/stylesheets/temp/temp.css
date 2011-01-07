@@ -1,0 +1,184 @@
+/*
+
+div.support-item-logo
+{
+	text-align: center;
+	margin: 10px;
+}
+
+div.support-item-logo img.corporate-logo
+{
+	border: none;
+	width: 100%;
+	height: 100%;
+}
+
+div.support-item-social-score
+{
+	border: none;
+	width: 30px;
+}
+
+div.support-item-social-score img
+{
+	width: 100%;
+}
+
+
+.support-navigation
+{
+	border: 1px solid #fff;
+	display: block;
+	width: 24px;
+	height: 365px;
+	background-repeat: no-repeat;
+	background-position: center;
+}
+
+a.support-navigation:hover
+{
+	border: solid 1px #5c87b2;
+	background-color: #e8eef4;
+}
+
+a.next-support-pane
+{
+	background-image: url(../images/site/arrow_right_selected.png);
+	float: right;
+}
+
+.next-support-pane-not-selected
+{
+	background-image: url(../images/site/arrow_right_not_selected.png);
+	float: right;
+}
+
+a.next-support-pane:hover
+{
+	background-image: url(../images/site/arrow_right_selected_hover.png);
+}
+
+a.previous-support-pane
+{
+	background-image: url(../images/site/arrow_left_selected.png);
+	float: left;
+	margin-right: 8px;
+}
+
+.previous-support-pane-not-selected
+{
+	background-image: url(../images/site/arrow_left_not_selected.png);
+	float: left;
+	margin-right: 8px;
+}
+
+a.previous-support-pane:hover
+{
+	background-image: url(../images/site/arrow_left_selected_hover.png);
+}
+*/
+
+.login-form
+{
+	width: 485px;
+}
+
+
+#stylized-form .messages
+{
+	width: 250px;
+	padding-left: 15px;
+	padding-top: 25px;
+	float: left;
+}
+
+#stylized-form .dividing-line
+{
+	clear: both;
+	border-bottom: solid 1px #556E85;
+	padding-top: 20px;
+	margin-bottom: 20px;
+}
+
+.clear
+{
+	clear: both;
+}
+
+
+.flash-message
+{
+	color: red;
+}
+
+#stylized-form
+{
+	background: white;
+}
+#stylized-form input, #stylized-form select
+{
+	padding:2px 2px;
+	border: solid 1px #9FBCD9;
+	width: 200px;
+	font-size: 120%;
+	margin:4px 0 4px 0px;
+	background-color: white;
+	color: black;
+}
+#stylized-form input[type=submit]
+{
+	clear: both;
+	width: 150px;
+	height: 31px;
+	background: #777;
+	text-align: center;
+	line-height: 31px;
+	color: #FFFFFF;
+	font-weight: bold;
+}
+
+
+
+.admin-edit
+{
+}
+
+.admin-show .container, .admin-edit .container
+{
+	margin-bottom: 10px;
+}
+
+.admin-show .label, .admin-edit .label
+{
+	font-weight: bold;
+}
+
+.admin-show .value, .admin-edit .value
+{
+}
+
+
+
+fieldset.support-filter
+{
+	border: solid 1px #556E85;
+	padding: 10px;
+	width: 350px;
+	margin: 0px auto;
+	margin-bottom: 10px;
+	text-align: center;
+	font-size: 110%;
+}
+
+fieldset.support-filter form
+{
+	display: inline;
+}
+
+fieldset.support-filter input[type=submit]
+{
+	padding: 5px 10px 5px 10px;
+	border: none;
+	cursor: pointer;
+}
+*/

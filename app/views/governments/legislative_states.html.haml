@@ -1,0 +1,18 @@
+= render :partial => "shared/government_menu"
+.span-12
+  %table
+    %thead
+      %tr
+        %th State
+        %th SS
+        %th PR
+        %th Link
+    %tbody
+      - @presenter.states.each do |state|
+        %tr
+          %td= state.name
+          %td= '45'
+          %td= '75'
+          %td= link_to "Link", :action => :legislative, :state => state.abbreviation
+.span-12.last
+  Maps/Reports
