@@ -1,6 +1,8 @@
 .svn
-*
+
 .xcodeproj
 
 nbproject
 .idea
+log/*.log
+tmp/*
