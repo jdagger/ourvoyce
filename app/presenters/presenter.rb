@@ -4,7 +4,7 @@ class Presenter
 	end
 
 	def product_logo_url(base)
-		(base.nil? || base.empty?) ? "/images/product_logos/128_128/not_found.png" : "/images/product_logos/128_128/#{base}.png"
+		(base.nil? || base.empty?) ? "/images/product_logos/128_128/not_found.png" : "/images/product_logos/128_128/#{base}"
 	end
 
 	def thumbs_up_support_class(support_type)
