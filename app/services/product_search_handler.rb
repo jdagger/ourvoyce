@@ -1,7 +1,7 @@
 class ProductSearchHandler < SearchHandlerBase
 	def handle_request(domain)
 		self.search_options = {
-			:select => %w{products.id upc name description logo social_score participation_rate},
+			:select => %w{products.id upc name description logo social_score participation_rate pending},
 			:filters => {}
 		}
 
