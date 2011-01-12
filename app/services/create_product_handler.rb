@@ -29,7 +29,7 @@ class CreateProductHandler < HandlerBase
 			self.status = 0
     else
       #Product not found, so create and mark as pending
-      product = Product.new(:upc => self.upc, :ean => self.ean, :pending => 1)
+      product = Product.new(:upc => self.upc, :ean => self.upc, :pending => 1)
       product.save
 
       #If user is authenticated, store vote and description
