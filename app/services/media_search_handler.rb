@@ -1,4 +1,6 @@
 class MediaSearchHandler < SearchHandlerBase
+  include ImageHelper
+
 	def handle_request(domain)
 		self.search_options = {
 			:select => %w{medias.id name logo parent_media_id media_type_id social_score participation_rate},
@@ -25,7 +27,7 @@ class MediaSearchHandler < SearchHandlerBase
 				m["MediaType"] = media.media_type_id
 				m["SocialScore"] = media.social_score
 				m["ParticipationRate"] = participation_rate_image(media.participation_rate)
-				m["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
+				m["ImageUrl"] = get_media_image_128 media.logo
 				if(!self.user.nil?)
 					m["SupportType"] = media.support_type.nil? ? "-1" : media.support_type
 				end

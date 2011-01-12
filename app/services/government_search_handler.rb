@@ -1,7 +1,9 @@
 class GovernmentSearchHandler < SearchHandlerBase
+  include ImageHelper
+
 	def handle_request(domain)
 		self.search_options = {
-			:select => %w{governments.id name first_name last_name government_type_id logo social_score participation_rate},
+			:select => %w{governments.id name first_name last_name government_type_id logo chamber_id social_score participation_rate},
 			:filters => {}
 		}
 		self.search_instance = Government.new
@@ -28,7 +30,7 @@ class GovernmentSearchHandler < SearchHandlerBase
 				g["SocialScore"] = government.social_score
 				g["ParticipationRate"] = participation_rate_image(government.participation_rate)
 				g["Type"] = government.government_type_id
-				g["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
+				g["ImageUrl"] = get_government_image_64 government.logo, government.government_type_id, government.chamber_id
 				if(!self.user.nil?)
 					g["SupportType"] = government.support_type.nil? ? "-1" : government.support_type
 				end

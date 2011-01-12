@@ -1,4 +1,6 @@
 class ProductLookupHandler < LookupHandlerBase
+  include ImageHelper
+
 	def upc
 		self.request.parameters['UPC']
 	end
@@ -51,7 +53,7 @@ class ProductLookupHandler < LookupHandlerBase
 			body["Name"] = self.item.name
       body["UPC"] = self.item.upc
 			body["Description"] = self.item.description
-			body["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
+			body["ImageUrl"] = get_product_image_128 self.item.logo
 		end
 
 		#if user token specified, return the support

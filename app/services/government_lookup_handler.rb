@@ -1,4 +1,6 @@
 class GovernmentLookupHandler < LookupHandlerBase
+  include ImageHelper
+  
 	def government_id
 		self.request.parameters['GovernmentId']
 	end
@@ -22,6 +24,7 @@ class GovernmentLookupHandler < LookupHandlerBase
 
 		body = result_hash["Body"]
 
+
 		if(self.status != 0)
 			body["GovernmentId"] = self.item.id
 			if(self.item.government_type_id == 1) #Agency
@@ -29,7 +32,7 @@ class GovernmentLookupHandler < LookupHandlerBase
 			else
 				body["Name"] = self.item.first_name + " " + self.item.last_name
 			end
-			body["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
+			body["ImageUrl"] = get_government_image_64 self.item.logo, self.item.government_type_id, self.item.chamber_id
 			body["Wikipedia"] = self.item.wikipedia
 			body["Website"] = self.item.website
 			body["ParticipationRate"] = participation_rate_image(self.item.participation_rate)

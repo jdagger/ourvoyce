@@ -1,7 +1,9 @@
 class ProductSearchHandler < SearchHandlerBase
+  include ImageHelper
+
 	def handle_request(domain)
 		self.search_options = {
-			:select => %w{products.id upc name description logo social_score participation_rate pending},
+			:select => %w{products.id upc name description pending logo social_score participation_rate},
 			:filters => {}
 		}
 
@@ -32,7 +34,7 @@ class ProductSearchHandler < SearchHandlerBase
         p["UPC"] = product.upc
 				p["SocialScore"] = product.social_score
 				p["ParticipationRate"] = participation_rate_image(product.participation_rate)
-				p["ImageUrl"] = "http://#{self.domain}/images/products/128_128/not_found.gif"
+				p["ImageUrl"] = get_product_image_128 product.logo
 				if(!self.user.nil?)
 					p["SupportType"] = product.support_type.nil? ? "-1" : product.support_type
 				end
