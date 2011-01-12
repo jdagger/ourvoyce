@@ -7,6 +7,7 @@ require File.expand_path('../application', __FILE__)
 # Initialize the rails application
 Production::Application.initialize!
 
-Rails.configuration.load_paths += %W(#{RAILS_ROOT}/app/presenters)
-Rails.configuration.load_paths += %W(#{RAILS_ROOT}/app/services)
-Rails.configuration.load_paths += %W(#{RAILS_ROOT}/lib)
+Rails.configuration.autoload_paths += %W(#{Rails.root.to_s}/app/presenters)
+Rails.configuration.autoload_paths += %W(#{Rails.root.to_s}/app/services)
+Rails.configuration.autoload_paths += %W(#{Rails.root.to_s}/app/mixins)
+Rails.configuration.autoload_paths += %W(#{Rails.root.to_s}/lib)

@@ -1,5 +1,6 @@
 class CorporationLookupHandler < LookupHandlerBase
 	include ActionView::Helpers::NumberHelper
+  include ImageHelper
 
 	def corporation_id
 		self.request.parameters['CorporationId']
@@ -33,7 +34,7 @@ class CorporationLookupHandler < LookupHandlerBase
 		if(self.status != 0)
 			body["CorporationId"] = self.item.id
 			body["Name"] = self.item.name
-			body["ImageUrl"] = "http://#{self.domain}/images/corporate_logos/128_128/not_found.gif"
+      body["ImageUrl"] = get_corporate_image_128 self.item.logo
 			body["Website"] = self.item.corporate_url
 			body["Wikipedia"] = self.item.wikipedia_url
 			body["Revenue"] = "$" + number_to_human(self.item.revenue, :precision => 1, :significant => false)
