@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110107195728) do
+ActiveRecord::Schema.define(:version => 20110114184049) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -27,8 +27,9 @@ ActiveRecord::Schema.define(:version => 20110107195728) do
     t.datetime "updated_at"
   end
 
-  create_table "chambers", :force => true do |t|
-    t.string "name"
+  create_table "chambers", :id => false, :force => true do |t|
+    t.integer "id"
+    t.string  "name"
   end
 
   create_table "corporate_audits", :force => true do |t|
@@ -76,8 +77,9 @@ ActiveRecord::Schema.define(:version => 20110107195728) do
     t.datetime "updated_at"
   end
 
-  create_table "government_types", :force => true do |t|
-    t.string "name"
+  create_table "government_types", :id => false, :force => true do |t|
+    t.integer "id"
+    t.string  "name"
   end
 
   create_table "governments", :force => true do |t|
@@ -123,7 +125,8 @@ ActiveRecord::Schema.define(:version => 20110107195728) do
     t.datetime "updated_at"
   end
 
-  create_table "media_types", :force => true do |t|
+  create_table "media_types", :id => false, :force => true do |t|
+    t.integer "id"
     t.string  "name"
     t.integer "level"
     t.integer "display_order"
@@ -191,11 +194,10 @@ ActiveRecord::Schema.define(:version => 20110107195728) do
     t.integer  "pending"
   end
 
-  create_table "states", :force => true do |t|
-    t.string   "abbreviation"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "states", :id => false, :force => true do |t|
+    t.integer "id"
+    t.string  "abbreviation"
+    t.string  "name"
   end
 
   create_table "users", :force => true do |t|
