@@ -12,7 +12,7 @@ class ServicesController < ApplicationController
 
 	def xml
 		handler = ServiceHandler.new
-		response = handler.handle_request(params[:Request], request.domain)
+		response = handler.handle_request(params[:Request])
 		render :xml => response.to_xml({:skip_instruct => false, :root => "Response", :skip_types => true})
 	end
 end

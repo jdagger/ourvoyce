@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110114184049) do
+ActiveRecord::Schema.define(:version => 20110118055803) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -30,6 +30,7 @@ ActiveRecord::Schema.define(:version => 20110114184049) do
   create_table "chambers", :id => false, :force => true do |t|
     t.integer "id"
     t.string  "name"
+    t.string  "logo"
   end
 
   create_table "corporate_audits", :force => true do |t|
@@ -80,6 +81,7 @@ ActiveRecord::Schema.define(:version => 20110114184049) do
   create_table "government_types", :id => false, :force => true do |t|
     t.integer "id"
     t.string  "name"
+    t.string  "logo"
   end
 
   create_table "governments", :force => true do |t|
@@ -117,7 +119,7 @@ ActiveRecord::Schema.define(:version => 20110114184049) do
     t.datetime "updated_at"
   end
 
-  create_table "media_supports", :id => false, :force => true do |t|
+  create_table "media_supports", :force => true do |t|
     t.integer  "media_id"
     t.integer  "user_id"
     t.integer  "support_type"
@@ -130,6 +132,7 @@ ActiveRecord::Schema.define(:version => 20110114184049) do
     t.string  "name"
     t.integer "level"
     t.integer "display_order"
+    t.string  "logo"
   end
 
   create_table "medias", :force => true do |t|
@@ -198,6 +201,7 @@ ActiveRecord::Schema.define(:version => 20110114184049) do
     t.integer "id"
     t.string  "abbreviation"
     t.string  "name"
+    t.string  "logo"
   end
 
   create_table "users", :force => true do |t|

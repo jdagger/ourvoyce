@@ -1,13 +1,13 @@
 class MediaSearchHandler < SearchHandlerBase
   include ImageHelper
 
-	def handle_request(domain)
+	def handle_request
 		self.search_options = {
 			:select => %w{medias.id name logo parent_media_id media_type_id social_score participation_rate},
 			:filters => {}
 		}
 		self.search_instance = Media.new
-		super(domain)
+		super
 		self.status = 1
 	end
 

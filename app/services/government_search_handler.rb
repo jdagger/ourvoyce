@@ -1,13 +1,13 @@
 class GovernmentSearchHandler < SearchHandlerBase
   include ImageHelper
 
-	def handle_request(domain)
+	def handle_request
 		self.search_options = {
 			:select => %w{governments.id name first_name last_name government_type_id logo chamber_id social_score participation_rate},
 			:filters => {}
 		}
 		self.search_instance = Government.new
-		super(domain)
+		super
 		self.status = 1
 	end
 

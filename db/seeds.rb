@@ -3,90 +3,89 @@
 #
 
 Chamber.destroy_all
-
-i = 1
-[[1, 'House'], [2, 'Senate']].each do |id, chamber|
-  Chamber.create :name => chamber do |r|
+[[1, 'House', 'house.png'], [2, 'Senate', 'senate.png']].each do |id, chamber, logo|
+  Chamber.create :name => chamber, :logo => logo do |r|
     r.id = id
     r.save
   end
-  i+=1
 end
 
 MediaType.destroy_all
-[[1, 'Magazine', 1, 3],
-[2, 'Newspaper', 1, 2],
-[3, 'Radio', 1, 4],
-[4, 'Television', 1, 1],
-[5, 'TVShow', 2, nil],
-[6, 'RadioShow', 2, nil]].each do |id, name, level, display_order|
-  MediaType.create :name => name, :level => level, :display_order => display_order do |m|
+[[1, 'Magazine', 1, 3, 'magazine.png'],
+[2, 'Newspaper', 1, 2, 'newspaper.png'],
+[3, 'Radio', 1, 4, 'radio.png'],
+[4, 'Television', 1, 1, 'television.png'],
+[5, 'TVShow', 2, nil, 'tvshow.png'],
+[6, 'RadioShow', 2, nil, 'radioshow.png']].each do |id, name, level, display_order, logo|
+  MediaType.create :name => name, :level => level, :display_order => display_order, :logo => logo do |m|
     m.id = id
     m.save
   end
 end
 
 GovernmentType.destroy_all
-[[1, 'Agency'], [2, 'Executive'], [3, 'Legislative']].each do |id, name|
-  GovernmentType.create :name => name do |g|
+[[1, 'Agency', 'agency.png'],
+ [2, 'Executive', 'executive.png'],
+ [3, 'Legislative', 'legislative.png']].each do |id, name, logo|
+  GovernmentType.create :name => name, :logo => logo do |g|
     g.id = id
     g.save
   end
 end
 
 State.destroy_all
-[[1, 'AK', 'Alaska'],
-[2, 'AZ', 'Arizona'],
-[3, 'AR', 'Arkansas'],
-[4, 'CA', 'California'],
-[5, 'CO', 'Colorado'],
-[6, 'CT', 'Connecticut'],
-[7, 'DE', 'Delaware'],
-[8, 'DC', 'District of Col'],
-[9, 'FL', 'Florida'],
-[10, 'GA', 'Georgia'],
-[11, 'HI', 'Hawaii'],
-[12, 'ID', 'Idaho'],
-[13, 'IL', 'Illinois'],
-[14, 'IN', 'Indiana'],
-[15, 'IA', 'Iowa'],
-[16, 'KS', 'Kansas'],
-[17, 'KY', 'Kentucky'],
-[18, 'LA', 'Louisiana'],
-[19, 'ME', 'Maine'],
-[20, 'MD', 'Maryland'],
-[21, 'MA', 'Massachusetts'],
-[22, 'MI', 'Michigan'],
-[23, 'MN', 'Minnesota'],
-[24, 'MS', 'Mississippi'],
-[25, 'MO', 'Missouri'],
-[26, 'MT', 'Montana'],
-[27, 'NE', 'Nebraska'],
-[28, 'NV', 'Nevada'],
-[29, 'NH', 'New Hampshire'],
-[30, 'NJ', 'New Jersey'],
-[31, 'NM', 'New Mexico'],
-[32, 'NY', 'New York'],
-[33, 'NC', 'North Carolina'],
-[34, 'ND', 'North Dakota'],
-[35, 'OH', 'Ohio'],
-[36, 'OK', 'Oklahoma'],
-[37, 'OR', 'Oregon'],
-[38, 'PA', 'Pennsylvania'],
-[39, 'RI', 'Rhode Island'],
-[40, 'SC', 'South Carolina'],
-[41, 'SD', 'South Dakota'],
-[42, 'TN', 'Tennessee'],
-[43, 'TX', 'Texas'],
-[44, 'UT', 'Utah'],
-[45, 'VT', 'Vermont'],
-[46, 'VA', 'Virginia'],
-[47, 'WA', 'Washington'],
-[48, 'WV', 'West Virginia'],
-[49, 'WI', 'Wisconsin'],
-[50, 'WY', 'Wyoming'],
-[60, 'AL', 'Alabama']].each do |id, abbr, name|
-  State.create :abbreviation => abbr, :name => name do |s|
+[[1, 'AK', 'Alaska', 'seal_ak.jpg'],
+[2, 'AZ', 'Arizona', 'seal_az.jpg'],
+[3, 'AR', 'Arkansas', 'seal_ar.jpg'],
+[4, 'CA', 'California', 'seal_ca.jpg'],
+[5, 'CO', 'Colorado', 'seal_co.jpg'],
+[6, 'CT', 'Connecticut', 'seal_ct.jpg'],
+[7, 'DE', 'Delaware', 'seal_de.jpg'],
+[8, 'DC', 'District of Col', 'seal_dc.jpg'],
+[9, 'FL', 'Florida', 'seal_fl.jpg'],
+[10, 'GA', 'Georgia', 'seal_ga.jpg'],
+[11, 'HI', 'Hawaii', 'seal_hi.jpg'],
+[12, 'ID', 'Idaho', 'seal_id.jpg'],
+[13, 'IL', 'Illinois', 'seal_il.jpg'],
+[14, 'IN', 'Indiana', 'seal_in.jpg'],
+[15, 'IA', 'Iowa', 'seal_ia.jpg'],
+[16, 'KS', 'Kansas', 'seal_ks.jpg'],
+[17, 'KY', 'Kentucky', 'seal_ky.jpg'],
+[18, 'LA', 'Louisiana', 'seal_la.jpg'],
+[19, 'ME', 'Maine', 'seal_me.jpg'],
+[20, 'MD', 'Maryland', 'seal_md.jpg'],
+[21, 'MA', 'Massachusetts', 'seal_ma.jpg'],
+[22, 'MI', 'Michigan', 'seal_mi.jpg'],
+[23, 'MN', 'Minnesota', 'seal_mn.jpg'],
+[24, 'MS', 'Mississippi', 'seal_ms.jpg'],
+[25, 'MO', 'Missouri', 'seal_mo.jpg'],
+[26, 'MT', 'Montana', 'seal_mt.jpg'],
+[27, 'NE', 'Nebraska', 'seal_ne.jpg'],
+[28, 'NV', 'Nevada', 'seal_nv.jpg'],
+[29, 'NH', 'New Hampshire', 'seal_nh.jpg'],
+[30, 'NJ', 'New Jersey', 'seal_nj.jpg'],
+[31, 'NM', 'New Mexico', 'seal_nm.jpg'],
+[32, 'NY', 'New York', 'seal_ny.jpg'],
+[33, 'NC', 'North Carolina', 'seal_nc.jpg'],
+[34, 'ND', 'North Dakota', 'seal_nd.jpg'],
+[35, 'OH', 'Ohio', 'seal_oh.jpg'],
+[36, 'OK', 'Oklahoma', 'seal_ok.jpg'],
+[37, 'OR', 'Oregon', 'seal_or.jpg'],
+[38, 'PA', 'Pennsylvania', 'seal_pa.jpg'],
+[39, 'RI', 'Rhode Island', 'seal_ri.jpg'],
+[40, 'SC', 'South Carolina', 'seal_sc.jpg'],
+[41, 'SD', 'South Dakota', 'seal_sd.jpg'],
+[42, 'TN', 'Tennessee', 'seal_tn.jpg'],
+[43, 'TX', 'Texas', 'seal_tx.jpg'],
+[44, 'UT', 'Utah', 'seal_ut.jpg'],
+[45, 'VT', 'Vermont', 'seal_vt.jpg'],
+[46, 'VA', 'Virginia', 'seal_va.jpg'],
+[47, 'WA', 'Washington', 'seal_wa.jpg'],
+[48, 'WV', 'West Virginia', 'seal_wv.jpg'],
+[49, 'WI', 'Wisconsin', 'seal_wi.jpg'],
+[50, 'WY', 'Wyoming', 'seal_wy.jpg'],
+[60, 'AL', 'Alabama', 'seal_al.jpg']].each do |id, abbr, name, logo|
+  State.create :abbreviation => abbr, :name => name, :logo => logo do |s|
     s.id = id
     s.save
   end

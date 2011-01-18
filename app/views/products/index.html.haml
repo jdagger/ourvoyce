@@ -38,10 +38,10 @@
     %tbody
     - @presenter.products.each do |c|
       %tr
-        %td= render :partial => 'shared/vote_control', :object => {:presenter => @presenter, :item => c, :post_url => :product_vote}, :as => :data
+        %td= render :partial => 'shared/vote_control', :object => {:id => c.id, :support_type => c.support_type, :post_url => :product_vote}, :as => :d
         %td= c.description
         %td
-          %img{:src => @presenter.product_logo_url(c.logo), :alt => c.description}
+          %img{:src => get_product_image_128(c.logo), :alt => c.description}
         %td= c.updated_at
 .span-12.last
   Maps/Graphs

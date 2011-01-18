@@ -34,6 +34,7 @@ class Media < ActiveRecord::Base
 			rescue
 				return nil
 			end
-		end
+    end
+
 	end
 end

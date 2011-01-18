@@ -9,8 +9,8 @@ class AuthenticateHandler < HandlerBase
 		self.request.parameters['Password']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 		user = User.authenticate(self.username, self.password)
 
 		if user.nil?

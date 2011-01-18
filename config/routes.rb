@@ -22,26 +22,26 @@ Production::Application.routes.draw do
 	resources :account, :only => [:create, :update, :edit]
 
 	# Corporate Index Routes
+  match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
 	match "/corporate/:filter/:sort/:offset" => "corporates#index"
 	match "/corporate/:filter/:sort" => "corporates#index", :offset => "0"
 	match "/corporate" => "corporates#index", :as => :corporates_index
-	match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
 
 	#End Corporate Routes
 
+  match "/products/vote" => "products#vote", :as => :product_vote
 	match "/products/lookup" => "products#lookup"
-	match "/products/vote" => "products#vote", :as => :product_vote
 
+  match "/media/vote" => "medias#vote", :as => :media_vote
 	match "/media(/:type(/:network))" => "medias#index", :as => :media_index
-	match "/media/vote" => "medias#vote", :as => :media_vote
 
+  match "/government/vote" => "governments#vote", :as => :government_vote
 	match '/government' => 'governments#index', :as => :government_index
 	scope "/government" do
 		match 'executive' => 'governments#executive', :as => :executive
 		match 'legislative(/:state)' => 'governments#legislative', :as => :legislative
 		match 'agency' => 'governments#agency', :as => :agency
 	end
-	match "/government/vote" => "governments#vote", :as => :government_vote
 
 	# Product Index Routes
 	match "/products/:offset" => "products#index"

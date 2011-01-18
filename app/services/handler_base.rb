@@ -2,7 +2,6 @@ class HandlerBase
 	attr_accessor :status
 	attr_accessor :request
 	attr_accessor :user
-  attr_accessor :domain
 
 	def user_token
 		self.request.parameters['UserToken'] || nil
@@ -26,8 +25,7 @@ class HandlerBase
 		end
 	end
 
-	def handle_request(domain)
-    self.domain = domain
+	def handle_request
 	end
 
 	def get_response
@@ -41,7 +39,7 @@ class HandlerBase
 	end
 
 	def participation_rate_image(participation_rate)
-		logo_base = "http://#{self.domain}/images/participation_rates/"
+		logo_base = "#{Rails.configuration.logos_domain}/images/participation_rates/"
 		participation_rate ||= 0
 
 		if(participation_rate > 97)

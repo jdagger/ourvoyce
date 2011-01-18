@@ -5,8 +5,8 @@ class ProductLookupHandler < LookupHandlerBase
 		self.request.parameters['UPC']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 		products = Product.upc_lookup :upc => self.upc
 
 		if(products.count == 0)

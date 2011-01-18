@@ -1,6 +1,6 @@
 class MediaSummaryHandler < HandlerBase
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 	end
 
 	def populate_result(result_hash)

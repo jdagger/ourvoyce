@@ -1,8 +1,11 @@
 = render :partial => "shared/government_menu"
+.span-12.last
+  Maps/Reports
 .span-12
   %table
     %thead
       %tr
+        %th Logo
         %th State
         %th SS
         %th PR
@@ -10,9 +13,9 @@
     %tbody
       - @presenter.states.each do |state|
         %tr
+          %td
+            %img{:src => get_state_image_128(state.logo), :alt => 'logo'}
           %td= state.name
           %td= '45'
           %td= '75'
           %td= link_to "Link", :action => :legislative, :state => state.abbreviation
-.span-12.last
-  Maps/Reports

@@ -6,8 +6,8 @@ class CorporationLookupHandler < LookupHandlerBase
 		self.request.parameters['CorporationId']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 		self.item = Corporation.corporation_lookup(self.corporation_id)
 
 		if self.item.nil?

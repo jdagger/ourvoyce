@@ -3,8 +3,8 @@ class MediaVoteHandler < VoteHandlerBase
 		self.request.parameters['MediaId']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 		self.status = 0
 
 		if(load_user)

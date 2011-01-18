@@ -50,11 +50,11 @@
     - @presenter.corporations.each do |c|
       %tr
         %td
-          =  render :partial => "shared/vote_control", :object =>{:presenter => @presenter, :item => c, :post_url => :corporate_vote}, :as => :data
+          =  render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
           = c.updated_at
         %td= c.name
         %td
-          %img{:src => @presenter.corporate_logo_url(c.logo), :alt => c.name}
+          %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
         %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
         %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
         %td= c.social_score

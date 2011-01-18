@@ -5,8 +5,8 @@ class GovernmentLookupHandler < LookupHandlerBase
 		self.request.parameters['GovernmentId']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 		self.item = Government.government_lookup(self.government_id)
 
 		if(self.item.nil?)

@@ -20,8 +20,8 @@ class CreateProductHandler < HandlerBase
 		self.request.parameters['SupportType']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 
     #Try to load to product to see if it exists
 		product = Product.where("upc = ? OR ean = ?", self.upc, self.upc)

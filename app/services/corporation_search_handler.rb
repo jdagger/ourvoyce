@@ -1,7 +1,7 @@
 class CorporationSearchHandler < SearchHandlerBase
   include ImageHelper
   
-	def handle_request(domain)
+	def handle_request
 		#Apply filtering
 		self.search_options = {
 			:select => %w{corporations.id name logo social_score participation_rate},
@@ -9,7 +9,7 @@ class CorporationSearchHandler < SearchHandlerBase
 		}
 
 		self.search_instance = Corporation.new
-		super(domain)
+		super
 
 		self.status = 1
 	end

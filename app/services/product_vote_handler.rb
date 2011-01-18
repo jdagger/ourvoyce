@@ -3,8 +3,8 @@ class ProductVoteHandler < VoteHandlerBase
 		self.request.parameters['ProductId']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 		self.status = 0
 		if(load_user)
 			ProductSupport.change_support(self.product_id, self.user.id, self.support_type)

@@ -20,8 +20,8 @@ class SearchHandlerBase < HandlerBase
 		self.request.max_results.to_i
 	end
 
-	def handle_request(domain)
-		super(domain)
+	def handle_request
+		super
 
 		if(load_user)
 			search_options[:include_user_support] = self.user.id

@@ -1,14 +1,14 @@
 class ProductSearchHandler < SearchHandlerBase
   include ImageHelper
 
-	def handle_request(domain)
+	def handle_request
 		self.search_options = {
 			:select => %w{products.id upc name description pending logo social_score participation_rate},
 			:filters => {}
 		}
 
 		self.search_instance = Product.new
-    super(domain)
+    super
 
 		self.status = 1
 	end

@@ -5,8 +5,8 @@ class MediaLookupHandler < LookupHandlerBase
 		self.request.parameters['MediaId']
 	end
 
-	def handle_request(domain)
-    super(domain)
+	def handle_request
+    super
 		self.item = Media.media_lookup(self.media_id.to_i)
 
 		if(self.item.nil?)

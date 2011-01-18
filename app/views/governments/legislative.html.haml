@@ -1,4 +1,6 @@
 = render :partial => "shared/government_menu"
+.span-12.last
+  Maps/Graphs
 .span-12
   %table
     %caption Senate
@@ -12,8 +14,9 @@
         %th PR
       - @presenter.senators.each do |senator|
         %tr
+          %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
           %td
-          %td= senator.logo
+            %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
           %td= senator.first_name + " " + senator.last_name
           %td= senator.title
           %td= senator.social_score
@@ -32,11 +35,10 @@
         %th PR
       - @presenter.representatives.each do |rep|
         %tr
+          %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
           %td
-          %td= rep.logo
+            %img{:src => get_government_image_64(rep.logo, rep.government_type_id, rep.chamber_id) , :alt => 'portrait'}
           %td= rep.first_name + " " + rep.last_name
           %td= rep.district
           %td= rep.social_score
           %td= rep.participation_rate
-.span-12.last
-  Maps/Graphs
