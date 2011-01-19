@@ -1,1 +1,48 @@
+- content_for :scripts do
+  = javascript_include_tag "change_support.js"
+  
 %h1 myvoYce
+.span-12
+  Maps/Graphs
+.span-12.last
+  %fieldset
+    %legend Sorting:
+    %a{:href => "/myvoyce?sort=description_asc"}Description Asc
+    |
+    %a{:href => "/myvoyce?sort=description_desc"}Description Desc
+    %br
+    %a{:href => "/myvoyce?sort=votedate_asc"}Vote Date Asc
+    |
+    %a{:href => "/myvoyce?sort=votedate_desc"}Vote Date Desc
+
+  %fieldset
+    %legend Filtering:
+    %a{:href => "/myvoyce?filter=thumbsup"}Thumbs Up
+    |
+    %a{:href => "/myvoyce?filter=thumbsdown"}Thumbs Down
+    |
+    %a{:href => "/myvoyce?filter=neutral"}Neutral
+    |
+    %a{:href => "/myvoyce?filter=voted"}Voted
+    |
+    %a{:href => "/myvoyce?filter=novote"}No Vote
+    |
+    %a{:href => "/myvoyce?"}All Records
+
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+
+  %table
+    %thead
+      %tr
+        %th Vote
+        %th Description
+        %th Logo
+        %th Vote Date
+    %tbody
+    - @presenter.products.each do |c|
+      %tr
+        %td= render :partial => 'shared/vote_control', :object => {:id => c.id, :support_type => c.support_type, :post_url => :product_vote}, :as => :d
+        %td= c.description
+        %td
+          %img{:src => get_product_image_128(c.logo), :alt => c.description}
+        %td= c.updated_at

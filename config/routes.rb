@@ -25,7 +25,6 @@ Production::Application.routes.draw do
 	#End Corporate Routes
 
   match "/products/vote" => "products#vote", :as => :product_vote
-	match "/products/lookup" => "products#lookup"
 
   match "/media/vote" => "medias#vote", :as => :media_vote
 	match "/media(/:type(/:network))" => "medias#index", :as => :media_index
@@ -37,11 +36,6 @@ Production::Application.routes.draw do
 		match 'legislative(/:state)' => 'governments#legislative', :as => :legislative
 		match 'agency' => 'governments#agency', :as => :agency
 	end
-
-	# Product Index Routes
-	match "/products/:offset" => "products#index"
-	match "/products" => "products#index", :offset => "0"
-	#End Product Routes
 
 	match "services/:action" => "services#:action"
 
