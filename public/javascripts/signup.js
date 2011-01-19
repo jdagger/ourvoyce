@@ -36,7 +36,7 @@ $(document).ready(function(){
 		validate_email($("#email").val());
 	});
 
-	$('form').submit(function(){
+	$('form.signup').submit(function(){
 		var $isValid = true;
 		if(!validate_email($("#email").val())){
 			$("#email").focus();
