@@ -1,5 +1,9 @@
 Production::Application.routes.draw do
 
+  match "/help" => "site#help", :as => :help
+  match "/privacy" => "site#privacy", :as => :privacy
+  match "/terms" => "site#terms", :as => :terms
+
   match "/myvoyce/account" => "myvoyce#new_account", :as => :account
   match "/myvoyce/authenticate" => "myvoyce#authenticate_user", :as => :authenticate_user
   match "/myvoyce/create" => "myvoyce#create_account", :as => :create_account

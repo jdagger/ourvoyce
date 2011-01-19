@@ -20,21 +20,20 @@
           #top-menu.span-24.last
             %ul
               - if session[:user_id].nil?
-                %li= link_to "Login",  account_path
+                %li= link_to "Login",  :account
               - else
-                %li= link_to "Logout",  logout_path
-              //%li= link_to "Sign Up",  signup_path
-              %li= link_to "Account",  account_path
-              %li= link_to "MyVoyce",  myvoyce_path
-              %li= link_to "Corporate",  corporates_index_path
-              %li= link_to "Products",  products_path
-              %li= link_to "Government",  government_index_path
-              %li= link_to "Media",  media_index_path
+                %li= link_to "Logout",  :logout
+              %li= link_to "Account",  :account
+              %li= link_to "MyVoyce",  :myvoyce
+              %li= link_to "Corporate",  :corporates_index
+              %li= link_to "Products",  :products
+              %li= link_to "Government",  :government_index
+              %li= link_to "Media",  :media_index
               %li= '|'
-              %li= link_to "Users",  admin_users_path
-              %li= link_to "Products",  admin_products_path
-              %li= link_to "Corporations",  admin_corporations_path
-              %li= link_to "States",  admin_states_path
+              %li= link_to "Users",  :admin_users
+              %li= link_to "Products",  :admin_products
+              %li= link_to "Corporations",  :admin_corporations
+              %li= link_to "States",  :admin_states
         .clear
 
         = yield
@@ -43,5 +42,9 @@
         .span-24.last
           .prepend-top
             #footer
+              =link_to 'Help', :help
+              =link_to 'Privacy', :privacy
+              =link_to 'Terms', :terms
+              %br
               OurVoyce &copy;2010
         .clear
