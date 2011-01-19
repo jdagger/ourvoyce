@@ -1,0 +1,89 @@
+- content_for :scripts do
+  =	javascript_include_tag "signup.js"
+  = javascript_include_tag "jquery.password_strength.js"
+  %script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?sensor=false"}
+
+#stylized-form.span-12
+  %h2 Create a new account
+  = form_for @create_user, :html => {:class => 'signup'}, :url => create_account_path(@create_user) do |f|
+    .input
+      = label_tag :username, "Select a username:"
+      = text_field_tag :username, @create_user.username
+      .small You will use the username when logging on to the site.
+    .messages
+      %span#username_messages= @create_user.errors[:username].first
+    .clear
+
+
+    .input
+      = label_tag :password, "Create a password:"
+      = password_field_tag :password
+      %br
+      = label_tag :password_confirmation, "Retype your password:"
+      = password_field_tag :password_confirmation
+      .small Password must be at least 6 characters.
+    .messages
+      %span#password_messages= @create_user.errors[:password].first
+    .clear
+
+
+    .input
+      = label_tag :zip_code, "Enter your zip code:"
+      = text_field_tag :zip_code, @create_user.zip_code
+      .small The zip code will be used for...
+    .messages
+      %span#zip_code_messages= @create_user.errors[:zip_code].first
+    .clear
+
+
+    .input
+      = label_tag :birth_year, "Year you were born:"
+      %br
+      = select_tag :birth_year, options_for_select((1910..Time.now.year).to_a.reverse, @create_user.birth_year)
+      .small
+    .messages
+      %span#birth_year_messages= @create_user.errors[:birth_year].first
+    .clear
+
+    .input
+      = label_tag :email, "Enter your email address:"
+      = text_field_tag :email, @create_user.email
+      .small You will need a valid email for account creation.
+    .messages
+      %span#email_message= @create_user.errors[:email].first
+    .clear
+
+    .input
+      = submit_tag "Create Account"
+    .clear
+#stylized-form.span-12.last
+  %h2 Log In
+  //= form_tag authenticate_user_path do
+  = form_for @authenticate_user, :html => {:class => 'login'}, :url => authenticate_user_path(@authenticate_user) do |f|
+    .messages.flash-message= flash[:login_message]
+    .clear
+
+    .input
+      = label_tag :username, "Username:"
+      %br
+      = text_field_tag :username, @authenticate_user.username
+      .small
+    .messages
+      #username_messages
+    .clear
+
+    .input
+      = label_tag :password, "Password:"
+      %br
+      = password_field_tag :password, ""
+      .small
+    .messages
+      #password_messages
+    .clear
+
+    .input
+      = submit_tag "Login"
+    .messages
+      #submit_messages
+    .clear
+

@@ -1,25 +1,16 @@
 Production::Application.routes.draw do
 
-	controller :myvoyce do
-		get 'myvoyce' => :show
-	end
-
-	controller :sessions do
-		get 'login' => :new
-		post 'login' => :create
-		get 'logout' => :destroy
-	end
+  match "/myvoyce/account" => "myvoyce#new_account", :as => :account
+  match "/myvoyce/authenticate" => "myvoyce#authenticate_user", :as => :authenticate_user
+  match "/myvoyce/create" => "myvoyce#create_account", :as => :create_account
+  match "/myvoyce" => "myvoyce#index", :as => :myvoyce
+  match "/logout" => "myvoyce#logout", :as => :logout
 
 	namespace :admin do
 		resources :states, :corporations, :users, :products
 	end
 
-	controller :account do
-		get 'signup' => :new
-		post 'signup' => :create, :as => :create_account
-	end
-
-	resources :account, :only => [:create, :update, :edit]
+	#resources :account, :only => [:create, :update, :edit]
 
 	# Corporate Index Routes
   match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
