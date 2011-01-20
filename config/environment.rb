@@ -12,6 +12,8 @@ Rails.configuration.autoload_paths += %W(#{Rails.root.to_s}/app/services)
 Rails.configuration.autoload_paths += %W(#{Rails.root.to_s}/app/mixins)
 Rails.configuration.autoload_paths += %W(#{Rails.root.to_s}/lib)
 
-Rails.configuration.logos_domain = "http://www.directeddata.com"
+
+Rails.configuration.logos_domain = "https://s3.amazonaws.com/ourvoYce"
+#Rails.configuration.logos_domain = "http://www.directeddata.com"
 #Rails.configuration.logos_domain = "http://localhost:3000"
 
