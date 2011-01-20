@@ -2,9 +2,13 @@ class MyvoyceController < ApplicationController
   
   #TODO THIS FORM NEEDS MAJOR REFACTORING TO STREAMLINE FLOW, CLEANUP LOGIC
 
-  skip_before_filter :authorize, :only => [:new_account, :create_account, :authenticate_user]
+  skip_before_filter :authorize, :only => [:new, :create, :authenticate]
 
   def index
+    if(params[:filter].nil?)
+      redirect_to :filter => 'all_records'
+      return
+    end
     #@presenter = ProductsIndexPresenter.new(nil)
     #@presenter.load(session[:user_id], params[:offset], 15, product_change_support_path)
     #@presenter
@@ -21,6 +25,20 @@ class MyvoyceController < ApplicationController
         :offset => (page - 1) * page_size
     }
 
+    case(params[:filter].downcase)
+      when "thumbs_up"
+        search_options[:filters][:vote] = "thumbsup"
+      when "thumbs_down"
+        search_options[:filters][:vote] = "thumbsdown"
+      when "neutral"
+        search_options[:filters][:vote] = "neutral"
+      when "no_vote"
+        search_options[:filters][:vote] = "novote"
+      when "all_records"
+        search_options[:filters][:vote] = "voted"
+    end
+
+
     user = User.find(self.user_id)
     search_options[:select] << "product_supports.updated_at"
     search_options[:include_user_support] = user.id
@@ -30,12 +48,11 @@ class MyvoyceController < ApplicationController
       sort_params = params[:sort].split(/_/)
       search_options[:sorting][:sort_name] = sort_params[0]
       search_options[:sorting][:sort_direction] = sort_params[1]
-
     end
 
-    if !params[:filter].nil?
-      search_options[:filters][:vote] = params[:filter]
-    end
+    #if !params[:filter].nil?
+      #search_options[:filters][:vote] = params[:filter]
+    #end
 
     products = Product.new
     products.build_search search_options
@@ -60,33 +77,37 @@ class MyvoyceController < ApplicationController
   
   def logout
     session[:user_id] = nil
-    redirect_to account_path, :notice => 'Logged out'
+    redirect_to :action => :new, :notice => 'Logged out'
   end
 
-  def new_account
+  def new
+    if !session[:user_id].nil?
+      redirect_to :action => :index
+      return
+    end
     @create_user = User.new
     @authenticate_user = User.new
   end
 
-  def create_account
+  def create
     @user = User.new(:username => params[:username], :password => params[:password], :zip_code => params[:zip_code], :birth_year => params[:birth_year], :email => params[:email])
     if @user.save
       session[:user_id] = @user.id
-      redirect_to myvoyce_path
+      redirect_to :action => :index
     else
-      render :action => "new_account"
+      render :action => :new
     end
   end
 
-  def authenticate_user
+  def authenticate
     @create_user = User.new
     @authenticate_user = User.new(:username => params[:username], :password => params[:password])
     if user = User.authenticate(@authenticate_user.username, @authenticate_user.password)
       session[:user_id] = user.id
-      redirect_to myvoyce_path
+      redirect_to :action => :index
     else
       flash[:login_message] = "Invalid username or password."
-      render :action => :new_account
+      render :action => :new
     end
   end
 

@@ -66,16 +66,22 @@
 
 #top-menu
 {
+    width: 100%;
 	background-color: #5555ff;
+    text-align: right;
+    font-size: 1.2em;
+
+    ul{
+        padding: 0px;
+    }
 
     li
     {
         float: left;
         list-style-type: none;
-        padding-right: 7px;
-        padding-left: 3px;
         color: white;
-
+        padding-right: 6px;
+        padding-left: 3px;
         a
         {
             color: white;

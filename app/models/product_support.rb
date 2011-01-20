@@ -23,11 +23,12 @@ class ProductSupport < ActiveRecord::Base
 			product_support = ProductSupport.where("product_id = ? and user_id = ?", product.id, user.id).first
 
 			#deleting
-			if(support_type.to_i < 0)
-				if(!product_support.nil?)
-					product_support.destroy
-				end
-			elsif(product_support.nil?)
+			#if(support_type.to_i < 0)
+				#if(!product_support.nil?)
+					#product_support.destroy
+				#end
+			#elsif(product_support.nil?)
+      if(product_support.nil?)
 				user.product_supports.create(:product => product, :support_type => support_type)
 			else
 				#if already exists, update

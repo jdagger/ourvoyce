@@ -17,17 +17,17 @@
 
   %fieldset
     %legend Filtering:
-    %a{:href => "/myvoyce?filter=thumbsup"}Thumbs Up
+    =link_to "Thumbs Up", :filter => "thumbs_up"
     |
-    %a{:href => "/myvoyce?filter=thumbsdown"}Thumbs Down
+    =link_to "Thumbs Down", :filter => "thumbs_down"
     |
-    %a{:href => "/myvoyce?filter=neutral"}Neutral
+    =link_to "Neutral", :filter => "neutral"
     |
-    %a{:href => "/myvoyce?filter=voted"}Voted
+    =link_to "All Records", :filter => "all_records"
     |
-    %a{:href => "/myvoyce?filter=novote"}No Vote
+    =link_to "No Vote", :filter => "no_vote"
     |
-    %a{:href => "/myvoyce?"}All Records
+    =link_to "All***", :filter => "*"
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 

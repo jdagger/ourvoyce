@@ -1,14 +1,23 @@
 Production::Application.routes.draw do
 
-  match "/help" => "site#help", :as => :help
-  match "/privacy" => "site#privacy", :as => :privacy
-  match "/terms" => "site#terms", :as => :terms
+  controller :site do
+    match "/help" => :help
+    match "/privacy" => :privacy
+    match "/terms" => :terms
+    match "/donate" => :donate
+    match "/about" => :about
+    match "/contact" => :contact
+  end
 
-  match "/myvoyce/account" => "myvoyce#new_account", :as => :account
-  match "/myvoyce/authenticate" => "myvoyce#authenticate_user", :as => :authenticate_user
-  match "/myvoyce/create" => "myvoyce#create_account", :as => :create_account
-  match "/myvoyce" => "myvoyce#index", :as => :myvoyce
-  match "/logout" => "myvoyce#logout", :as => :logout
+  controller :myvoyce do
+    match "/myvoyce/account" => :new
+    match "/myvoyce/authenticate" => :authenticate
+    match "/myvoyce/create" => :create
+    match "/myvoyce(/:filter(/:page(/:sort)))" => :index, :as => :myvoyce
+    match "/logout" => :logout, :as => :logout
+  end
+
+  match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
 
 	namespace :admin do
 		resources :states, :corporations, :users, :products

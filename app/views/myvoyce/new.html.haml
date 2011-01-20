@@ -5,7 +5,7 @@
 
 #stylized-form.span-12
   %h2 Create a new account
-  = form_for @create_user, :html => {:class => 'signup'}, :url => create_account_path(@create_user) do |f|
+  = form_for @create_user, :html => {:class => 'signup'}, :url => myvoyce_create_path(@create_user) do |f|
     .input
       = label_tag :username, "Select a username:"
       = text_field_tag :username, @create_user.username
@@ -58,8 +58,7 @@
     .clear
 #stylized-form.span-12.last
   %h2 Log In
-  //= form_tag authenticate_user_path do
-  = form_for @authenticate_user, :html => {:class => 'login'}, :url => authenticate_user_path(@authenticate_user) do |f|
+  = form_for @authenticate_user, :html => {:class => 'login'}, :url => myvoyce_authenticate_path(@authenticate_user) do |f|
     .messages.flash-message= flash[:login_message]
     .clear
 

@@ -15,25 +15,35 @@
     %body.bp
       .container
         #header.span-24.last
-          .span-24.last
+          .span-8
             %img{:src => "/images/site/ourvoYce_header.png", :alt => "header"}
-          #top-menu.span-24.last
-            %ul
+          .span-16.last
+            .span-16.last
+              = link_to "Donate", :donate
+              = "|"
+              = "Seed money raised: $0 |"
               - if session[:user_id].nil?
-                %li= link_to "Login",  :account
+                = link_to "Sign In",  :myvoyce_account
+                = link_to "Create Account",  :myvoyce_account
               - else
-                %li= link_to "Logout",  :logout
-              %li= link_to "Account",  :account
-              %li= link_to "MyVoyce",  :myvoyce
-              %li= link_to "Corporate",  :corporates_index
-              %li= link_to "Government",  :government_index
-              %li= link_to "Media",  :media_index
-              %li= '|'
-              %li= link_to "Users",  :admin_users
-              %li= link_to "Products",  :admin_products
-              %li= link_to "Corporations",  :admin_corporations
-              %li= link_to "States",  :admin_states
-        .clear
+                = link_to "Logout",  :logout
+              = "|"
+              Number of ourvoYce users:
+              =user_count
+            #top-menu.span-16.last
+              %ul
+                %li= link_to "OurVoyce",  :ourvoyce
+                %li= link_to "MyVoyce",  :myvoyce
+                %li= link_to "Corporate",  :corporates_index
+                %li= link_to "Government",  :government_index
+                %li= link_to "Media",  :media_index
+            #top-menu.span-16.last
+              %ul
+                %li= "Admin:"
+                %li= link_to "Users",  :admin_users
+                %li= link_to "Products",  :admin_products
+                %li= link_to "Corporations",  :admin_corporations
+                %li= link_to "States",  :admin_states
 
         = yield
         .clear
@@ -41,9 +51,15 @@
         .span-24.last
           .prepend-top
             #footer
+              =link_to 'About ourvoYce', :about
+              = "|"
+              =link_to 'Contact ourvoYce', :contact
+              = "|"
+              =link_to 'Privacy Policy', :privacy
+              = "|"
+              =link_to 'Terms of Service', :terms
+              = "|"
               =link_to 'Help', :help
-              =link_to 'Privacy', :privacy
-              =link_to 'Terms', :terms
               %br
               OurVoyce &copy;2010
         .clear

@@ -50,14 +50,20 @@
 }
 
 #top-menu {
+  width: 100%;
   background-color: #5555ff;
+  text-align: right;
+  font-size: 1.2em;
+}
+#top-menu ul {
+  padding: 0px;
 }
 #top-menu li {
   float: left;
   list-style-type: none;
-  padding-right: 7px;
-  padding-left: 3px;
   color: white;
+  padding-right: 6px;
+  padding-left: 3px;
 }
 #top-menu li a {
   color: white;
