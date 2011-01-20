@@ -50,6 +50,8 @@ module SearchHelper
 						#self.search_object = self.search_object.where("support_type IS NOT NULL")
             self.search_object = self.search_object.where("support_type >= 0")
 					when "NOVOTE"
+            self.search_object = self.search_object.where("support_type IS NULL OR support_type = -1")
+          when "LIMITEDNOVOTE"
 						self.search_object = self.search_object.where("support_type = -1")
 					end
 				when :participation_rate

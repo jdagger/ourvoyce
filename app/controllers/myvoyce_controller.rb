@@ -33,7 +33,7 @@ class MyvoyceController < ApplicationController
       when "neutral"
         search_options[:filters][:vote] = "neutral"
       when "no_vote"
-        search_options[:filters][:vote] = "novote"
+        search_options[:filters][:vote] = "limitednovote"
       when "all_records"
         search_options[:filters][:vote] = "voted"
     end

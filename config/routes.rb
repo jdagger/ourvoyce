@@ -19,6 +19,10 @@ Production::Application.routes.draw do
 
   match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
 
+  controller :stats do
+    match "/stats(/:action)", :defaults => {:action => "index"}
+  end
+
 	namespace :admin do
 		resources :states, :corporations, :users, :products
 	end

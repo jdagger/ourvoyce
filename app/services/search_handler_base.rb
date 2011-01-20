@@ -157,7 +157,7 @@ class SearchHandlerBase < HandlerBase
 
 			if(!self.user.nil?)
 				if(!self.request.filters["VOTE"].nil?)
-					case self.request.filters["VOTE"]
+					case self.request.filters["VOTE"].upcase
 					when "THUMBSUP"
 						self.search_object = self.search_object.where("support_type = 1")
 					when "THUMBSDOWN"
@@ -165,9 +165,11 @@ class SearchHandlerBase < HandlerBase
 					when "NEUTRAL"
 						self.search_object = self.search_object.where("support_type = 2")
 					when "VOTED"
-						self.search_object = self.search_object.where("support_type IS NOT NULL")
+						self.search_object = self.search_object.where("support_type >= 0")
 					when "NOVOTE"
 						self.search_object = self.search_object.where("support_type is null")
+          when "LIMITEDNOVOTE"
+            self.search_object = self.search_object.where("support_type = -1")
 					end
 				end
 			end

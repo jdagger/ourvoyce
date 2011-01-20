@@ -2,15 +2,18 @@
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
 #
 
-Chamber.destroy_all
+puts 'Inserting Chambers'
+Chamber.delete_all
 [[1, 'House', 'house.png'], [2, 'Senate', 'senate.png']].each do |id, chamber, logo|
   Chamber.create :name => chamber, :logo => logo do |r|
     r.id = id
     r.save
   end
 end
+puts '##########'
 
-MediaType.destroy_all
+puts 'Inserting MediaTypes'
+MediaType.delete_all
 [[1, 'Magazine', 1, 3, 'magazine.png'],
 [2, 'Newspaper', 1, 2, 'newspaper.png'],
 [3, 'Radio', 1, 4, 'radio.png'],
@@ -22,8 +25,11 @@ MediaType.destroy_all
     m.save
   end
 end
+puts '##########'
 
-GovernmentType.destroy_all
+
+puts 'Inserting GovernmentTypes'
+GovernmentType.delete_all
 [[1, 'Agency', 'agency.png'],
  [2, 'Executive', 'executive.png'],
  [3, 'Legislative', 'legislative.png']].each do |id, name, logo|
@@ -32,8 +38,10 @@ GovernmentType.destroy_all
     g.save
   end
 end
+puts '##########'
 
-State.destroy_all
+puts 'Inserting States'
+State.delete_all
 [[1, 'AK', 'Alaska', 'seal_ak.jpg'],
 [2, 'AZ', 'Arizona', 'seal_az.jpg'],
 [3, 'AR', 'Arkansas', 'seal_ar.jpg'],
@@ -90,3 +98,50 @@ State.destroy_all
     s.save
   end
 end
+puts '##########'
+
+=begin
+Zip file description
+Columns 1-2: United States Postal Service State Abbreviation
+Columns 3-66: Name (e.g. 35004 5-Digit ZCTA - there are no post office names)
+Columns 67-75: Total Population (2000)
+Columns 76-84: Total Housing Units (2000)
+Columns 85-98: Land Area (square meters) - Created for statistical purposes only.
+Columns 99-112: Water Area (square meters) - Created for statistical purposes only.
+Columns 113-124: Land Area (square miles) - Created for statistical purposes only.
+Columns 125-136: Water Area (square miles) - Created for statistical purposes only.
+Columns 137-146: Latitude (decimal degrees) First character is blank or "-" denoting North or South latitude respectively
+Columns 147-157: Longitude (decimal degrees) First character is blank or "-" denoting East or West longitude respectively
+=end
+
+#Map states to a hash for quick lookup
+states = {}
+State.all.each do |state|
+  states[state.abbreviation] = state.id
+end
+
+puts 'Inserting Zips'
+Zip.delete_all
+
+fields = [2, 5, 59, 9, 9, 14, 14, 12, 12, 10, 11] #<- the size of each field
+field_pattern = "A#{fields.join('A')}"
+count = 0
+file_name = File.dirname(__FILE__) + "/zcta5.txt"
+lines = File.readlines(file_name)
+#file = File.new(file_name, "r")
+dot_count_size = 200
+dots = (lines.length.to_f / dot_count_size)
+puts 'Total:'
+puts '.' * dots
+count = 0
+puts 'Progress:'
+lines.each do |line|
+  row = line.unpack(field_pattern)
+  Zip.create! :zip => row[1].strip, :state_id => states[row[0].strip], :population => row[3].strip.to_i, :latitude => row[9].strip, :longitude => row[10].strip
+  count += 1
+  if count % dot_count_size == 0
+    print "."
+  end
+end
+puts '##########'
+

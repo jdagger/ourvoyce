@@ -7,6 +7,12 @@ class ProductSearchHandler < SearchHandlerBase
 			:filters => {}
 		}
 
+    #If the NOVOTE filter was selected for the product, override with the LIMITEDNOVOTE so all products aren't returned
+    if ! self.request.filters["VOTE"].nil?
+      if self.request.filters["VOTE"].upcase.eq("NOVOTE")
+        self.request.filters["VOTE"] = "LIMITEDNOVOTE"
+    end
+
 		self.search_instance = Product.new
     super
 

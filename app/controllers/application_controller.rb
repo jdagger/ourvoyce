@@ -12,7 +12,6 @@ class ApplicationController < ActionController::Base
 			redirect_to myvoyce_account_path
 		end
 	end
-	#To Skip - skip_before_filter :authorize, only => [:create, :update, :destroy]
 
 	def is_authenticated?
 		session[:user_id].nil?
