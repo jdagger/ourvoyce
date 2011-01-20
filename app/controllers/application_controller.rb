@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
 		begin
 			User.find(session[:user_id])
 		rescue
-			redirect_to account_path
+			redirect_to myvoyce_account_path
 		end
 	end
 	#To Skip - skip_before_filter :authorize, only => [:create, :update, :destroy]
