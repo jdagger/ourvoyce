@@ -5,7 +5,7 @@
   -(1..100).each do |age|
     = "{"
     = "#{age}, "
-    = @national_ages["age_#{age}"]
+    = @national_ages.nil? ? 'nil' : @national_ages["age_#{age}"]
     = "}, "
 
   %table

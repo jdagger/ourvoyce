@@ -78,9 +78,9 @@ class StatsController < ApplicationController
   def state_population_counts
     count = 0
 
-    t.integer :state_id
-    t.integer :user_count
-    t.float :percent_of_population
+    #t.integer :state_id
+    #t.integer :user_count
+    #t.float :percent_of_population
     
     redirect_to :action => :index, :notice => "Updated #{count} state population records"
   end
