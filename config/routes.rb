@@ -17,7 +17,7 @@ Production::Application.routes.draw do
     match "/logout" => :logout, :as => :logout
   end
 
-  match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
+  match "/ourvoyce(/:state)" => "ourvoyce#index", :as => :ourvoyce
 
   controller :stats do
     match "/stats(/:action)", :defaults => {:action => "index"}

@@ -12,25 +12,21 @@ class StatsController < ApplicationController
     #Reset the count
     Zip.update_all(:user_count => 0)
 
-    count = 0
     stats =  User.find(:all, :select => "zip_code, count(zip_code) as count", :group => :zip_code)
     stats.each do |s|
       zip = Zip.where("zip = ?", s.zip_code).first
       if ! zip.nil?
         zip.user_count = s.count
         zip.save
-        count += 1
       end
     end
-    redirect_to :action => :index, :notice => "Updated #{count} zip records"
+    redirect_to :action => :index, :notice => "Updated zip records"
   end
 
   #Calculate total users in each state
   def state_user_counts
     #Reset state counts
     State.update_all(:user_count => 0)
-
-    count = 0
 
 =begin
     # Expected query
@@ -45,13 +41,11 @@ class StatsController < ApplicationController
       state = State.find(s.id)
       state.user_count = s.count
       state.save
-      count += 1
     end
-    redirect_to :action => :index, :notice => "Updated #{count} state records"
+    redirect_to :action => :index, :notice => "Updated state records"
   end
 
   def national_age_counts
-    count = 0
 
     #Reset table
     NationalAge.delete_all
@@ -64,8 +58,7 @@ class StatsController < ApplicationController
 
     stats = User.find(:all, :select => 'birth_year, count(birth_year) as count', :group => 'birth_year')
     stats.each do |s|
-     #TODO make year dynamic
-      age = 2011 - s.birth_year
+      age = Time.now.year - s.birth_year
       if age > 0 && age <= 100
         national_age["age_#{age}"] = s.count
       end
@@ -75,13 +68,36 @@ class StatsController < ApplicationController
     redirect_to :action => :index, :notice => "Updated national ages"
   end
 
-  def state_population_counts
-    count = 0
+  def state_age_counts
+    StateAgeLookup.delete_all
 
-    #t.integer :state_id
-    #t.integer :user_count
-    #t.float :percent_of_population
+    #This will return rows of state_id, birth_year, count
+    stats =  User.find(:all, :select => "states.id as id, birth_year, count(birth_year) as count", :joins => ['join zips ON zips.zip = users.zip_code', 'join states ON states.id = zips.state_id'], :group => ["states.id", "birth_year"], :order => "states.id")
+
+    state_ages = {}
+
+    #Loop through result set
+    stats.each do |row|
+      age_row = nil
+
+      #If we've already referenced a state's row, reload.  Otherwise, create
+      if state_ages.key?(row.id)
+        age_row = state_ages[row.id]
+      else
+        age_row = StateAgeLookup.new :state_id => row.id
+        state_ages[row.id] = age_row
+      end
+
+      #Store the count for the given state/age
+      age = Time.now.year - row.birth_year
+      age_row["age_#{age}"] = row.count
+    end
+
+    #Loop through each row and save the values
+    state_ages.each do |state_id, age_row|
+      age_row.save
+    end
     
-    redirect_to :action => :index, :notice => "Updated #{count} state population records"
+    redirect_to :action => :index, :notice => "Updated state age records"
   end
 end

@@ -5,7 +5,7 @@
   -(1..100).each do |age|
     = "{"
     = "#{age}, "
-    = @national_ages.nil? ? 'nil' : @national_ages["age_#{age}"]
+    = (@ages["age_#{age}"].nil? ? '0' : @ages["age_#{age}"]) rescue '0'
     = "}, "
 
   %table
@@ -17,9 +17,9 @@
     %tbody
       - @states.each do |state|
         %tr
-          %td= state.name
+          %td= link_to state.name, :state => state.abbreviation
           %td= state.user_count
-          %td= "tbd"
+          %td= number_with_precision(100 * state.user_count.to_f / state.population, :precision => 2).to_s + '%'
 
 .span-12.last
   Maps/Graphs
