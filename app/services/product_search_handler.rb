@@ -11,6 +11,7 @@ class ProductSearchHandler < SearchHandlerBase
     if ! self.request.filters["VOTE"].nil?
       if self.request.filters["VOTE"].upcase.eq("NOVOTE")
         self.request.filters["VOTE"] = "LIMITEDNOVOTE"
+      end
     end
 
 		self.search_instance = Product.new
