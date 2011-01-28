@@ -7,6 +7,14 @@ module ImageHelper
     end
   end
 
+  def get_media_type_image_128(image_name)
+    if(image_name.nil? || image_name.empty?)
+      "#{Rails.configuration.logos_domain}/images/media_type_logos/128_128/not_found.png"
+    else
+      "#{Rails.configuration.logos_domain}/images/media_type_logos/128_128/#{image_name}"
+    end
+  end
+
   def get_corporate_image_128(image_name)
     if(image_name.nil? || image_name.empty?)
         "#{Rails.configuration.logos_domain}/images/corporate_logos/128_128/not_found.gif"
@@ -43,6 +51,14 @@ module ImageHelper
         "#{Rails.configuration.logos_domain}/images/government_logos/#{directory}/64_64/#{image_name}"
       end
     end
+
+  def get_government_type_image_128(image_name)
+    if(image_name.nil? || image_name.empty?)
+      "#{Rails.configuration.logos_domain}/images/government_type_logos/128_128/not_found.png"
+    else
+      "#{Rails.configuration.logos_domain}/images/government_type_logos/128_128/#{image_name}"
+    end
+  end
 
 
   def get_product_image_128(image_name)

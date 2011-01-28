@@ -2,7 +2,7 @@ class CorporatesController < ApplicationController
 	def index
 		page_size = 15
 		page = [params[:page].to_i, 1].max
-
+    
 		#Set up search options
 		search_options = {
 			:select => %w{corporations.id name logo social_score participation_rate revenue profit },

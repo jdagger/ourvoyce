@@ -10,32 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110121152651) do
-
-  create_table "agencies", :force => true do |t|
-    t.string   "name"
-    t.string   "url"
-    t.float    "social_score"
-    t.float    "participation_rate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "agency_audits", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "agency_id"
-    t.integer  "vote"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "agency_supports", :id => false, :force => true do |t|
-    t.integer  "agency_id"
-    t.integer  "user_id"
-    t.integer  "support_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
+ActiveRecord::Schema.define(:version => 20110128191928) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -87,34 +62,6 @@ ActiveRecord::Schema.define(:version => 20110121152651) do
     t.string   "wikipedia_url"
   end
 
-  create_table "executive_audits", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "executive_id"
-    t.integer  "vote"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "executive_supports", :id => false, :force => true do |t|
-    t.integer  "executive_id"
-    t.integer  "user_id"
-    t.integer  "support_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "executives", :force => true do |t|
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.string   "title"
-    t.string   "active"
-    t.float    "social_score"
-    t.float    "participation_rate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "government_audits", :force => true do |t|
     t.integer  "user_id"
     t.integer  "government_id"
@@ -135,6 +82,9 @@ ActiveRecord::Schema.define(:version => 20110121152651) do
     t.integer "id"
     t.string  "name"
     t.string  "logo"
+    t.integer "social_score"
+    t.integer "participation_rate"
+    t.integer "display_order"
   end
 
   create_table "governments", :force => true do |t|
@@ -162,42 +112,13 @@ ActiveRecord::Schema.define(:version => 20110121152651) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "search_text"
+    t.string   "office"
   end
 
-  create_table "legislative_audits", :force => true do |t|
-    t.integer  "user_id"
-    t.integer  "legislative_id"
-    t.integer  "vote"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "legislative_supports", :id => false, :force => true do |t|
-    t.integer  "legislative_id"
-    t.integer  "user_id"
-    t.integer  "support_type"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "legislatives", :force => true do |t|
-    t.string   "first_name"
-    t.string   "middle_name"
-    t.string   "last_name"
-    t.string   "title"
-    t.string   "active"
-    t.string   "political_party"
-    t.integer  "state_id"
-    t.string   "seat"
-    t.string   "district"
-    t.string   "gender"
-    t.string   "phone_number"
-    t.string   "website"
-    t.string   "email"
-    t.float    "social_score"
-    t.float    "participation_rate"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "legislative_states", :force => true do |t|
+    t.integer "state_id"
+    t.integer "social_score"
+    t.integer "participation_rate"
   end
 
   create_table "media_audits", :force => true do |t|
@@ -206,6 +127,12 @@ ActiveRecord::Schema.define(:version => 20110121152651) do
     t.integer  "support_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "media_states", :force => true do |t|
+    t.integer "state_id"
+    t.integer "social_score"
+    t.integer "participation_rate"
   end
 
   create_table "media_supports", :force => true do |t|
@@ -222,6 +149,8 @@ ActiveRecord::Schema.define(:version => 20110121152651) do
     t.integer "level"
     t.integer "display_order"
     t.string  "logo"
+    t.integer "social_score"
+    t.integer "participation_rate"
   end
 
   create_table "medias", :force => true do |t|
@@ -235,6 +164,8 @@ ActiveRecord::Schema.define(:version => 20110121152651) do
     t.string   "logo"
     t.integer  "parent_media_id"
     t.string   "wikipedia"
+    t.string   "data1"
+    t.string   "data2"
   end
 
   create_table "national_ages", :force => true do |t|

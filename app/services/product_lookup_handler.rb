@@ -54,6 +54,8 @@ class ProductLookupHandler < LookupHandlerBase
       body["UPC"] = self.item.upc
 			body["Description"] = self.item.description
 			body["ImageUrl"] = get_product_image_128 self.item.logo
+    else
+      body["ImageUrl"] = get_product_image_128 nil
 		end
 
 		#if user token specified, return the support

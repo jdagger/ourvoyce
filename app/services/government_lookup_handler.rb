@@ -35,6 +35,8 @@ class GovernmentLookupHandler < LookupHandlerBase
 			body["ImageUrl"] = get_government_image_64 self.item.logo, self.item.government_type_id, self.item.chamber_id
 			body["Wikipedia"] = self.item.wikipedia
 			body["Website"] = self.item.website
+			body["Title"] = self.item.title
+			body["Office"] = self.item.office
 			body["ParticipationRate"] = participation_rate_image(self.item.participation_rate)
 			body["SocialScore"] = self.item.social_score
 		end

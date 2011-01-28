@@ -30,10 +30,10 @@ puts '##########'
 
 puts 'Inserting GovernmentTypes'
 GovernmentType.delete_all
-[[1, 'Agency', 'agency.png'],
- [2, 'Executive', 'executive.png'],
- [3, 'Legislative', 'legislative.png']].each do |id, name, logo|
-  GovernmentType.create :name => name, :logo => logo do |g|
+[[1, 'Agency', 'agency.png', 1],
+ [2, 'Executive', 'executive.png', 2],
+ [3, 'Legislative', 'legislative.png', 3]].each do |id, name, logo, display_order|
+  GovernmentType.create :name => name, :logo => logo, :display_order => display_order do |g|
     g.id = id
     g.save
   end

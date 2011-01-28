@@ -100,4 +100,22 @@ class StatsController < ApplicationController
     
     redirect_to :action => :index, :notice => "Updated state age records"
   end
+
+  def media_state_sspr
+    MediaState.delete_all
+
+    State.all.each do |state|
+      MediaState.create :state_id => state.id, :social_score => rand(100), :participation_rate => rand(100)
+    end
+    redirect_to :action => :index, :notice => "Updated media state sspr"
+  end
+
+  def government_state_sspr
+    GovernmentState.delete_all
+
+    State.all.each do |state|
+      GovernmentState.create :state_id => state.id, :social_score => rand(100), :participation_rate => rand(100)
+    end
+    redirect_to :action => :index, :notice => "Updated government state sspr"
+  end
 end

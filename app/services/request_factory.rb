@@ -43,6 +43,14 @@ class RequestFactory
 			return GovernmentSummaryHandler.new self.request
 		when "MediaSummary"
 			return MediaSummaryHandler.new self.request
+		when "MediaState"
+			return MediaStateHandler.new self.request
+		when "LegislativeState"
+			return LegislativeStateHandler.new self.request
+    when "MediaTypes"
+      return MediaTypesHandler.new self.request
+    when "GovernmentTypes"
+      return GovernmentTypesHandler.new self.request
 		else
 			return nil
 		end

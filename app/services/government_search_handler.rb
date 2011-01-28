@@ -3,7 +3,7 @@ class GovernmentSearchHandler < SearchHandlerBase
 
 	def handle_request
 		self.search_options = {
-			:select => %w{governments.id name first_name last_name government_type_id logo chamber_id social_score participation_rate},
+			:select => %w{governments.id name first_name last_name government_type_id logo chamber_id social_score participation_rate title office},
 			:filters => {}
 		}
 		self.search_instance = Government.new
@@ -29,6 +29,8 @@ class GovernmentSearchHandler < SearchHandlerBase
 				end
 				g["SocialScore"] = government.social_score
 				g["ParticipationRate"] = participation_rate_image(government.participation_rate)
+				g["Title"] = government.title
+				g["Office"] = government.office
 				g["Type"] = government.government_type_id
 				g["ImageUrl"] = get_government_image_64 government.logo, government.government_type_id, government.chamber_id
 				if(!self.user.nil?)

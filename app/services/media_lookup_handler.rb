@@ -30,6 +30,8 @@ class MediaLookupHandler < LookupHandlerBase
 			body["ParentId"] = self.item.parent_media_id
 			body["MediaType"] = self.item.media_type_id
 			body["Wikipedia"] = self.item.wikipedia
+			body["Data1"] = self.item.data1
+			body["Data2"] = self.item.data2
 			body["Website"] = self.item.website
 			body["ImageUrl"] = get_media_image_128 self.item.logo
 			body["ParticipationRate"] = participation_rate_image(self.item.participation_rate)
