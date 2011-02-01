@@ -1,19 +1,34 @@
-class LegislativeStateHandler < HandlerBase
+class LegislativeStateHandler < SearchHandlerBase
   include ImageHelper
 
   attr_accessor :states
 
 	def handle_request
-    super
-    self.states = LegislativeState.find(:all, :include => "state", :order => "states.name asc")
-    self.status = 1 
+		self.search_options = {
+			:select => %w{states.id states.logo states.abbreviation states.name social_score participation_rate},
+		  :filters => {},
+		}
+		self.search_instance = LegislativeState.new
+		super
+		self.status = 1
 	end
 
 	def populate_result(result_hash)
-		result_hash["Body"] = {"Status" => self.status }
-    result_hash["Body"]["States"] = []
-    self.states.each do |legislative_state|
-      result_hash["Body"]["States"] << {"StateID" => legislative_state.state.id, "Logo" => get_state_image_128(legislative_state.state.logo), "Abbreviation" => legislative_state.state.abbreviation, "Name" => legislative_state.state.name, "SocialScore" => legislative_state.social_score, "ParticipationRate" => participation_rate_image(legislative_state.participation_rate)}
-    end
+
+		super(result_hash)
+
+			body = result_hash["Body"]
+			body["States"] = []
+			leg_hash = body["States"]
+			self.search_object.each do |leg_state|
+				g = {}
+				leg_hash.push(g)
+				g["StateID"] = leg_state.id
+        g["Abbreviation"] = leg_state.abbreviation
+        g["Name"] = leg_state.name
+        g["Logo"] = get_state_image_128(leg_state.logo)
+				g["SocialScore"] = leg_state.social_score
+				g["ParticipationRate"] = participation_rate_image(leg_state.participation_rate)
+			end
 	end
 end

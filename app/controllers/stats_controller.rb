@@ -111,11 +111,38 @@ class StatsController < ApplicationController
   end
 
   def government_state_sspr
-    GovernmentState.delete_all
+    LegislativeState.delete_all
 
     State.all.each do |state|
-      GovernmentState.create :state_id => state.id, :social_score => rand(100), :participation_rate => rand(100)
+      LegislativeState.create :state_id => state.id, :social_score => rand(100), :participation_rate => rand(100)
     end
-    redirect_to :action => :index, :notice => "Updated government state sspr"
+    redirect_to :action => :index, :notice => "Updated legislative state sspr"
+  end
+
+
+  #Votes
+  def generate_corporate_votes
+    # counts
+    corp_count = Corporation.all.count
+    user_count = User.all.count
+
+    votes_to_generate = 1000
+    votes_generated = 0
+    while votes_generated < votes_to_generate
+      random_user = User.find(:first, :offset => rand(user_count))
+      random_corp = Corporation.find(:first, :offset => rand(corp_count))
+      support_type = rand(3) #0, 1, or 2
+
+			CorporationSupport.change_support(random_corp.id, random_user.id, support_type)
+
+      votes_generated += 1
+    end
+
+    vote_count = CorporationSupport.all.count
+
+    redirect_to :action => :index, :notice => "Corporation votes generated (#{vote_count} total corp votes)"
+  end
+
+  def generate_corporate_stats
   end
 end

@@ -1,38 +1,39 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
+  = javascript_include_tag "map.js"
 
 .span-12
   %fieldset
     %legend Sorting:
-    %a{:href => "/corporate?sort=name_asc"}Name Asc
+    = link_to "Name Asc", :filter => params[:filter], :sort => 'name_asc', :offset => params[:offset]
     |
-    %a{:href => "/corporate?sort=name_desc"}Name Desc
+    = link_to "Name Desc", :filter => params[:filter], :sort => 'name_desc', :offset => params[:offset]
     %br
-    %a{:href => "/corporate?sort=social_asc"}Social Score Asc
+    = link_to "Social Score Asc", :filter => params[:filter], :sort => 'social_asc', :offset => params[:offset]
     |
-    %a{:href => "/corporate?sort=social_desc"}Social Score Desc
+    = link_to "Social Score Desc", :filter => params[:filter], :sort => 'social_desc', :offset => params[:offset]
     %br
-    %a{:href => "/corporate?sort=participation_asc"}Participation Rate Asc
+    = link_to "Participation Rate Asc", :filter => params[:filter], :sort => 'participation_asc', :offset => params[:offset]
     |
-    %a{:href => "/corporate?sort=participation_desc"}Participation Rate Desc
+    = link_to "Participation Rate Desc", :filter => params[:filter], :sort => 'participation_desc', :offset => params[:offset]
     %br
-    %a{:href => "/corporate?sort=votedate_asc"}Vote Date Asc
+    = link_to "Vote Date Asc", :filter => params[:filter], :sort => 'votedate_asc', :offset => params[:offset]
     |
-    %a{:href => "/corporate?sort=votedate_desc"}Vote Date Desc
+    = link_to "Vote Date Desc", :filter => params[:filter], :sort => 'votedate_desc', :offset => params[:offset]
 
   %fieldset
     %legend Filtering:
-    %a{:href => "/corporate?filter=thumbsup"}Thumbs Up
+    =link_to 'Thumbs Up', :filter => 'thumbsup', :sort => params[:sort], :offset => 0
     |
-    %a{:href => "/corporate?filter=thumbsdown"}Thumbs Down
+    =link_to 'Thumbs Down', :filter => 'thumbsdown', :sort => params[:sort], :offset => 0
     |
-    %a{:href => "/corporate?filter=neutral"}Neutral
+    =link_to 'Neutral', :filter => 'neutral', :sort => params[:sort], :offset => 0
     |
-    %a{:href => "/corporate?filter=voted"}Voted
+    =link_to 'Voted', :filter => 'voted', :sort => params[:sort], :offset => 0
     |
-    %a{:href => "/corporate?filter=novote"}No Vote
-    |
-    %a{:href => "/corporate?"}All Records
+    =link_to 'No Vote', :filter => 'novote', :sort => params[:sort], :offset => 0
+    ||
+    =link_to 'All Records', :filter => '', :sort => params[:sort], :offset => 0
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
@@ -54,10 +55,13 @@
           = c.updated_at
         %td= c.name
         %td
-          %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
+          %div{:class => 'jq-corporation', :style => 'border: solid 1px red;'}
+            %input{:type => :hidden, :class => 'jq-corporation-id', :value =>  c.id}
+            %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
         %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
         %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
         %td= c.social_score
         %td= c.participation_rate
 .span-12.last
   Maps/Graphs
+  .jq-map

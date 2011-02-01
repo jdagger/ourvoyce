@@ -31,9 +31,9 @@ Production::Application.routes.draw do
 
 	# Corporate Index Routes
   match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
-	match "/corporate/:filter/:sort/:offset" => "corporates#index"
-	match "/corporate/:filter/:sort" => "corporates#index", :offset => "0"
-	match "/corporate" => "corporates#index", :as => :corporates_index
+	match "/corporate(/:filter(/:sort(/:offset)))" => "corporates#index", :defaults => {:filter => '', :sort => '', :offset => 0}, :as => :corporates_index
+	#match "/corporate/:filter/:sort" => "corporates#index", :offset => "0"
+	#match "/corporate" => "corporates#index", :as => :corporates_index
 
 	#End Corporate Routes
 
@@ -50,6 +50,7 @@ Production::Application.routes.draw do
 		match 'agency' => 'governments#agency', :as => :agency
 	end
 
+	match "services/website/corporate/:corporation_id/:state" => "services#corporate"
 	match "services/:action" => "services#:action"
 
 	root :to => "home#index"

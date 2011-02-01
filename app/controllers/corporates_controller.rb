@@ -1,7 +1,7 @@
 class CorporatesController < ApplicationController
 	def index
 		page_size = 15
-		page = [params[:page].to_i, 1].max
+		page = [params[:offset].to_i, 1].max
     
 		#Set up search options
 		search_options = {
@@ -16,13 +16,18 @@ class CorporatesController < ApplicationController
 		search_options[:select] << "corporation_supports.updated_at"
 		search_options[:include_user_support] = user.id
 
-		#Sorting
-		if !params[:sort].nil?
-			sort_params = params[:sort].split(/_/)
-			search_options[:sorting][:sort_name] = sort_params[0]
-			search_options[:sorting][:sort_direction] = sort_params[1]
+    if params[:sort].empty?
+      params[:sort] = 'name_asc'
+    end
 
-		end
+		#Sorting
+    sort_params = params[:sort].split(/_/)
+    search_options[:sorting][:sort_name] = sort_params[0]
+    search_options[:sorting][:sort_direction] = sort_params[1]
+
+    if params[:filter].empty?
+      params[:filter] = 'all'
+    end
 
 		if !params[:filter].nil?
 			search_options[:filters][:vote] = params[:filter]
@@ -41,13 +46,14 @@ class CorporatesController < ApplicationController
 
 		#Build paging links
 		(1..@presenter.paging.total_pages).each do |count|
-			link = {:link_url => url_for(:controller => "corporates", :action => 'index', :page => count, :sort => params[:sort], :filter => params[:filter]), :page => count}
+			link = {:link_url => url_for(:controller => "corporates", :action => 'index', :offset => count, :sort => params[:sort], :filter => params[:filter]), :page => count}
 			@presenter.paging.links << link
 		end
 
 		@presenter.corporations = corporations.get_search_results
 
 	end
+
 
 	def vote
 		support_type = -1
