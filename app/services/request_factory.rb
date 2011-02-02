@@ -45,7 +45,7 @@ class RequestFactory
 			return MediaSummaryHandler.new self.request
 		when "MediaState"
 			return MediaStateHandler.new self.request
-		when "LegislativeState"
+		when "LegislativeStates"
 			return LegislativeStateHandler.new self.request
     when "MediaTypes"
       return MediaTypesHandler.new self.request
