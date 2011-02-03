@@ -1,0 +1,36 @@
+<h1>Listing governments</h1>
+
+<table>
+  <tr>
+	<th></th>
+    <th>Name</th>
+    <th>Logo</th>
+    <th>Logo Filename</th>
+	<th>Website</th>
+	<th>SS</th>
+	<th>PR</th>
+	<th></th>
+  </tr>
+
+<% @governments.each do |government| %>
+  <tr>
+    <td>
+		<%= link_to 'Edit', edit_admin_government_path(government) %>
+	</td>
+    <td><%= government.name %></td>
+	
+<%-# Ryan - please correct my code so this shows the actual governmentogo -%>
+	<td><%= government.logo %></td> 
+  <td><%= government.logo %></td>
+	<td><%= government.social_score %></td>
+	<td><%= government.participation_rate %></td>
+  <td>
+		<%= link_to 'Delete', admin_government_path(government), :confirm => 'Are you sure?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Corporation', new_admin_government_path %>

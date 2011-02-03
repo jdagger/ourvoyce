@@ -1,0 +1,6 @@
+xml.instruct!
+xml.ages :scaletop => @results[:max], :scalebottom => 0, :graphlabel => "Age Participation Rates" do
+  @results[:ages].each do |age|
+    xml.age :label => age[:label], :scale => number_with_precision(age[:scale], :precision => 2), :color => age[:color]
+  end
+end

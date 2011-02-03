@@ -1,0 +1,37 @@
+<h1>Listing medias</h1>
+
+<table>
+  <tr>
+	<th></th>
+  <th>Name</th>
+  <th>Logo</th>
+  <th>Logo Filename</th>
+	<th>Website</th>
+	<th>Wiki</th>
+	<th>SS</th>
+	<th>PR</th>
+	<th></th>
+  </tr>
+
+<% @medias.each do |media| %>
+  <tr>
+    <td>
+		<%= link_to 'Edit', edit_admin_media_path(media) %>
+	</td>
+    <td><%= media.name %></td>
+	
+<%-# Ryan - please correct my code so this shows the actual mediaogo -%>
+	<td><%= media.logo %></td> 
+  <td><%= media.logo %></td>
+	<td><%= media.social_score %></td>
+	<td><%= media.participation_rate %></td>
+    <td>
+		<%= link_to 'Delete', admin_media_path(media), :confirm => 'Are you sure?', :method => :delete %>
+	</td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Corporation', new_admin_media_path %>
