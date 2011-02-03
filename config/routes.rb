@@ -24,7 +24,7 @@ Production::Application.routes.draw do
   end
 
 	namespace :admin do
-		resources :states, :corporations, :users, :products
+		resources :states, :corporations, :users, :products, :medias, :governments
 	end
 
 	#resources :account, :only => [:create, :update, :edit]
@@ -50,7 +50,10 @@ Production::Application.routes.draw do
 		match 'agency' => 'governments#agency', :as => :agency
 	end
 
-	match "services/website/corporate/:corporation_id/:state" => "services#corporate"
+	match "services/website/corporate/map/:corporation_id" => "services#corporate_map_all"
+	match "services/website/corporate/map/:corporation_id/:state" => "services#corporate_map_state"
+	match "services/website/corporate/age/:corporation_id" => "services#corporate_age_all"
+	match "services/website/corporate/age/:corporation_id/:state" => "services#corporate_age_state"
 	match "services/:action" => "services#:action"
 
 	root :to => "home#index"

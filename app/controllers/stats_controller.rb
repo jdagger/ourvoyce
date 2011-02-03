@@ -126,14 +126,24 @@ class StatsController < ApplicationController
     corp_count = Corporation.all.count
     user_count = User.all.count
 
+    corporate_id = nil
+
+    if !(params[:corp_id].nil? || params[:corp_id].empty?)
+      corporate_id = params[:corp_id].to_i
+    end
+
     votes_to_generate = 1000
     votes_generated = 0
     while votes_generated < votes_to_generate
       random_user = User.find(:first, :offset => rand(user_count))
-      random_corp = Corporation.find(:first, :offset => rand(corp_count))
       support_type = rand(3) #0, 1, or 2
 
-			CorporationSupport.change_support(random_corp.id, random_user.id, support_type)
+      if corporate_id.nil?
+        random_corp = Corporation.find(:first, :offset => rand(corp_count))
+        CorporationSupport.change_support(random_corp.id, random_user.id, support_type)
+      else
+        CorporationSupport.change_support(corporate_id, random_user.id, support_type)
+      end
 
       votes_generated += 1
     end
@@ -143,6 +153,5 @@ class StatsController < ApplicationController
     redirect_to :action => :index, :notice => "Corporation votes generated (#{vote_count} total corp votes)"
   end
 
-  def generate_corporate_stats
-  end
+
 end

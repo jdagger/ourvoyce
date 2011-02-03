@@ -20,5 +20,14 @@
 
 %fieldset
   %legend Generate Votes
-  = link_to "Corporate Votes", :action => :generate_corporate_votes
+  Corp Id (optional):
+  %input{:type => :text, :id => "votes_corp_id"}
+  = link_to "1000 Corporate Votes", {:action => :generate_corporate_votes}, :id => 'corp_generate_votes_link'
+
+:javascript
+  $(document).ready(function(){
+    $("#votes_corp_id").keyup(function(){
+      $('#corp_generate_votes_link').attr("href", "/stats/generate_corporate_votes?corp_id=" + $(this).val());
+    });
+  });
 

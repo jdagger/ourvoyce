@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110128191928) do
+ActiveRecord::Schema.define(:version => 20110203152751) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -48,6 +48,10 @@ ActiveRecord::Schema.define(:version => 20110128191928) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "corporation_supports", ["corporation_id"], :name => "index_corporation_supports_on_corporation_id"
+  add_index "corporation_supports", ["user_id", "corporation_id"], :name => "index_corporation_supports_on_user_id_and_corporation_id"
+  add_index "corporation_supports", ["user_id"], :name => "index_corporation_supports_on_user_id"
 
   create_table "corporations", :force => true do |t|
     t.string   "name"

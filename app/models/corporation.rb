@@ -25,17 +25,9 @@ class Corporation < ActiveRecord::Base
 			end
 		end
 
-    def stats(corporation_id, state)
-      corp = nil
-      case state.downcase
-      when 'all'
-        filter_all(corporation_id)
-      else
-        filter_state(corporation_id, state.upcase)
-      end
-    end
+    def map_state(corporation_id, state)
+      state = state.upcase
 
-    def filter_state(corporation_id, state)
         corp = CorporationSupport.find(:all, 
                                        :conditions => {:corporation_id => corporation_id, "states.abbreviation" => state}, 
                                        :joins => [
@@ -63,6 +55,8 @@ class Corporation < ActiveRecord::Base
       }
 
       zips = [] 
+      #total_votes = 0
+      max_votes = 0
       result.each do |key, value|
         #Find total number of votes
         negative = result[key][:negative].to_i
@@ -70,24 +64,34 @@ class Corporation < ActiveRecord::Base
         neutral = result[key][:neutral].to_i
         total = negative + neutral + positive
 
+        #total_votes += total
+        max_votes = [max_votes, total].max
+
         #determine a score
         score = (negative * -1 + positive).to_f / total
-        color = '#ffffff'
+        color = 'ffffff'
         if score < -0.25
-          color = '#ff0000'
+          color = 'ff0000'
         elsif score > 0.25
-          color = '#00ff00'
+          color = '00ff00'
         else
-          color = '#ffff00'
+          color = 'ffff00'
         end
-        #zips << {:name => key, :color => color, :negative => negative, :positive => positive, :neutral => neutral}
-        zips << {:name => key, :color => color, :scale => '1.0', :lat => value[:lat], :long => value[:long] }
+        zips << {:name => key, :color => color, :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
       end
+
+      #Calculate the scale
+      zips.each do |zip|
+        zip[:scale] = zip[:votes].to_f / max_votes
+      end
+
+      (zips.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
+
+      return zips
       
-      return zips.to_xml(:root => "dots")
     end
 
-    def filter_all(corporation_id)
+    def map_all(corporation_id)
         corp = CorporationSupport.find(:all, 
                                        :conditions => {:corporation_id => corporation_id}, 
                                        :joins => [
@@ -124,19 +128,154 @@ class Corporation < ActiveRecord::Base
 
         #determine a score
         score = (negative * -1 + positive).to_f / total
-        color = '#ffffff'
+        color = 'ffffff'
         if score < -0.25
-          color = '#ff0000'
+          color = 'ff0000'
         elsif score > 0.25
-          color = '#00ff00'
+          color = '00ff00'
         else
-          color = '#ffff00'
+          color = 'ffff00'
         end
         #states << {:name => key, :color => color, :negative => negative, :positive => positive, :neutral => neutral}
         states << {:name => key, :color => color}
       end
-      
-      return states.to_xml(:root => "states")
+
+      return states
     end
+
+    def age_all corporation_id
+        corp = CorporationSupport.find(:all, 
+                                       :conditions => {:corporation_id => corporation_id}, 
+                                       :joins => [
+                                         "join users on users.id = corporation_supports.user_id"
+                                        ], 
+                                       :select => "support_type, count(support_type) as count, users.birth_year", 
+                                       :group => "support_type, users.birth_year")
+      #collect the results into a collection
+                                        
+      #Initialize the collection
+      result = (1..100).inject({}) { |r, element| 
+          r["age_#{element}"] = {:negative => 0, :neutral => 0, :positive => 0}
+          r
+      }
+
+      result = corp.inject(result) { |r, element| 
+        age = Time.now.year - element.birth_year.to_i
+        key = "age_#{age}"
+
+        case element.support_type.to_i
+        when 0
+          r[key][:negative] = element.count
+        when 1
+          r[key][:positive] = element.count
+        when 2
+          r[key][:neutral] = element.count
+        end
+        r
+      }
+
+      ages = []
+      max_total = 0
+      result.each do |key, value|
+        #Find total number of votes
+        negative = result[key][:negative].to_i
+        positive = result[key][:positive].to_i
+        neutral = result[key][:neutral].to_i
+        total = negative + neutral + positive
+
+        max_total = [max_total, total].max
+
+        #determine a score
+        score = (negative * -1 + positive).to_f / total
+        color = 'ffffff'
+        if score < -0.25
+          color = 'ff0000'
+        elsif score > 0.25
+          color = '00ff00'
+        else
+          color = 'ffff00'
+        end
+        ages << {:label => key.gsub("age_", ""), :color => color, :scale => '1.0', :total => total}
+      end
+
+      ages.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
+
+      #set scale
+      ages.each do |age|
+        age[:scale] = age[:total].to_f / max_total
+      end
+
+
+      return {:ages => ages, :max => max_total}
+    end
+
+    def age_state corporation_id, state
+      state = state.upcase
+        corp = CorporationSupport.find(:all, 
+                                       :conditions => {:corporation_id => corporation_id, "states.abbreviation" => state }, 
+                                       :joins => [
+                                         "join users on users.id = corporation_supports.user_id",
+                                         "join zips on users.zip_code = zips.zip",
+                                         "join states on zips.state_id = states.id"
+                                        ], 
+                                       :select => "support_type, count(support_type) as count, users.birth_year", 
+                                       :group => "support_type, users.birth_year")
+
+      #Initialize the collection
+      result = (1..100).inject({}) { |r, element| 
+          r["age_#{element}"] = {:negative => 0, :neutral => 0, :positive => 0}
+          r
+      }
+
+      #collect the results into a collection
+      result = corp.inject(result) { |r, element| 
+        age = Time.now.year - element.birth_year.to_i
+        key = "age_#{age}"
+
+        case element.support_type.to_i
+        when 0
+          r[key][:negative] = element.count
+        when 1
+          r[key][:positive] = element.count
+        when 2
+          r[key][:neutral] = element.count
+        end
+        r
+      }
+
+      ages = [] 
+      max_total = 0
+      result.each do |key, value|
+        #Find total number of votes
+        negative = result[key][:negative].to_i
+        positive = result[key][:positive].to_i
+        neutral = result[key][:neutral].to_i
+        total = negative + neutral + positive
+
+        max_total = [max_total, total].max
+
+        #determine a score
+        score = (negative * -1 + positive).to_f / total
+        color = 'ffffff'
+        if score < -0.25
+          color = 'ff0000'
+        elsif score > 0.25
+          color = '00ff00'
+        else
+          color = 'ffff00'
+        end
+        ages << {:label => key.gsub("age_", ""), :color => color, :scale => '1.0', :total => total}
+      end
+
+      #set scale
+      ages.each do |age|
+        age[:scale] = age[:total].to_f / max_total
+      end
+
+      ages.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
+
+      return {:ages => ages, :max => max_total}
+    end
+
 	end
 end
