@@ -2,7 +2,7 @@ class Admin::MediasController < ApplicationController
 
   # GET /medias
   def index
-    @medias = Media.all
+    @medias = Media.find(:all, :order => [:media_type_id, :parent_media_id, :name])
   end
 
   # GET /medias/1

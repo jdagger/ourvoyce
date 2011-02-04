@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110203152751) do
+ActiveRecord::Schema.define(:version => 20110204173808) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -64,6 +64,8 @@ ActiveRecord::Schema.define(:version => 20110203152751) do
     t.decimal  "profit",             :precision => 18, :scale => 0
     t.string   "corporate_url"
     t.string   "wikipedia_url"
+    t.string   "revenue_text"
+    t.string   "profit_text"
   end
 
   create_table "government_audits", :force => true do |t|

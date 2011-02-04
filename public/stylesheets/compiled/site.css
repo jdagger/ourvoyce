@@ -141,3 +141,13 @@
   cursor: pointer;
   background-image: url(../../images/site/neutral_not_selected.png);
 }
+
+table.admin tr:hover {
+  background-color: #ddd;
+}
+table.admin .highlight_missing {
+  background-color: #E88;
+}
+table.admin .highlight_found {
+  background-color: #8E8;
+}

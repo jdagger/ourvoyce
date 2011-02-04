@@ -1,9 +1,12 @@
 class Government < ActiveRecord::Base
 	include SearchHelper
 
+  belongs_to :government_type
 	has_many :government_supports
 	has_many :users, :through => :government_supports
 	has_many :government_audits
+	belongs_to :state
+	belongs_to :chamber
 
 	def initialize_search_instance
 		self.search_object = Government.where("1=1")

@@ -4,6 +4,11 @@ class Media < ActiveRecord::Base
 	has_many :media_supports
 	has_many :users, :through => :media_supports
 	has_many :media_audits
+  belongs_to :media_type
+
+  has_many :children, :class_name => 'Media', :foreign_key => "parent_media_id"
+  belongs_to :parent_media, :class_name => 'Media'
+
 
 	def initialize_search_instance
 		self.search_object = Media.where("1=1")

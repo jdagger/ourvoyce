@@ -23,6 +23,7 @@
     }
 }
 
+
 #stylized-form {
     .messages{
         margin-top: 0.3em;
@@ -150,4 +151,20 @@
 {
 	@include vote-button-common;
 	background-image: url(../../images/site/neutral_not_selected.png);
+}
+
+
+table.admin{
+  tr:hover{
+    background-color: #ddd;
+  }
+  .highlight_missing{
+    background-color: #E88;
+  }
+  .highlight_found{
+    background-color: #8E8;
+  }
+}
+
+table.admin-government{
 }

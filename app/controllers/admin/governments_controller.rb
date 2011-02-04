@@ -3,7 +3,7 @@ class Admin::GovernmentsController < ApplicationController
 
   # GET /governments
   def index
-    @governments = Government.all
+    @governments = Government.find(:all, :order => [:government_type_id, :default_order, :name, :last_name], :include => [:chamber, :state, :government_type])
   end
 
   # GET /governments/1
