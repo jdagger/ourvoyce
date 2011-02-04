@@ -20,8 +20,8 @@
       %td= media.logo.nil? ? highlight_missing_cell : "<img src='#{get_media_image_128(media.logo)}' />".html_safe
       %td= media.media_type.nil? ? highlight_missing_cell : media.media_type.name
       %td= media.parent_media.nil? ? highlight_missing_cell : media.parent_media.name
-      %td= media.website || highlight_missing_cell
-      %td= media.wikipedia || highlight_missing_cell
+      %td= highlight_or_link media.website
+      %td= highlight_or_link media.wikipedia
       %td= media.data1 || highlight_missing_cell
       %td= media.data2 || highlight_missing_cell
       %td= link_to 'Delete', admin_media_path(media), :confirm => 'Are you sure?', :method => :delete

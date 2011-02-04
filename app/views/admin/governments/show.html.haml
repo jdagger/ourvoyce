@@ -1,7 +1,7 @@
 %p#notice= notice
 
 %h2
-  %img{:src => get_government_image_64(@government.logo, @government.government_type_id)}
+  %img{:src => get_government_image_64(@government.logo, @government.government_type_id, @government.chamber_id)}
   = "#{@government.name} #{@government.first_name} #{@government.last_name}"
 %h3= @government.government_type.blank? ? '' : @government.government_type.name
 = link_to "Website", @government.website, :target => '_blank'

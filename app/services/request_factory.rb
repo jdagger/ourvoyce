@@ -51,6 +51,8 @@ class RequestFactory
       return MediaTypesHandler.new self.request
     when "GovernmentTypes"
       return GovernmentTypesHandler.new self.request
+    when "ReportError"
+      return ErrorReportingHandler.new self.request
 		else
 			return nil
 		end

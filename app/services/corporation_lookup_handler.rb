@@ -37,8 +37,10 @@ class CorporationLookupHandler < LookupHandlerBase
       body["ImageUrl"] = get_corporate_image_128 self.item.logo
 			body["Website"] = self.item.corporate_url
 			body["Wikipedia"] = self.item.wikipedia_url
-			body["Revenue"] = "$" + number_to_human(self.item.revenue, :precision => 1, :significant => false)
-			body["Profit"] = "$" + number_to_human(self.item.profit, :precision => 1, :significant => false)
+			body["Revenue"] = self.item.revenue_text
+			body["Profit"] = self.item.profit_text
+			#body["Revenue"] = "$" + number_to_human(self.item.revenue, :precision => 1, :significant => false)
+			#body["Profit"] = "$" + number_to_human(self.item.profit, :precision => 1, :significant => false)
 		end
 
 		#if user token specified, return the support

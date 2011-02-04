@@ -23,6 +23,8 @@ Production::Application.routes.draw do
     match "/stats(/:action)", :defaults => {:action => "index"}
   end
 
+  match "/log" => "error_logs#index", :as => :error_log
+
 	namespace :admin do
 		resources :states, :corporations, :users, :products, :medias, :governments
 	end

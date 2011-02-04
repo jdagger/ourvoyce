@@ -45,7 +45,7 @@
       %td= highlight_existence government.office
       %td= highlight_or_value government.default_order
 
-      %td= government.logo.blank? ? highlight_missing_cell : "<img src='#{get_government_image_64(government.logo, government.government_type_id)}' />".html_safe
+      %td= government.logo.blank? ? highlight_missing_cell : "<img src='#{get_government_image_64(government.logo, government.government_type_id, government.chamber_id)}' />".html_safe
       %td= government.government_type.blank? ? highlight_missing_cell : government.government_type.name
       %td= highlight_or_link government.website
       %td= highlight_or_link government.wikipedia
