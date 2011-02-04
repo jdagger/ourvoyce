@@ -1,0 +1,28 @@
+%p#notice= notice
+
+%h1= @media.name
+%img{:src => get_media_image_128(@media.logo)}
+
+%table{:style => "width: 50%;"}
+  %tr
+    %td Media Type:
+    %td= @media.media_type.nil? ? "n/a" : @media.media_type.name
+  %tr
+    %td Parent Media:
+    %td= @media.parent_media.nil? ? "n/a" : @media.parent_media.name
+  %tr
+    %td Wikipedia:
+    %td= link_to @media.wikipedia, @media.wikipedia, :target => '_blank'
+  %tr
+    %td Website:
+    %td= link_to @media.website, @media.website, :target => '_blank'
+  %tr
+    %td Data 1:
+    %td= @media.data1
+  %tr
+    %td Data 2:
+    %td= @media.data2
+
+= link_to 'Edit', edit_admin_media_path(@media)
+= "|"
+= link_to 'Back', admin_medias_path

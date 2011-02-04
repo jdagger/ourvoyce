@@ -1,0 +1,32 @@
+%h1 Listing corporations
+
+%table.admin
+  %tr
+    %th 
+    %th 
+    %th Name
+    %th Logo
+    %th Revenue
+    %th Revenue Text
+    %th Profit
+    %th Profit Text
+    %th Website
+    %th Wiki
+  
+
+  - @corporations.each do |corporation|
+    %tr
+      %td= link_to 'Edit', edit_admin_corporation_path(corporation)
+      %td= link_to 'Delete', admin_corporation_path(corporation), :confirm => 'Are you sure?', :method => :delete
+      %td= corporation.name
+      %td= corporation.logo.blank? ? highlight_missing_cell : "<img src='#{get_corporate_image_128(corporation.logo)}' />".html_safe
+      %td= highlight_or_value corporation.revenue
+      %td= highlight_or_value corporation.revenue_text
+      %td= highlight_or_value corporation.profit
+      %td= highlight_or_value corporation.profit_text
+      %td= highlight_or_link corporation.corporate_url
+      %td= highlight_or_link corporation.wikipedia_url
+	
+  
+%br
+= link_to 'New Corporation', new_admin_corporation_path

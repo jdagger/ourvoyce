@@ -1,0 +1,36 @@
+%p#notice= notice
+
+%h2
+  %img{:src => get_government_image_64(@government.logo, @government.government_type_id)}
+  = "#{@government.name} #{@government.first_name} #{@government.last_name}"
+%h3= @government.government_type.blank? ? '' : @government.government_type.name
+= link_to "Website", @government.website, :target => '_blank'
+= " | "
+= link_to "Wikipedia", @government.wikipedia, :target => '_blank'
+
+%br
+%br
+
+%table{:style => "width: 50%;"}
+  %tr
+    %td State:
+    %td= @government.state.blank? ? '' : @government.state.name
+  %tr
+    %td Chamber:
+    %td= @government.chamber.blank? ? '' : @government.chamber.name
+  %tr
+    %td District:
+    %td= @government.district
+  %tr
+    %td Title:
+    %td= highlight_existence @government.title
+  %tr
+    %td Office:
+    %td= highlight_existence @government.office
+  %tr
+    %td Order:
+    %td= highlight_or_value @government.default_order
+
+= link_to 'Edit', edit_admin_government_path(@government)
+= "|"
+= link_to 'Back', admin_governments_path
