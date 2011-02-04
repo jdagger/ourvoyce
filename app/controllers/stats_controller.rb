@@ -101,6 +101,97 @@ class StatsController < ApplicationController
     redirect_to :action => :index, :notice => "Updated state age records"
   end
 
+
+  def corporate_sspr
+    @corporations = Corporation.all
+    total_users = User.all.count
+
+    @corporations.each do |corp|
+      neutral = 0
+      positive = 0
+      negative = 0
+
+      vote_counts = CorporationSupport.find(:all, :select => [:support_type, "count(support_type) as count"], :group => [:support_type], :conditions => {:corporation_id => corp.id})
+      vote_counts.each do |vote|
+        case vote.support_type
+        when 0
+          negative = vote.count.to_i
+        when 1
+          positive = vote.count.to_i
+        when 2
+          neutral = vote.count.to_i
+        end
+      end
+
+      #votes = CorporationSupport.find(:all, :conditions => {:corporation_id => corp.id}).count
+      votes = [negative + neutral + positive, 1].max
+
+      corp.social_score = (positive * 100 + neutral * 50) / votes
+      corp.participation_rate = votes * 100 / total_users
+      corp.save
+    end
+    redirect_to :action => :index, :notice => "Corporations SSPR calculated"
+  end
+
+  def media_sspr
+    @medias = Media.all
+    total_users = User.all.count
+
+    @medias.each do |media|
+      neutral = 0
+      positive = 0
+      negative = 0
+      vote_counts = MediaSupport.find(:all, :select => [:support_type, "count(support_type) as count"], :group => [:support_type], :conditions => {:media_id => media.id})
+      vote_counts.each do |vote|
+        case vote.support_type
+        when 0
+          negative = vote.count.to_i
+        when 1
+          positive = vote.count.to_i
+        when 2
+          neutral = vote.count.to_i
+        end
+      end
+
+      votes = [negative + neutral + positive, 1].max
+
+      media.social_score = (positive * 100 + neutral * 50) / votes
+      media.participation_rate = votes * 100 / total_users
+      media.save
+    end
+    redirect_to :action => :index, :notice => "Media SSPR calculated"
+  end
+
+  def government_sspr
+    @governments = Government.all
+    total_users = User.all.count
+
+    @governments.each do |gov|
+      neutral = 0
+      positive = 0
+      negative = 0
+      vote_counts = GovernmentSupport.find(:all, :select => [:support_type, "count(support_type) as count"], :group => [:support_type], :conditions => {:government_id => gov.id})
+      vote_counts.each do |vote|
+        case vote.support_type
+        when 0
+          negative = vote.count.to_i
+        when 1
+          positive = vote.count.to_i
+        when 2
+          neutral = vote.count.to_i
+        end
+      end
+
+      votes = [negative + neutral + positive, 1].max
+
+      gov.social_score = (positive * 100 + neutral * 50) / votes
+      gov.participation_rate = votes * 100 / total_users
+      gov.save
+    end
+    redirect_to :action => :index, :notice => "Government SSPR calculated"
+  end
+
+
   def media_state_sspr
     MediaState.delete_all
 
