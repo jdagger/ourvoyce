@@ -1,5 +1,11 @@
 class CorporatesController < ApplicationController
 	def index
+
+    #search_filter is set if form was submitted
+    if !params[:search_filter].blank?
+    end
+
+
 		page_size = 15
 		page = [params[:offset].to_i, 1].max
     
@@ -25,13 +31,27 @@ class CorporatesController < ApplicationController
     search_options[:sorting][:sort_name] = sort_params[0]
     search_options[:sorting][:sort_direction] = sort_params[1]
 
+    #If no filter was supplied, specify all records should be returned
     if params[:filter].empty?
-      params[:filter] = 'all'
+      params[:filter] = 'vote=all'
+      search_options[:filters][:vote] = 'all'
+    else
+      #filters have form 'key1=value1;key2=value2'
+      params[:filter].split(';').each do |part|
+        key_value = part.split('=')
+        if key_value.length == 2
+          key = key_value[0].downcase
+          value = key_value[1]
+          case key
+          when 'text'
+            search_options[:filters][:text] = value
+          when 'vote'
+            search_options[:filters][:vote] = value
+          end
+        end
+      end
     end
 
-		if !params[:filter].nil?
-			search_options[:filters][:vote] = params[:filter]
-		end
 
 		corporations = Corporation.new
 		corporations.build_search search_options

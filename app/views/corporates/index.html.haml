@@ -4,6 +4,11 @@
 
 .span-12
   %fieldset
+    %legend Search:
+    - form_tag :corporates_index do
+      =text_field :search_filter, @presenter.search_text
+      =submit_tag 'Search'
+  %fieldset
     %legend Sorting:
     = link_to "Name Asc", :filter => params[:filter], :sort => 'name_asc', :offset => params[:offset]
     |
@@ -23,15 +28,15 @@
 
   %fieldset
     %legend Filtering:
-    =link_to 'Thumbs Up', :filter => 'thumbsup', :sort => params[:sort], :offset => 0
+    =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :offset => 0
     |
-    =link_to 'Thumbs Down', :filter => 'thumbsdown', :sort => params[:sort], :offset => 0
+    =link_to 'Thumbs Down', :filter => 'vote=thumbsdown', :sort => params[:sort], :offset => 0
     |
-    =link_to 'Neutral', :filter => 'neutral', :sort => params[:sort], :offset => 0
+    =link_to 'Neutral', :filter => 'vote=neutral', :sort => params[:sort], :offset => 0
     |
-    =link_to 'Voted', :filter => 'voted', :sort => params[:sort], :offset => 0
+    =link_to 'Voted', :filter => 'vote=voted', :sort => params[:sort], :offset => 0
     |
-    =link_to 'No Vote', :filter => 'novote', :sort => params[:sort], :offset => 0
+    =link_to 'No Vote', :filter => 'vote=novote', :sort => params[:sort], :offset => 0
     ||
     =link_to 'All Records', :filter => '', :sort => params[:sort], :offset => 0
 

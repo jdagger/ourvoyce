@@ -3,5 +3,10 @@
 
 require File.expand_path('../config/application', __FILE__)
 require 'rake'
+require "heroku_backup_task"
+
+task :cron do
+  HerokuBackupTask.execute
+end
 
 Production::Application.load_tasks

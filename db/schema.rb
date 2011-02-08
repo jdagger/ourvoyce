@@ -41,6 +41,15 @@ ActiveRecord::Schema.define(:version => 20110207221920) do
     t.datetime "updated_at"
   end
 
+  create_table "corporation_rank", :id => false, :force => true do |t|
+    t.integer "year"
+    t.integer "rank"
+    t.string  "company"
+    t.string  "revenue"
+    t.string  "profit"
+    t.integer "id"
+  end
+
   create_table "corporation_supports", :force => true do |t|
     t.integer  "corporation_id"
     t.integer  "user_id"

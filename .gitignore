@@ -1,7 +1,7 @@
 *.svn
 *.xcodeproj
 build
-
+.DS_Store
 tmp
 nbproject
 .idea

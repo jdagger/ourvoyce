@@ -13,13 +13,13 @@ group :development, :test do
   gem "compass", ">= 0.10.6"
 end
 
+gem 'heroku_backup_task'
+gem 'texticle'
+
 gem 'uuidtools'
 
 # Use unicorn as the web server
 # gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
 
 # To use debugger
 # gem 'ruby-debug'
