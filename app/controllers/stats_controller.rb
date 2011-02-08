@@ -1,4 +1,6 @@
 class StatsController < ApplicationController
+  include SsprCalculations
+
   def index
     @notice = params[:notice] || ''
   end
@@ -28,14 +30,6 @@ class StatsController < ApplicationController
     #Reset state counts
     State.update_all(:user_count => 0)
 
-=begin
-    # Expected query
-    SELECT s.id, count(s.id) as count
-    FROM Users u
-    JOIN Zips z ON u.zip_code = z.zip
-    JOIN States s ON s.id = z.state_id
-    GROUP BY s.id
-=end
     stats =  User.find(:all, :select => "states.id, count(states.id) as count", :joins => ['join zips ON zips.zip = users.zip_code', 'join states ON states.id = zips.state_id'], :group => "states.id")
     stats.each do |s|
       state = State.find(s.id)
@@ -103,93 +97,63 @@ class StatsController < ApplicationController
 
 
   def corporate_sspr
-    @corporations = Corporation.all
-    total_users = User.all.count
+    begin_time = Time.now
 
-    @corporations.each do |corp|
-      neutral = 0
-      positive = 0
-      negative = 0
+    Corporation.update_all("social_score=0, participation_rate=0")
 
-      vote_counts = CorporationSupport.find(:all, :select => [:support_type, "count(support_type) as count"], :group => [:support_type], :conditions => {:corporation_id => corp.id})
-      vote_counts.each do |vote|
-        case vote.support_type
-        when 0
-          negative = vote.count.to_i
-        when 1
-          positive = vote.count.to_i
-        when 2
-          neutral = vote.count.to_i
-        end
+
+    votes = CorporationSupport.find(:all, :select => ["corporation_id as id", :support_type, "count(support_type) as count"], :group => [:corporation_id, :support_type])
+    tabulate_votes votes
+
+    Corporation.transaction do
+      self.updated_attributes.each do |key, value|
+        Corporation.update_all("social_score=#{value[:social_score]}, participation_rate=#{value[:participation_rate]}", :id => key)
       end
-
-      #votes = CorporationSupport.find(:all, :conditions => {:corporation_id => corp.id}).count
-      votes = [negative + neutral + positive, 1].max
-
-      corp.social_score = (positive * 100 + neutral * 50) / votes
-      corp.participation_rate = votes * 100 / total_users
-      corp.save
     end
-    redirect_to :action => :index, :notice => "Corporations SSPR calculated"
+
+    end_time = Time.now
+
+    redirect_to :action => :index, :notice => "Corporations SSPR calculated (#{((end_time - begin_time) * 1000).to_i}ms)"
   end
 
   def media_sspr
-    @medias = Media.all
-    total_users = User.all.count
+    begin_time = Time.now
 
-    @medias.each do |media|
-      neutral = 0
-      positive = 0
-      negative = 0
-      vote_counts = MediaSupport.find(:all, :select => [:support_type, "count(support_type) as count"], :group => [:support_type], :conditions => {:media_id => media.id})
-      vote_counts.each do |vote|
-        case vote.support_type
-        when 0
-          negative = vote.count.to_i
-        when 1
-          positive = vote.count.to_i
-        when 2
-          neutral = vote.count.to_i
-        end
+    Media.update_all("social_score=0, participation_rate=0")
+
+    votes = MediaSupport.find(:all, :select => ["media_id as id", :support_type, "count(support_type) as count"], :group => [:support_type, :media_id])
+    tabulate_votes votes
+
+    Media.transaction do
+      self.updated_attributes.each do |key, value|
+        Media.update_all("social_score=#{value[:social_score]}, participation_rate=#{value[:participation_rate]}", :id => key)
       end
-
-      votes = [negative + neutral + positive, 1].max
-
-      media.social_score = (positive * 100 + neutral * 50) / votes
-      media.participation_rate = votes * 100 / total_users
-      media.save
     end
-    redirect_to :action => :index, :notice => "Media SSPR calculated"
+
+    end_time = Time.now
+    redirect_to :action => :index, :notice => "Media SSPR calculated (#{((end_time - begin_time) * 1000).to_i}ms)"
   end
 
   def government_sspr
-    @governments = Government.all
-    total_users = User.all.count
+    begin_time = Time.now
 
-    @governments.each do |gov|
-      neutral = 0
-      positive = 0
-      negative = 0
-      vote_counts = GovernmentSupport.find(:all, :select => [:support_type, "count(support_type) as count"], :group => [:support_type], :conditions => {:government_id => gov.id})
-      vote_counts.each do |vote|
-        case vote.support_type
-        when 0
-          negative = vote.count.to_i
-        when 1
-          positive = vote.count.to_i
-        when 2
-          neutral = vote.count.to_i
-        end
+    Government.update_all("social_score=0, participation_rate=0")
+
+    votes = GovernmentSupport.find(:all, :select => ["government_id as id", :support_type, "count(support_type) as count"], :group => [:support_type, :government_id])
+    tabulate_votes votes
+
+    Government.transaction do
+      self.updated_attributes.each do |key, value|
+        Government.update_all("social_score=#{value[:social_score]}, participation_rate=#{value[:participation_rate]}", :id => key)
       end
-
-      votes = [negative + neutral + positive, 1].max
-
-      gov.social_score = (positive * 100 + neutral * 50) / votes
-      gov.participation_rate = votes * 100 / total_users
-      gov.save
     end
-    redirect_to :action => :index, :notice => "Government SSPR calculated"
+
+
+    end_time = Time.now
+
+    redirect_to :action => :index, :notice => "Government SSPR calculated (#{((end_time - begin_time) * 1000).to_i}ms)"
   end
+
 
 
   def media_state_sspr
@@ -213,35 +177,104 @@ class StatsController < ApplicationController
 
   #Votes
   def generate_corporate_votes
-    # counts
-    corp_count = Corporation.all.count
-    user_count = User.all.count
+    begin_time = Time.now
 
     corporate_id = nil
-
     if !(params[:corp_id].nil? || params[:corp_id].empty?)
       corporate_id = params[:corp_id].to_i
     end
 
-    votes_to_generate = 1000
+    corp_ids = Corporation.find(:all, :select => "id").to_a #array of corp ids
+    user_ids = User.find(:all, :select => "id").to_a #array of user ids
+
+    votes_to_generate = 5000
     votes_generated = 0
-    while votes_generated < votes_to_generate
-      random_user = User.find(:first, :offset => rand(user_count))
-      support_type = rand(3) #0, 1, or 2
+    CorporationSupport.transaction do
+      while votes_generated < votes_to_generate
+        support_type = rand(3)
 
-      if corporate_id.nil?
-        random_corp = Corporation.find(:first, :offset => rand(corp_count))
-        CorporationSupport.change_support(random_corp.id, random_user.id, support_type)
-      else
-        CorporationSupport.change_support(corporate_id, random_user.id, support_type)
+        if corporate_id.nil?
+          corp_id = corp_ids[rand(corp_ids.length)].id
+        else
+          corp_id = corporate_id
+        end
+        user_id = user_ids[rand(user_ids.length)].id
+
+        record = CorporationSupport.where("corporation_id = ? AND user_id = ?", corp_id, user_id).first
+        if record.nil?
+          CorporationSupport.create(:bypass_audit => true, :corporation_id => corp_id, :user_id => user_id, :support_type => support_type)
+        else
+          CorporationSupport.update_all("support_type=#{support_type}", "corporation_id=#{corp_id} AND user_id=#{user_id}")
+        end
+        votes_generated += 1
       end
-
-      votes_generated += 1
     end
 
     vote_count = CorporationSupport.all.count
 
-    redirect_to :action => :index, :notice => "Corporation votes generated (#{vote_count} total corp votes)"
+    end_time = Time.now
+
+    redirect_to :action => :index, :notice => "Corporation votes generated (#{vote_count} total corp votes. #{((end_time-begin_time)*5000).to_i}ms)"
+  end
+
+  def generate_government_votes
+    begin_time = Time.now
+
+    gov_ids = Government.find(:all, :select => "id").to_a #array of government ids
+    user_ids = User.find(:all, :select => "id").to_a #array of user ids
+
+    votes_to_generate = 5000
+    votes_generated = 0
+    GovernmentSupport.transaction do
+      while votes_generated < votes_to_generate
+        support_type = rand(3)
+        gov_id = gov_ids[rand(gov_ids.length)].id
+        user_id = user_ids[rand(user_ids.length)].id
+        record = GovernmentSupport.where("government_id = ? AND user_id = ?", gov_id, user_id).first
+        if record.nil?
+          GovernmentSupport.create(:bypass_audit => true, :government_id => gov_id, :user_id => user_id, :support_type => support_type)
+        else
+          GovernmentSupport.update_all("support_type=#{support_type}", "government_id=#{gov_id} AND user_id=#{user_id}")
+        end
+        votes_generated += 1
+      end
+    end
+
+    vote_count = GovernmentSupport.all.count
+
+    end_time = Time.now
+
+    redirect_to :action => :index, :notice => "Government votes generated (#{vote_count} total government votes. #{((end_time-begin_time) * 1000).to_i}ms)"
+  end
+
+  def generate_media_votes
+    begin_time = Time.now
+
+    media_ids = Media.find(:all, :select => "id").to_a #array of media ids
+    user_ids = User.find(:all, :select => "id").to_a #array of user ids
+
+    votes_to_generate = 5000
+    votes_generated = 0
+    MediaSupport.transaction do
+      while votes_generated < votes_to_generate
+        support_type = rand(3)
+        media_id = media_ids[rand(media_ids.length)].id
+        user_id = user_ids[rand(user_ids.length)].id
+        record = MediaSupport.where("media_id = ? AND user_id = ?", media_id, user_id).first
+        if record.nil?
+          MediaSupport.create(:bypass_audit => true, :media_id => media_id, :user_id => user_id, :support_type => support_type)
+        else
+          MediaSupport.update_all("support_type=#{support_type}", "media_id=#{media_id} AND user_id=#{user_id}")
+        end
+        votes_generated += 1
+      end
+    end
+
+    vote_count = MediaSupport.all.count
+
+    end_time = Time.now
+
+    redirect_to :action => :index, :notice => "Media votes generated (#{vote_count} total media votes. #{((end_time-begin_time) * 1000).to_i}ms)"
   end
 
 

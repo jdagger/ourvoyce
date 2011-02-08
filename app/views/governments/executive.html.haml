@@ -16,7 +16,7 @@
         %tr
           %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
           %td
-            %img{:src => get_government_image_64(executive.logo, 2, nil), :alt => 'logo'}
+            %img{:src => get_government_image_64(executive.logo, executive.government_type_id), :alt => 'logo'}
           %td= "#{executive.first_name} #{executive.last_name}"
           %td= executive.title
           %td= executive.social_score

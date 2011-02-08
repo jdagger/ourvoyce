@@ -27,9 +27,13 @@
 
 %fieldset
   %legend Generate Votes
+  = link_to "5000 Government Votes", :action => :generate_government_votes
+  %br
+  = link_to "5000 Media Votes", :action => :generate_media_votes
+  %br
   Corp Id (optional):
   %input{:type => :text, :id => "votes_corp_id"}
-  = link_to "1000 Corporate Votes", {:action => :generate_corporate_votes}, :id => 'corp_generate_votes_link'
+  = link_to "5000 Corporate Votes", {:action => :generate_corporate_votes}, :id => 'corp_generate_votes_link'
 
 :javascript
   $(document).ready(function(){

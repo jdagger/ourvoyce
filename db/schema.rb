@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110204194207) do
+ActiveRecord::Schema.define(:version => 20110207221920) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -49,7 +49,9 @@ ActiveRecord::Schema.define(:version => 20110204194207) do
     t.datetime "updated_at"
   end
 
+  add_index "corporation_supports", ["corporation_id", "user_id"], :name => "index_corporation_supports_on_corporation_id_and_user_id", :unique => true
   add_index "corporation_supports", ["corporation_id"], :name => "index_corporation_supports_on_corporation_id"
+  add_index "corporation_supports", ["support_type"], :name => "index_corporation_supports_on_support_type"
   add_index "corporation_supports", ["user_id", "corporation_id"], :name => "index_corporation_supports_on_user_id_and_corporation_id"
   add_index "corporation_supports", ["user_id"], :name => "index_corporation_supports_on_user_id"
 
@@ -91,6 +93,11 @@ ActiveRecord::Schema.define(:version => 20110204194207) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "government_supports", ["government_id", "user_id"], :name => "index_government_supports_on_government_id_and_user_id", :unique => true
+  add_index "government_supports", ["government_id"], :name => "index_government_supports_on_government_id"
+  add_index "government_supports", ["support_type"], :name => "index_government_supports_on_support_type"
+  add_index "government_supports", ["user_id"], :name => "index_government_supports_on_user_id"
 
   create_table "government_types", :id => false, :force => true do |t|
     t.integer "id"
@@ -156,6 +163,11 @@ ActiveRecord::Schema.define(:version => 20110204194207) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "media_supports", ["media_id", "user_id"], :name => "index_media_supports_on_media_id_and_user_id", :unique => true
+  add_index "media_supports", ["media_id"], :name => "index_media_supports_on_media_id"
+  add_index "media_supports", ["support_type"], :name => "index_media_supports_on_support_type"
+  add_index "media_supports", ["user_id"], :name => "index_media_supports_on_user_id"
 
   create_table "media_types", :id => false, :force => true do |t|
     t.integer "id"
@@ -322,6 +334,11 @@ ActiveRecord::Schema.define(:version => 20110204194207) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "product_supports", ["product_id", "user_id"], :name => "index_product_supports_on_product_id_and_user_id", :unique => true
+  add_index "product_supports", ["product_id"], :name => "index_product_supports_on_product_id"
+  add_index "product_supports", ["support_type"], :name => "index_product_supports_on_support_type"
+  add_index "product_supports", ["user_id"], :name => "index_product_supports_on_user_id"
 
   create_table "products", :force => true do |t|
     t.string   "name"
