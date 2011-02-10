@@ -1,4 +1,6 @@
 class Corporation < ActiveRecord::Base
+  include AgeGraphHelper
+  include MapGraphHelper
 
   has_many :corporation_supports
   has_many :users, :through => :corporation_supports
@@ -7,6 +9,125 @@ class Corporation < ActiveRecord::Base
   #used by texticle to define indexes
   index do
     generated_indexes
+  end
+
+  def age_all corporation_id
+    corp = CorporationSupport.find(:all, 
+                                   :conditions => {:corporation_id => corporation_id}, 
+                                   :joins => [
+                                     "join users on users.id = corporation_supports.user_id"
+    ], 
+      :select => "support_type, count(support_type) as count, users.birth_year", 
+      :group => "support_type, users.birth_year")
+
+    init_age_stats 
+
+    corp.each do |element|
+      add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
+    end
+
+    generate_age_data
+
+    return {:ages => self.age_data, :max => self.age_max_total}
+  end
+
+
+
+
+
+  def age_state corporation_id, state
+    state = state.upcase
+    corp = CorporationSupport.find(:all, 
+                                   :conditions => {:corporation_id => corporation_id, "states.abbreviation" => state }, 
+                                   :joins => [
+                                     "join users on users.id = corporation_supports.user_id",
+                                     "join zips on users.zip_code = zips.zip",
+                                     "join states on zips.state_id = states.id"
+    ], 
+      :select => "support_type, count(support_type) as count, users.birth_year", 
+      :group => "support_type, users.birth_year")
+
+    init_age_stats
+
+    corp.each do |element|
+      add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
+    end
+
+    generate_age_data
+
+    return {:ages => self.age_data, :max => self.age_max_total}
+  end
+
+
+  def map_state(corporation_id, state)
+    state = state.upcase
+
+    corp = CorporationSupport.find(:all, 
+                                   :conditions => {:corporation_id => corporation_id, "states.abbreviation" => state}, 
+                                   :joins => [
+                                     "join users on users.id = corporation_supports.user_id",
+                                     "join zips on users.zip_code = zips.zip",
+                                     "join states on zips.state_id = states.id"
+    ], 
+      :select => "support_type, count(support_type) as count, zips.zip, zips.latitude, zips.longitude", 
+      :group => "support_type, zips.zip, zips.latitude, zips.longitude")
+
+    init_state_map_stats
+    #collect the results into a collection
+    corp.each do |c|
+      add_state_map_element :zip => c.zip, :lat => c.latitude, :long => c.longitude, :support_type => c.support_type.to_i, :count => c.count.to_i
+    end
+
+    calculate_state_map_stats
+=begin
+    zips = [] 
+    #total_votes = 0
+    max_votes = 0
+    result.each do |key, value|
+      #Find total number of votes
+      negative = result[key][:negative].to_i
+      positive = result[key][:positive].to_i
+      neutral = result[key][:neutral].to_i
+      total = negative + neutral + positive
+
+      #total_votes += total
+      max_votes = [max_votes, total].max
+    end
+
+    #Calculate the scale
+    zips.each do |zip|
+      zip[:scale] = zip[:votes].to_f / max_votes
+    end
+
+    (zips.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
+    return zips
+=end
+  return self.state_map_stats
+
+  end
+
+  def map_all(corporation_id)
+    corp = CorporationSupport.find(:all, 
+                                   :conditions => {:corporation_id => corporation_id}, 
+                                   :joins => [
+                                     "join users on users.id = corporation_supports.user_id",
+                                     "join zips on users.zip_code = zips.zip",
+                                     "join states on zips.state_id = states.id"
+    ], 
+      :select => "support_type, count(support_type) as count, states.abbreviation as abbreviation", 
+      :group => "support_type, states.abbreviation")
+    #collect the results into a collection
+
+    init_national_map_stats
+
+    corp.each do |element|
+      add_national_map_element :abbreviation => element.abbreviation, :support_type => element.support_type.to_i, :count => element.count.to_i
+    end
+
+    calculate_national_map_stats
+
+
+    return self.national_map_stats
   end
 
 
@@ -104,284 +225,5 @@ class Corporation < ActiveRecord::Base
 
       return records
     end
-
-    def map_state(corporation_id, state)
-      state = state.upcase
-
-      corp = CorporationSupport.find(:all, 
-                                     :conditions => {:corporation_id => corporation_id, "states.abbreviation" => state}, 
-                                     :joins => [
-                                       "join users on users.id = corporation_supports.user_id",
-                                       "join zips on users.zip_code = zips.zip",
-                                       "join states on zips.state_id = states.id"
-      ], 
-        :select => "support_type, count(support_type) as count, zips.zip, zips.latitude, zips.longitude", 
-        :group => "support_type, zips.zip, zips.latitude, zips.longitude")
-      #collect the results into a collection
-      result = corp.inject({}) { |r, element| 
-        if ! r.key?(element.zip)
-          r[element.zip] = {:negative => 0, :neutral => 0, :positive => 0, :lat => element.latitude, :long => element.longitude}
-        end
-
-        case element.support_type.to_i
-        when 0
-          r[element.zip][:negative] = element.count
-        when 1
-          r[element.zip][:positive] = element.count
-        when 2
-          r[element.zip][:neutral] = element.count
-        end
-        r
-      }
-
-      zips = [] 
-      #total_votes = 0
-      max_votes = 0
-      result.each do |key, value|
-        #Find total number of votes
-        negative = result[key][:negative].to_i
-        positive = result[key][:positive].to_i
-        neutral = result[key][:neutral].to_i
-        total = negative + neutral + positive
-
-        #total_votes += total
-        max_votes = [max_votes, total].max
-
-        #determine a score
-        score = (negative * -1 + positive).to_f / total
-        color = 'ffffff'
-        if score < -0.25
-          color = 'ff0000'
-        elsif score > 0.25
-          color = '00ff00'
-        else
-          color = 'ffff00'
-        end
-        zips << {:name => key, :color => color, :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
-      end
-
-      #Calculate the scale
-      zips.each do |zip|
-        zip[:scale] = zip[:votes].to_f / max_votes
-      end
-
-      (zips.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
-
-      return zips
-
-    end
-
-    def map_all(corporation_id)
-      corp = CorporationSupport.find(:all, 
-                                     :conditions => {:corporation_id => corporation_id}, 
-                                     :joins => [
-                                       "join users on users.id = corporation_supports.user_id",
-                                       "join zips on users.zip_code = zips.zip",
-                                       "join states on zips.state_id = states.id"
-      ], 
-        :select => "support_type, count(support_type) as count, states.abbreviation as abbreviation", 
-        :group => "support_type, states.abbreviation")
-      #collect the results into a collection
-      result = corp.inject({}) { |r, element| 
-        if ! r.key?(element.abbreviation)
-          r[element.abbreviation] = {:negative => 0, :neutral => 0, :positive => 0}
-        end
-
-        case element.support_type.to_i
-        when 0
-          r[element.abbreviation][:negative] = element.count
-        when 1
-          r[element.abbreviation][:positive] = element.count
-        when 2
-          r[element.abbreviation][:neutral] = element.count
-        end
-        r
-      }
-
-      states = [] 
-      result.each do |key, value|
-        #Find total number of votes
-        negative = result[key][:negative].to_i
-        positive = result[key][:positive].to_i
-        neutral = result[key][:neutral].to_i
-        total = negative + neutral + positive
-
-        #determine a score
-        score = (negative * -1 + positive).to_f / total
-        color = 'ffffff'
-        if score < -0.25
-          color = 'ff0000'
-        elsif score > 0.25
-          color = '00ff00'
-        else
-          color = 'ffff00'
-        end
-        #states << {:name => key, :color => color, :negative => negative, :positive => positive, :neutral => neutral}
-        states << {:name => key, :color => color}
-      end
-
-      return states
-    end
-
-
-    attr_accessor :age_stats
-    def age_lookups
-      lookups = {}
-      lookups['1-19'] = 0..19
-      lookups['20-29'] = 20..29
-      lookups['30-39'] = 30..39
-      lookups['40-49'] = 40..49
-      lookups['50-59'] = 50..59
-      lookups['60-69'] = 60..69
-      lookups['70-79'] = 70..79
-      lookups['80+'] = 80..120
-      lookups
-    end
-
-    def init_age_stats
-      self.age_stats = {}
-      self.age_lookups.keys.each do |range|
-        self.age_stats[range] = {:negative => 0, :neutral => 0, :positive => 0}
-      end
-    end
-
-
-    def add_age_hash_entry params
-      element = nil
-      self.age_lookups.each do |key, range|
-        if range === params[:age].to_i
-          element = self.age_stats[key]
-          break
-        end
-      end
-
-      if ! element.nil?
-        case params[:support_type]
-        when 0
-          element[:negative] = params[:count]
-        when 1
-          element[:positive] = params[:count]
-        when 2
-          element[:neutral] = params[:count]
-        end
-      end
-    end
-
-    def age_all corporation_id
-      corp = CorporationSupport.find(:all, 
-                                     :conditions => {:corporation_id => corporation_id}, 
-                                     :joins => [
-                                      "join users on users.id = corporation_supports.user_id"
-      ], 
-        :select => "support_type, count(support_type) as count, users.birth_year", 
-        :group => "support_type, users.birth_year")
-      init_age_stats 
-      corp.each do |element|
-        add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
-      end
-
-      ages = []
-      max_total = 0
-      self.age_stats.each do |label, value|
-        #Find total number of votes
-        negative = value[:negative].to_i
-        positive = value[:positive].to_i
-        neutral = value[:neutral].to_i
-        total = negative + neutral + positive
-
-        max_total = [max_total, total].max
-
-        #determine a score
-        score = (negative * -1 + positive).to_f / total
-        color = 'ffffff'
-        if score < -0.25
-          color = 'ff0000'
-        elsif score > 0.25
-          color = '00ff00'
-        else
-          color = 'ffff00'
-        end
-        ages << {:label => label, :color => color, :scale => '1.0', :total => total}
-      end
-
-      ages.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
-
-      #set scale
-      ages.each do |age|
-        age[:scale] = age[:total].to_f / max_total
-      end
-
-
-      return {:ages => ages, :max => max_total}
-    end
-
-    def age_state corporation_id, state
-      state = state.upcase
-      corp = CorporationSupport.find(:all, 
-                                     :conditions => {:corporation_id => corporation_id, "states.abbreviation" => state }, 
-                                     :joins => [
-                                       "join users on users.id = corporation_supports.user_id",
-                                       "join zips on users.zip_code = zips.zip",
-                                       "join states on zips.state_id = states.id"
-      ], 
-        :select => "support_type, count(support_type) as count, users.birth_year", 
-        :group => "support_type, users.birth_year")
-
-      #Initialize the collection
-      result = (1..100).inject({}) { |r, element| 
-        r["age_#{element}"] = {:negative => 0, :neutral => 0, :positive => 0}
-        r
-      }
-
-      #collect the results into a collection
-      result = corp.inject(result) { |r, element| 
-        age = Time.now.year - element.birth_year.to_i
-        key = "age_#{age}"
-
-        case element.support_type.to_i
-        when 0
-          r[key][:negative] = element.count
-        when 1
-          r[key][:positive] = element.count
-        when 2
-          r[key][:neutral] = element.count
-        end
-        r
-      }
-
-      ages = [] 
-      max_total = 0
-      result.each do |key, value|
-        #Find total number of votes
-        negative = result[key][:negative].to_i
-        positive = result[key][:positive].to_i
-        neutral = result[key][:neutral].to_i
-        total = negative + neutral + positive
-
-        max_total = [max_total, total].max
-
-        #determine a score
-        score = (negative * -1 + positive).to_f / total
-        color = 'ffffff'
-        if score < -0.25
-          color = 'ff0000'
-        elsif score > 0.25
-          color = '00ff00'
-        else
-          color = 'ffff00'
-        end
-        ages << {:label => key.gsub("age_", ""), :color => color, :scale => '1.0', :total => total}
-      end
-
-      #set scale
-      ages.each do |age|
-        age[:scale] = age[:total].to_f / max_total
-      end
-
-      ages.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
-
-      return {:ages => ages, :max => max_total}
-    end
-
   end
 end
