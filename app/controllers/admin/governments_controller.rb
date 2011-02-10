@@ -1,4 +1,3 @@
-
 class Admin::GovernmentsController < ApplicationController
 
   # GET /governments
@@ -23,24 +22,34 @@ class Admin::GovernmentsController < ApplicationController
 
   # POST /governments
   def create
+    #If a legislative or executive, update the name with the last_name value
+    if ! params[:government][:government_type_id].blank? && [2,3].include?(params[:government][:government_type_id].to_i)
+      params[:government][:name] = params[:government][:last_name]
+    end
+
     @government = Government.new(params[:government])
 
-      if @government.save
-        redirect_to(admin_government_path(@government), :notice => 'Government was successfully created.')
-      else
-        render :action => "new"
-      end
+    if @government.save
+      redirect_to(admin_government_path(@government), :notice => 'Government was successfully created.')
+    else
+      render :action => "new"
+    end
   end
 
   # PUT /governments/1
   def update
     @government = Government.find(params[:id])
 
-      if @government.update_attributes(params[:government])
-        redirect_to(admin_government_path(@government), :notice => 'Government was successfully updated.')
-      else
-        render :action => "edit"
-      end
+    #If a legislative or executive, update the name with the last_name value
+    if ! params[:government][:government_type_id].blank? && [2,3].include?(params[:government][:government_type_id].to_i)
+      params[:government][:name] = params[:government][:last_name]
+    end
+
+    if @government.update_attributes(params[:government])
+      redirect_to(admin_government_path(@government), :notice => 'Government was successfully updated.')
+    else
+      render :action => "edit"
+    end
   end
 
   # DELETE /governments/1
@@ -48,6 +57,6 @@ class Admin::GovernmentsController < ApplicationController
     @government = Government.find(params[:id])
     @government.destroy
 
-	redirect_to(admin_governments_url)
+    redirect_to(admin_governments_url)
   end
 end
