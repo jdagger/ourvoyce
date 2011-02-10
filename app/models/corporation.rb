@@ -223,44 +223,70 @@ class Corporation < ActiveRecord::Base
       return states
     end
 
+
+    attr_accessor :age_stats
+    def age_lookups
+      lookups = {}
+      lookups['1-19'] = 0..19
+      lookups['20-29'] = 20..29
+      lookups['30-39'] = 30..39
+      lookups['40-49'] = 40..49
+      lookups['50-59'] = 50..59
+      lookups['60-69'] = 60..69
+      lookups['70-79'] = 70..79
+      lookups['80+'] = 80..120
+      lookups
+    end
+
+    def init_age_stats
+      self.age_stats = {}
+      self.age_lookups.keys.each do |range|
+        self.age_stats[range] = {:negative => 0, :neutral => 0, :positive => 0}
+      end
+    end
+
+
+    def add_age_hash_entry params
+      element = nil
+      self.age_lookups.each do |key, range|
+        if range === params[:age].to_i
+          element = self.age_stats[key]
+          break
+        end
+      end
+
+      if ! element.nil?
+        case params[:support_type]
+        when 0
+          element[:negative] = params[:count]
+        when 1
+          element[:positive] = params[:count]
+        when 2
+          element[:neutral] = params[:count]
+        end
+      end
+    end
+
     def age_all corporation_id
       corp = CorporationSupport.find(:all, 
                                      :conditions => {:corporation_id => corporation_id}, 
                                      :joins => [
-                                       "join users on users.id = corporation_supports.user_id"
+                                      "join users on users.id = corporation_supports.user_id"
       ], 
         :select => "support_type, count(support_type) as count, users.birth_year", 
         :group => "support_type, users.birth_year")
-      #collect the results into a collection
-
-      #Initialize the collection
-      result = (1..100).inject({}) { |r, element| 
-        r["age_#{element}"] = {:negative => 0, :neutral => 0, :positive => 0}
-        r
-      }
-
-      result = corp.inject(result) { |r, element| 
-        age = Time.now.year - element.birth_year.to_i
-        key = "age_#{age}"
-
-        case element.support_type.to_i
-        when 0
-          r[key][:negative] = element.count
-        when 1
-          r[key][:positive] = element.count
-        when 2
-          r[key][:neutral] = element.count
-        end
-        r
-      }
+      init_age_stats 
+      corp.each do |element|
+        add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
+      end
 
       ages = []
       max_total = 0
-      result.each do |key, value|
+      self.age_stats.each do |label, value|
         #Find total number of votes
-        negative = result[key][:negative].to_i
-        positive = result[key][:positive].to_i
-        neutral = result[key][:neutral].to_i
+        negative = value[:negative].to_i
+        positive = value[:positive].to_i
+        neutral = value[:neutral].to_i
         total = negative + neutral + positive
 
         max_total = [max_total, total].max
@@ -275,7 +301,7 @@ class Corporation < ActiveRecord::Base
         else
           color = 'ffff00'
         end
-        ages << {:label => key.gsub("age_", ""), :color => color, :scale => '1.0', :total => total}
+        ages << {:label => label, :color => color, :scale => '1.0', :total => total}
       end
 
       ages.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }

@@ -18,7 +18,6 @@ class ServicesController < ApplicationController
 	end
 
 
-  #National map rseults
   def corporate_map_all
     @states = Corporation.map_all params[:corporation_id]
     render :template => 'services/corporate/national_map'
@@ -38,4 +37,6 @@ class ServicesController < ApplicationController
     @results = Corporation.age_state params[:corporation_id], params[:state]
     render :template => 'services/corporate/age'
   end
+
+
 end
