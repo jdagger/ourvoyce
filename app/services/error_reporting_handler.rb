@@ -3,8 +3,12 @@ class ErrorReportingHandler < HandlerBase
     begin
       super
       message = self.request.parameters['Message']
+      request = self.request.parameters['Request']
+      response = self.request.parameters['Response']
+      device_type = self.request.parameters['DeviceType']
+      user = self.request.parameters['User']
 
-      ErrorLog.create :message => message, :source => 'iphone'
+      ErrorLog.create :message => message, :request => request, :response => response, :device_type => device_type, :user => user,  :source => 'iphone'
     rescue
     end
     self.status = 1

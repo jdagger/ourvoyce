@@ -53,7 +53,8 @@
       - @presenter.third_level.each do |third|
         %tr
           %td= render :partial => 'shared/vote_control', :object =>{:id => third.id, :support_type => third.support_type, :post_url => :media_vote}, :as => :d
-          %td= third.logo
+          %td
+            %img{:src => get_media_image_128(third.logo)}
           %td= third.name
           %td= third.social_score
           %td= third.participation_rate 

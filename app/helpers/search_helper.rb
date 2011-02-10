@@ -59,8 +59,10 @@ module SearchHelper
 				when :social_score
 					self.search_object = self.search_object.where("social_score >= ?", value)
 				when :text
-					value = "%#{value}%"
-					self.search_object = self.search_object.where("name like ?", value)
+					#value = "%#{value}%"
+					#self.search_object = self.search_object.where("name like ?", value)
+          self.search_object = self.search_object.search value
+
 				end
 			end
 		end

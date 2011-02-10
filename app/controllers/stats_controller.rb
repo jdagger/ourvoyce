@@ -278,4 +278,46 @@ class StatsController < ApplicationController
   end
 
 
+  def generate_corporate_indexes
+    Corporation.all.each do |corporation|
+      indexes = build_index_array(corporation.name) + build_index_array(corporation.keywords)
+      corporation.generated_indexes = indexes.join(' ')
+      corporation.save
+    end
+    redirect_to :action => :index, :notice => "Corporate indexes updated"
+  end
+
+  def generate_media_indexes
+    Media.all.each do |media|
+      indexes = build_index_array(media.name) + build_index_array(media.keywords)
+      media.generated_indexes = indexes.join(' ')
+      media.save
+    end
+    redirect_to :action => :index, :notice => "Media indexes updated"
+  end
+
+  def generate_government_indexes
+    Government.all.each do |gov|
+      indexes = build_index_array(gov.name) + build_index_array(gov.first_name) + build_index_array(gov.last_name) + build_index_array(gov.keywords)
+      gov.generated_indexes = indexes.join(' ')
+      gov.save
+    end
+    redirect_to :action => :index, :notice => "Government indexes updated"
+  end
+
+  private
+  def build_index_array(value)
+    if value.blank?
+      return []
+    end
+
+    min_length = 2
+    indexes = []
+    value.split(' ').each do |word|
+      (min_length..word.length).each do |len|
+          indexes << word[0, len]
+      end
+    end
+    indexes
+  end
 end

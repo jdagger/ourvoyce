@@ -7,27 +7,27 @@
 .span-12.last
   %fieldset
     %legend Sorting:
-    %a{:href => "/myvoyce?sort=description_asc"}Description Asc
+    =link_to "Description Asc", :filter => params[:filter], :sort => 'description_asc', :page => params[:page]
     |
-    %a{:href => "/myvoyce?sort=description_desc"}Description Desc
+    =link_to "Description Desc", :filter => params[:filter], :sort => 'description_desc', :page => params[:page]
     %br
-    %a{:href => "/myvoyce?sort=votedate_asc"}Vote Date Asc
+    =link_to "Vote Date Asc", :filter => params[:filter], :sort => 'votedate_asc', :page => params[:page]
     |
-    %a{:href => "/myvoyce?sort=votedate_desc"}Vote Date Desc
+    =link_to "Vote Date Desc", :filter => params[:filter], :sort => 'votedate_desc', :page => params[:page]
 
   %fieldset
     %legend Filtering:
-    =link_to "Thumbs Up", :filter => "thumbs_up"
+    =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :page => 1
     |
-    =link_to "Thumbs Down", :filter => "thumbs_down"
+    =link_to 'Thumbs Down', :filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1
     |
-    =link_to "Neutral", :filter => "neutral"
+    =link_to 'Neutral', :filter => 'vote=neutral', :sort => params[:sort], :page => 1
     |
-    =link_to "All Records", :filter => "all_records"
+    =link_to 'All Votes', :filter => 'vote=voted', :sort => params[:sort], :page => 1
     |
-    =link_to "No Vote", :filter => "no_vote"
+    =link_to 'No Vote', :filter => 'vote=novote', :sort => params[:sort], :page => 1
     |
-    =link_to "All***", :filter => "*"
+    =link_to '**All**', :filter => 'vote=all', :sort => params[:sort], :page => 1
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 

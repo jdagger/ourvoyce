@@ -1,5 +1,4 @@
 class Media < ActiveRecord::Base
-	include SearchHelper
 
 	has_many :media_supports
 	has_many :users, :through => :media_supports
@@ -9,28 +8,10 @@ class Media < ActiveRecord::Base
   has_many :children, :class_name => 'Media', :foreign_key => "parent_media_id"
   belongs_to :parent_media, :class_name => 'Media'
 
-
-	def initialize_search_instance
-		self.search_object = Media.where("1=1")
-
-		self.search_options[:sorting][:vote_date_column] = "media_supports.updated_at"
-
-		if self.search_options[:include_user_support]
-			self.search_options[:select] << "support_type"
-			self.search_object = self.search_object.joins("LEFT OUTER JOIN media_supports ON medias.id=media_supports.media_id AND user_id=#{self.search_options[:include_user_support].to_i}")
-		end
-	end
-
-	def apply_custom_filters
-		filters = self.search_options[:filters]
-		if filters[:parent_id]
-			self.search_object = self.search_object.where("parent_media_id = ?", filters[:parent_id])
-		end
-
-		if filters[:media_type]
-			self.search_object = self.search_object.where("media_type_id = ?", filters[:media_type])
-		end
-	end
+  #used by texticle to define indexes
+  index do
+    generated_indexes
+  end
 
 	class << self
 		def media_lookup id
@@ -39,6 +20,102 @@ class Media < ActiveRecord::Base
 			rescue
 				return nil
 			end
+    end
+
+
+    # text - search text
+    # media_type_id
+    # parent_media_id
+    # user_id - user id, if support should be included
+    #   vote - if user_id is specified, will filter by thumbs_up, thumbs_down, vote, no_vote, all
+    # sort_name
+    # sort_direction
+    # do_search will return an AR object with all that match the specified filter.  
+    # It DOES NOT apply paging (limit, offset)
+    def do_search(params={})
+      records = Media.where('1=1')
+      select = ['medias.id as id', 'medias.name as name', 'medias.media_type_id as media_type_id', 'medias.parent_media_id as parent_media_id', 'medias.logo as logo', 'medias.social_score as social_score', 'medias.participation_rate as participation_rate', 'medias.data1', 'medias.data2', 'medias.website', 'medias.wikipedia']
+
+      #If the user_id is specified, load the vote data
+      if params.key? :user_id
+        select << 'media_supports.support_type as support_type'
+        records = records.joins("LEFT OUTER JOIN media_supports ON medias.id=media_supports.media_id AND user_id=#{params[:user_id].to_i}")
+      end
+
+      #Only apply text filter or thumbs up/thumbs down filter
+      if params.key? :text
+        #Get a list of media ids that match the search text
+        records_to_include = Media.search params[:text].strip
+        media_ids = records_to_include.inject([]) do |r, element|
+          r << element.id
+          r
+        end
+        records = records.where("medias.id in (?)", media_ids)
+      elsif params.key? :vote
+        case params[:vote].strip.upcase
+        when "THUMBSUP"
+          records = records.where("support_type = 1")
+        when "THUMBSDOWN"
+          records = records.where("support_type = 0")
+        when "NEUTRAL"
+          records = records.where("support_type = 2")
+        when "VOTE"
+          records = records.where("support_type >= 0")
+        when "NOVOTE"
+          records = records.where("support_type IS NULL OR support_type = -1")
+        end
+      end
+
+      if params.key? :parent_media_id
+        records = records.where("parent_media_id = ?", params[:parent_media_id])
+      end
+
+      if params.key? :media_type_id
+        records = records.where("media_type_id = ?", params[:media_type_id])
+      end
+
+
+      if params.key? :social_score
+        records = records.where("social_score >= ?", params[:social_score].to_i)
+      end
+
+      if params.key? :participation_rate
+        records = records.where("participation_rate >= ?", params[:participation_rate].to_i)
+      end
+
+      records = records.select(select.join(", "))
+
+      if params.key?(:sort_direction) && params.key?(:sort_name)
+        begin
+          #column, direction = params[:sort].downcase.split('_')
+          column = params[:sort_name].downcase
+          direction = params[:sort_direction].downcase
+
+          direction = (direction == 'asc') ? 'asc' : 'desc'
+
+          case column
+          when 'name'
+            column = 'medias.name'
+          when 'social'
+            column = 'medias.social_score'
+          when 'participation'
+            column = 'medias.participation_rate'
+          when 'votedate'
+            if params.key? :user_id
+              column = 'media_supports.updated_at'
+            end
+          when 'default'
+            column = 'medias.default_order'
+          else
+            column = 'medias.name'
+          end
+
+          records = records.order("#{column} #{direction}")
+        rescue
+        end
+      end
+
+      return records
     end
 
 	end

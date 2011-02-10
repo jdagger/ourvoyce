@@ -2,12 +2,52 @@ class MediaSearchHandler < SearchHandlerBase
   include ImageHelper
 
 	def handle_request
+    search_options = {}
+
+    if(load_user)
+      search_options[:user_id] = self.user.id
+      if self.request.filters["VOTE"]
+        search_options[:vote] = self.request.filters["VOTE"]
+      end
+    end
+
+    if self.request.filters["TEXT"]
+      search_options[:text] = self.request.filters["TEXT"]
+    end
+
+    if self.request.filters["MEDIA_TYPE"]
+      search_options[:media_type_id] = self.request.filters["MEDIA_TYPE"]
+    end
+
+    if self.request.filters["PARENT_ID"]
+      search_options[:parent_media_id] = self.request.filters["PARENT_ID"]
+    end
+
+		if self.request.filters["PARTICIPATIONRATE"]
+			search_options[:participation_rate] = self.request.filters["PARTICIPATIONRATE"].to_i
+		end
+
+		if self.request.filters["SOCIALSCORE"]
+			search_options[:social_score] = self.request.filters["SOCIALSCORE"].to_i
+		end
+
+    if !(self.request.sort_name.blank? || self.request.sort_direction.blank?)
+      search_options[:sort_name] = self.request.sort_name
+      search_options[:sort_direction] = self.request.sort_direction
+    end
+
+
+    self.search_object = Media.do_search search_options
+    self.total_records = self.search_object.count
+    self.search_object = self.search_object.limit(self.max_results).offset(self.start_offset)
+=begin
 		self.search_options = {
 			:select => %w{medias.id name logo parent_media_id website wikipedia media_type_id social_score participation_rate data1 data2},
 			:filters => {}
 		}
 		self.search_instance = Media.new
 		super
+=end
 		self.status = 1
 	end
 

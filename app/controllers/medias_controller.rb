@@ -1,18 +1,12 @@
 class MediasController < ApplicationController
   #Url: /media/:type/:network
 	def index
-    user = User.find(self.user_id)
-    search_options = {
-        :select => %w{medias.id name logo parent_media_id media_type_id social_score participation_rate},
-        :include_user_support => user.id,
-        :filters => {},
-        :sorting => {:sort_name => "NAME"}
-    }
-    medias = Media.new
+    search_options = {}
+    search_options[:user_id] = self.user_id
 
     @presenter = MediaPresenter.new
     
-    if(params[:type].nil?) #type not selected
+    if ! params.key? :type
       @presenter.media_types = MediaType.where(:level => 1).order(:display_order)
     else #media type selected
       type = MediaType.where(:name => params[:type]).first  #Load the media type, based on specified name
@@ -33,9 +27,11 @@ class MediasController < ApplicationController
         if [1,2].include?(type.id.to_i)
           @presenter.second_level_vote = true
         end
-        search_options[:filters][:media_type] = type.id
-        medias.build_search search_options
-        @presenter.second_level = medias.get_search_results
+        #search_options[:filters][:media_type] = type.id
+        search_options[:media_type_id] = type.id
+        #medias.build_search search_options
+        #@presenter.second_level = medias.get_search_results
+        @presenter.second_level = Media.do_search search_options
       else
         network = Media.where(:name => params[:network]).first
 
@@ -51,9 +47,11 @@ class MediasController < ApplicationController
 
 
         #load shows for the network
-        search_options[:filters][:parent_id] = network.id
-        medias.build_search search_options
-        @presenter.third_level = medias.get_search_results
+        #search_options[:filters][:parent_id] = network.id
+        search_options[:parent_media_id] = network.id
+        #medias.build_search search_options
+        #@presenter.third_level = medias.get_search_results
+        @presenter.third_level = Media.do_search search_options
       end
     end
   end

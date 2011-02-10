@@ -1,69 +1,49 @@
 class MyvoyceController < ApplicationController
-  
-  #TODO THIS FORM NEEDS MAJOR REFACTORING TO STREAMLINE FLOW, CLEANUP LOGIC
 
   skip_before_filter :authorize, :only => [:new, :create, :authenticate]
 
   def index
-    if(params[:filter].nil?)
-      redirect_to :filter => 'all_records'
-      return
+    if params[:sort].blank?
+      params[:sort] = 'name_asc'
     end
-    #@presenter = ProductsIndexPresenter.new(nil)
-    #@presenter.load(session[:user_id], params[:offset], 15, product_change_support_path)
-    #@presenter
+
+    @presenter = ProductsIndexPresenter.new
 
     page_size = 15
-    page = [params[:page].to_i, 1].max
+    current_page = [params[:page].to_i, 1].max
 
-    #Set up search options
-    search_options = {
-        :select => %w{products.id name description logo social_score participation_rate },
-        :filters => {},
-        :sorting => {},
-        :limit => page_size,
-        :offset => (page - 1) * page_size
-    }
+    search_params = {}
+    search_params[:user_id] = self.user_id
 
-    case(params[:filter].downcase)
-      when "thumbs_up"
-        search_options[:filters][:vote] = "thumbsup"
-      when "thumbs_down"
-        search_options[:filters][:vote] = "thumbsdown"
-      when "neutral"
-        search_options[:filters][:vote] = "neutral"
-      when "no_vote"
-        search_options[:filters][:vote] = "limitednovote"
-      when "all_records"
-        search_options[:filters][:vote] = "voted"
+    begin
+      search_params[:sort_name], search_params[:sort_direction] = params[:sort].split('_')
+    rescue
     end
 
-
-    user = User.find(self.user_id)
-    search_options[:select] << "product_supports.updated_at"
-    search_options[:include_user_support] = user.id
-
-    #Sorting
-    if !params[:sort].nil?
-      sort_params = params[:sort].split(/_/)
-      search_options[:sorting][:sort_name] = sort_params[0]
-      search_options[:sorting][:sort_direction] = sort_params[1]
+    #If no filter was supplied, specify all records should be returned
+    if params[:filter].empty?
+      params[:filter] = 'vote=all'
+    else
+      #filters have form 'key1=value1;key2=value2'
+      params[:filter].split(';').each do |part|
+        key_value = part.split('=')
+        if key_value.length == 2
+          key = key_value[0].downcase
+          value = key_value[1].strip
+          case key
+          when 'vote'
+            search_params[:vote] = value
+          end
+        end
+      end
     end
 
-    #if !params[:filter].nil?
-      #search_options[:filters][:vote] = params[:filter]
-    #end
-
-    products = Product.new
-    products.build_search search_options
-
-    #Set up the presenter
-    @presenter = ProductsIndexPresenter.new
+    records = Product.do_search search_params
 
     #Paging
     @presenter.paging = PagingHelper::PagingData.new
-    @presenter.paging.total_pages = (products.get_search_total_records.to_f / page_size).ceil
-    @presenter.paging.current_page = page
+    @presenter.paging.total_pages = (records.count.to_f / page_size).ceil
+    @presenter.paging.current_page = current_page
 
     #Build paging links
     (1..@presenter.paging.total_pages).each do |count|
@@ -71,10 +51,13 @@ class MyvoyceController < ApplicationController
       @presenter.paging.links << link
     end
 
-    @presenter.products = products.get_search_results
+    records = records.offset((current_page - 1) * page_size).limit(page_size)
+
+    @presenter.products = records
+
 
   end
-  
+
   def logout
     session[:user_id] = nil
     redirect_to :action => :new, :notice => 'Logged out'

@@ -10,6 +10,17 @@
 %br
 %br
 
+%fieldset 
+  %legend Text Lookup Indexes
+  = link_to 'Corporate Indexes', :action => :generate_corporate_indexes
+  %br
+  = link_to 'Government Indexes', :action => :generate_government_indexes
+  %br
+  = link_to 'Media Indexes', :action => :generate_media_indexes
+%br
+%br
+
+
 %fieldset
   %legend SSPR
   = link_to 'Corporate', :action => :corporate_sspr

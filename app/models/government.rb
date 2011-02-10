@@ -1,63 +1,128 @@
 class Government < ActiveRecord::Base
-	include SearchHelper
+  #include SearchHelper
 
   belongs_to :government_type
-	has_many :government_supports
-	has_many :users, :through => :government_supports
-	has_many :government_audits
-	belongs_to :state
-	belongs_to :chamber
+  has_many :government_supports
+  has_many :users, :through => :government_supports
+  has_many :government_audits
+  belongs_to :state
+  belongs_to :chamber
 
-	def initialize_search_instance
-		self.search_object = Government.where("1=1")
+  #used by texticle to define indexes
+  index do
+    generated_indexes
+  end
 
-		self.search_options[:sorting][:vote_date_column] = "government_supports.updated_at"
-		self.search_options[:sorting][:name_column] = self.search_options[:sorting][:name_column] || 'search_text'
 
-		self.search_options[:filters][:text_field] = 'search_text'
+  class << self
+    def government_lookup id
+      begin
+        return Government.find id
+      rescue 
+        return nil
+      end
+    end
 
-		if (!self.search_options[:filters][:government_type].nil? &&
-			  self.search_options[:filters][:government_type].upcase == "EXECUTIVE")
-			self.search_options[:sorting][:default_sort_order] = 'default_order'
-		else
-			self.search_options[:sorting][:default_sort_order] = self.search_options[:sorting][:default_sort_order] || 'search_text'
-		end
 
-		if self.search_options[:include_user_support]
-			self.search_options[:select] << "support_type"
-			self.search_object = self.search_object.joins("LEFT OUTER JOIN government_supports ON governments.id=government_supports.government_id AND user_id=#{self.search_options[:include_user_support].to_i}")
-		end
-	end
+    # text - search text
+    # state - state id to include
+    # branch - agency, executive, or legislative
+    # user_id - user id, if support should be included
+    #   vote - if user_id is specified, will filter by thumbs_up, thumbs_down, vote, no_vote, all
+    # sort_name - name_desc, name_asc, default_asc, default_desc
+    # do_search will return an AR object with all that match the specified filter.  
+    # It DOES NOT apply paging (limit, offset)
+    def do_search(params={})
+      records = Government.where('1=1')
+      select = ['governments.id as id', 'governments.name as name', 'governments.first_name as first_name', 'governments.last_name as last_name', 'governments.title as title', 'governments.office as office', 'governments.government_type_id as government_type_id', 'governments.chamber_id as chamber_id', 'governments.logo as logo', 'governments.social_score as social_score', 'governments.participation_rate as participation_rate', 'governments.district as district']
 
-	def apply_custom_filters
-		filters = self.search_options[:filters]
-		if filters[:state]
-			self.search_object = self.search_object.where("state_id = ?", filters[:state].to_i)
-		end
+      #If the user_id is specified, load the vote data
+      if params.key? :user_id
+        select << 'government_supports.support_type as support_type'
+        records = records.joins("LEFT OUTER JOIN government_supports ON governments.id=government_supports.government_id AND user_id=#{params[:user_id].to_i}")
+      end
 
-		if filters[:government_type]
-			case filters[:government_type].upcase
-			when "LEGISLATIVE"
-				self.search_object = self.search_object.where("government_type_id = 3")
-			when "EXECUTIVE"
-				self.search_object = self.search_object.where("government_type_id = 2")
-				#if(self.request.sort_name.length > 0) #If executive search and sort order not overridden, specify priority sort
-				#self.sort_name = "default_order"
-				#end
-			when "AGENCY"
-				self.search_object = self.search_object.where("government_type_id = 1")
-			end
+      #Only apply text filter or thumbs up/thumbs down filter
+      if params.key? :text
+        #Get a list of government ids that match the search text
+        records_to_include = Government.search params[:text].strip
+        government_ids = records_to_include.inject([]) do |r, element|
+          r << element.id
+          r
+        end
+        records = records.where("governments.id in (?)", government_ids)
+      elsif params.key? :vote
+        case params[:vote].strip.upcase
+        when "THUMBSUP"
+          records = records.where("support_type = 1")
+        when "THUMBSDOWN"
+          records = records.where("support_type = 0")
+        when "NEUTRAL"
+          records = records.where("support_type = 2")
+        when "VOTE"
+          records = records.where("support_type >= 0")
+        when "NOVOTE"
+          records = records.where("support_type IS NULL OR support_type = -1")
+        end
+      end
 
-		end
-	end
+      if params.key? :state
+        records = records.where("state_id = ?", params[:state].to_i)
+      end
 
-	class << self
-		def government_lookup id
-			begin
-				return Government.find id
-			rescue 
-				return nil
-			end
-		end
-	end
+
+      if params.key? :branch
+        case params[:branch].downcase
+        when "legislative"
+          records = records.where("government_type_id = 3")
+        when "executive"
+          records = records.where("government_type_id = 2")
+        when "agency"
+          records = records.where("government_type_id = 1")
+        end
+      end
+
+      if params.key? :social_score
+        records = records.where("social_score >= ?", params[:social_score].to_i)
+      end
+
+      if params.key? :participation_rate
+        records = records.where("participation_rate >= ?", params[:participation_rate].to_i)
+      end
+
+      records = records.select(select.join(", "))
+
+      if params.key? :sort
+        sort = params[:sort].downcase
+        case sort
+        when 'name_asc'
+            records = records.order('governments.name asc')
+        when 'name_desc'
+            records = records.order('governments.name desc')
+        when 'social_asc'
+            records = records.order('governments.social_score asc')
+        when 'social_desc'
+            records = records.order('governments.social_score desc')
+        when 'participation_asc'
+            records = records.order('governments.participation_rate asc')
+        when 'participation_desc'
+            records = records.order('governments.participation_rate desc')
+        when 'votedate_asc'
+          if params.key? :user_id
+            records = records.order('government_supports.updated_at asc')
+          end
+        when 'votedate_desc'
+          if params.key? :user_id
+            records = records.order('government_supports.updated_at desc')
+          end
+        when 'default_asc' || 'desult_desc'
+          records = records.order('governments.default_order asc, governments.name asc')
+        else
+          records = records.order('governments.name asc')
+        end
+      end
+
+      return records
+    end
+  end
 end

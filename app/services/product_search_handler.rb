@@ -2,6 +2,7 @@ class ProductSearchHandler < SearchHandlerBase
   include ImageHelper
 
 	def handle_request
+=begin
 		self.search_options = {
 			:select => %w{products.id upc name description pending logo social_score participation_rate},
 			:filters => {}
@@ -16,6 +17,38 @@ class ProductSearchHandler < SearchHandlerBase
 
 		self.search_instance = Product.new
     super
+=end
+    search_options = {}
+
+    if(load_user)
+      search_options[:user_id] = self.user.id
+      if self.request.filters["VOTE"]
+        search_options[:vote] = self.request.filters["VOTE"]
+      end
+    end
+
+    #if self.request.filters["TEXT"]
+      #search_options[:text] = self.request.filters["TEXT"]
+    #end
+
+		if self.request.filters["PARTICIPATIONRATE"]
+			search_options[:participation_rate] = self.request.filters["PARTICIPATIONRATE"].to_i
+		end
+
+		if self.request.filters["SOCIALSCORE"]
+			search_options[:social_score] = self.request.filters["SOCIALSCORE"].to_i
+		end
+
+    if !(self.request.sort_name.blank? || self.request.sort_direction.blank?)
+      search_options[:sort_name] = self.request.sort_name
+      search_options[:sort_direction] = self.request.sort_direction
+    end
+
+
+    self.search_object = Product.do_search search_options
+    self.total_records = self.search_object.count
+    self.search_object = self.search_object.limit(self.max_results).offset(self.start_offset)
+
 
 		self.status = 1
 	end

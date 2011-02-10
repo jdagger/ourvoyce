@@ -13,7 +13,7 @@ Production::Application.routes.draw do
     match "/myvoyce/account" => :new
     match "/myvoyce/authenticate" => :authenticate
     match "/myvoyce/create" => :create
-    match "/myvoyce(/:filter(/:page(/:sort)))" => :index, :as => :myvoyce
+    match "/myvoyce(/:filter(/:sort(/:page)))" => :index, :defaults => {:page => 1, :sort => 'name_asc', :filter => ''}, :as => :myvoyce
     match "/logout" => :logout, :as => :logout
   end
 
@@ -31,13 +31,8 @@ Production::Application.routes.draw do
 
 	#resources :account, :only => [:create, :update, :edit]
 
-	# Corporate Index Routes
   match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
-	match "/corporate(/:filter(/:sort(/:offset)))" => "corporates#index", :defaults => {:filter => '', :sort => '', :offset => 0}, :as => :corporates_index
-	#match "/corporate/:filter/:sort" => "corporates#index", :offset => "0"
-	#match "/corporate" => "corporates#index", :as => :corporates_index
-
-	#End Corporate Routes
+	match "/corporate(/:filter(/:sort(/:page)))" => "corporates#index", :defaults => {:filter => '', :sort => '', :page => 1}, :as => :corporates_index
 
   match "/products/vote" => "products#vote", :as => :product_vote
 
@@ -49,7 +44,7 @@ Production::Application.routes.draw do
 	scope "/government" do
 		match 'executive' => 'governments#executive', :as => :executive
 		match 'legislative(/:state)' => 'governments#legislative', :as => :legislative
-		match 'agency' => 'governments#agency', :as => :agency
+		match 'agency(/:filter(/:sort(/:page)))' => 'governments#agency', :defaults => {:filter => '', :sort => '', :page => 1}, :as => :agency
 	end
 
 	match "services/website/corporate/map/:corporation_id" => "services#corporate_map_all"

@@ -1,69 +1,44 @@
 class GovernmentsController < ApplicationController
-	def index
-		redirect_to :action => :executive
-	end
+  def index
+    redirect_to :action => :executive
+  end
 
-	def executive
-		user = User.find(self.user_id)
+  def executive
+    search_options = {}
+    search_options[:user_id] = self.user_id
+    search_options[:branch] = 'executive' 
+    search_options[:sort] = 'default_asc'
 
-		#Set up search options
-		search_options = {
-			:select => %w{governments.id first_name last_name title government_type_id logo social_score participation_rate},
-			:include_user_support => user.id,
-			:filters => {:government_type => 'executive'},
-			:sorting => {},
-		}
+    @presenter = ExecutivePresenter.new
+    @presenter.executives = Government.do_search search_options
+  end
 
-		#Sorting
-		#if !params[:sort].nil?
-		#	sort_params = params[:sort].split(/_/)
-		#	search_options[:sorting][:sort_name] = sort_params[0]
-		#	search_options[:sorting][:sort_direction] = sort_params[1]
-#
-#		end
-
-#		if !params[:filter].nil?
-#			search_options[:filters][:vote] = params[:filter]
-#		end
-
-		#corporations = Corporation.new
-		#corporations.build_search search_options
-		governments = Government.new
-		governments.build_search search_options
-
-		#Set up the presenter
-		@presenter = ExecutivePresenter.new
-
-		@presenter.executives = governments.get_search_results
-	end
-
-	def legislative
-		if(params[:state].nil?) #State not defined, so display list of states
-			@presenter = LegislativeStatePresenter.new
+  def legislative
+    #Check if a state was selected.  
+    #If state not selected, display list of states.  
+    #Otherwise, display list of legislatives from the state
+    if ! params.key? :state
+      @presenter = LegislativeStatePresenter.new
       @presenter.states = State.find(:all, :order => "name asc")
-			render 'governments/legislative_states'
+      render 'governments/legislative_states'
     else
       state = State.where(:abbreviation => params[:state]).first
+
+      #Verify the state could be loaded
       if state.nil?
         redirect_to :action => :legislative, :state => nil
         return
       end
 
 
-			@presenter = LegislativePresenter.new
-      user = User.find(self.user_id)
+      @presenter = LegislativePresenter.new
+      search_options = {}
 
-      #Set up search options
-      search_options = {
-          :select => %w{governments.id first_name last_name title government_type_id chamber_id district logo social_score participation_rate},
-          :include_user_support => user.id,
-          :filters => {:government_type => 'legislative', :state => state.id},
-          :sorting => {:default_sort_order => "last_name", :name_column => "last_name"}
-      }
-      governments = Government.new
-      governments.build_search search_options
+      search_options[:user_id] = self.user_id
+      search_options[:branch] = 'legislative'
+      search_options[:state] = state.id
 
-      results = governments.get_search_results
+      results = Government.do_search search_options
       results.each do |leg|
         if leg.chamber_id == 1
           @presenter.representatives << leg
@@ -71,47 +46,82 @@ class GovernmentsController < ApplicationController
           @presenter.senators << leg
         end
       end
-			render 'governments/legislative'
-		end
+      render 'governments/legislative'
+    end
+  end
 
-	end
+  def agency
 
-	def agency
-		user = User.find(self.user_id)
+    page_size = 15
+    current_page = [params[:page].to_i, 1].max
 
-		#Set up search options
-		search_options = {
-			:select => %w{governments.id name logo social_score participation_rate},
-			:include_user_support => user.id,
-			:filters => {:government_type => 'agency'},
-			:sorting => {},
-		}
+    @presenter = AgencyPresenter.new
+    #Check if form was submitted with a new text filter
+    if !params[:search_filter].blank?
+      redirect_to :filter => "text=#{params[:search_filter]}", :sort => params[:sort]
+    end
 
-		governments = Government.new
-		governments.build_search search_options
+    if params[:sort].blank?
+      params[:sort] = 'name_asc'
+    end
 
-		@presenter = AgencyPresenter.new
-		@presenter.agencies = governments.get_search_results
+    search_options = {}
+    search_options[:user_id] = self.user_id
+    search_options[:branch] = 'agency'
+    search_options[:sort] = params[:sort]
 
-	end
+    #If no filter was supplied, specify all records should be returned
+    if params[:filter].blank?
+      params[:filter] = 'vote=all'
+    else
+      #filters have form 'key1=value1;key2=value2'
+      params[:filter].split(';').each do |part|
+        key, value = part.downcase.split('=')
+        case key
+        when 'text'
+          @presenter.search_text = value
+          search_options[:text] = value
+        when 'vote'
+          search_options[:vote] = value
+        end
+      end
+    end
 
-	def vote
-		support_type = -1
 
-		if (!params[:thumbs_up].nil?)
-			support_type = 1
-		elsif (!params[:thumbs_down].nil?)
-			support_type = 0
-		elsif (!params[:neutral].nil?)
-			support_type = 2
-		end
+    records = Government.do_search search_options
 
-		GovernmentSupport.change_support(params[:item_id], session[:user_id], support_type)
+    #Paging
+    @presenter.paging = PagingHelper::PagingData.new
+    @presenter.paging.total_pages = (records.count.to_f / page_size).ceil
+    @presenter.paging.current_page = current_page
 
-		redirect_to request.referrer
-		#respond_to do |format|
-		#	format.html {redirect_to request.referrer}
-		#	format.json { render :json => {'result' => true}}
-		#end
-	end
+    #Build paging links
+    (1..@presenter.paging.total_pages).each do |count|
+      link = {:link_url => url_for(:action => 'agency', :page => count, :sort => params[:sort], :filter => params[:filter]), :page => count}
+      @presenter.paging.links << link
+    end
+
+    records = records.offset((current_page - 1) * page_size).limit(page_size)
+    @presenter.agencies = records
+  end
+
+  def vote
+    support_type = -1
+
+    if (!params[:thumbs_up].nil?)
+      support_type = 1
+    elsif (!params[:thumbs_down].nil?)
+      support_type = 0
+    elsif (!params[:neutral].nil?)
+      support_type = 2
+    end
+
+    GovernmentSupport.change_support(params[:item_id], session[:user_id], support_type)
+
+    redirect_to request.referrer
+    #respond_to do |format|
+    #	format.html {redirect_to request.referrer}
+    #	format.json { render :json => {'result' => true}}
+    #end
+  end
 end

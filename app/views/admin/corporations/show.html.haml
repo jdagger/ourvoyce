@@ -24,6 +24,12 @@
   %tr
     %td Profit Text
     %td= @corporation.profit_text
+  %tr
+    %td Keywords
+    %td= @corporation.keywords
+  %tr
+    %td Generated Indexes
+    %td= @corporation.generated_indexes
 	
 
 = link_to 'Edit', edit_admin_corporation_path(@corporation)

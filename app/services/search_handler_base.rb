@@ -53,11 +53,11 @@ class SearchHandlerBase < HandlerBase
 		end
 
 		if self.request.filters["PARENT_ID"]
-			search_options[:filters][:parent_id] = self.request.filters["PARENT_ID"].to_i
+			search_options[:parent_id] = self.request.filters["PARENT_ID"].to_i
 		end
 
 		if self.request.filters["MEDIA_TYPE"]
-			search_options[:filters][:media_type] = self.request.filters["MEDIA_TYPE"].to_i
+			search_options[:media_type] = self.request.filters["MEDIA_TYPE"].to_i
 		end
 
 		search_options[:sorting] = {:sort_name => self.request.sort_name, :sort_direction => self.request.sort_direction}

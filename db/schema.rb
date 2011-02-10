@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110207221920) do
+ActiveRecord::Schema.define(:version => 20110210182346) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -77,6 +77,8 @@ ActiveRecord::Schema.define(:version => 20110207221920) do
     t.string   "wikipedia_url"
     t.string   "revenue_text"
     t.string   "profit_text"
+    t.string   "keywords"
+    t.text     "generated_indexes"
   end
 
   create_table "error_logs", :force => true do |t|
@@ -85,6 +87,10 @@ ActiveRecord::Schema.define(:version => 20110207221920) do
     t.string   "source"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.text     "request"
+    t.text     "response"
+    t.string   "device_type"
+    t.string   "user"
   end
 
   create_table "government_audits", :force => true do |t|
@@ -143,6 +149,8 @@ ActiveRecord::Schema.define(:version => 20110207221920) do
     t.datetime "updated_at"
     t.string   "search_text"
     t.string   "office"
+    t.string   "keywords"
+    t.text     "generated_indexes"
   end
 
   create_table "legislative_states", :force => true do |t|
@@ -201,6 +209,8 @@ ActiveRecord::Schema.define(:version => 20110207221920) do
     t.string   "wikipedia"
     t.string   "data1"
     t.string   "data2"
+    t.string   "keywords"
+    t.text     "generated_indexes"
   end
 
   create_table "national_ages", :force => true do |t|
