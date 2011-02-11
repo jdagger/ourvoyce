@@ -145,6 +145,9 @@
 table.admin tr:hover {
   background-color: #ddd;
 }
+table.admin td {
+  border-bottom: solid 1px #ccc;
+}
 table.admin .highlight_missing {
   background-color: #E88;
 }
