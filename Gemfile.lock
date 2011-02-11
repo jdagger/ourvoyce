@@ -77,6 +77,8 @@ GEM
     rake (0.8.7)
     rest-client (1.6.1)
       mime-types (>= 1.16)
+    simple-navigation (3.2.0)
+      activesupport (>= 2.3.2)
     texticle (1.0.4.20101004123327)
     thor (0.14.6)
     treetop (1.4.9)
@@ -93,5 +95,6 @@ DEPENDENCIES
   heroku_backup_task
   pg
   rails (= 3.0.3)
+  simple-navigation (= 3.2.0)
   texticle
   uuidtools

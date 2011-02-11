@@ -16,4 +16,7 @@ class SiteController < ApplicationController
 
   def privacy
   end
+  
+  def work
+  end
 end
