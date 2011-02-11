@@ -61,6 +61,8 @@ class GovernmentSearchHandler < SearchHandlerBase
 				g["Title"] = government.title
 				g["Office"] = government.office
 				g["Type"] = government.government_type_id
+				g["Data1"] = government.data1
+				g["Data2"] = government.data2
 				g["ImageUrl"] = get_government_image_64 government.logo, government.government_type_id, government.chamber_id
 				if(!self.user.nil?)
 					g["SupportType"] = government.support_type.nil? ? "-1" : government.support_type

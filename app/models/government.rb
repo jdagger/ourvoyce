@@ -34,7 +34,7 @@ class Government < ActiveRecord::Base
     # It DOES NOT apply paging (limit, offset)
     def do_search(params={})
       records = Government.where('1=1')
-      select = ['governments.id as id', 'governments.name as name', 'governments.first_name as first_name', 'governments.last_name as last_name', 'governments.title as title', 'governments.office as office', 'governments.government_type_id as government_type_id', 'governments.chamber_id as chamber_id', 'governments.logo as logo', 'governments.social_score as social_score', 'governments.participation_rate as participation_rate', 'governments.district as district']
+      select = ['governments.id as id', 'governments.name as name', 'governments.first_name as first_name', 'governments.last_name as last_name', 'governments.title as title', 'governments.office as office', 'governments.government_type_id as government_type_id', 'governments.chamber_id as chamber_id', 'governments.logo as logo', 'governments.social_score as social_score', 'governments.participation_rate as participation_rate', 'governments.district as district', 'governments.data1 as data1', 'governments.data2 as data2']
 
       #If the user_id is specified, load the vote data
       if params.key? :user_id
@@ -82,13 +82,16 @@ class Government < ActiveRecord::Base
         end
       end
 
+
       if params.key? :social_score
         records = records.where("social_score >= ?", params[:social_score].to_i)
       end
 
+
       if params.key? :participation_rate
         records = records.where("participation_rate >= ?", params[:participation_rate].to_i)
       end
+
 
       records = records.select(select.join(", "))
 

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110210182346) do
+ActiveRecord::Schema.define(:version => 20110211153600) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -151,6 +151,8 @@ ActiveRecord::Schema.define(:version => 20110210182346) do
     t.string   "office"
     t.string   "keywords"
     t.text     "generated_indexes"
+    t.string   "data1"
+    t.string   "data2"
   end
 
   create_table "legislative_states", :force => true do |t|

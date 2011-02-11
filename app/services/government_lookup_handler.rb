@@ -37,6 +37,8 @@ class GovernmentLookupHandler < LookupHandlerBase
 			body["Website"] = self.item.website
 			body["Title"] = self.item.title
 			body["Office"] = self.item.office
+			body["Data1"] = self.item.data1
+			body["Data2"] = self.item.data2
 			body["ParticipationRate"] = participation_rate_image(self.item.participation_rate)
 			body["SocialScore"] = self.item.social_score
 		end

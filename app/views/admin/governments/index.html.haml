@@ -49,6 +49,8 @@
       %td= government.government_type.blank? ? highlight_missing_cell : government.government_type.name
       %td= highlight_or_link government.website
       %td= highlight_or_link government.wikipedia
+      %td= highlight_existence government.data1
+      %td= highlight_existence government.data2
 
 
   %br
