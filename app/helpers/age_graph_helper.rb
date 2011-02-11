@@ -19,7 +19,7 @@ module AgeGraphHelper
   def init_age_stats
     self.age_stats = {}
     self.age_lookups.keys.each do |range|
-      self.age_stats[range] = {:negative => 0, :neutral => 0, :positive => 0}
+      self.age_stats[range] = {:negative => 0, :neutral => 0, :positive => 0, :count => 0}
     end
   end
 
@@ -33,6 +33,7 @@ module AgeGraphHelper
     end
 
     if ! element.nil?
+      element[:count] += params[:count]
       case params[:support_type]
       when 0
         element[:negative] = params[:count]
@@ -46,7 +47,7 @@ module AgeGraphHelper
 
 
 
-  def generate_age_data
+  def generate_age_data params = {}
     self.age_data= []
     self.age_max_total = 0
     self.age_stats.each do |label, value|
@@ -54,19 +55,24 @@ module AgeGraphHelper
       negative = value[:negative].to_i
       positive = value[:positive].to_i
       neutral = value[:neutral].to_i
-      total = negative + neutral + positive
+      #total = negative + neutral + positive
+      total = value[:count]
 
       self.age_max_total = [self.age_max_total, total].max
 
       #determine a score
-      score = (negative * -1 + positive).to_f / total
-      color = 'ffffff'
-      if score < -0.25
-        color = 'ff0000'
-      elsif score > 0.25
-        color = '00ff00'
+      if params.key? :color
+        color = params[:color]
       else
-        color = 'ffff00'
+        score = (negative * -1 + positive).to_f / total
+        color = 'ffffff'
+        if score < -0.25
+          color = 'ff0000'
+        elsif score > 0.25
+          color = '00ff00'
+        else
+          color = 'ffff00'
+        end
       end
       self.age_data << {:label => label, :color => color, :scale => '1.0', :total => total}
     end

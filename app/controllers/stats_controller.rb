@@ -58,7 +58,6 @@ class StatsController < ApplicationController
       end
     end
     national_age.save
-
     redirect_to :action => :index, :notice => "Updated national ages"
   end
 
