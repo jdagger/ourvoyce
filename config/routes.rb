@@ -7,6 +7,7 @@ Production::Application.routes.draw do
     match "/donate" => :donate
     match "/about" => :about
     match "/contact" => :contact
+    match "/how-does-this-work" => :work
   end
 
   controller :myvoyce do

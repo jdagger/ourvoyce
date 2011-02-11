@@ -1,0 +1,48 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<!-- force IE8 to render as IE7 -->
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7" />
+<title><%= yield :title %></title>
+
+<meta name="keywords" content="" />
+<meta name="description" content="" />
+
+<!-- styles -->
+<%= stylesheet_link_tag 'reset', 'styles', :media => "screen, projection" %>
+<!--[if IE]><link href="stylesheets/ie7.css" rel="stylesheet" type="text/css" /><![endif]-->
+<%= javascript_include_tag 'jquery-1.4.3.min', 'rails', 'cufon-yui', 'Subway_Ticker_400.font', 'base' %>
+<%= yield :scripts %>
+<%= csrf_meta_tag %>
+
+
+<body>
+  
+<div id="main">
+  
+  <!-- insert header -->
+  <%= render :partial => "shared/header" %>
+  
+  <div id="container">
+
+  	<!-- insert main nav -->
+  	<%= render :partial => "shared/main_navigation" %>
+
+    <div id="main-top"></div>
+    <div id="main-content">
+      <div id="content">
+		    <%= yield %>
+      </div>
+    </div> <!--end main-content -->
+    <div id="main-bottom"></div>
+  
+  </div> <!-- end container -->  
+    
+  <!-- insert footer -->
+  <%= render :partial => "shared/footer" %>
+
+</div><!-- end main -->
+  
+</body>
+</html>

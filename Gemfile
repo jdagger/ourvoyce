@@ -15,8 +15,8 @@ end
 
 gem 'heroku_backup_task'
 gem 'texticle'
-
 gem 'uuidtools'
+gem 'simple-navigation', '3.2.0'
 
 # Use unicorn as the web server
 # gem 'unicorn'
