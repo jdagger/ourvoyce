@@ -13,7 +13,7 @@ class ProductsIndexPresenter < Presenter
 					:link_format => "/products/{offset}",
 					:current_offset => offset.to_i,
 					:records_per_page => limit.to_i,
-					:total_record_count => Product.all.count
+					:total_record_count => Product.count
 				}),
 				:items => [],
 				:supported_ids => {},

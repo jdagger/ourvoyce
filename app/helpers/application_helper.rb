@@ -3,7 +3,7 @@ module ApplicationHelper
   include VoteCssHelper
 
   def user_count
-    User.all.count
+    User.count
   end
 
   def highlight_missing_cell

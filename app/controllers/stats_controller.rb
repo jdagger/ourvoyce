@@ -209,7 +209,7 @@ class StatsController < ApplicationController
       end
     end
 
-    vote_count = CorporationSupport.all.count
+    vote_count = CorporationSupport.count 
 
     end_time = Time.now
 
@@ -239,7 +239,7 @@ class StatsController < ApplicationController
       end
     end
 
-    vote_count = GovernmentSupport.all.count
+    vote_count = GovernmentSupport.count
 
     end_time = Time.now
 
@@ -269,7 +269,7 @@ class StatsController < ApplicationController
       end
     end
 
-    vote_count = MediaSupport.all.count
+    vote_count = MediaSupport.count
 
     end_time = Time.now
 

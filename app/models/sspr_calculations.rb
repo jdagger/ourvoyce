@@ -48,7 +48,7 @@ module SsprCalculations
     end
 
 
-    user_count = User.all.count
+    user_count = User.count
     self.updated_attributes ={}
     entities.values.each do |vote|
       updated_attributes[vote.id] = {:social_score => vote.social_score, :participation_rate => vote.participation_rate(user_count) }
