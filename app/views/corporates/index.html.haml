@@ -68,8 +68,8 @@
             %td= c.participation_rate
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 .graph-contents
-  %fieldset
-    %legend Search:
+  %div.map-search
+    Search:
     = form_tag :corporates_index do
       =text_field_tag :search_filter, @presenter.search_text
       =submit_tag 'Search'

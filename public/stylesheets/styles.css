@@ -470,3 +470,12 @@ table.vote-table .jq-corporation{
   float:right;
   margin-top:15px;
 }
+
+.map-search{
+  width:215px;
+  float:right;
+}
+
+.map-search form{
+  text-align:right;
+}
