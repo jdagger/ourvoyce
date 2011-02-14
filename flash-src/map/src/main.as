@@ -35,6 +35,7 @@ package
 	  public var baseURL:String = "http://www.directeddata.com/services/website/";
 	  public var curState:String = "";
 	  public var animationTime:Number = 2.5;
+	  public var lastState;
 		
 		public function main()
 		{
@@ -90,7 +91,28 @@ package
       setupStateButtons();
       
       geo_map_mc.visible = false;
+      zoom_mc.visible = false;
+      
+      zoom_mc.addEventListener(MouseEvent.CLICK, zoomOut);
+      zoom_mc.buttonMode = true;
+      zoom_mc.mouseChildren = false;
 		}
+    
+    public function zoomOut(e:Event):void{
+      geo_map_mc.visible = false;
+      zoom_mc.visible = false;
+      click_map_mc.visible = true;
+      dot_holder.visible = false;
+      
+      //remove the dots this second
+      removeDotsNow();
+      
+      viewState = "us"
+      getDataString(restRoute);
+      
+      //set the state to empty
+      ExternalInterface.call("setState", "");
+    }
     
     public function loadStates(str:String):void {
       trace("loading states " + str);
@@ -119,7 +141,6 @@ package
         trace("state is " + USStates[i]);
         var stateMC = click_map_mc[USStates[i] + "_mc"];
         stateMC.addEventListener(MouseEvent.CLICK, stateClick);
-        
         stateMC.buttonMode = true;
         stateMC.mouseChildren = false;
       }
@@ -130,6 +151,8 @@ package
       curState = stateMC.split("_")[0];
       geo_map_mc.visible = true;
       click_map_mc.visible = false;
+      zoom_mc.visible = true;
+      dot_holder.visible = true;
       
       placeState(stateMC);
       
@@ -140,6 +163,8 @@ package
     public function loadDots(xmlName:String):void{
       var xmlLoader:URLLoader = new URLLoader();
       var xmlData:XML = new XML();
+      
+      trace("loading dots for " + baseURL + xmlName + curState)
       
       xmlLoader.addEventListener(Event.COMPLETE, loadDotsXML);
       xmlLoader.load(new URLRequest(baseURL + xmlName + curState));
@@ -178,7 +203,13 @@ package
       geo_map_mc.y = stagePadding + (Math.abs(mc.y)*scalePercent) + yoffset;
       
       //color the selected state white
+      if(lastState){
+        TweenMax.to(lastState, 0, {colorTransform:{tintAmount:0}});
+      }
       TweenMax.to(mc, 0, {colorTransform:{tint:0xDDDDDD, tintAmount:1}});
+      
+      //set the last state 
+      lastState = mc;
       
       //load the dots
       //loadDots("nc" + restRoute + ".xml");
@@ -234,6 +265,19 @@ package
           
       }else{
         placeDots(dotsXML);
+      }
+    }
+    
+    public function removeDotsNow():void{
+      trace("removing dots now!")
+      if(dot_holder.numChildren!=0){
+          var k:int = dot_holder.numChildren;
+          while( k -- )
+          {
+            var dotMC = dot_holder.getChildAt( k );
+            dot_holder.removeChild( dotMC );
+          }
+          
       }
     }
     

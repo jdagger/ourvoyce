@@ -421,21 +421,39 @@ table.vote-table th{
   padding-right:5px;
 }
 
+table.vote-table{
+  width:600px;
+}
+
+
 table.vote-table td{
   text-align:center;
 }
 
 table.vote-table tr td{
-  border-bottom:1px solid #cdd9e7;
+  padding-bottom:3px;
+  margin-bottom:15px;
+  padding-left:5px;
+  padding-right:5px;
+  vertical-align: middle;
+  border-bottom: 1px dashed #ddd;
 }
 
-
-table.vote-table tr.odd td{
-
+table.vote-table tr{
+  vertical-align: middle;
 }
 
 table.vote-table .jq-corporation{
   text-align:center;
+}
+
+.vote-table-wrap{
+  height:500px;
+  width:580px;
+  margin-top:15px;
+  margin-bottom:25px;
+  overflow-x: hidden;
+  overflow-y: scroll;
 }
 
 .left-content{
@@ -446,4 +464,9 @@ table.vote-table .jq-corporation{
 .graph-contents{
   width:350px;
   float:right;
+}
+
+#map{
+  float:right;
+  margin-top:15px;
 }

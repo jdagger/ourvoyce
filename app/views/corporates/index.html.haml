@@ -4,24 +4,19 @@
 
 .left-content
   %fieldset
-    %legend Search:
-    = form_tag :corporates_index do
-      =text_field_tag :search_filter, @presenter.search_text
-      =submit_tag 'Search'
-  %fieldset
     %legend Sorting:
     = link_to "Name Asc", :filter => params[:filter], :sort => 'name_asc', :page => params[:page]
     |
     = link_to "Name Desc", :filter => params[:filter], :sort => 'name_desc', :page => params[:page]
-    %br
+    |
     = link_to "Social Score Asc", :filter => params[:filter], :sort => 'social_asc', :page => params[:page]
     |
     = link_to "Social Score Desc", :filter => params[:filter], :sort => 'social_desc', :page => params[:page]
-    %br
+    |
     = link_to "Participation Rate Asc", :filter => params[:filter], :sort => 'participation_asc', :page => params[:page]
     |
     = link_to "Participation Rate Desc", :filter => params[:filter], :sort => 'participation_desc', :page => params[:page]
-    %br
+    |
     = link_to "Vote Date Asc", :filter => params[:filter], :sort => 'votedate_asc', :page => params[:page]
     |
     = link_to "Vote Date Desc", :filter => params[:filter], :sort => 'votedate_desc', :page => params[:page]
@@ -41,34 +36,41 @@
     =link_to 'All Records', :filter => 'vote=all', :sort => params[:sort], :page => 1
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
-
-  %table.vote-table
-    %thead
-      %tr
-        %th Vote
-        %th Name
-        %th Logo
-        %th Profit
-        %th Revenue
-        %th SS
-        %th PR
-    %tbody
-    - count = 0
-    - @presenter.corporations.each do |c|
-      - count = count + 1
-      %tr{:class => "#{count%2 == 1 ? 'even' : 'odd'}", :valign => "middle"}
-        %td
-          = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
-          = c.updated_at
-        %td
-          = c.name
-        %td
-          %a{:class => 'jq-corporation dataset', :href=> "#{c.id}"}
-            %input{:type => :hidden, :class => 'jq-corporation-id', :value =>  c.id}
-            %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
-        %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
-        %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
-        %td= c.social_score
-        %td= c.participation_rate
+  %div.vote-table-wrap
+    %table.vote-table
+      %thead
+        %tr
+          %th Vote
+          %th Name
+          %th Logo
+          %th Profit
+          %th Revenue
+          %th SS
+          %th PR
+          %th -
+      %tbody
+        - count = 0
+        - @presenter.corporations.each do |c|
+          - count = count + 1
+          %tr{:class => "#{count%2 == 1 ? 'even' : 'odd'}", :valign => "middle"}
+            %td
+              = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
+              = c.updated_at
+            %td
+              = c.name
+            %td
+              %a{:class => 'jq-corporation dataset', :href=> "#{c.id}"}
+                %input{:type => :hidden, :class => 'jq-corporation-id', :value =>  c.id}
+                %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
+            %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
+            %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
+            %td= c.social_score
+            %td= c.participation_rate
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 .graph-contents
+  %fieldset
+    %legend Search:
+    = form_tag :corporates_index do
+      =text_field_tag :search_filter, @presenter.search_text
+      =submit_tag 'Search'
   = render :partial => "shared/map_graph", :locals => {:id => @presenter.corporations.first.id, :model => "corporate"}

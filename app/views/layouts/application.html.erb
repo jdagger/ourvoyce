@@ -21,12 +21,10 @@
   
 <div id="main">
   
-  <!-- insert header -->
   <%= render :partial => "shared/header" %>
   
   <div id="container">
 
-  	<!-- insert main nav -->
   	<%= render :partial => "shared/main_navigation" %>
 
     <div id="main-top"></div>
@@ -34,15 +32,14 @@
       <div id="content">
 		    <%= yield %>
       </div>
-    </div> <!--end main-content -->
+    </div>
     <div id="main-bottom"></div>
   
-  </div> <!-- end container -->  
+  </div>
     
-  <!-- insert footer -->
   <%= render :partial => "shared/footer" %>
 
-</div><!-- end main -->
+</div>
   
 </body>
 </html>
