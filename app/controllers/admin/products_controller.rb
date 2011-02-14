@@ -8,7 +8,7 @@ class Admin::ProductsController < ApplicationController
 		@presenter = AdminProductsPresenter.new
 		@presenter.products = Product.find(:all, :offset => (page - 1) * page_size, :limit => page_size, :order => "name asc")
 
-		@product_count = Product.all.count
+		@product_count = Product.count
 		@presenter.paging.total_pages = (@product_count / page_size).ceil
 		@presenter.paging.current_page = page
 		(1..@presenter.paging.total_pages).each do |count|

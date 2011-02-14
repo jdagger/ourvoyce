@@ -52,6 +52,12 @@ Production::Application.routes.draw do
 	match "services/website/corporate/map/:corporation_id/:state" => "services#corporate_map_state"
 	match "services/website/corporate/age/:corporation_id" => "services#corporate_age_all"
 	match "services/website/corporate/age/:corporation_id/:state" => "services#corporate_age_state"
+
+	match "services/website/ourvoyce/age" => "services#ourvoyce_age_all"
+	match "services/website/ourvoyce/age/:state" => "services#ourvoyce_age_state"
+	match "services/website/ourvoyce/map" => "services#ourvoyce_map_all"
+	match "services/website/ourvoyce/map/:state" => "services#ourvoyce_map_state"
+
 	match "services/:action" => "services#:action"
 
 	root :to => "home#index"

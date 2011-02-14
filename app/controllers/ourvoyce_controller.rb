@@ -1,6 +1,7 @@
 class OurvoyceController < ApplicationController
   def index
     @states = State.find(:all, :order => "name")
+
     if params[:state].nil?
       @ages = NationalAge.first
     else

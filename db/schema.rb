@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110211153600) do
+ActiveRecord::Schema.define(:version => 20110211180151) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -502,6 +502,8 @@ ActiveRecord::Schema.define(:version => 20110211153600) do
     t.string   "salt"
     t.string   "zip_code"
   end
+
+  add_index "users", ["birth_year"], :name => "index_users_on_birth_year"
 
   create_table "zip_age_lookups", :force => true do |t|
     t.string  "zip"

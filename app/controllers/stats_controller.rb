@@ -58,7 +58,6 @@ class StatsController < ApplicationController
       end
     end
     national_age.save
-
     redirect_to :action => :index, :notice => "Updated national ages"
   end
 
@@ -210,7 +209,7 @@ class StatsController < ApplicationController
       end
     end
 
-    vote_count = CorporationSupport.all.count
+    vote_count = CorporationSupport.count 
 
     end_time = Time.now
 
@@ -240,7 +239,7 @@ class StatsController < ApplicationController
       end
     end
 
-    vote_count = GovernmentSupport.all.count
+    vote_count = GovernmentSupport.count
 
     end_time = Time.now
 
@@ -270,7 +269,7 @@ class StatsController < ApplicationController
       end
     end
 
-    vote_count = MediaSupport.all.count
+    vote_count = MediaSupport.count
 
     end_time = Time.now
 

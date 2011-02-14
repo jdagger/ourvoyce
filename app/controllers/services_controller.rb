@@ -20,24 +20,41 @@ class ServicesController < ApplicationController
 
   def corporate_map_all
     @states = Corporation.new.map_all params[:corporation_id]
-    render :template => 'services/corporate/national_map'
+    render :template => 'services/map/national'
   end
 
   def corporate_map_state
     @zips = Corporation.new.map_state params[:corporation_id], params[:state]
-    render :template => 'services/corporate/state_dots'
+    render :template => 'services/map/state'
   end
 
   def corporate_age_all
-
     @results = Corporation.new.age_all params[:corporation_id]
-    render :template => 'services/corporate/age'
+    render :template => 'services/graph/age'
   end
 
   def corporate_age_state
     @results = Corporation.new.age_state params[:corporation_id], params[:state]
-    render :template => 'services/corporate/age'
+    render :template => 'services/graph/age'
   end
 
+  def ourvoyce_age_all
+    @results = User.new.age_all 
+    render :template => 'services/graph/age'
+  end
 
+  def ourvoyce_age_state
+    @results = User.new.age_state params[:state]
+    render :template => 'services/graph/age'
+  end
+
+  def ourvoyce_map_all
+    @results = User.new.map_all
+    render :template => 'services/map/national'
+  end
+
+  def ourvoyce_map_state
+    @results = User.new.map_state params[:state]
+    render :template => 'services/map/state'
+  end
 end
