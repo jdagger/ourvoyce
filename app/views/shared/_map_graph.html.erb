@@ -1,0 +1,73 @@
+<script type="text/javascript">
+	var state = "";
+	var curID = "<%= id %>";
+	
+	function setState(st){
+	  state = st;
+	  sendToGraph("<%= model %>/age/" + curID + "/" + state);
+	}
+	
+	function sendToMap(dataString) {
+    thisMovie("map").sendTextToFlash(dataString);
+  }
+  
+  function sendToGraph(dataString) {
+    thisMovie("bar-graph").sendTextToFlash(dataString);
+    //alert("sending to graph " + dataString);
+  }
+	
+	$(document).ready(function(){
+	  function getFlashMovie(movieName) { 
+      var isIE = navigator.appName.indexOf("Microsoft") != -1;
+      return (isIE) ? window[movieName] : document[movieName];
+    }
+	  
+	  //alert("ready!");
+	  $("a.dataset").click(function(){
+	    curID = $(this).attr("href");
+	    
+	    //send to the map
+	    sendToMap("<%= model %>/map/" + $(this).attr("href") + "/");
+	    
+	    //send to the graph
+	    sendToGraph("<%= model %>/age/" + $(this).attr("href") + "/" + state);
+	    
+	    return false;
+	  });
+	});
+
+  function thisMovie(movieName) {
+    if (navigator.appName.indexOf("Microsoft") != -1) {
+      return window[movieName];
+    } else {
+      return document[movieName];
+    }
+  }
+	
+	var mapvars = {
+	  xmlpath:"<%= model %>/map/" + curID + "/",
+	  baseURL:"/services/website/"
+	};
+	
+	var agevars = {
+	  xmlpath:"<%= model %>/age/" + curID + "/",
+	  baseURL:"/services/website/",
+	  barwidth: 25
+	};
+	
+  var params = {
+      menu: "false",
+      wmode: "transparent"
+  };
+  var attributes = {
+    allowfullscreen: "true",
+    allowscriptaccess: "always"
+  };
+
+  swfobject.embedSWF("/swf/map.swf", "map", "350", "280","10.0.0", params, mapvars, attributes);
+  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "350", "250","10.0.0", params, agevars, attributes);
+
+</script>
+
+<div id="map"></div>
+<div id="bar-graph"></div>

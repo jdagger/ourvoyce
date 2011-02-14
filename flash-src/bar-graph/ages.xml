@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ages scaletop="500" scalebottom="0" ylabel="Number of Users" xlabel="Age of Users">
+  <age label="25 - 30" scale="0.0" color="ff00ff"/>
+  <age label="31-35" scale=".25" color="00ffff"/>
+  <age label="36-38" scale=".5" color="ffffff"/>
+  <age label="39-42" scale=".75" color="ff00ff"/>
+  <age label="42-48" scale="1" color="ff44ff"/>
+  <age label="49 - 50" scale=".14" color="ff00ff"/>
+  <age label="51+" scale=".1" color="00ffff"/>
+</ages>

@@ -398,3 +398,52 @@ h2{
   cursor: pointer;
   background-image: url(../../images/site/neutral_not_selected.png);
 }
+
+
+/* thumb placement */
+
+.thumbs-up, .thumbs-up-selected, .thumbs-up-not-selected, .thumbs-down, .thumbs-down-selected, .thumbs-down-not-selected, .neutral, .neutral-selected, .neutral-not-selected {
+  display:block;
+}
+
+.support{
+  display:none;
+}
+
+table.vote-table th{
+  background: url(/images/graph-top.gif) repeat-x top;
+  height:30px;
+  text-align: center;
+  color:#ffffff;
+  font-weight:bold;
+  padding-top:7px;
+  padding-left:5px;
+  padding-right:5px;
+}
+
+table.vote-table td{
+  text-align:center;
+}
+
+table.vote-table tr td{
+  border-bottom:1px solid #cdd9e7;
+}
+
+
+table.vote-table tr.odd td{
+
+}
+
+table.vote-table .jq-corporation{
+  text-align:center;
+}
+
+.left-content{
+  float:left;
+  width:600px;
+}
+
+.graph-contents{
+  width:350px;
+  float:right;
+}

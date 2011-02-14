@@ -15,5 +15,5 @@ $(document).ready(function() {
 
   // add dividers to top and footer navigation
   $('#header-nav ul li:not(:first)').before('<li>|</li>');
-    
+  
 }); //end document.ready

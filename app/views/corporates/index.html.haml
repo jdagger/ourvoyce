@@ -2,7 +2,7 @@
   = javascript_include_tag "change_support.js"
   = javascript_include_tag "map.js"
 
-.span-12
+.left-content
   %fieldset
     %legend Search:
     = form_tag :corporates_index do
@@ -42,7 +42,7 @@
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-  %table
+  %table.vote-table
     %thead
       %tr
         %th Vote
@@ -53,20 +53,22 @@
         %th SS
         %th PR
     %tbody
+    - count = 0
     - @presenter.corporations.each do |c|
-      %tr
+      - count = count + 1
+      %tr{:class => "#{count%2 == 1 ? 'even' : 'odd'}", :valign => "middle"}
         %td
-          =  render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
+          = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
           = c.updated_at
-        %td= c.name
         %td
-          %div{:class => 'jq-corporation', :style => 'border: solid 1px red;'}
+          = c.name
+        %td
+          %a{:class => 'jq-corporation dataset', :href=> "#{c.id}"}
             %input{:type => :hidden, :class => 'jq-corporation-id', :value =>  c.id}
             %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
         %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
         %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
         %td= c.social_score
         %td= c.participation_rate
-.span-12.last
-  Maps/Graphs
-  .jq-map
+.graph-contents
+  = render :partial => "shared/map_graph", :locals => {:id => @presenter.corporations.first.id, :model => "corporate"}
