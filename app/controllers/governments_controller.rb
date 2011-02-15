@@ -19,7 +19,11 @@ class GovernmentsController < ApplicationController
     #Otherwise, display list of legislatives from the state
     if ! params.key? :state
       @presenter = LegislativeStatePresenter.new
-      @presenter.states = State.find(:all, :order => "name asc")
+      @presenter.states = State.find(:all, 
+                                     :select => ["states.name as name", "states.logo as logo", "states.abbreviation as abbreviation", "legislative_states.social_score as social_score", "legislative_states.participation_rate as participation_rate"],
+                                     :joins => ["left outer join legislative_states on legislative_states.state_id = states.id"],
+                                     :order => "states.name asc"
+                                    )
       render 'governments/legislative_states'
     else
       state = State.where(:abbreviation => params[:state]).first

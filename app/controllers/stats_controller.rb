@@ -208,19 +208,27 @@ class StatsController < ApplicationController
     end
 
 
+    user_count = User.count
+
+    #State stats for legislatives
+    LegislativeState.delete_all
+    votes = GovernmentSupport.find(
+      :all,
+      :select => ["governments.state_id as id", :support_type, "count(support_type) as count"],
+      :joins => ["join governments on governments.id = government_supports.government_id"],
+      :group => ["governments.state_id", :support_type],
+      :conditions => {"governments.government_type_id" => 3}
+    )
+
+    tabulate_votes votes
+
+    self.vote_data.each do |key, vote|
+      LegislativeState.create :state_id => vote.id, :social_score => vote.social_score, :participation_rate => vote.participation_rate(user_count)
+    end
+
     end_time = Time.now
 
     redirect_to :action => :index, :notice => "Government SSPR calculated (#{((end_time - begin_time) * 1000).to_i}ms)"
-  end
-
-
-  def government_state_sspr
-    LegislativeState.delete_all
-
-    State.all.each do |state|
-      LegislativeState.create :state_id => state.id, :social_score => rand(100), :participation_rate => rand(100)
-    end
-    redirect_to :action => :index, :notice => "Updated legislative state sspr"
   end
 
 

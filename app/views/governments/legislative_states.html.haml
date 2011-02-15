@@ -16,6 +16,6 @@
           %td
             %img{:src => get_state_image_128(state.logo), :alt => 'logo'}
           %td= state.name
-          %td= '45'
-          %td= '75'
+          %td= state.social_score
+          %td= state.participation_rate
           %td= link_to "Link", :action => :legislative, :state => state.abbreviation
