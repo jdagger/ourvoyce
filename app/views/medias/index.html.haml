@@ -16,8 +16,8 @@
       %tr
         %td= ''
         %td= link_to media_type.name, :type => media_type.name
-        %td -
-        %td -
+        %td= media_type.social_score
+        %td= media_type.participation_rate
 
   - if @presenter.second_level.count > 0
     %table

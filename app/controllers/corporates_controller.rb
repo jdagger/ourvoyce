@@ -20,7 +20,8 @@ class CorporatesController < ApplicationController
     search_params[:user_id] = self.user_id
 
     begin
-      search_params[:sort_name], search_params[:sort_direction] = params[:sort].split('_')
+      #search_params[:sort_name], search_params[:sort_direction] = params[:sort].split('_')
+      search_params[:sort] = params[:sort]
       @sort_column, @sort_direction = params[:sort].downcase.split('_')
     rescue
     end

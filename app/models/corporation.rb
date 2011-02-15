@@ -79,29 +79,6 @@ class Corporation < ActiveRecord::Base
     end
 
     calculate_state_map_stats
-=begin
-    zips = [] 
-    #total_votes = 0
-    max_votes = 0
-    result.each do |key, value|
-      #Find total number of votes
-      negative = result[key][:negative].to_i
-      positive = result[key][:positive].to_i
-      neutral = result[key][:neutral].to_i
-      total = negative + neutral + positive
-
-      #total_votes += total
-      max_votes = [max_votes, total].max
-    end
-
-    #Calculate the scale
-    zips.each do |zip|
-      zip[:scale] = zip[:votes].to_f / max_votes
-    end
-
-    (zips.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
-    return zips
-=end
   return self.state_map_stats
 
   end
@@ -143,8 +120,7 @@ class Corporation < ActiveRecord::Base
     # text - search text
     # user_id - user id, if support should be included
     #   vote - if user_id is specified, will filter by thumbs_up, thumbs_down, vote, no_vote, all
-    # sort_name
-    # sort_direction
+    # sort
     # do_search will return an AR object with all that match the specified filter.  
     # It DOES NOT apply paging (limit, offset)
     def do_search(params={})
@@ -191,34 +167,49 @@ class Corporation < ActiveRecord::Base
 
       records = records.select(select.join(", "))
 
-      if params.key?(:sort_direction) && params.key?(:sort_name)
+      if params.key? :sort
         begin
           #column, direction = params[:sort].downcase.split('_')
-          column = params[:sort_name].downcase
-          direction = params[:sort_direction].downcase
+          #column = params[:sort_name].downcase
+          #direction = params[:sort_direction].downcase
 
-          direction = (direction == 'asc') ? 'asc' : 'desc'
+          #direction = (direction == 'asc') ? 'asc' : 'desc'
 
-          case column
-          when 'name'
-            column = 'corporations.name'
-          when 'social'
-            column = 'corporations.social_score'
-          when 'participation'
-            column = 'corporations.participation_rate'
-          when 'votedate'
+          #case column
+          case params[:sort].downcase
+          when 'name_asc'
+            records = records.order('corporations.name asc')
+          when 'name_desc'
+            records = records.order('corporations.name desc')
+          when 'social_asc'
+            records = records.order('corporations.social_score asc')
+          when 'social_desc'
+            records = records.order('corporations.social_score desc')
+          when 'participation_asc'
+            records = records.order('corporations.participation_rate asc')
+          when 'participation_desc'
+            records = records.order('corporations.participation_rate desc')
+          when 'votedate_asc'
             if params.key? :user_id
-              column = 'corporation_supports.updated_at'
+              records = records.order('corporation_supports.updated_at asc')
             end
-          when 'profit'
-            column = 'corporations.profit'
-          when 'revenue'
-            column = 'corporations.revenue'
+          when 'votedate_desc'
+            if params.key? :user_id
+              records = records.order('corporation_supports.updated_at desc')
+            end
+          when 'profit_asc'
+            records = records.order('corporations.profit asc')
+          when 'profit_desc'
+            records = records.order('corporations.profit desc')
+          when 'revenue_asc'
+            records = records.order('corporations.revenue asc')
+          when 'revenue_desc'
+            records = records.order('corporations.revenue desc')
           else
-            column = 'corporations.name'
+            records = records.order('corporations.name asc')
           end
 
-          records = records.order("#{column} #{direction}")
+          #records = records.order("#{column} #{direction}")
         rescue
         end
       end

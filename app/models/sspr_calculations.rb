@@ -23,34 +23,39 @@ module SsprCalculations
   end
 
   attr_accessor :updated_attributes
-  
-  
-  
-  def tabulate_votes votes
-    entities = {}
-    
+  attr_accessor :vote_data
+
+  def populate_vote_data votes
+    self.vote_data = {}
+
     votes.each do |vote|
       key = "entity_#{vote.id}"
 
-      if !entities.key? key
-        entities[key] = Votes.new 
-        entities[key].id = vote.id
+      if !self.vote_data.key? key
+        self.vote_data[key] = Votes.new 
+        self.vote_data[key].id = vote.id
       end
 
       case vote.support_type
       when 0
-        entities[key].negative_votes = vote.count.to_i
+        self.vote_data[key].negative_votes = vote.count.to_i
       when 1
-        entities[key].positive_votes = vote.count.to_i
+        self.vote_data[key].positive_votes = vote.count.to_i
       when 2
-        entities[key].neutral_votes = vote.count.to_i
+        self.vote_data[key].neutral_votes = vote.count.to_i
       end
     end
 
+  end
+
+  #Populate updated_attributes with the social_score and participation_rate, keyed by media_id
+  def tabulate_votes votes
+    populate_vote_data votes
+    
 
     user_count = User.count
-    self.updated_attributes ={}
-    entities.values.each do |vote|
+    self.updated_attributes = {}
+    self.vote_data.values.each do |vote|
       updated_attributes[vote.id] = {:social_score => vote.social_score, :participation_rate => vote.participation_rate(user_count) }
     end
   end

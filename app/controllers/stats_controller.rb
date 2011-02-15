@@ -119,13 +119,73 @@ class StatsController < ApplicationController
     begin_time = Time.now
 
     Media.update_all("social_score=0, participation_rate=0")
+    MediaType.update_all("social_score=0, participation_rate=0")
 
-    votes = MediaSupport.find(:all, :select => ["media_id as id", :support_type, "count(support_type) as count"], :group => [:support_type, :media_id])
+    #Load the media for Magazines (1), Newspapers (2), TV Shows (5), and Radio Shows (6)
+    votes = MediaSupport.find(
+      :all, 
+      :select => ["media_id as id", :support_type, "count(support_type) as count"], 
+      :joins => ["join medias ON medias.id = media_supports.media_id"],
+      :conditions => { "medias.media_type_id" => [1,2,5,6] },
+      :group => [:support_type, :media_id]
+    )
     tabulate_votes votes
 
     Media.transaction do
       self.updated_attributes.each do |key, value|
         Media.update_all("social_score=#{value[:social_score]}, participation_rate=#{value[:participation_rate]}", :id => key)
+      end
+    end
+
+    #TV and Radio networks will be identified by the parent_media_id field
+    #Get the vote data for all medias that have a parent_media_id
+    votes = MediaSupport.find(
+      :all,
+      :select => ["medias.parent_media_id as id", :support_type, "count(support_type) as count"], 
+      :joins => ["join medias on medias.id = media_supports.media_id"],
+      :conditions => ["medias.parent_media_id IS NOT NULL"],
+      :group => [:support_type, "medias.parent_media_id"]
+    )
+
+    tabulate_votes votes
+
+    user_count = User.count
+    self.vote_data.each do |key, vote|
+      network_show_count = Media.where(:parent_media_id => vote.id).count
+
+      social_score = vote.social_score
+      participation_rate = vote.participation_rate(user_count * network_show_count)
+
+      #Write the SSPR back to the record
+      Media.update_all("social_score=#{social_score}, participation_rate=#{participation_rate}", :id => vote.id)
+    end
+
+
+    #Calculate SSPR for media_types (Magazine (1), Newspaper (2), TV Show (5), Radio Show (6)
+    votes = MediaSupport.find(
+      :all,
+      :select => ["medias.media_type_id as id", :support_type, "count(support_type) as count"], 
+      :joins => ["join medias on medias.id = media_supports.media_id"],
+      :conditions => {"medias.media_type_id" =>  [1, 2, 5, 6]},
+      :group => [:support_type, "medias.media_type_id"]
+    )
+
+    tabulate_votes votes
+
+    self.vote_data.each do |key, vote|
+      media_show_count = Media.where(:media_type_id => vote.id).count
+
+      social_score = vote.social_score
+      participation_rate = vote.participation_rate(user_count * media_show_count)
+
+      #Write the SSPR back to the record
+      case vote.id.to_i
+      when (1..2) #Magazine or Newspaper
+        MediaType.update_all("social_score=#{social_score}, participation_rate=#{participation_rate}", :id => vote.id)
+      when 5 #TV Show, update Television type
+        MediaType.update_all("social_score=#{social_score}, participation_rate=#{participation_rate}", :id => 4)
+      when 6 #Radio Show, update Radio type
+        MediaType.update_all("social_score=#{social_score}, participation_rate=#{participation_rate}", :id => 3)
       end
     end
 
@@ -153,16 +213,6 @@ class StatsController < ApplicationController
     redirect_to :action => :index, :notice => "Government SSPR calculated (#{((end_time - begin_time) * 1000).to_i}ms)"
   end
 
-
-
-  def media_state_sspr
-    MediaState.delete_all
-
-    State.all.each do |state|
-      MediaState.create :state_id => state.id, :social_score => rand(100), :participation_rate => rand(100)
-    end
-    redirect_to :action => :index, :notice => "Updated media state sspr"
-  end
 
   def government_state_sspr
     LegislativeState.delete_all
