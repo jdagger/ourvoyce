@@ -4,24 +4,6 @@
 
 .left-content
   %fieldset
-    %legend Sorting:
-    = link_to "Name Asc", :filter => params[:filter], :sort => 'name_asc', :page => params[:page]
-    |
-    = link_to "Name Desc", :filter => params[:filter], :sort => 'name_desc', :page => params[:page]
-    |
-    = link_to "Social Score Asc", :filter => params[:filter], :sort => 'social_asc', :page => params[:page]
-    |
-    = link_to "Social Score Desc", :filter => params[:filter], :sort => 'social_desc', :page => params[:page]
-    |
-    = link_to "Participation Rate Asc", :filter => params[:filter], :sort => 'participation_asc', :page => params[:page]
-    |
-    = link_to "Participation Rate Desc", :filter => params[:filter], :sort => 'participation_desc', :page => params[:page]
-    |
-    = link_to "Vote Date Asc", :filter => params[:filter], :sort => 'votedate_asc', :page => params[:page]
-    |
-    = link_to "Vote Date Desc", :filter => params[:filter], :sort => 'votedate_desc', :page => params[:page]
-
-  %fieldset
     %legend Filtering:
     =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :page => 1
     |
@@ -40,13 +22,18 @@
     %table.vote-table
       %thead
         %tr
-          %th Vote
-          %th Name
-          %th Logo
-          %th Profit
-          %th Revenue
-          %th SS
-          %th PR
+          %th
+            = table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th 
+            = table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th 
+            = table_sort_header_link :header => "Profit", :sort_column => 'profit', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th 
+            = table_sort_header_link :header => "Revenue", :sort_column => 'revenue', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th 
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th 
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
           %th -
       %tbody
         - count = 0
@@ -57,11 +44,11 @@
               = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
               = c.updated_at
             %td
-              = c.name
-            %td
               %a{:class => 'jq-corporation dataset', :href=> "#{c.id}"}
                 %input{:type => :hidden, :class => 'jq-corporation-id', :value =>  c.id}
                 %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
+                %br
+                = c.name
             %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
             %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
             %td= c.social_score

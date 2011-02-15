@@ -6,6 +6,32 @@ module ApplicationHelper
     User.count
   end
 
+  def table_sort_header_link params = {}
+    direction = 'desc'
+    #Check if this column is the current sort column
+    if @sort_column == params[:sort_column]
+      #If selected column, display the appropriate arrow
+      if @sort_direction == 'asc'
+        text = "#{params[:header]} <img src='/images/sort_arrow_up.gif' />"
+        direction = 'desc' #Set the direction for clicking on the header link
+      else
+        text = "#{params[:header]} <img src='/images/sort_arrow_down.gif' />"
+        direction = 'asc' #Set the direction for clicking on the header link
+      end
+    else
+      #not selected sort column, so just display the text
+      text = "#{params[:header]}"
+
+      #Sort not specified, so use the default initial sort, if specified
+      if params.key? :default_direction
+        direction = params[:default_direction]
+      end
+    end
+
+    params[:link_params][:sort] = "#{params[:sort_column]}_#{direction}"
+    "<div style='white-space: nowrap;'>#{link_to(text.html_safe, params[:link_params])}</div>".html_safe
+  end
+
   def highlight_missing_cell
     "<div class='highlight_missing'>&nbsp;</div>".html_safe
   end
