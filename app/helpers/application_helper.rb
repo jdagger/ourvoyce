@@ -7,11 +7,14 @@ module ApplicationHelper
   end
 
   def table_sort_header_link params = {}
+    sort_column = ''
+    sort_direction = ''
     direction = 'desc'
+    sort_column, sort_direction = request[:sort].downcase.split('_') rescue ['','']
     #Check if this column is the current sort column
-    if @sort_column == params[:sort_column]
+    if sort_column == params[:sort_column]
       #If selected column, display the appropriate arrow
-      if @sort_direction == 'asc'
+      if sort_direction == 'asc'
         text = "#{params[:header]} <img src='/images/sort_arrow_up.gif' />"
         direction = 'desc' #Set the direction for clicking on the header link
       else

@@ -1,4 +1,6 @@
 module MapGraphHelper
+  include ColorHelper
+
   attr_accessor :national_map_collected_data
   attr_accessor :national_map_stats
 
@@ -32,8 +34,8 @@ module MapGraphHelper
       total = negative + neutral + positive
 
       #determine a score
-      score = (negative * -1 + positive).to_f / total
-      self.national_map_stats << {:name => key, :color => calculated_color(score)}
+      score = positive * 100 / total
+      self.national_map_stats << { :name => key, :color => color_from_social_score(score) }
     end
   end
 
@@ -68,8 +70,8 @@ module MapGraphHelper
       self.state_max_total_votes = [self.state_max_total_votes, total].max
 
       #determine a score
-      score = (negative * -1 + positive).to_f / total
-      self.state_map_stats << {:name => key, :color => calculated_color(score), :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
+      score = positive * 100 / total
+      self.state_map_stats << {:name => key, :color => color_from_social_score(score), :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
 
       #Calculate the scale
       self.state_map_stats.each do |zip|
@@ -93,14 +95,4 @@ module MapGraphHelper
     end
   end
 
-
-  def calculated_color score
-    if score < -0.25
-      color = 'ff0000'
-    elsif score > 0.25
-      color = '00ff00'
-    else
-      color = 'ffff00'
-    end
-  end
 end

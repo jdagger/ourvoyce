@@ -43,8 +43,9 @@ Production::Application.routes.draw do
   match "/government/vote" => "governments#vote", :as => :government_vote
 	match '/government' => 'governments#index', :as => :government_index
 	scope "/government" do
-		match 'executive' => 'governments#executive', :as => :executive
+		match 'executive(/:sort)' => 'governments#executive', :as => :executive, :defaults => {:sort => ''}
 		match 'legislative(/:state)' => 'governments#legislative', :as => :legislative
+		match 'legislative_state(/:sort)' => 'governments#legislative_state', :as => :legislative_state
 		match 'agency(/:filter(/:sort(/:page)))' => 'governments#agency', :defaults => {:filter => '', :sort => '', :page => 1}, :as => :agency
 	end
 
@@ -52,6 +53,11 @@ Production::Application.routes.draw do
 	match "services/website/corporate/map/:corporation_id/:state" => "services#corporate_map_state"
 	match "services/website/corporate/age/:corporation_id" => "services#corporate_age_all"
 	match "services/website/corporate/age/:corporation_id/:state" => "services#corporate_age_state"
+
+	match "services/website/government/:branch/map/:government_id" => "services#government_map_all"
+	match "services/website/government/:branch/map/:government_id/:state" => "services#government_map_state"
+	match "services/website/government/:branch/age/:government_id" => "services#government_age_all"
+	match "services/website/government/:branch/age/:government_id/:state" => "services#government_age_state"
 
 	match "services/website/ourvoyce/age" => "services#ourvoyce_age_all"
 	match "services/website/ourvoyce/age/:state" => "services#ourvoyce_age_state"

@@ -22,18 +22,12 @@
     %table.vote-table
       %thead
         %tr
-          %th
-            = table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
-          %th 
-            = table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th 
-            = table_sort_header_link :header => "Profit", :sort_column => 'profit', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th 
-            = table_sort_header_link :header => "Revenue", :sort_column => 'revenue', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th 
-            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th 
-            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Profit", :sort_column => 'profit', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Revenue", :sort_column => 'revenue', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
           %th -
       %tbody
         - count = 0

@@ -22,7 +22,7 @@ class CorporatesController < ApplicationController
     begin
       #search_params[:sort_name], search_params[:sort_direction] = params[:sort].split('_')
       search_params[:sort] = params[:sort]
-      @sort_column, @sort_direction = params[:sort].downcase.split('_')
+      #@sort_column, @sort_direction = params[:sort].downcase.split('_')
     rescue
     end
 

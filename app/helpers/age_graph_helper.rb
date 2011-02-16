@@ -1,4 +1,6 @@
 module AgeGraphHelper
+  include ColorHelper
+
   attr_accessor :age_stats
   attr_accessor :age_data
   attr_accessor :age_max_total
@@ -55,24 +57,18 @@ module AgeGraphHelper
       negative = value[:negative].to_i
       positive = value[:positive].to_i
       neutral = value[:neutral].to_i
-      #total = negative + neutral + positive
       total = value[:count]
 
       self.age_max_total = [self.age_max_total, total].max
 
       #determine a score
-      if params.key? :color
+      if params.key? :color #If overriding the color, use that color
         color = params[:color]
+      elsif total > 0
+        score = (positive * 100) / total
+        color = color_from_social_score(score)
       else
-        score = (negative * -1 + positive).to_f / total
-        color = 'ffffff'
-        if score < -0.25
-          color = 'ff0000'
-        elsif score > 0.25
-          color = '00ff00'
-        else
-          color = 'ffff00'
-        end
+        color = "ffffff"
       end
       self.age_data << {:label => label, :color => color, :scale => '1.0', :total => total}
     end

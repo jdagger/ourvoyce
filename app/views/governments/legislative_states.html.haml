@@ -1,21 +1,16 @@
 = render :partial => "shared/government_menu"
-.span-12.last
-  Maps/Reports
-.span-12
-  %table
-    %thead
+%table
+  %thead
+    %tr
+      %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+  %tbody
+    - @presenter.states.each do |state|
       %tr
-        %th Logo
-        %th State
-        %th SS
-        %th PR
-        %th Link
-    %tbody
-      - @presenter.states.each do |state|
-        %tr
-          %td
-            %img{:src => get_state_image_128(state.logo), :alt => 'logo'}
-          %td= state.name
-          %td= state.social_score
-          %td= state.participation_rate
-          %td= link_to "Link", :action => :legislative, :state => state.abbreviation
+        %td
+          = link_to "<img src='#{get_state_image_128(state.logo)}' />".html_safe, :action => :legislative, :state => state.abbreviation
+          %br
+          = state.name
+        %td= state.social_score
+        %td= state.participation_rate

@@ -1,5 +1,6 @@
 class Government < ActiveRecord::Base
-  #include SearchHelper
+  include AgeGraphHelper
+  include MapGraphHelper
 
   belongs_to :government_type
   has_many :government_supports
@@ -12,6 +13,127 @@ class Government < ActiveRecord::Base
   index do
     generated_indexes
   end
+
+  def government_type_from_text text
+    government_type_id = 0
+    case text.downcase
+    when 'agency'
+      government_type_id = 1
+    when 'executive'
+      government_type_id = 2
+    when 'legislative'
+      government_type_id = 3
+    end
+    return government_type_id
+  end
+
+  def age_all branch, government_id
+    government_type_id = government_type_from_text branch
+
+    gov = GovernmentSupport.find(
+      :all, 
+      :conditions => {:government_id => government_id, "governments.government_type_id" => government_type_id}, 
+      :joins => [
+        "join users on users.id = government_supports.user_id",
+        "join governments on governments.id = government_supports.government_id"
+      ], 
+      :select => "support_type, count(support_type) as count, users.birth_year", 
+      :group => "support_type, users.birth_year"
+    )
+
+    init_age_stats 
+
+    gov.each do |element|
+      add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
+    end
+
+    generate_age_data
+
+    return {:ages => self.age_data, :max => self.age_max_total}
+  end
+
+
+
+
+
+  def age_state branch, government_id, state
+    government_type_id = government_type_from_text branch
+    state = state.upcase
+    gov = GovernmentSupport.find(
+      :all, 
+      :conditions => {:government_id => government_id, "states.abbreviation" => state, "governments.government_type_id" => government_type_id }, 
+      :joins => [
+        "join users on users.id = government_supports.user_id",
+        "join zips on users.zip_code = zips.zip",
+        "join states on zips.state_id = states.id",
+        "join governments on governments.id = government_supports.government_id"
+      ], 
+      :select => "support_type, count(support_type) as count, users.birth_year", 
+      :group => "support_type, users.birth_year")
+
+    init_age_stats
+
+    gov.each do |element|
+      add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
+    end
+
+    generate_age_data
+
+    return {:ages => self.age_data, :max => self.age_max_total}
+  end
+
+  def map_all branch, government_id
+    government_type_id = government_type_from_text branch
+    gov = GovernmentSupport.find(
+      :all, 
+      :conditions => {:government_id => government_id, "governments.government_type_id" => government_type_id}, 
+      :joins => [
+        "join users on users.id = government_supports.user_id",
+        "join zips on users.zip_code = zips.zip",
+        "join states on zips.state_id = states.id",
+        "join governments on governments.id = government_supports.government_id"
+      ], 
+      :select => "support_type, count(support_type) as count, states.abbreviation as abbreviation", 
+      :group => "support_type, states.abbreviation")
+
+    #collect the results into a collection
+    init_national_map_stats
+
+    gov.each do |element|
+      add_national_map_element :abbreviation => element.abbreviation, :support_type => element.support_type.to_i, :count => element.count.to_i
+    end
+
+    calculate_national_map_stats
+
+    return self.national_map_stats
+  end
+
+  def map_state branch, government_id, state
+    government_type_id = government_type_from_text branch
+    state = state.upcase
+
+    gov = GovernmentSupport.find(
+      :all, 
+      :conditions => {:government_id => government_id, "states.abbreviation" => state, "governments.government_type_id" => government_type_id}, 
+      :joins => [
+        "join governments on governments.id = government_supports.government_id",
+        "join users on users.id = government_supports.user_id",
+        "join zips on users.zip_code = zips.zip",
+        "join states on zips.state_id = states.id"
+      ], 
+      :select => "support_type, count(support_type) as count, zips.zip, zips.latitude, zips.longitude", 
+      :group => "support_type, zips.zip, zips.latitude, zips.longitude")
+
+    init_state_map_stats
+    #collect the results into a collection
+    gov.each do |c|
+      add_state_map_element :zip => c.zip, :lat => c.latitude, :long => c.longitude, :support_type => c.support_type.to_i, :count => c.count.to_i
+    end
+
+    calculate_state_map_stats
+    return self.state_map_stats
+  end
+
 
 
   class << self
@@ -118,8 +240,10 @@ class Government < ActiveRecord::Base
           if params.key? :user_id
             records = records.order('government_supports.updated_at desc')
           end
-        when 'default_asc' || 'desult_desc'
+        when 'default_asc'
           records = records.order('governments.default_order asc, governments.name asc')
+        when 'default_desc'
+          records = records.order('governments.default_order desc, governments.name asc')
         else
           records = records.order('governments.name asc')
         end

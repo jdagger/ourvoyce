@@ -49,12 +49,32 @@ class ServicesController < ApplicationController
   end
 
   def ourvoyce_map_all
-    @results = User.new.map_all
+    @states = User.new.map_all
     render :template => 'services/map/national'
   end
 
   def ourvoyce_map_state
-    @results = User.new.map_state params[:state]
+    @zips = User.new.map_state params[:state]
+    render :template => 'services/map/state'
+  end
+
+  def government_age_all
+    @results = Government.new.age_all params[:branch], params[:government_id]
+    render :template => 'services/graph/age'
+  end
+
+  def government_age_state
+    @results = Government.new.age_state params[:branch], params[:government_id], params[:state]
+    render :template => 'services/graph/age'
+  end
+
+  def government_map_all
+    @states = Government.new.map_all params[:branch], params[:government_id]
+    render :template => 'services/map/national'
+  end
+
+  def government_map_state
+    @zips = Government.new.map_state params[:branch], params[:government_id], params[:state]
     render :template => 'services/map/state'
   end
 end

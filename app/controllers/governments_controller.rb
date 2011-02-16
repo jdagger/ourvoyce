@@ -7,51 +7,73 @@ class GovernmentsController < ApplicationController
     search_options = {}
     search_options[:user_id] = self.user_id
     search_options[:branch] = 'executive' 
-    search_options[:sort] = 'default_asc'
+
+    if params[:sort].blank?
+      params[:sort] = 'default_asc'
+      search_options[:sort] = 'default_asc'
+    else
+      search_options[:sort] = params[:sort]
+    end
 
     @presenter = ExecutivePresenter.new
     @presenter.executives = Government.do_search search_options
   end
 
-  def legislative
-    #Check if a state was selected.  
-    #If state not selected, display list of states.  
-    #Otherwise, display list of legislatives from the state
-    if ! params.key? :state
-      @presenter = LegislativeStatePresenter.new
-      @presenter.states = State.find(:all, 
-                                     :select => ["states.name as name", "states.logo as logo", "states.abbreviation as abbreviation", "legislative_states.social_score as social_score", "legislative_states.participation_rate as participation_rate"],
-                                     :joins => ["left outer join legislative_states on legislative_states.state_id = states.id"],
-                                     :order => "states.name asc"
-                                    )
-      render 'governments/legislative_states'
-    else
-      state = State.where(:abbreviation => params[:state]).first
-
-      #Verify the state could be loaded
-      if state.nil?
-        redirect_to :action => :legislative, :state => nil
-        return
+  def legislative_state
+    sort = 'states.name asc'
+    if params[:sort].blank?
+      params[:sort] = "name_asc"
+    else params[:sort].blank?
+      case params[:sort]
+      when "name_asc"
+        sort = "states.name asc"
+      when "name_desc"
+        sort = "states.name desc"
+      when "social_asc"
+        sort = "legislative_states.social_score asc"
+      when "social_desc"
+        sort = "legislative_states.social_score desc"
+      when "participation_asc"
+        sort = "legislative_states.participation_rate asc"
+      when "participation_desc"
+        sort = "legislative_states.participation_rate desc"
       end
-
-
-      @presenter = LegislativePresenter.new
-      search_options = {}
-
-      search_options[:user_id] = self.user_id
-      search_options[:branch] = 'legislative'
-      search_options[:state] = state.id
-
-      results = Government.do_search search_options
-      results.each do |leg|
-        if leg.chamber_id == 1
-          @presenter.representatives << leg
-        else
-          @presenter.senators << leg
-        end
-      end
-      render 'governments/legislative'
     end
+    @presenter = LegislativeStatePresenter.new
+    @presenter.states = State.find(:all, 
+                                   :select => ["states.name as name", "states.logo as logo", "states.abbreviation as abbreviation", "legislative_states.social_score as social_score", "legislative_states.participation_rate as participation_rate"],
+                                   :joins => ["left outer join legislative_states on legislative_states.state_id = states.id"],
+                                   :order => sort
+                                  )
+                                  render 'governments/legislative_states'
+  end
+
+  def legislative
+    state = State.where(:abbreviation => params[:state]).first
+
+    #Verify the state could be loaded
+    if state.nil?
+      redirect_to :action => :legislative, :state => nil
+      return
+    end
+
+
+    @presenter = LegislativePresenter.new
+    search_options = {}
+
+    search_options[:user_id] = self.user_id
+    search_options[:branch] = 'legislative'
+    search_options[:state] = state.id
+
+    results = Government.do_search search_options
+    results.each do |leg|
+      if leg.chamber_id == 1
+        @presenter.representatives << leg
+      else
+        @presenter.senators << leg
+      end
+    end
+    render 'governments/legislative'
   end
 
   def agency
