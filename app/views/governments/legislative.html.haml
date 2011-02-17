@@ -1,45 +1,52 @@
 = render :partial => "shared/government_menu"
-.span-12.last
-  Maps/Graphs
-.span-12
-  %table
-    %caption Senate
-    %thead
+URLS:
+%br
+= "/services/website/government/legislative/map/:id"
+%br
+= "/services/website/government/legislative/map/:id/:state"
+%br
+= "/services/website/government/legislative/age/:id"
+%br
+= "/services/website/government/legislative/age/:id/:state"
+%table
+  %caption Senate
+  %thead
+    %tr
+      %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th Picture
+      %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+    - @presenter.senators.each do |senator|
       %tr
-        %th Vote
-        %th Picture
-        %th Name
-        %th Title
-        %th SS
-        %th PR
-      - @presenter.senators.each do |senator|
-        %tr
-          %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
-          %td
-            %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
-          %td= senator.first_name + " " + senator.last_name
-          %td= senator.title
-          %td= senator.social_score
-          %td= senator.participation_rate
+        %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
+        %td
+          %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
+        %td= senator.first_name + " " + senator.last_name
+        %td= senator.title
+        %td= senator.social_score
+        %td= senator.participation_rate
 
 
-  %table
-    %caption House of Representatives
-    %thead
+%table
+  %caption House of Representatives
+  %thead
+    %tr
+      %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th Picture
+      %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "District", :sort_column => 'district', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+    - @presenter.representatives.each do |rep|
       %tr
-        %th Vote
-        %th Picture
-        %th Name
-        %th Title
-        %th District
-        %th SS
-        %th PR
-      - @presenter.representatives.each do |rep|
-        %tr
-          %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
-          %td
-            %img{:src => get_government_image_64(rep.logo, rep.government_type_id, rep.chamber_id) , :alt => 'portrait'}
-          %td= rep.first_name + " " + rep.last_name
-          %td= rep.district
-          %td= rep.social_score
-          %td= rep.participation_rate
+        %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
+        %td
+          %img{:src => get_government_image_64(rep.logo, rep.government_type_id, rep.chamber_id) , :alt => 'portrait'}
+        %td= rep.first_name + " " + rep.last_name
+        %td= rep.title
+        %td= rep.district
+        %td= rep.social_score
+        %td= rep.participation_rate

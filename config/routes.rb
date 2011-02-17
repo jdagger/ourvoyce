@@ -38,13 +38,13 @@ Production::Application.routes.draw do
   match "/products/vote" => "products#vote", :as => :product_vote
 
   match "/media/vote" => "medias#vote", :as => :media_vote
-	match "/media(/:type(/:network))" => "medias#index", :as => :media_index
+	match "/media(/:media_type(/:network(/:filter(/:sort(/:page)))))" => "medias#index", :as => :media_index
 
   match "/government/vote" => "governments#vote", :as => :government_vote
 	match '/government' => 'governments#index', :as => :government_index
 	scope "/government" do
 		match 'executive(/:sort)' => 'governments#executive', :as => :executive, :defaults => {:sort => ''}
-		match 'legislative(/:state)' => 'governments#legislative', :as => :legislative
+		match 'legislative/:state(/:sort)' => 'governments#legislative', :as => :legislative
 		match 'legislative_state(/:sort)' => 'governments#legislative_state', :as => :legislative_state
 		match 'agency(/:filter(/:sort(/:page)))' => 'governments#agency', :defaults => {:filter => '', :sort => '', :page => 1}, :as => :agency
 	end

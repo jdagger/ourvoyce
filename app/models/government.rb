@@ -224,6 +224,10 @@ class Government < ActiveRecord::Base
             records = records.order('governments.name asc')
         when 'name_desc'
             records = records.order('governments.name desc')
+        when 'district_asc'
+            records = records.order('governments.district asc')
+        when 'district_desc'
+            records = records.order('governments.district desc')
         when 'social_asc'
             records = records.order('governments.social_score asc')
         when 'social_desc'

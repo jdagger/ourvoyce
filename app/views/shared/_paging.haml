@@ -1,22 +1,23 @@
-- total_pages = paging_data.links.length
-- current_page = paging_data.current_page
-- links_to_show = [total_pages - 1, 7].min
-- start_index = [0, current_page - 1 - (links_to_show / 2)].max
-- last_index = [total_pages - 1, start_index + links_to_show - 1].min
+- final_index = paging_data.links.length - 1
+- current_index = paging_data.current_page - 1
+- links_to_show = 7
+- last_index = [final_index, [links_to_show - 1, current_index + links_to_show / 2].max].min
+- start_index = [0, last_index - links_to_show + 1].max
 
 //Display quick link to page 1
 - if start_index > 0
   %a{:href => paging_data.links[0][:link_url]}= "<<"
   = "&nbsp;".html_safe
 
-- (start_index..last_index).each do |i|
-  - link = paging_data.links[i]
-  - if paging_data.current_page.to_i == link[:page].to_i
-    %b= link[:page]
-  - else
-    %a{:href => link[:link_url]}=link[:page]
+- if final_index > 0 || current_index > final_index #Display paging if multiple pages or beyond final index
+  - (start_index..last_index).each do |i|
+    - link = paging_data.links[i]
+    - if paging_data.current_page.to_i == link[:page].to_i
+      %b= link[:page]
+    - else
+      %a{:href => link[:link_url]}=link[:page]
 
 //Display quick link to last page
-- if last_index < total_pages - 1
+- if last_index < final_index
   = "&nbsp;".html_safe
-  %a{:href => paging_data.links[total_pages - 1][:link_url]}= ">>"
+  %a{:href => paging_data.links[final_index][:link_url]}= ">>"

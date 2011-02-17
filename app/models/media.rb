@@ -1,8 +1,8 @@
 class Media < ActiveRecord::Base
 
-	has_many :media_supports
-	has_many :users, :through => :media_supports
-	has_many :media_audits
+  has_many :media_supports
+  has_many :users, :through => :media_supports
+  has_many :media_audits
   belongs_to :media_type
 
   has_many :children, :class_name => 'Media', :foreign_key => "parent_media_id"
@@ -13,13 +13,13 @@ class Media < ActiveRecord::Base
     generated_indexes
   end
 
-	class << self
-		def media_lookup id
-			begin
-				return Media.find id
-			rescue
-				return nil
-			end
+  class << self
+    def media_lookup id
+      begin
+        return Media.find id
+      rescue
+        return nil
+      end
     end
 
 
@@ -28,8 +28,7 @@ class Media < ActiveRecord::Base
     # parent_media_id
     # user_id - user id, if support should be included
     #   vote - if user_id is specified, will filter by thumbs_up, thumbs_down, vote, no_vote, all
-    # sort_name
-    # sort_direction
+    # sort - {sort_name}_{sort_direction}
     # do_search will return an AR object with all that match the specified filter.  
     # It DOES NOT apply paging (limit, offset)
     def do_search(params={})
@@ -85,38 +84,38 @@ class Media < ActiveRecord::Base
 
       records = records.select(select.join(", "))
 
-      if params.key?(:sort_direction) && params.key?(:sort_name)
-        begin
-          #column, direction = params[:sort].downcase.split('_')
-          column = params[:sort_name].downcase
-          direction = params[:sort_direction].downcase
-
-          direction = (direction == 'asc') ? 'asc' : 'desc'
-
-          case column
-          when 'name'
-            column = 'medias.name'
-          when 'social'
-            column = 'medias.social_score'
-          when 'participation'
-            column = 'medias.participation_rate'
-          when 'votedate'
-            if params.key? :user_id
-              column = 'media_supports.updated_at'
-            end
-          when 'default'
-            column = 'medias.default_order'
-          else
-            column = 'medias.name'
+      if params.key? :sort
+        case params[:sort].downcase
+        when 'name_asc'
+          records = records.order('medias.name asc')
+        when 'name_desc'
+          records = records.order('medias.name desc')
+        when 'social_asc'
+          records = records.order('medias.social_score asc')
+        when 'social_desc'
+          records = records.order('medias.social_score desc')
+        when 'participation_asc'
+          records = records.order('medias.participation_rate asc')
+        when 'participation_desc'
+          records = records.order('medias.participation_rate desc')
+        when 'votedate_asc'
+          if params.key? :user_id
+            records = records.order('media_supports.updated_at asc')
           end
-
-          records = records.order("#{column} #{direction}")
-        rescue
+        when 'votedate_desc'
+          if params.key? :user_id
+            records = records.order('media_supports.updated_at desc')
+          end
+        when 'default_asc'
+          records = records.order('medias.default_order asc')
+        when 'default_desc'
+          records = records.order('medias.default_order desc')
+        else
+          records = records.order('medias.name asc')
         end
       end
-
       return records
     end
 
-	end
+  end
 end

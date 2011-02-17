@@ -49,11 +49,11 @@ class GovernmentsController < ApplicationController
   end
 
   def legislative
+
     state = State.where(:abbreviation => params[:state]).first
 
-    #Verify the state could be loaded
     if state.nil?
-      redirect_to :action => :legislative, :state => nil
+      redirect_to :action => :legislative_state
       return
     end
 
@@ -64,6 +64,13 @@ class GovernmentsController < ApplicationController
     search_options[:user_id] = self.user_id
     search_options[:branch] = 'legislative'
     search_options[:state] = state.id
+
+    if params[:sort].blank?
+      params[:sort] = 'default_asc'
+      search_options[:sort] = 'default_asc'
+    else
+      search_options[:sort] = params[:sort]
+    end
 
     results = Government.do_search search_options
     results.each do |leg|

@@ -1,61 +1,64 @@
-.span-12.last
-  Maps/Graphs
-.span-12
+%table
+  %caption
+    Media Type
+  %tbody
+  - @presenter.media_types.each do |media_type|
+    %tr
+      - if @presenter.media_types.count == 1
+        %td= link_to media_type.name
+      - else
+        %td= link_to media_type.name, :media_type => media_type.name
+      %td= media_type.social_score
+      %td= media_type.participation_rate
+
+
+- if @presenter.networks.count > 0
   %table
-    %caption
-      Media Type
-      = link_to "(reset)", :type => nil, :network => nil
     %thead
       %tr
-        %th Logo
-        %th Name
-        %th SS
-        %th PR
     %tbody
-    - @presenter.media_types.each do |media_type|
+    - @presenter.networks.each do |network|
       %tr
-        %td= ''
-        %td= link_to media_type.name, :type => media_type.name
-        %td= media_type.social_score
-        %td= media_type.participation_rate
+        %td
+          %img{:src => get_media_image_128(network.logo), :alt => 'logo'}
+        - if @presenter.networks.count == 1
+          %td= link_to network.name, :media_type => @presenter.media_types[0].name
+        - else
+          %td= link_to network.name, :media_type => @presenter.media_types[0].name, :network => network.name
+        %td= network.social_score 
+        %td= network.participation_rate
 
-  - if @presenter.second_level.count > 0
-    %table
-      %thead
-        %tr
-          -if @presenter.second_level_vote
-            %th
-          %th Logo
-          %th Name
-          %th SS
-          %th PR
-      %tbody
-      - @presenter.second_level.each do |second|
-        %tr
-          -if @presenter.second_level_vote
-            %td= render :partial => 'shared/vote_control', :object =>{:id => second.id, :support_type => second.support_type, :post_url => :media_vote}, :as => :d
-          %td
-            %img{:src => get_media_image_128(second.logo), :alt => 'logo'}
-          %td= link_to second.name, :type => @presenter.media_types[0].name, :network => second.name
-          %td= second.social_score 
-          %td= second.participation_rate
 
-  - if @presenter.third_level.count > 0
-    %table
-      %thead
-        %tr
-          %th Vote
-          %th Logo
-          %th Name
-          %th SS
-          %th PR
-      %tbody
-      - @presenter.third_level.each do |third|
-        %tr
-          %td= render :partial => 'shared/vote_control', :object =>{:id => third.id, :support_type => third.support_type, :post_url => :media_vote}, :as => :d
-          %td
-            %img{:src => get_media_image_128(third.logo)}
-          %td= third.name
-          %td= third.social_score
-          %td= third.participation_rate 
+- if @presenter.shows.count > 0 || @presenter.force_display_shows
+  %fieldset
+    %legend Filtering:
+    =link_to 'Thumbs Up', :media_type => params[:media_type], :network => params[:network], :filter => 'thumbsup', :sort => params[:sort], :page => 1
+    |
+    =link_to 'Thumbs Down', :media_type => params[:media_type], :network => params[:network], :filter => 'thumbsdown', :sort => params[:sort], :page => 1
+    |
+    =link_to 'Neutral', :media_type => params[:media_type], :network => params[:network], :filter => 'neutral', :sort => params[:sort], :page => 1
+    |
+    =link_to 'Voted', :media_type => params[:media_type], :network => params[:network], :filter => 'vote', :sort => params[:sort], :page => 1
+    |
+    =link_to 'No Vote', :media_type => params[:media_type], :network => params[:network], :filter => 'novote', :sort => params[:sort], :page => 1
+    ||
+    =link_to 'All Records', :media_type => params[:media_type], :network => params[:network], :filter => 'all', :sort => params[:sort], :page => 1
+
+  = render :partial => "shared/paging", :object => @paging, :as => :paging_data
+  %table
+    %thead
+      %tr
+        %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+        %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => {:filter => params[:filter], :page => params[:page] }
+        %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
+        %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
+    %tbody
+    - @presenter.shows.each do |show|
+      %tr
+        %td= render :partial => 'shared/vote_control', :object =>{:id => show.id, :support_type => show.support_type, :post_url => :media_vote}, :as => :d
+        %td
+          %img{:src => get_media_image_128(show.logo)}
+          = show.name
+        %td= show.social_score
+        %td= show.participation_rate 
 
