@@ -1,16 +1,36 @@
 class Media < ActiveRecord::Base
+  include AgeGraphHelper
+  include MapGraphHelper
 
   has_many :media_supports
   has_many :users, :through => :media_supports
   has_many :media_audits
   belongs_to :media_type
-
   has_many :children, :class_name => 'Media', :foreign_key => "parent_media_id"
   belongs_to :parent_media, :class_name => 'Media'
 
   #used by texticle to define indexes
   index do
     generated_indexes
+  end
+
+
+
+  def age_all media_id
+    generate_age_all :base_object_name => 'media', :base_object_id => media_id
+  end
+
+
+  def age_state media_id, state
+    generate_age_state :base_object_name => 'media', :base_object_id => media_id, :state => state
+  end
+
+  def map_all media_id
+    generate_map_all :base_object_name => 'media', :base_object_id => media_id
+  end
+
+  def map_state media_id, state
+    generate_map_state :base_object_name => 'media', :base_object_id => media_id, :state => state
   end
 
   class << self

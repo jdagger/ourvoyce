@@ -54,10 +54,15 @@ Production::Application.routes.draw do
 	match "services/website/corporate/age/:corporation_id" => "services#corporate_age_all"
 	match "services/website/corporate/age/:corporation_id/:state" => "services#corporate_age_state"
 
-	match "services/website/government/:branch/map/:government_id" => "services#government_map_all"
-	match "services/website/government/:branch/map/:government_id/:state" => "services#government_map_state"
-	match "services/website/government/:branch/age/:government_id" => "services#government_age_all"
-	match "services/website/government/:branch/age/:government_id/:state" => "services#government_age_state"
+	match "services/website/government/map/:government_id" => "services#government_map_all"
+	match "services/website/government/map/:government_id/:state" => "services#government_map_state"
+	match "services/website/government/age/:government_id" => "services#government_age_all"
+	match "services/website/government/age/:government_id/:state" => "services#government_age_state"
+
+	match "services/website/media/map/:media_id" => "services#media_map_all"
+	match "services/website/media/map/:media_id/:state" => "services#media_map_state"
+	match "services/website/media/age/:media_id" => "services#media_age_all"
+	match "services/website/media/age/:media_id/:state" => "services#media_age_state"
 
 	match "services/website/ourvoyce/age" => "services#ourvoyce_age_all"
 	match "services/website/ourvoyce/age/:state" => "services#ourvoyce_age_state"

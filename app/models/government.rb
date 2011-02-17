@@ -27,113 +27,21 @@ class Government < ActiveRecord::Base
     return government_type_id
   end
 
-  def age_all branch, government_id
-    government_type_id = government_type_from_text branch
-
-    gov = GovernmentSupport.find(
-      :all, 
-      :conditions => {:government_id => government_id, "governments.government_type_id" => government_type_id}, 
-      :joins => [
-        "join users on users.id = government_supports.user_id",
-        "join governments on governments.id = government_supports.government_id"
-      ], 
-      :select => "support_type, count(support_type) as count, users.birth_year", 
-      :group => "support_type, users.birth_year"
-    )
-
-    init_age_stats 
-
-    gov.each do |element|
-      add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
-    end
-
-    generate_age_data
-
-    return {:ages => self.age_data, :max => self.age_max_total}
+  def age_all government_id
+    generate_age_all :base_object_name => 'government', :base_object_id => government_id
   end
 
-
-
-
-
-  def age_state branch, government_id, state
-    government_type_id = government_type_from_text branch
-    state = state.upcase
-    gov = GovernmentSupport.find(
-      :all, 
-      :conditions => {:government_id => government_id, "states.abbreviation" => state, "governments.government_type_id" => government_type_id }, 
-      :joins => [
-        "join users on users.id = government_supports.user_id",
-        "join zips on users.zip_code = zips.zip",
-        "join states on zips.state_id = states.id",
-        "join governments on governments.id = government_supports.government_id"
-      ], 
-      :select => "support_type, count(support_type) as count, users.birth_year", 
-      :group => "support_type, users.birth_year")
-
-    init_age_stats
-
-    gov.each do |element|
-      add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
-    end
-
-    generate_age_data
-
-    return {:ages => self.age_data, :max => self.age_max_total}
+  def age_state government_id, state
+    generate_age_state :base_object_name => 'government', :base_object_id => government_id, :state => state
   end
 
-  def map_all branch, government_id
-    government_type_id = government_type_from_text branch
-    gov = GovernmentSupport.find(
-      :all, 
-      :conditions => {:government_id => government_id, "governments.government_type_id" => government_type_id}, 
-      :joins => [
-        "join users on users.id = government_supports.user_id",
-        "join zips on users.zip_code = zips.zip",
-        "join states on zips.state_id = states.id",
-        "join governments on governments.id = government_supports.government_id"
-      ], 
-      :select => "support_type, count(support_type) as count, states.abbreviation as abbreviation", 
-      :group => "support_type, states.abbreviation")
-
-    #collect the results into a collection
-    init_national_map_stats
-
-    gov.each do |element|
-      add_national_map_element :abbreviation => element.abbreviation, :support_type => element.support_type.to_i, :count => element.count.to_i
-    end
-
-    calculate_national_map_stats
-
-    return self.national_map_stats
+  def map_all government_id
+    generate_map_all :base_object_name => 'government', :base_object_id => government_id
   end
 
-  def map_state branch, government_id, state
-    government_type_id = government_type_from_text branch
-    state = state.upcase
-
-    gov = GovernmentSupport.find(
-      :all, 
-      :conditions => {:government_id => government_id, "states.abbreviation" => state, "governments.government_type_id" => government_type_id}, 
-      :joins => [
-        "join governments on governments.id = government_supports.government_id",
-        "join users on users.id = government_supports.user_id",
-        "join zips on users.zip_code = zips.zip",
-        "join states on zips.state_id = states.id"
-      ], 
-      :select => "support_type, count(support_type) as count, zips.zip, zips.latitude, zips.longitude", 
-      :group => "support_type, zips.zip, zips.latitude, zips.longitude")
-
-    init_state_map_stats
-    #collect the results into a collection
-    gov.each do |c|
-      add_state_map_element :zip => c.zip, :lat => c.latitude, :long => c.longitude, :support_type => c.support_type.to_i, :count => c.count.to_i
-    end
-
-    calculate_state_map_stats
-    return self.state_map_stats
+  def map_state government_id, state
+    generate_map_state :base_object_name => 'government', :base_object_id => government_id, :state => state
   end
-
 
 
   class << self

@@ -59,22 +59,42 @@ class ServicesController < ApplicationController
   end
 
   def government_age_all
-    @results = Government.new.age_all params[:branch], params[:government_id]
+    @results = Government.new.age_all params[:government_id]
     render :template => 'services/graph/age'
   end
 
   def government_age_state
-    @results = Government.new.age_state params[:branch], params[:government_id], params[:state]
+    @results = Government.new.age_state params[:government_id], params[:state]
     render :template => 'services/graph/age'
   end
 
   def government_map_all
-    @states = Government.new.map_all params[:branch], params[:government_id]
+    @states = Government.new.map_all params[:government_id]
     render :template => 'services/map/national'
   end
 
   def government_map_state
-    @zips = Government.new.map_state params[:branch], params[:government_id], params[:state]
+    @zips = Government.new.map_state params[:government_id], params[:state]
+    render :template => 'services/map/state'
+  end
+
+  def media_age_all
+    @results = Media.new.age_all params[:media_id]
+    render :template => 'services/graph/age'
+  end
+
+  def media_age_state
+    @results = Media.new.age_state params[:media_id], params[:state]
+    render :template => 'services/graph/age'
+  end
+
+  def media_map_all
+    @states = Media.new.map_all params[:media_id]
+    render :template => 'services/map/national'
+  end
+
+  def media_map_state
+    @zips = Media.new.map_state params[:media_id], params[:state]
     render :template => 'services/map/state'
   end
 end
