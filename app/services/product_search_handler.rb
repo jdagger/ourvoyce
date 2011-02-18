@@ -40,8 +40,9 @@ class ProductSearchHandler < SearchHandlerBase
 		end
 
     if !(self.request.sort_name.blank? || self.request.sort_direction.blank?)
-      search_options[:sort_name] = self.request.sort_name
-      search_options[:sort_direction] = self.request.sort_direction
+      #search_options[:sort_name] = self.request.sort_name
+      #search_options[:sort_direction] = self.request.sort_direction
+      search_options[:sort] = "#{self.request.sort_name}_#{self.request.sort_direction}"
     end
 
 
