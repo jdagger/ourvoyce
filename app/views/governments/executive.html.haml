@@ -11,8 +11,10 @@
         %th Picture
         %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
         %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+        %th
+          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+          = '/'
+          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
       %tbody
       - @presenter.executives.each do |executive|
         %tr
@@ -25,8 +27,8 @@
               %br
               = "#{executive.first_name} #{executive.last_name}"
           %td= executive.title
-          %td= executive.social_score
           %td
+            = executive.social_score
             %img{:src => participation_rate_image(executive.participation_rate), :alt => executive.participation_rate}
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government"}

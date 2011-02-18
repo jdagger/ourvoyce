@@ -1,13 +1,4 @@
-%h2 OurVoyce
-
-.span-12
-  Ages:
-  -(1..100).each do |age|
-    = "{"
-    = "#{age}, "
-    = (@ages["age_#{age}"].nil? ? '0' : @ages["age_#{age}"]) rescue '0'
-    = "}, "
-
+.left-content
   %table
     %thead
       %tr
@@ -17,9 +8,9 @@
     %tbody
       - @states.each do |state|
         %tr
-          %td= link_to state.name, :state => state.abbreviation
+          %td= state.name
           %td= state.user_count
           %td= number_with_precision(100 * state.user_count.to_f / state.population, :precision => 2).to_s + '%'
 
-.span-12.last
-  Maps/Graphs
+.graph-contents
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "ourvoyce"}

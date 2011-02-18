@@ -28,8 +28,10 @@
       %tr
         %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
         %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+        %th
+          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+          = '/'
+          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
     %tbody
     - @presenter.agencies.each do |agency|
       %tr
@@ -40,8 +42,8 @@
             %img{:src => get_government_image_64(agency.logo, 1), :alt => 'logo'}
             %br
             = agency.name
-        %td= agency.social_score
         %td
+          = agency.social_score
           %img{:src => participation_rate_image(agency.participation_rate), :alt => agency.participation_rate}
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government"}

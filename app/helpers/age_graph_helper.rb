@@ -96,7 +96,6 @@ module AgeGraphHelper
 
     items.each do |element|
       add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
-      #Rails.logger.error "Age: #{Time.now.year - element.birth_year.to_i}, Support Type: #{element.support_type.to_i}, Count: #{element.count.to_i}"
     end
 
     generate_age_data
@@ -105,6 +104,8 @@ module AgeGraphHelper
   end
 
   def init_age_stats
+    self.age_max_total = 0
+    self.age_data= []
     self.age_stats = {}
     self.age_lookups.keys.each do |range|
       self.age_stats[range] = {:negative => 0, :neutral => 0, :positive => 0, :count => 0}
@@ -116,13 +117,12 @@ module AgeGraphHelper
     self.age_lookups.each do |key, range|
       if range === params[:age].to_i
         element = self.age_stats[key]
-        #Rails.logger.error "Key: #{key}"
         break
       end
     end
 
     if ! element.nil?
-      element[:count] += params[:count]
+      element[:count] = element[:count] +  params[:count]
       case params[:support_type]
       when 0
         element[:negative] = element[:negative] + params[:count]
@@ -135,8 +135,6 @@ module AgeGraphHelper
   end
 
   def generate_age_data params = {}
-    self.age_data= []
-    self.age_max_total = 0
     self.age_stats.each do |label, value|
       #Find total number of votes
       negative = value[:negative].to_i
@@ -146,18 +144,23 @@ module AgeGraphHelper
 
       self.age_max_total = [self.age_max_total, total].max
 
+      score = 0
+      if total > 0
+        score = (positive * 100) / total
+      end
+
       if params.key? :color #If overriding the color, use that color instead of the calculated color
         color = params[:color]
-      elsif total > 0
-        score = (positive * 100) / total
-        color = color_from_social_score(score)
+      elsif params.key? :color_method
+        color = eval("#{params[:color_method]} #{score}")
       else
-        color = "ffffff"
+        color = color_from_social_score(score)
       end
       self.age_data << {:label => label, :color => color, :scale => '1.0', :total => total}
     end
 
-    self.age_data.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
+
+    #self.age_data.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
 
 
     #set scale

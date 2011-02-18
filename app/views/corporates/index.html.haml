@@ -25,8 +25,10 @@
           %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => {:filter => params[:filter], :page => params[:page] }
           %th= table_sort_header_link :header => "Profit", :sort_column => 'profit', :link_params => {:filter => params[:filter], :page => params[:page] }
           %th= table_sort_header_link :header => "Revenue", :sort_column => 'revenue', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
           %th -
       %tbody
         - count = 0
@@ -44,8 +46,8 @@
                 = c.name
             %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
             %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
-            %td= c.social_score
             %td
+              = c.social_score
               %img{:src => participation_rate_image(c.participation_rate), :alt => c.participation_rate}
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 .graph-contents

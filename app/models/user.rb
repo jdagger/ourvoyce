@@ -47,10 +47,17 @@ class User < ActiveRecord::Base
 
   def age_all 
     init_age_stats
-    User.find(:all, :group => 'birth_year', :select => 'birth_year, count(birth_year)').each do |user|
+    User.find(:all, :group => 'birth_year', :select => 'birth_year, count(birth_year) as count').each do |user|
       add_age_hash_entry :age => Time.now.year - user.birth_year.to_i, :support_type => -1, :count => user.count.to_i
     end
-    generate_age_data :color => '00ff00'
+
+    max_total_element = self.age_stats.values.max { |a, b| a[:count].to_i <=> b[:count].to_i }
+    self.age_max_total = max_total_element[:count]
+
+    self.age_stats.each do |key, value|
+      self.age_data << {:label => key, :color => "00ff00", :scale => value[:count].to_f / self.age_max_total, :total => value.count }
+    end
+
 
     return {:ages => self.age_data, :max => self.age_max_total}
   end
@@ -58,7 +65,6 @@ class User < ActiveRecord::Base
   def age_state state
     state = state.upcase
 
-    #Optimize by having state_id in a lookup hash
     users = User.find(
       :all, 
       :conditions => {"states.abbreviation" => state}, 
@@ -75,33 +81,71 @@ class User < ActiveRecord::Base
       add_age_hash_entry :age => Time.now.year - user.birth_year.to_i, :support_type => -1, :count => user.count.to_i
     end
 
-    generate_age_data :color => '00ff00'
+    max_total_element = self.age_stats.values.max { |a, b| a[:count].to_i <=> b[:count].to_i }
+    self.age_max_total = max_total_element[:count]
+
+    self.age_stats.each do |key, value|
+      self.age_data << {:label => key, :color => "00ff00", :scale => value[:count].to_f / self.age_max_total, :total => value.count }
+    end
+
     return {:ages => self.age_data, :max => self.age_max_total}
   end
 
   def map_all
-    users = User.find(
-      :all, 
-      :joins => [
-        "join zips on users.zip_code = zips.zip", 
-        "join states on zips.state_id = states.id" 
-      ], 
-      :select => "states.abbreviation, count(states.abbreviation) as count", 
-      :group => "states.abbreviation")
-
     init_national_map_stats
 
+    users = User.find( 
+                      :all, 
+                      :joins => [ 
+                        "join zips on users.zip_code = zips.zip", 
+                        "join states on zips.state_id = states.id" 
+    ], 
+      :select => "states.abbreviation as abbreviation, count(states.abbreviation) as count, states.population as population", 
+      :group => "states.abbreviation, states.population") 
+
+    stats = []
+    #collect the data
     users.each do |user|
-      add_national_map_element :abbreviation => user.abbreviation, :support_type => -1, :count => user.count.to_i
+      stats << { :state => user[:abbreviation], :percent => user[:count].to_f * 100.0 / user[:population].to_f }
     end
 
-    calculate_national_map_stats
+    max_percent = stats.max { |a, b| a[:percent].to_f <=> b[:percent].to_f }
 
+    #normalize the data
+    stats.each do |stat|
+      scale = (stat[:percent] * 100 / max_percent[:percent]).to_i
+      self.national_map_stats << { :name => stat[:state], :color => shades_of_green(scale) }
+    end
 
     return self.national_map_stats
   end
 
   def map_state state
+    state = state.upcase
+
+    users = User.find(:all,
+                      :select => "count(zips.zip) as count, zips.zip, zips.latitude, zips.longitude",
+                      :joins => [
+                        "join zips on users.zip_code = zips.zip", 
+                        "join states on zips.state_id = states.id"
+                      ],
+                      :conditions => {"states.abbreviation" => state},
+                      :group => "zips.zip, zips.latitude, zips.longitude")
+    init_state_map_stats
+    users.each do |c|
+      add_state_map_element :zip => c.zip, :lat => c.latitude, :long => c.longitude, :support_type => -1, :count => c.count.to_i
+    end
+
+    max_count_element = self.state_map_collected_data.values.max{ |a, b| a[:count] <=> b[:count] }
+    max_count = max_count_element[:count]
+
+
+    self.state_map_collected_data.each do |key, value|
+      self.state_map_stats << {:name => key, :color => '00ff00', :scale => value[:count].to_f / max_count, :lat => value[:lat], :long => value[:long], :votes => value[:count] }
+    end
+    (self.state_map_stats.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
+
+    return self.state_map_stats
   end
 
   class << self

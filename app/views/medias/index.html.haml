@@ -58,8 +58,10 @@
         %tr
           %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
           %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th= table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th= table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
       %tbody
       - @presenter.shows.each do |show|
         %tr
@@ -70,7 +72,8 @@
               %img{:src => get_media_image_128(show.logo)}
               %br
               = show.name
-          %td= show.social_score
-          %td= show.participation_rate 
+          %td
+            = show.social_score
+            %img{:src => participation_rate_image(show.participation_rate), :alt => show.participation_rate}
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "media"}

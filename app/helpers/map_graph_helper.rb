@@ -46,7 +46,7 @@ module MapGraphHelper
       add_national_map_element :abbreviation => element.abbreviation, :support_type => element.support_type.to_i, :count => element.count.to_i
     end
 
-    calculate_national_map_stats
+    calculate_national_map_stats params
 
 
     return self.national_map_stats
@@ -92,7 +92,7 @@ module MapGraphHelper
     end
 
     calculate_state_map_stats
-  return self.state_map_stats
+    return self.state_map_stats
 
   end
 
@@ -104,7 +104,7 @@ module MapGraphHelper
 
   def add_national_map_element params
     if ! self.national_map_collected_data.key? params[:abbreviation]
-      self.national_map_collected_data[params[:abbreviation]] = {:negative => 0, :neutral => 0, :positive => 0}
+      self.national_map_collected_data[params[:abbreviation]] = {:negative => 0, :neutral => 0, :positive => 0, :count => 0}
     end
 
     element = self.national_map_collected_data[params[:abbreviation]]
@@ -112,7 +112,7 @@ module MapGraphHelper
     record_support_type element, params[:support_type], params[:count]
   end
 
-  def calculate_national_map_stats
+  def calculate_national_map_stats params = {}
     self.national_map_collected_data.each do |key, value|
       #Find total number of votes
       negative = self.national_map_collected_data[key][:negative].to_i
@@ -126,7 +126,12 @@ module MapGraphHelper
       else
         score = 0
       end
-      self.national_map_stats << { :name => key, :color => color_from_social_score(score) }
+
+      if params.key? :color_method
+        self.national_map_stats << { :name => key, :color => eval("#{params[:color_method]} #{score}") }
+      else
+        self.national_map_stats << { :name => key, :color => color_from_social_score(score) }
+      end
     end
   end
 
@@ -140,7 +145,7 @@ module MapGraphHelper
 
   def add_state_map_element params
     if ! self.state_map_collected_data.key? params[:zip]
-      self.state_map_collected_data[params[:zip]] = {:negative => 0, :neutral => 0, :positive => 0, :lat => params[:lat], :long => params[:long]}
+      self.state_map_collected_data[params[:zip]] = {:negative => 0, :neutral => 0, :positive => 0, :lat => params[:lat], :long => params[:long], :count => 0}
     end
 
     element = self.state_map_collected_data[params[:zip]]
@@ -184,6 +189,7 @@ module MapGraphHelper
 
 
   def record_support_type element, support_type, count
+    element[:count] = element[:count] + count
     case support_type
     when 0
       element[:negative] = element[:negative] + count
