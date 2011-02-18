@@ -13,7 +13,12 @@ class MyvoyceController < ApplicationController
       search_params[:sort] = params[:sort]
     end
 
+    if params[:page].blank?
+      params[:page] = 1
+    end
+
     @presenter = ProductsIndexPresenter.new
+    @stats = User.new.user_stats self.user_id
 
     page_size = 15
     current_page = [params[:page].to_i, 1].max
@@ -38,6 +43,27 @@ class MyvoyceController < ApplicationController
       end
     end
 
+    #barcode lookup was selected
+    if params.key? :lookup_submit
+      redirect_to :barcode => params[:barcode_lookup].strip, :filter => params[:filter], :sort => params[:sort], :page => params[:page]
+      return
+    end
+
+
+    if ! params[:barcode].blank?
+      product = Product.upc_lookup :upc => params[:barcode]
+      if product.nil?
+        @current_product_description = 'Product could not be found'
+      else
+        support = ProductSupport.where(:user_id => self.user_id, :product_id => product.id).first
+        @current_product_description = product.description
+        @current_product_image = product.logo
+        @current_product_id = product.id
+        @current_product_support = support.support_type rescue -1
+      end
+    end
+
+
     records = Product.do_search search_params
 
     #Paging
@@ -47,15 +73,13 @@ class MyvoyceController < ApplicationController
 
     #Build paging links
     (1..@presenter.paging.total_pages).each do |count|
-      link = {:link_url => url_for(:controller => "myvoyce", :action => 'index', :page => count, :sort => params[:sort], :filter => params[:filter]), :page => count}
+      link = {:link_url => url_for(:controller => "myvoyce", :action => 'index', :page => count, :sort => params[:sort], :barcode => params[:barcode], :filter => params[:filter]), :page => count}
       @presenter.paging.links << link
     end
 
     records = records.offset((current_page - 1) * page_size).limit(page_size)
 
     @presenter.products = records
-
-
   end
 
   def logout

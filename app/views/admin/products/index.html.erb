@@ -11,6 +11,7 @@
 	<tr>
 		<th>UPC</th>
 		<th>EAN</th>
+		<th>Image</th>
 		<th>Description</th>
         <th>Pending?</th>
 		<th>Links</th>
@@ -21,6 +22,7 @@
 	<tr>
 		<td><%= product.upc %></td>
 		<td><%= product.ean %></td>
+    <td><img src="<%= get_product_image_128 product.logo %>" /></td>
 		<td><%= product.description %></td>
       <td><%= product.pending %></td>
 		<td>

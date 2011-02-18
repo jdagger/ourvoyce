@@ -21,12 +21,16 @@ class MyvoyceStatsHandler < HandlerBase
 			return
 		end
 
-		self.total_votes = ProductSupport.where(:user_id => self.user.id).count
-		#self.today_votes = 5
-		self.today_votes = ProductSupport.where("user_id = ? AND updated_at > ?", self.user.id, Time.now.beginning_of_day).count
-		self.this_week_votes = ProductSupport.where("user_id = ? AND updated_at > ?", self.user.id, Time.now.beginning_of_week).count
-		self.this_month_votes = ProductSupport.where("user_id = ? AND updated_at > ?", self.user.id, Time.now.beginning_of_month).count
-		self.this_year_votes = ProductSupport.where("user_id = ? AND updated_at > ?", self.user.id, Time.now.beginning_of_year).count
+    stats = User.new.user_stats self.user.id
+
+		self.member_since = stats[:member_since]
+		self.username = self.user.username
+
+		self.total_votes = stats[:total_scans]
+		self.today_votes = stats[:today_scans]
+		self.this_week_votes = stats[:this_week_scans]
+		self.this_month_votes = stats[:this_month_scans]
+		self.this_year_votes = stats[:this_year_scans]
 
 		self.total_votes_image = "#{Rails.configuration.logos_domain}/images/corporate_logos/128_128/not_found.gif"
 		self.today_votes_image = "#{Rails.configuration.logos_domain}/images/corporate_logos/128_128/not_found.gif"
@@ -34,8 +38,6 @@ class MyvoyceStatsHandler < HandlerBase
 		self.this_month_votes_image = "#{Rails.configuration.logos_domain}/images/corporate_logos/128_128/not_found.gif"
 		self.this_year_votes_image = "#{Rails.configuration.logos_domain}/images/corporate_logos/128_128/not_found.gif"
 
-		self.member_since = self.user.created_at.strftime("%B %d, %Y")
-		self.username = self.user.username
 		self.status = 1
 	end
 

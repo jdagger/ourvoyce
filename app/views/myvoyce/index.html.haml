@@ -1,19 +1,45 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
   
+%div
+  Stats:
+  %br
+  = "Username: #{@stats[:username]}"
+  %br
+  = "Member since: #{@stats[:member_since]}"
+  %br
+  = "Total: #{@stats[:total_scans]}"
+  %br
+  = "This year: #{@stats[:this_year_scans]}"
+  %br
+  = "This month: #{@stats[:this_month_scans]}"
+  %br
+  = "This week: #{@stats[:this_week_scans]}"
+  %br
+  = "Today: #{@stats[:today_scans]}"
+%fieldset
+  %legend Enter item identification number: (Test with 067933136480 )
+  = form_tag request.fullpath do
+    = text_field_tag :barcode_lookup, params[:barcode]
+    %input{:type => 'submit', :name => 'lookup_submit', :value => 'Lookup'}
+  %br
+  = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
+  %img{:src => get_product_image_128(@current_product_image) }
+  = @current_product_description || 'Enter a barcode'
+
 %fieldset
   %legend Filtering:
-  =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :page => 1
+  =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
   |
-  =link_to 'Thumbs Down', :filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1
+  =link_to 'Thumbs Down', :filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
   |
-  =link_to 'Neutral', :filter => 'vote=neutral', :sort => params[:sort], :page => 1
+  =link_to 'Neutral', :filter => 'vote=neutral', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
   |
-  =link_to 'All Votes', :filter => 'vote=voted', :sort => params[:sort], :page => 1
+  =link_to 'All Votes', :filter => 'vote=voted', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
   |
-  =link_to 'No Vote', :filter => 'vote=novote', :sort => params[:sort], :page => 1
+  =link_to 'No Vote', :filter => 'vote=novote', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
   |
-  =link_to '**All**', :filter => 'vote=all', :sort => params[:sort], :page => 1
+  =link_to '**All**', :filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
 
 = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
@@ -22,12 +48,12 @@
     %tr
       %th
       %th
-      %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] }
-      %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+        %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
+      %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
       %th
-        = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+        = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
         = '/'
-        = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+        = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
   %tbody
   - @presenter.products.each do |product|
     %tr

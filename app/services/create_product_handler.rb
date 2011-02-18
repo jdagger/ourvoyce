@@ -37,9 +37,13 @@ class CreateProductHandler < HandlerBase
 			if(load_user)
 				user_id = self.user.id
         ProductSupport.change_support(product.id, user_id, self.support_type)
-        
+
+        #Record the new product as being scaned
         pending_product = PendingProduct.new(:product_id => product.id, :name => self.name, :description => self.description, :user_id => user_id)
         pending_product.save
+
+				ps = ProductScan.new(:user_id => user_id, :product_id => product.id)
+        ps.save
 			end
 
 			self.status = 1

@@ -3,7 +3,7 @@ class Admin::ProductsController < ApplicationController
 	skip_before_filter :authorize, :only => [:show]
 
 	def index
-		page_size = 20
+		page_size = 100 
 		page = [params[:page].to_i, 1].max
 		@presenter = AdminProductsPresenter.new
 		@presenter.products = Product.find(:all, :offset => (page - 1) * page_size, :limit => page_size, :order => "name asc")

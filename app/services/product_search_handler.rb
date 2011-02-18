@@ -2,22 +2,6 @@ class ProductSearchHandler < SearchHandlerBase
   include ImageHelper
 
 	def handle_request
-=begin
-		self.search_options = {
-			:select => %w{products.id upc name description pending logo social_score participation_rate},
-			:filters => {}
-		}
-
-    #If the NOVOTE filter was selected for the product, override with the LIMITEDNOVOTE so all products aren't returned
-    if ! self.request.filters["VOTE"].nil?
-      if self.request.filters["VOTE"].strip.upcase =="NOVOTE"
-        self.request.filters["VOTE"] = "LIMITEDNOVOTE"
-      end
-    end
-
-		self.search_instance = Product.new
-    super
-=end
     search_options = {}
 
     if(load_user)

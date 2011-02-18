@@ -55,7 +55,11 @@
 
 	<div class="container">
 		<div class="label">Image Path:</div>
-		<div class="value"><%= @product.logo %></div>
+    <div class="value">
+      <img src="<%= get_product_image_128 @product.logo %>" />
+      <br />
+      <%= @product.logo %>
+    </div>
 	</div>
   
     <div class="container">

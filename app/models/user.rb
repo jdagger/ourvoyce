@@ -44,6 +44,20 @@ class User < ActiveRecord::Base
   has_many :governments, :through => :government_supports
   has_many :government_audits
 
+  def user_stats user_id
+    user = User.find user_id
+
+    {
+		  :member_since => user.created_at.strftime("%B %d, %Y"),
+		  :username => user.username,
+		  :total_scans => ProductScan.where(:user_id => user.id).count,
+      :today_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_day).count,
+      :this_week_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_week).count,
+      :this_month_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_month).count,
+      :this_year_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_year).count
+    }
+  end
+
 
   def age_all 
     init_age_stats

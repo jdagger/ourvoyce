@@ -14,7 +14,7 @@ Production::Application.routes.draw do
     match "/myvoyce/account" => :new
     match "/myvoyce/authenticate" => :authenticate
     match "/myvoyce/create" => :create
-    match "/myvoyce(/:filter(/:sort(/:page)))" => :index, :defaults => {:page => 1, :sort => '', :filter => ''}, :as => :myvoyce
+    match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => :index, :defaults => {:barcode => '', :page => '', :sort => '', :filter => ''}, :as => :myvoyce
     match "/logout" => :logout, :as => :logout
   end
 

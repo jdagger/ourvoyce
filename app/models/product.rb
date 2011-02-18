@@ -6,7 +6,7 @@ class Product < ActiveRecord::Base
   class << self
     def upc_lookup(options = {})
       raise "UPC not specified" if options[:upc].nil?
-      Product.where("upc = ? OR ean = ?", options[:upc], options[:upc])
+      Product.where("upc = ? OR ean = ?", options[:upc], options[:upc]).first
     end
 
 
