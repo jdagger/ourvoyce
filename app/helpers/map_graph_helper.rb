@@ -17,13 +17,27 @@ module MapGraphHelper
     end
 
     items = eval("#{params[:base_object_name].capitalize}Support")
-    items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    if ! params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
+      items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    end
     items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.joins("join zips on users.zip_code = zips.zip")
     items = items.joins("join states on zips.state_id = states.id")
     items = items.select("support_type, count(support_type) as count, states.abbreviation as abbreviation")
     items = items.group("support_type, states.abbreviation")
+
+    if params.key? :joins
+      params[:joins].each do |join|
+        items = items.joins(join)
+      end
+    end
+
+    if params.key? :conditions
+      params[:conditions].each do |condition|
+        items = items.where(condition)
+      end
+    end
 
     #collect the results into a collection
     init_national_map_stats
@@ -48,7 +62,9 @@ module MapGraphHelper
     state = params[:state].upcase
 
     items = eval("#{params[:base_object_name].capitalize}Support")
-    items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    if !params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
+      items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    end
     items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
     items = items.where("states.abbreviation" => state)
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
@@ -56,6 +72,18 @@ module MapGraphHelper
     items = items.joins("join states on zips.state_id = states.id")
     items = items.select("support_type, count(support_type) as count, zips.zip, zips.latitude, zips.longitude")
     items = items.group("support_type, zips.zip, zips.latitude, zips.longitude")
+
+    if params.key? :joins
+      params[:joins].each do |join|
+        items = items.joins(join)
+      end
+    end
+
+    if params.key? :conditions
+      params[:conditions].each do |condition|
+        items = items.where(condition)
+      end
+    end
 
     init_state_map_stats
     #collect the results into a collection
@@ -93,7 +121,11 @@ module MapGraphHelper
       total = negative + positive
 
       #determine a score
-      score = positive * 100 / total
+      if total > 0
+        score = positive * 100 / total
+      else
+        score = 0
+      end
       self.national_map_stats << { :name => key, :color => color_from_social_score(score) }
     end
   end
@@ -129,12 +161,20 @@ module MapGraphHelper
       self.state_max_total_votes = [self.state_max_total_votes, total].max
 
       #determine a score
-      score = positive * 100 / [total, 1].max
+      if total > 0
+        score = positive * 100 / total
+      else
+        score = 0
+      end
       self.state_map_stats << {:name => key, :color => color_from_social_score(score), :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
 
       #Calculate the scale
       self.state_map_stats.each do |zip|
-        zip[:scale] = zip[:votes].to_f / self.state_max_total_votes
+        if self.state_max_total_votes > 0
+          zip[:scale] = zip[:votes].to_f / self.state_max_total_votes
+        else
+          zip[:scale] = 0.0
+        end
       end
 
       (self.state_map_stats.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!

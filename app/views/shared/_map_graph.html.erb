@@ -1,10 +1,11 @@
 <script type="text/javascript">
 	var state = "";
+  var model = '<%= model %>';
 	var curID = "<%= id %>";
-	
+
 	function setState(st){
 	  state = st;
-	  sendToGraph("<%= model %>/age/" + curID + "/" + state);
+	  sendToGraph(model + "/age/" + curID + "/" + state);
 	}
 	
 	function sendToMap(dataString) {
@@ -24,13 +25,17 @@
 	  
 	  //alert("ready!");
 	  $("a.dataset").click(function(){
-	    curID = $(this).attr("href");
+	    //curID = $(this).attr("href");
+      curID = $(this).attr("href").split('_')[0]
+      model = $(this).attr("href").split('_')[1]
 	    
 	    //send to the map
-	    sendToMap("<%= model %>/map/" + $(this).attr("href") + "/");
+	    //sendToMap(model + "/map/" + $(this).attr("href") + "/");
+	    sendToMap(model + "/map/" + curID + "/");
 	    
 	    //send to the graph
-	    sendToGraph("<%= model %>/age/" + $(this).attr("href") + "/" + state);
+	    //sendToGraph(model + "/age/" + $(this).attr("href") + "/" + state);
+	    sendToGraph(model + "/age/" + curID + "/" + state);
 	    
 	    return false;
 	  });
@@ -45,12 +50,12 @@
   }
 	
 	var mapvars = {
-	  xmlpath:"<%= model %>/map/" + curID + "/",
+	  xmlpath: model + "/map/" + curID + "/",
 	  baseURL:"/services/website/"
 	};
 	
 	var agevars = {
-	  xmlpath:"<%= model %>/age/" + curID + "/",
+	  xmlpath: model + "/age/" + curID + "/",
 	  baseURL:"/services/website/",
 	  barwidth: 25
 	};

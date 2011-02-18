@@ -19,7 +19,7 @@
           %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
           %td
           %td
-            %a{:class => 'jq-government dataset', :href=> "#{executive.id}"}
+            %a{:class => 'jq-government dataset', :href=> "#{executive.id}_government"}
               %input{:type => :hidden, :class => 'jq-government-id', :value =>  executive.id}
               %img{:src => get_government_image_64(executive.logo, executive.government_type_id), :alt => 'logo'}
               %br

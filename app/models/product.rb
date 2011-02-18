@@ -13,8 +13,7 @@ class Product < ActiveRecord::Base
     # text - search text
     # user_id - user id, if support should be included
     #   vote - if user_id is specified, will filter by thumbs_up, thumbs_down, vote, no_vote, all
-    # sort_name
-    # sort_direction
+    # sort - {sort_column}_{sort_direction}
     # do_search will return an AR object with all that match the specified filter.  
     # It DOES NOT apply paging (limit, offset)
     def do_search(params={})
@@ -24,12 +23,13 @@ class Product < ActiveRecord::Base
       #If the user_id is specified, load the vote data
       if params.key? :user_id
         select << 'product_supports.support_type as support_type'
+        select << 'product_supports.updated_at as votedate'
         records = records.joins("LEFT OUTER JOIN product_supports ON products.id=product_supports.product_id AND user_id=#{params[:user_id].to_i}")
       end
 
       #Only apply text filter or thumbs up/thumbs down filter
       #if params.key? :text
-        #Get a list of product ids that match the search text
+      #Get a list of product ids that match the search text
       #  records_to_include = Product.search params[:text].strip
       #  product_ids = records_to_include.inject([]) do |r, element|
       #    r << element.id
@@ -53,7 +53,7 @@ class Product < ActiveRecord::Base
           records = records
         end
       else
-          records = records.where("support_type >= -1")
+        records = records.where("support_type >= -1")
       end
 
       if params.key? :social_score
@@ -66,34 +66,30 @@ class Product < ActiveRecord::Base
 
       records = records.select(select.join(", "))
 
-      if params.key?(:sort_direction) && params.key?(:sort_name)
-        begin
-          column = params[:sort_name].downcase
-          direction = params[:sort_direction].downcase
-
-          direction = (direction == 'asc') ? 'asc' : 'desc'
-
-          case column
-          when ('name' || 'description')
-            column = 'products.description'
-          when 'social'
-            column = 'products.social_score'
-          when 'participation'
-            column = 'products.participation_rate'
-          when 'votedate'
-            if params.key? :user_id
-              column = 'product_supports.updated_at'
-            end
-          when 'profit'
-            column = 'products.profit'
-          when 'revenue'
-            column = 'products.revenue'
-          else
-            column = 'products.description'
+      if params.key? :sort
+        case params[:sort].downcase
+        when 'description_asc'
+          records = records.order("products.description asc")
+        when 'description_desc'
+          records = records.order("products.description desc")
+        when 'social_asc'
+          records = records.order('products.social_score asc')
+        when 'social_desc'
+          records = records.order('products.social_score desc')
+        when 'participation_asc'
+          records = records.order('products.participation_rate asc')
+        when 'participation_desc'
+          records = records.order('products.participation_rate desc')
+        when 'votedate_asc'
+          if params.key? :user_id
+            records = records.order('product_supports.updated_at asc')
           end
-
-          records = records.order("#{column} #{direction}")
-        rescue
+        when 'votedate_desc'
+          if params.key? :user_id
+            records = records.order('product_supports.updated_at desc')
+          end
+        else
+          records = records.order('products.description asc')
         end
       end
 

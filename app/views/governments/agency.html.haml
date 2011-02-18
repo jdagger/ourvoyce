@@ -35,7 +35,7 @@
       %tr
         %td= render :partial => "shared/vote_control", :object =>{:id => agency.id, :support_type => agency.support_type, :post_url => :government_vote}, :as => :d
         %td
-          %a{:class => 'jq-government dataset', :href=> "#{agency.id}"}
+          %a{:class => 'jq-government dataset', :href=> "#{agency.id}_government"}
             %input{:type => :hidden, :class => 'jq-media-id', :value =>  agency.id}
             %img{:src => get_government_image_64(agency.logo, 1), :alt => 'logo'}
             %br

@@ -37,7 +37,7 @@
               = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
               = c.updated_at
             %td
-              %a{:class => 'jq-corporation dataset', :href=> "#{c.id}"}
+              %a{:class => 'jq-corporation dataset', :href=> "#{c.id}_corporate"}
                 %input{:type => :hidden, :class => 'jq-corporation-id', :value =>  c.id}
                 %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
                 %br

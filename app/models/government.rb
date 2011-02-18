@@ -43,6 +43,40 @@ class Government < ActiveRecord::Base
     generate_map_state :base_object_name => 'government', :base_object_id => government_id, :state => state
   end
 
+  def legislative_state_age_all state_id
+    generate_age_all :base_object_name => 'government', 
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join governments on governments.id = government_supports.government_id'],
+      :conditions => [{'governments.state_id' => state_id}, {'governments.government_type_id' => 3}]
+  end
+
+  def legislative_state_age_state state_id, state
+    generate_age_state :base_object_name => 'government', 
+      :state => state,
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join governments on governments.id = government_supports.government_id'],
+      :conditions => [{'governments.state_id' => state_id}, {'governments.government_type_id' => 3}]
+  end
+
+  def legislative_state_map_all state_id
+    generate_map_all :base_object_name => 'government', 
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join governments on governments.id = government_supports.government_id'],
+      :conditions => [{'governments.state_id' => state_id}, {'governments.government_type_id' => 3}]
+  end
+
+  def legislative_state_map_state state_id, state
+    generate_map_state :base_object_name => 'government', 
+      :state => state,
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join governments on governments.id = government_supports.government_id'],
+      :conditions => [{'governments.state_id' => state_id}, {'governments.government_type_id' => 3}]
+  end
+
 
   class << self
     def government_lookup id

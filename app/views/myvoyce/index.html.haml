@@ -1,48 +1,34 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
   
-%h1 myvoYce
-.span-12
-  Maps/Graphs
-.span-12.last
-  %fieldset
-    %legend Sorting:
-    =link_to "Description Asc", :filter => params[:filter], :sort => 'description_asc', :page => params[:page]
-    |
-    =link_to "Description Desc", :filter => params[:filter], :sort => 'description_desc', :page => params[:page]
-    %br
-    =link_to "Vote Date Asc", :filter => params[:filter], :sort => 'votedate_asc', :page => params[:page]
-    |
-    =link_to "Vote Date Desc", :filter => params[:filter], :sort => 'votedate_desc', :page => params[:page]
+%fieldset
+  %legend Filtering:
+  =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :page => 1
+  |
+  =link_to 'Thumbs Down', :filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1
+  |
+  =link_to 'Neutral', :filter => 'vote=neutral', :sort => params[:sort], :page => 1
+  |
+  =link_to 'All Votes', :filter => 'vote=voted', :sort => params[:sort], :page => 1
+  |
+  =link_to 'No Vote', :filter => 'vote=novote', :sort => params[:sort], :page => 1
+  |
+  =link_to '**All**', :filter => 'vote=all', :sort => params[:sort], :page => 1
 
-  %fieldset
-    %legend Filtering:
-    =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :page => 1
-    |
-    =link_to 'Thumbs Down', :filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1
-    |
-    =link_to 'Neutral', :filter => 'vote=neutral', :sort => params[:sort], :page => 1
-    |
-    =link_to 'All Votes', :filter => 'vote=voted', :sort => params[:sort], :page => 1
-    |
-    =link_to 'No Vote', :filter => 'vote=novote', :sort => params[:sort], :page => 1
-    |
-    =link_to '**All**', :filter => 'vote=all', :sort => params[:sort], :page => 1
+= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
-
-  %table
-    %thead
-      %tr
-        %th Vote
-        %th Description
-        %th Logo
-        %th Vote Date
-    %tbody
-    - @presenter.products.each do |c|
-      %tr
-        %td= render :partial => 'shared/vote_control', :object => {:id => c.id, :support_type => c.support_type, :post_url => :product_vote}, :as => :d
-        %td= c.description
-        %td
-          %img{:src => get_product_image_128(c.logo), :alt => c.description}
-        %td= c.updated_at
+%table
+  %thead
+    %tr
+      %th
+      %th
+      %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+  %tbody
+  - @presenter.products.each do |product|
+    %tr
+      %td= render :partial => 'shared/vote_control', :object => {:id => product.id, :support_type => product.support_type, :post_url => :product_vote}, :as => :d
+      %td
+        %img{:src => get_product_image_128(product.logo), :alt => product.description}
+      %td= product.description
+      %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''

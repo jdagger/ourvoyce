@@ -14,7 +14,7 @@ Production::Application.routes.draw do
     match "/myvoyce/account" => :new
     match "/myvoyce/authenticate" => :authenticate
     match "/myvoyce/create" => :create
-    match "/myvoyce(/:filter(/:sort(/:page)))" => :index, :defaults => {:page => 1, :sort => 'name_asc', :filter => ''}, :as => :myvoyce
+    match "/myvoyce(/:filter(/:sort(/:page)))" => :index, :defaults => {:page => 1, :sort => '', :filter => ''}, :as => :myvoyce
     match "/logout" => :logout, :as => :logout
   end
 
@@ -59,10 +59,25 @@ Production::Application.routes.draw do
 	match "services/website/government/age/:government_id" => "services#government_age_all"
 	match "services/website/government/age/:government_id/:state" => "services#government_age_state"
 
+	match "services/website/legislativestate/map/:state_id" => "services#legislative_state_map_all"
+	match "services/website/legislativestate/map/:state_id/:state" => "services#legislative_state_map_state"
+	match "services/website/legislativestate/age/:state_id" => "services#legislative_state_age_all"
+	match "services/website/legislativestate/age/:state_id/:state" => "services#legislative_state_age_state"
+
 	match "services/website/media/map/:media_id" => "services#media_map_all"
 	match "services/website/media/map/:media_id/:state" => "services#media_map_state"
 	match "services/website/media/age/:media_id" => "services#media_age_all"
 	match "services/website/media/age/:media_id/:state" => "services#media_age_state"
+
+	match "services/website/mediatype/map/:media_type_id" => "services#media_type_map_all"
+	match "services/website/mediatype/map/:media_type_id/:state" => "services#media_type_map_state"
+	match "services/website/mediatype/age/:media_type_id" => "services#media_type_age_all"
+	match "services/website/mediatype/age/:media_type_id/:state" => "services#media_type_age_state"
+
+	match "services/website/network/map/:network_id" => "services#network_map_all"
+	match "services/website/network/map/:network_id/:state" => "services#network_map_state"
+	match "services/website/network/age/:network_id" => "services#network_age_all"
+	match "services/website/network/age/:network_id/:state" => "services#network_age_state"
 
 	match "services/website/ourvoyce/age" => "services#ourvoyce_age_all"
 	match "services/website/ourvoyce/age/:state" => "services#ourvoyce_age_state"

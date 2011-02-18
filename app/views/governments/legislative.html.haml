@@ -17,7 +17,7 @@
         %tr
           %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
           %td
-            %a{:class => 'jq-government dataset', :href=> "#{senator.id}"}
+            %a{:class => 'jq-government dataset', :href=> "#{senator.id}_government"}
               %input{:type => :hidden, :class => 'jq-government-id', :value =>  senator.id}
               %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
               %br
@@ -41,7 +41,7 @@
         %tr
           %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
           %td
-            %a{:class => 'jq-government dataset', :href=> "#{rep.id}"}
+            %a{:class => 'jq-government dataset', :href=> "#{rep.id}_government"}
               %input{:type => :hidden, :class => 'jq-government-id', :value =>  rep.id}
               %img{:src => get_government_image_64(rep.logo, rep.government_type_id, rep.chamber_id) , :alt => 'portrait'}
               %br

@@ -3,8 +3,14 @@ class MyvoyceController < ApplicationController
   skip_before_filter :authorize, :only => [:new, :create, :authenticate]
 
   def index
+    search_params = {}
+    search_params[:user_id] = self.user_id
+
     if params[:sort].blank?
-      params[:sort] = 'name_asc'
+      params[:sort] = 'description_asc'
+      search_params[:sort] = 'description_asc'
+    else
+      search_params[:sort] = params[:sort]
     end
 
     @presenter = ProductsIndexPresenter.new
@@ -12,17 +18,11 @@ class MyvoyceController < ApplicationController
     page_size = 15
     current_page = [params[:page].to_i, 1].max
 
-    search_params = {}
-    search_params[:user_id] = self.user_id
 
-    begin
-      search_params[:sort_name], search_params[:sort_direction] = params[:sort].split('_')
-    rescue
-    end
 
     #If no filter was supplied, specify all records should be returned
     if params[:filter].empty?
-      params[:filter] = 'vote=all'
+      params[:filter] = 'vote=voted'
     else
       #filters have form 'key1=value1;key2=value2'
       params[:filter].split(';').each do |part|

@@ -33,6 +33,90 @@ class Media < ActiveRecord::Base
     generate_map_state :base_object_name => 'media', :base_object_id => media_id, :state => state
   end
 
+  def translate_media_type media_type_id
+    if media_type_id == 3
+      return 6 #If Radio, look up records marked as radio show
+    elsif media_type_id == 4
+      return 5 #If Television, look up records marked as television show
+    else
+      return media_type_id
+    end
+  end
+
+  def media_type_age_all media_type_id
+    media_type_id = translate_media_type media_type_id
+
+    generate_age_all :base_object_name => 'media', 
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.media_type_id' => media_type_id}]
+  end
+
+  def media_type_age_state media_type_id, state
+    media_type_id = translate_media_type media_type_id
+    generate_age_state :base_object_name => 'media', 
+      :state => state,
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.media_type_id' => media_type_id}]
+  end
+
+  def media_type_map_all media_type_id
+    media_type_id = translate_media_type media_type_id
+    generate_map_all :base_object_name => 'media', 
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.media_type_id' => media_type_id}]
+  end
+
+  def media_type_map_state media_type_id, state
+    media_type_id = translate_media_type media_type_id
+    generate_map_state :base_object_name => 'media', 
+      :state => state,
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.media_type_id' => media_type_id}]
+  end
+
+
+  def network_age_all network_id
+    generate_age_all :base_object_name => 'media', 
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.parent_media_id' => network_id}]
+  end
+
+  def network_age_state network_id, state
+    generate_age_state :base_object_name => 'media', 
+      :state => state,
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.parent_media_id' => network_id}]
+  end
+
+  def network_map_all network_id
+    generate_map_all :base_object_name => 'media', 
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.parent_media_id' => network_id}]
+  end
+
+  def network_map_state network_id, state
+    generate_map_state :base_object_name => 'media', 
+      :state => state,
+      :base_object_id => nil,
+      :skip_object_id_filter => true,
+      :joins => ['join medias on medias.id = media_supports.media_id'],
+      :conditions => [{'medias.parent_media_id' => network_id}]
+  end
+
   class << self
     def media_lookup id
       begin

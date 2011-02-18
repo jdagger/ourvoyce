@@ -78,6 +78,26 @@ class ServicesController < ApplicationController
     render :template => 'services/map/state'
   end
 
+  def legislative_state_age_all
+    @results = Government.new.legislative_state_age_all params[:state_id]
+    render :template => 'services/graph/age'
+  end
+
+  def legislative_state_age_state
+    @results = Government.new.legislative_state_age_state params[:state_id], params[:state]
+    render :template => 'services/graph/age'
+  end
+
+  def legislative_state_map_all
+    @states = Government.new.legislative_state_map_all params[:state_id]
+    render :template => 'services/map/national'
+  end
+
+  def legislative_state_map_state
+    @zips = Government.new.legislative_state_map_state params[:state_id], params[:state]
+    render :template => 'services/map/state'
+  end
+
   def media_age_all
     @results = Media.new.age_all params[:media_id]
     render :template => 'services/graph/age'
@@ -95,6 +115,46 @@ class ServicesController < ApplicationController
 
   def media_map_state
     @zips = Media.new.map_state params[:media_id], params[:state]
+    render :template => 'services/map/state'
+  end
+
+  def media_type_age_all
+    @results = Media.new.media_type_age_all params[:media_type_id]
+    render :template => 'services/graph/age'
+  end
+
+  def media_type_age_state
+    @results = Media.new.media_type_age_state params[:media_type_id], params[:state]
+    render :template => 'services/graph/age'
+  end
+
+  def media_type_map_all
+    @states = Media.new.media_type_map_all params[:media_type_id]
+    render :template => 'services/map/national'
+  end
+
+  def media_type_map_state
+    @zips = Media.new.media_type_map_state params[:media_type_id], params[:state]
+    render :template => 'services/map/state'
+  end
+
+  def network_age_all
+    @results = Media.new.network_age_all params[:network_id]
+    render :template => 'services/graph/age'
+  end
+
+  def network_age_state
+    @results = Media.new.network_age_state params[:network_id], params[:state]
+    render :template => 'services/graph/age'
+  end
+
+  def network_map_all
+    @states = Media.new.network_map_all params[:network_id]
+    render :template => 'services/map/national'
+  end
+
+  def network_map_state
+    @zips = Media.new.network_map_state params[:network_id], params[:state]
     render :template => 'services/map/state'
   end
 end

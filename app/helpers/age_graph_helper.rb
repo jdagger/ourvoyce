@@ -27,7 +27,9 @@ module AgeGraphHelper
     end
 
     items = eval("#{params[:base_object_name].capitalize}Support")
-    items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    if ! params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
+      items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    end
     items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.select("support_type, count(support_type) as count, users.birth_year")
@@ -64,8 +66,11 @@ module AgeGraphHelper
     end
 
     state = params[:state].upcase
+
     items = eval("#{params[:base_object_name].capitalize}Support")
-    items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    if ! params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
+      items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
+    end
     items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
     items = items.where("states.abbreviation" => state)
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
@@ -73,6 +78,19 @@ module AgeGraphHelper
     items = items.joins("join states on zips.state_id = states.id")
     items = items.select("support_type, count(support_type) as count, users.birth_year")
     items = items.group("support_type, users.birth_year")
+
+    if params.key? :joins
+      params[:joins].each do |join|
+        items = items.joins(join)
+      end
+    end
+
+    if params.key? :conditions
+      params[:conditions].each do |condition|
+        items = items.where(condition)
+      end
+    end
+
 
     init_age_stats
 
@@ -128,11 +146,10 @@ module AgeGraphHelper
 
       self.age_max_total = [self.age_max_total, total].max
 
-      #determine a score
-      if params.key? :color #If overriding the color, use that color
+      if params.key? :color #If overriding the color, use that color instead of the calculated color
         color = params[:color]
       elsif total > 0
-        score = (positive * 100) / (negative + positive)
+        score = (positive * 100) / total
         color = color_from_social_score(score)
       else
         color = "ffffff"
@@ -145,7 +162,11 @@ module AgeGraphHelper
 
     #set scale
     self.age_data.each do |age|
-      age[:scale] = age[:total].to_f / self.age_max_total
+      if self.age_max_total > 0
+        age[:scale] = age[:total].to_f / self.age_max_total
+      else
+        age[:scale] = 0
+      end
     end
 
     self.age_data.each do |age|

@@ -41,7 +41,7 @@ class GovernmentsController < ApplicationController
     end
     @presenter = LegislativeStatePresenter.new
     @presenter.states = State.find(:all, 
-                                   :select => ["states.name as name", "states.logo as logo", "states.abbreviation as abbreviation", "legislative_states.social_score as social_score", "legislative_states.participation_rate as participation_rate"],
+                                   :select => ["states.id as id, states.name as name", "states.logo as logo", "states.abbreviation as abbreviation", "legislative_states.social_score as social_score", "legislative_states.participation_rate as participation_rate"],
                                    :joins => ["left outer join legislative_states on legislative_states.state_id = states.id"],
                                    :order => sort
                                   )
