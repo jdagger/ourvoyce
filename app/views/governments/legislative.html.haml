@@ -24,7 +24,8 @@
               = senator.first_name + " " + senator.last_name
           %td= senator.title
           %td= senator.social_score
-          %td= senator.participation_rate
+          %td
+            %img{ :src => participation_rate_image(senator.participation_rate), :alt => senator.participation_rate }
 
 
   %table
@@ -49,6 +50,7 @@
           %td= rep.title
           %td= rep.district
           %td= rep.social_score
-          %td= rep.participation_rate
+          %td
+            %img{ :src => participation_rate_image(rep.participation_rate), :alt => rep.participation_rate }
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government"}

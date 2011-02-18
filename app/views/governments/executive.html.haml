@@ -26,6 +26,7 @@
               = "#{executive.first_name} #{executive.last_name}"
           %td= executive.title
           %td= executive.social_score
-          %td= executive.participation_rate
+          %td
+            %img{:src => participation_rate_image(executive.participation_rate), :alt => executive.participation_rate}
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government"}

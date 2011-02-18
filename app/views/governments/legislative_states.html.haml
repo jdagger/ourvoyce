@@ -16,7 +16,8 @@
             %br
             = state.name
           %td= state.social_score
-          %td= state.participation_rate
+          %td
+            %img{ :src => participation_rate_image(state.participation_rate), :alt => state.participation_rate }
           %td
             %a{:class => 'jq-media dataset', :href=> "#{state.id}_legislativestate"}= "Graph"
 .graph-contents

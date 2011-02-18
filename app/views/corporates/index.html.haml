@@ -45,7 +45,8 @@
             %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
             %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
             %td= c.social_score
-            %td= c.participation_rate
+            %td
+              %img{:src => participation_rate_image(c.participation_rate), :alt => c.participation_rate}
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 .graph-contents
   %div.map-search

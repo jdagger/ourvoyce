@@ -41,6 +41,7 @@
             %br
             = agency.name
         %td= agency.social_score
-        %td= agency.participation_rate
+        %td
+          %img{:src => participation_rate_image(agency.participation_rate), :alt => agency.participation_rate}
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government"}
