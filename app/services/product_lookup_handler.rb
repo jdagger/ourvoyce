@@ -7,15 +7,15 @@ class ProductLookupHandler < LookupHandlerBase
 
 	def handle_request
     super
-		products = Product.upc_lookup :upc => self.upc
+		product = Product.upc_lookup :upc => self.upc
 
-		if(products.count == 0)
+		if(product.nil?)
 			self.status = 0
 			return
 		else
 			#product was found, so populate values
 			self.status = 1
-			self.item = products.first
+			self.item = product
 
       #Load default text if pending item
       if(self.item.pending)
