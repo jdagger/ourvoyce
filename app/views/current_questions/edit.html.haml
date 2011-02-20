@@ -1,0 +1,7 @@
+%h1 Edit Current Question
+
+= render 'form'
+
+= link_to 'Show', current_question_path(@current_question)
+= "|"
+= link_to 'Back', current_questions_path

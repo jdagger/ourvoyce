@@ -1,0 +1,27 @@
+- form_for @current_question do |f|
+  - if @current_question.errors.any?
+    #error_explanation
+      %h2= "#{pluralize(@current_question.errors.count, "error")} prohibited this question from being saved:"
+      %ul
+        - @current_question.errors.full_messages.each do |msg|
+          %li= msg
+
+  %table{:style => "width: 50%;"}
+    %tr
+      %td= f.label :question_title, 'Title'
+      %td= f.text_field :question_title
+    %tr
+      %td= f.label :question_text, 'Text'
+      %td= f.text_field :question_text
+    %tr
+      %td= f.label :start_date
+      %td= f.text_field :start_date
+    %tr
+      %td= f.label :end_date
+      %td= f.text_field :end_date
+    %tr
+      %td= f.label :active
+      %td= f.text_field :active
+
+  .actions
+    = f.submit

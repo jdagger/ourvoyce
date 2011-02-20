@@ -1,0 +1,22 @@
+%p#notice= notice
+
+%table{:style => "width: 50%;"}
+  %tr
+    %td Title:
+    %td= @current_question.question_title
+  %tr
+    %td Text:
+    %td= @current_question.question_text
+  %tr
+    %td Start Date:
+    %td= @current_question.start_date
+  %tr
+    %td End Date:
+    %td= @current_question.end_date
+  %tr
+    %td Active
+    %td= @current_question.active
+
+= link_to 'Edit', edit_current_question_path(@current_question)
+= "|"
+= link_to 'Back', current_questions_path
