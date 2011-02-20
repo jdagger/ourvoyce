@@ -44,6 +44,9 @@ class User < ActiveRecord::Base
   has_many :governments, :through => :government_supports
   has_many :government_audits
 
+  has_many :current_question_supports
+  has_many :current_questions, :through => :current_question_supports
+
   def user_stats user_id
     user = User.find user_id
 

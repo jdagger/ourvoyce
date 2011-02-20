@@ -1,4 +1,7 @@
 .left-content
+  .current_question
+    = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
+    = @current_question.question_text
   %table
     %thead
       %tr
