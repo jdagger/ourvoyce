@@ -413,12 +413,15 @@ h2{
 table.vote-table th{
   background: url(/images/graph-top.gif) repeat-x top;
   height:30px;
-  text-align: center;
-  color:#ffffff;
-  font-weight:bold;
   padding-top:7px;
   padding-left:5px;
   padding-right:5px;
+  text-align: center;
+}
+
+table.vote-table th a{
+  color:#ffffff;
+  font-weight:bold;
 }
 
 table.vote-table{
@@ -447,6 +450,19 @@ table.vote-table .jq-corporation{
   text-align:center;
 }
 
+table.vote-table tr.selected{
+  border-bottom: 2px dashed #174694;
+  border-top: 2px dashed #174694;
+}
+
+h4.map-title{
+  float:right;
+  width:300px;
+  margin-top:20px;
+  font-size:25px;
+  text-align:center;
+}
+
 .vote-table-wrap{
   height:500px;
   width:580px;
@@ -468,7 +484,7 @@ table.vote-table .jq-corporation{
 
 #map{
   float:right;
-  margin-top:15px;
+  margin-top:8px;
 }
 
 .map-search{
