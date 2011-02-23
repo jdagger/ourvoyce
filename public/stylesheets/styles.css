@@ -412,10 +412,11 @@ h2{
 
 table.vote-table th{
   background: url(/images/graph-top.gif) repeat-x top;
-  height:30px;
+  height:20px;
   padding-top:7px;
   padding-left:5px;
   padding-right:5px;
+  padding-bottom:10px;
   text-align: center;
 }
 
@@ -427,6 +428,7 @@ table.vote-table th a{
 table.vote-table{
   width:600px;
 }
+
 
 
 table.vote-table td{
@@ -455,21 +457,28 @@ table.vote-table tr.selected{
   border-top: 2px dashed #174694;
 }
 
-h4.map-title{
-  float:right;
-  width:300px;
-  margin-top:20px;
-  font-size:25px;
-  text-align:center;
-}
-
 .vote-table-wrap{
   height:500px;
-  width:580px;
+  width:600px;
   margin-top:15px;
   margin-bottom:25px;
   overflow-x: hidden;
   overflow-y: scroll;
+}
+
+.vote-table-wrap h4{
+  margin-top:10px;
+  margin-bottom:0;
+  font-size:18px;
+  color: #1B3E80;
+}
+
+.vote-table-wrap.small{
+  height:320px;
+}
+
+.vote-table-wrap.smaller{
+  height:150px;
 }
 
 .left-content{
@@ -487,6 +496,10 @@ h4.map-title{
   margin-top:8px;
 }
 
+#bar-graph{
+  float:right;
+}
+
 .map-search{
   width:215px;
   float:right;
@@ -494,4 +507,46 @@ h4.map-title{
 
 .map-search form{
   text-align:right;
+}
+
+.maps-container{
+  float:right;
+  width:320px;
+  margin-top:20px;
+}
+
+.maps-container h4{
+  color:#1b3e80;
+  float:right;
+  text-align:center;
+  font-size:18px;
+  width:320px;
+  font-weight:bold;
+}
+
+.maps-container div.corp-title h4{
+  float:left;
+  width:256px;
+  text-align:left;
+}
+
+.maps-container div.corp-title a{
+  float:right;
+  margin-left:10px;
+}
+
+th.limit {
+  width:100px;
+}
+
+a.sort-button{
+  width:90px;
+  height:22px;
+  text-align:center;
+  display:block;
+  float:left;
+  padding-top:5px; 
+  margin-right:5px;
+  color:#ffffff;
+  background: url(/images/button-bg.gif) no-repeat;
 }

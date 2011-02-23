@@ -1,26 +1,27 @@
 = render :partial => "shared/government_menu"
 
 .left-content
-  %table
-    %thead
-      %tr
-        %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th
-          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
-          = '/'
-          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th
-    %tbody
-      - @presenter.states.each do |state|
+  %div.vote-table-wrap
+    %table.vote-table
+      %thead
         %tr
-          %td
-            = link_to "<img src='#{get_state_image_128(state.logo)}' />".html_safe, :action => :legislative, :state => state.abbreviation
-            %br
-            = state.name
-          %td
-            = state.social_score
-            %img{ :src => participation_rate_image(state.participation_rate), :alt => state.participation_rate }
-          %td
-            %a{:class => 'jq-media dataset', :href=> "#{state.id}_legislativestate"}= "Graph"
+          %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th
+      %tbody
+        - @presenter.states.each do |state|
+          %tr
+            %td
+              = link_to "<img src='#{get_state_image_128(state.logo)}' />".html_safe, :action => :legislative, :state => state.abbreviation
+              %br
+              = state.name
+            %td
+              = state.social_score
+              %img{ :src => participation_rate_image(state.participation_rate), :alt => state.participation_rate }
+            %td
+              %a{:class => 'jq-media dataset', :href=> "#{state.id}_legislativestate"}= "Graph"
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "legislativestate"}
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "legislativestate", :title => ""}

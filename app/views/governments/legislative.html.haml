@@ -4,57 +4,59 @@
 = render :partial => "shared/government_menu"
 
 .left-content
-  %table
-    %caption Senate
-    %thead
-      %tr
-        %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th
-          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
-          = '/'
-          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
-      - @presenter.senators.each do |senator|
+  
+  %div.vote-table-wrap
+    %h4 Senate
+    %table.vote-table
+      %thead
         %tr
-          %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
-          %td
-            %a{:class => 'jq-government dataset', :href=> "#{senator.id}_government"}
-              %input{:type => :hidden, :class => 'jq-government-id', :value =>  senator.id}
-              %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
-              %br
-              = senator.first_name + " " + senator.last_name
-          %td= senator.title
-          %td
-            = senator.social_score
-            %img{ :src => participation_rate_image(senator.participation_rate), :alt => senator.participation_rate }
-
-
-  %table
-    %caption House of Representatives
-    %thead
-      %tr
-        %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "District", :sort_column => 'district', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th
-          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
-          = '/'
-          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
-      - @presenter.representatives.each do |rep|
+          %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %tbody
+        - @presenter.senators.each do |senator|
+          %tr
+            %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
+            %td
+              %a{:class => 'jq-government dataset', :href=> "#{senator.id}_government"}
+                %input{:type => :hidden, :class => 'jq-government-id', :value =>  senator.id}
+                %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
+                %br
+                = senator.first_name + " " + senator.last_name
+            %td= senator.title
+            %td
+              = senator.social_score
+              %img{ :src => participation_rate_image(senator.participation_rate), :alt => senator.participation_rate }
+    %h4 House of Representatives
+    %table.vote-table
+      %thead
         %tr
-          %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
-          %td
-            %a{:class => 'jq-government dataset', :href=> "#{rep.id}_government"}
-              %input{:type => :hidden, :class => 'jq-government-id', :value =>  rep.id}
-              %img{:src => get_government_image_64(rep.logo, rep.government_type_id, rep.chamber_id) , :alt => 'portrait'}
-              %br
-              = rep.first_name + " " + rep.last_name
-          %td= rep.title
-          %td= rep.district
-          %td
-            = rep.social_score
-            %img{ :src => participation_rate_image(rep.participation_rate), :alt => rep.participation_rate }
+          %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "District", :sort_column => 'district', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+      %tbody
+        - @presenter.representatives.each do |rep|
+          %tr
+            %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
+            %td
+              %a{:class => 'jq-government dataset', :href=> "#{rep.id}_government"}
+                %input{:type => :hidden, :class => 'jq-government-id', :value =>  rep.id}
+                %img{:src => get_government_image_64(rep.logo, rep.government_type_id, rep.chamber_id) , :alt => 'portrait'}
+                %br
+                = rep.first_name + " " + rep.last_name
+            %td= rep.title
+            %td= rep.district
+            %td
+              = rep.social_score
+              %img{ :src => participation_rate_image(rep.participation_rate), :alt => rep.participation_rate }
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government"}
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => ""}

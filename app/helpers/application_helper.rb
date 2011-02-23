@@ -32,7 +32,7 @@ module ApplicationHelper
     end
 
     params[:link_params][:sort] = "#{params[:sort_column]}_#{direction}"
-    "<div style='white-space: nowrap;'>#{link_to(text.html_safe, params[:link_params])}</div>".html_safe
+    "#{link_to(text.html_safe, params[:link_params])}".html_safe #the div whitespace is messing with table headers for SS/PR
   end
 
   def highlight_missing_cell

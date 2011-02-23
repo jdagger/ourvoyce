@@ -75,10 +75,15 @@
   };
 
   swfobject.embedSWF("/swf/map.swf", "map", "300", "250","10.0.0", params, mapvars, attributes);
-  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "350", "250","10.0.0", params, agevars, attributes);
+  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "315", "250","10.0.0", params, agevars, attributes);
 
 </script>
 
-<h4 class="map-title"><%= title.nil? ? "" : title %></h4>
-<div id="map"></div>
-<div id="bar-graph"></div>
+<div class="maps-container">
+  <div class="corp-title"><h4 class="map-title"><%= title.nil? ? "" : title %></h4>
+    <a href="http://wikipedia.com">wikipedia</a><a href="#corporate">website</a>
+  </div>
+  <div id="map"></div>
+  <h4>Who’s Being Counted?</h4>
+  <div id="bar-graph"></div>
+</div>

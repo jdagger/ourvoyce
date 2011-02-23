@@ -4,31 +4,31 @@
 = render :partial => "shared/government_menu"
 
 .left-content
-  %table
-    %thead
-      %tr
-        %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th Picture
-        %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th= table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
-        %th
-          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
-          = '/'
-          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
-      %tbody
-      - @presenter.executives.each do |executive|
+  %div.vote-table-wrap
+    %table.vote-table
+      %thead
         %tr
-          %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
-          %td
-          %td
-            %a{:class => 'jq-government dataset', :href=> "#{executive.id}_government"}
-              %input{:type => :hidden, :class => 'jq-government-id', :value =>  executive.id}
-              %img{:src => get_government_image_64(executive.logo, executive.government_type_id), :alt => 'logo'}
-              %br
-              = "#{executive.first_name} #{executive.last_name}"
-          %td= executive.title
-          %td
-            = executive.social_score
-            %img{:src => participation_rate_image(executive.participation_rate), :alt => executive.participation_rate}
+          %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th.limit 
+            = table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
+        %tbody
+        - @presenter.executives.each do |executive|
+          %tr
+            %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
+            %td
+              %a{:class => 'jq-government dataset', :href=> "#{executive.id}_government"}
+                %input{:type => :hidden, :class => 'jq-government-id', :value =>  executive.id}
+                %img{:src => get_government_image_64(executive.logo, executive.government_type_id), :alt => 'logo'}
+                %br
+                = "#{executive.first_name} #{executive.last_name}"
+            %td= executive.title
+            %td
+              = executive.social_score
+              %img{:src => participation_rate_image(executive.participation_rate), :alt => executive.participation_rate}
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government"}
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => ""}
