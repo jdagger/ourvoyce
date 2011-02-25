@@ -28,7 +28,7 @@ package
 		public var statesXML:XML;
 		public var paramObj;
 		public var projection:Projection;
-		public var stagePadding:Number = 25;
+		public var stagePadding:Number = 10;
 		public var viewState:String = "us";
 		public var USStates:Array = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
 	  public var restRoute:String = "corporate/map/85/";
@@ -96,7 +96,39 @@ package
       zoom_mc.addEventListener(MouseEvent.CLICK, zoomOut);
       zoom_mc.buttonMode = true;
       zoom_mc.mouseChildren = false;
+      
+      scaleClickMap();
 		}
+    
+    public function scaleClickMap():void{
+      
+      var wpercent:Number = click_map_mc.width/stage.stageWidth;
+      var hpercent:Number = click_map_mc.height/stage.stageHeight;
+      var xoffset:Number = 0;
+      var yoffset:Number = 0;
+      var scalePercent:Number = 0;
+      
+      if(hpercent >= wpercent){
+        scalePercent = (stage.stageHeight-(stagePadding*2))/click_map_mc.height;
+        
+        //for horizontal centering
+        xoffset = ((stage.stageWidth - (click_map_mc.width*scalePercent))/2) - stagePadding;
+      }
+      
+      if(wpercent >= hpercent){
+        scalePercent = (stage.stageWidth-(stagePadding*2))/click_map_mc.width;
+        
+        //for vetical centering
+        yoffset = ((stage.stageHeight - (click_map_mc.height*scalePercent))/2) - stagePadding;
+      }
+      
+      click_map_mc.scaleX = scalePercent;
+      click_map_mc.scaleY = scalePercent;
+      
+      click_map_mc.x = stagePadding + xoffset;
+      click_map_mc.y = stagePadding + yoffset;
+      
+    }
     
     public function zoomOut(e:Event):void{
       geo_map_mc.visible = false;
@@ -308,7 +340,7 @@ package
         dotMC.scaleX = 0;
         dotMC.scaleY = 0;
         
-        TweenMax.to(dotMC, 0, {colorTransform:{tint:dotColor, tintAmount:1}});
+        TweenMax.to(dotMC.dot_color, 0, {colorTransform:{tint:dotColor, tintAmount:1}});
         TweenMax.to(dotMC, 1, {delay:0.001 + (i*dotTime), scaleX:1+dotScale, scaleY:1+dotScale, ease:Elastic.easeOut});
       }
     }

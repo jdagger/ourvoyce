@@ -16,8 +16,8 @@
     =link_to 'All Records', {:filter => 'vote=all', :sort => params[:sort], :page => 1}, :class=> "sort-button"
 
   /= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
-  %div.vote-table-wrap
-    %table.vote-table
+  %div.vote-table-wrap-new
+    %table.vote-table-new
       %thead
         %tr
           %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -42,8 +42,8 @@
                 %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
                 %br
                 = c.name
-            %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false, :units => {:million => "M", :thousand => "k", :billion => "B"})}"
-            %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false, :units => {:million => "M", :thousand => "k", :billion => "B"})}"
+            %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false )}"
+            %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false )}"
             %td
               %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(c.participation_rate)})", :alt => c.participation_rate}
                 = c.social_score
