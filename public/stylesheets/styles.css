@@ -22,6 +22,14 @@ b, strong{
   color: #000000;
 }
 
+h1{
+  font-size:28px;
+  color: #666;
+  font-weight: bold;
+  line-height: 29.19px;
+  padding-bottom: 15px;
+}
+
 h2{
   font-size: 19.46px;
   color: #113376;
@@ -414,10 +422,11 @@ table.vote-table th{
   background: url(/images/graph-top.gif) repeat-x top;
   height:20px;
   padding-top:7px;
-  padding-left:5px;
-  padding-right:5px;
-  padding-bottom:10px;
+  padding-left:4px;
+  padding-right:4px;
+  padding-bottom:6px;
   text-align: center;
+  color:#fff;
 }
 
 table.vote-table th a{
@@ -426,10 +435,8 @@ table.vote-table th a{
 }
 
 table.vote-table{
-  width:600px;
+  width:550px;
 }
-
-
 
 table.vote-table td{
   text-align:center;
@@ -441,11 +448,12 @@ table.vote-table tr td{
   padding-left:5px;
   padding-right:5px;
   vertical-align: middle;
-  border-bottom: 1px dashed #ddd;
+  border-bottom:1px dashed #ddd
 }
 
 table.vote-table tr{
   vertical-align: middle;
+  width:550px;
 }
 
 table.vote-table .jq-corporation{
@@ -457,13 +465,26 @@ table.vote-table tr.selected{
   border-top: 2px dashed #174694;
 }
 
-.vote-table-wrap{
-  height:500px;
-  width:600px;
-  margin-top:15px;
-  margin-bottom:25px;
+table.vote-table tbody{
   overflow-x: hidden;
-  overflow-y: scroll;
+  width:550px;
+  overflow-y: auto;
+  height:500px;
+}
+
+table.vote-table thead tr{
+  position: relative;
+}
+
+.vote-table-wrap{
+  margin-top:15px;
+  height:480px;
+}
+
+.vote-table-cap{
+   background:url(/images/graph-top.gif) repeat-x;
+   width:550px;
+   height:10px;
 }
 
 .vote-table-wrap h4{
@@ -471,6 +492,7 @@ table.vote-table tr.selected{
   margin-bottom:0;
   font-size:18px;
   color: #1B3E80;
+  text-align:center;
 }
 
 .vote-table-wrap.small{
@@ -527,7 +549,6 @@ table.vote-table tr.selected{
 .maps-container div.corp-title h4{
   float:left;
   width:256px;
-  text-align:left;
 }
 
 .maps-container div.corp-title a{
@@ -549,4 +570,45 @@ a.sort-button{
   margin-right:5px;
   color:#ffffff;
   background: url(/images/button-bg.gif) no-repeat;
+}
+
+.page-title{
+  width:600px;
+  clear:both;
+}
+
+.page-title h1{
+  float:left;
+}
+
+.page-title form{
+  float:right;
+}
+
+.filtering{
+  width:600px;
+  height:25px;
+  clear:both;
+}
+
+div.paging{
+  height:25px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+div.paging a, div.paging b{
+  border:1px solid #aaa;
+  background:#eee;
+  padding:4px;
+  padding-left:5px;
+  padding-right:5px;
+}
+
+div.pr-pie{
+  width:50px;
+  height:32px;
+  text-align:center;
+  font-weight:bold;
+  padding-top:18px;
 }
