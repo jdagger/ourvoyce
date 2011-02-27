@@ -25,17 +25,22 @@
 	  
 	  //alert("ready!");
 	  $("a.dataset").click(function(){
-	    //curID = $(this).attr("href");
+	    $(".selected").removeClass("selected");  //remove the selected items
+	    $(this).parent().parent().addClass("selected");  //add selected to the clicked item
+	    
+	    var text = $(this).text();
+	    
+	    //fade the text
+	    $("h4.map-title").fadeOut(500, function(){
+	      $(this).text(text);
+	      $(this).fadeIn(500);
+	    });
+	    
       curID = $(this).attr("href").split('_')[0]
       model = $(this).attr("href").split('_')[1]
 	    
-	    //send to the map
-	    //sendToMap(model + "/map/" + $(this).attr("href") + "/");
-	    sendToMap(model + "/map/" + curID + "/");
-	    
-	    //send to the graph
-	    //sendToGraph(model + "/age/" + $(this).attr("href") + "/" + state);
-	    sendToGraph(model + "/age/" + curID + "/" + state);
+	    sendToMap(model + "/map/" + curID + "/");  //send to the map
+	    sendToGraph(model + "/age/" + curID + "/" + state);  //send to the graph
 	    
 	    return false;
 	  });
@@ -70,9 +75,15 @@
   };
 
   swfobject.embedSWF("/swf/map.swf", "map", "300", "250","10.0.0", params, mapvars, attributes);
-  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "350", "250","10.0.0", params, agevars, attributes);
+  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "315", "250","10.0.0", params, agevars, attributes);
 
 </script>
 
-<div id="map"></div>
-<div id="bar-graph"></div>
+<div class="maps-container">
+  <div class="corp-title"><h4 class="map-title"><%= title.nil? ? "" : title %></h4>
+    <a href="http://wikipedia.com">wikipedia</a><a href="#corporate">website</a>
+  </div>
+  <div id="map"></div>
+  <h4>Who’s Being Counted?</h4>
+  <div id="bar-graph"></div>
+</div>
