@@ -59,4 +59,4 @@
   - default_title = selected_corp.nil? ? '' : selected_corp.name
   - default_wikipedia = selected_corp.nil? ? '' : selected_corp.wikipedia_url
   - default_website = selected_corp.nil? ? '' : selected_corp.corporate_url
-  = render :partial => "shared/map_graph", :locals => { id:default_id, model:"corporate", title:default_title, wikipedia:default_wikipedia, website:default_website}
+  = render :partial => "shared/map_graph", :locals => { :id => default_id, :model => "corporate", :title => default_title, :wikipedia => default_wikipedia, :website => default_website}
