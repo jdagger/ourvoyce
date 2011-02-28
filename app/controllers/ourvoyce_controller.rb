@@ -7,6 +7,9 @@ class OurvoyceController < ApplicationController
       if ! support.nil?
         @current_question_support = support.support_type
       end
+    else
+      @current_question = CurrentQuestion.new :question_text => 'No question selected'
+      @current_question_support = -1
     end
   end
 
