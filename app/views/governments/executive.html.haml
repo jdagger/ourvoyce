@@ -21,7 +21,7 @@
           %tr
             %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
             %td
-              %a{:href => url_for(sort:params[:sort], id:executive.id), :class => 'dataset' }
+              %a{:href => url_for(:sort => params[:sort], :id => executive.id), :class => 'dataset' }
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{executive.id}_government"}
                 %input{:type => :hidden, :class => 'jq-title', :value => "#{executive.first_name} #{executive.last_name}" }
                 %input{:type => :hidden, :class => 'jq-wikipedia', :value => executive.wikipedia }

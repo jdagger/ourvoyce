@@ -15,7 +15,7 @@
           %td= media_type.social_score
           %td= media_type.participation_rate
           %td
-            %a{:href => url_for(media_type:params[:media_type]), :class => 'dataset' }
+            %a{:href => url_for(:media_type => params[:media_type]), :class => 'dataset' }
               = 'Graph'
               %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{media_type.id}_mediatype"}
               %input{:type => :hidden, :class => 'jq-title', :value => media_type.name }
@@ -37,7 +37,7 @@
             %td= network.social_score 
             %td= network.participation_rate
             %td
-              %a{:href => url_for(media_type:params[:media_type], network:params[:network]), :class => 'dataset' }
+              %a{:href => url_for(:media_type => params[:media_type], :network => params[:network]), :class => 'dataset' }
                 = "Graph"
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{network.id}_network"}
                 %input{:type => :hidden, :class => 'jq-title', :value => network.name }
@@ -71,7 +71,7 @@
             %tr
               %td= render :partial => 'shared/vote_control', :object =>{:id => show.id, :support_type => show.support_type, :post_url => :media_vote}, :as => :d
               %td
-                %a{:href => url_for(media_type:params[:media_type], network:params[:network], filter:params[:filter], sort:params[:sort], page:params[:page], id:params[:id]), :class => 'dataset' }
+                %a{:href => url_for(:media_type => params[:media_type], :network => params[:network], :filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => params[:id]), :class => 'dataset' }
                   %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{show.id}_media"}
                   %input{:type => :hidden, :class => 'jq-title', :value => show.name }
                   %input{:type => :hidden, :class => 'jq-wikipedia', :value => show.wikipedia }
