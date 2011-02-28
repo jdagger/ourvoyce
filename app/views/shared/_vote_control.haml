@@ -1,7 +1,7 @@
 = form_tag d[:post_url] do
-  %div{:style => 'white-space: nowrap;'}
+  .vote{:style => 'white-space: nowrap;'}
     %input{:type => "hidden", :name => "item_id", :value => d[:id]}
-    %input{:type => "submit", :class => "jq-thumbs-down-#{d[:id]} #{thumbs_down_support_class(d[:support_type])}", :name => "thumbs_down", :value => ""}
-    %input{:type => "submit", :class => "jq-neutral-#{d[:id]} #{neutral_support_class(d[:support_type])}", :name => "neutral", :value => ""}
     %input{:type => "submit", :class => "jq-thumbs-up-#{d[:id]} #{thumbs_up_support_class(d[:support_type])}", :name => "thumbs_up", :value => ""}
-    %input{:type => "submit", :class => "jq-clear-vote-#{d[:id]}", :name => "clear_vote", :value => "Clear"}
+    %input{:type => "submit", :class => "jq-neutral-#{d[:id]} #{neutral_support_class(d[:support_type])}", :name => "neutral", :value => ""}
+    %input{:type => "submit", :class => "jq-thumbs-down-#{d[:id]} #{thumbs_down_support_class(d[:support_type])}", :name => "thumbs_down", :value => ""}
+    %input{:type => "submit", :class => "jq-clear-vote-#{d[:id]} clear-vote", :name => "clear_vote", :value => "Clear"}

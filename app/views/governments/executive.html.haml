@@ -21,8 +21,11 @@
           %tr
             %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
             %td
-              %a{:class => 'jq-government dataset', :href=> "#{executive.id}_government"}
-                %input{:type => :hidden, :class => 'jq-government-id', :value =>  executive.id}
+              %a{:href => url_for(sort:params[:sort], id:executive.id), :class => 'dataset' }
+                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{executive.id}_government"}
+                %input{:type => :hidden, :class => 'jq-title', :value => "#{executive.first_name} #{executive.last_name}" }
+                %input{:type => :hidden, :class => 'jq-wikipedia', :value => executive.wikipedia }
+                %input{:type => :hidden, :class => 'jq-website', :value => executive.website }
                 %img{:src => get_government_image_64(executive.logo, executive.government_type_id), :alt => 'logo'}
                 %br
                 = "#{executive.first_name} #{executive.last_name}"
@@ -31,4 +34,4 @@
               = executive.social_score
               %img{:src => participation_rate_image(executive.participation_rate), :alt => executive.participation_rate}
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => ""}
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => "", :website => '', :wikipedia => ''}

@@ -22,8 +22,11 @@
           %tr
             %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
             %td
-              %a{:class => 'jq-government dataset', :href=> "#{senator.id}_government"}
-                %input{:type => :hidden, :class => 'jq-government-id', :value =>  senator.id}
+              %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => senator.id), :class => 'dataset' }
+                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{senator.id}_government"}
+                %input{:type => :hidden, :class => 'jq-title', :value => "#{senator.first_name} #{senator.last_name}" }
+                %input{:type => :hidden, :class => 'jq-wikipedia', :value => senator.wikipedia }
+                %input{:type => :hidden, :class => 'jq-website', :value => senator.website }
                 %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
                 %br
                 = senator.first_name + " " + senator.last_name
@@ -48,8 +51,11 @@
           %tr
             %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
             %td
-              %a{:class => 'jq-government dataset', :href=> "#{rep.id}_government"}
-                %input{:type => :hidden, :class => 'jq-government-id', :value =>  rep.id}
+              %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => rep.id), :class => 'dataset' }
+                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{rep.id}_government"}
+                %input{:type => :hidden, :class => 'jq-title', :value => "#{rep.first_name} #{rep.last_name}" }
+                %input{:type => :hidden, :class => 'jq-wikipedia', :value => rep.wikipedia }
+                %input{:type => :hidden, :class => 'jq-website', :value => rep.website }
                 %img{:src => get_government_image_64(rep.logo, rep.government_type_id, rep.chamber_id) , :alt => 'portrait'}
                 %br
                 = rep.first_name + " " + rep.last_name
@@ -59,4 +65,4 @@
               = rep.social_score
               %img{ :src => participation_rate_image(rep.participation_rate), :alt => rep.participation_rate }
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => ""}
+  = render :partial => "shared/map_graph", :locals => {id:nil, model:"government", title:"", wikipedia:'', website:''}

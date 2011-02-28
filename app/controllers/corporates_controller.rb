@@ -19,15 +19,10 @@ class CorporatesController < ApplicationController
     search_params = {}
     search_params[:user_id] = self.user_id
 
-    begin
-      #search_params[:sort_name], search_params[:sort_direction] = params[:sort].split('_')
-      search_params[:sort] = params[:sort]
-      #@sort_column, @sort_direction = params[:sort].downcase.split('_')
-    rescue
-    end
+    search_params[:sort] = params[:sort]
 
     #If no filter was supplied, specify all records should be returned
-    if params[:filter].empty?
+    if params[:filter].blank?
       params[:filter] = 'vote=all'
     else
       #filters have form 'key1=value1;key2=value2'
@@ -75,10 +70,15 @@ class CorporatesController < ApplicationController
       support_type = 0
     elsif (!params[:neutral].nil?)
       support_type = 2
+    elsif (!params[:clear].nil?)
+      support_type = -1
     end
 
     CorporationSupport.change_support(params[:item_id], session[:user_id], support_type)
 
-    redirect_to request.referrer
+    respond_to do |format|
+      format.html { redirect_to request.referrer }
+      format.json { render :json => { :result => 'success' }}
+    end
   end
 end

@@ -18,11 +18,16 @@ class MediasController < ApplicationController
       support_type = 0
     elsif (!params[:neutral].nil?)
       support_type = 2
+    elsif (!params[:clear].nil?)
+      support_type = -1
     end
 
     MediaSupport.change_support(params[:item_id].to_i, session[:user_id].to_i, support_type)
 
-    redirect_to request.referrer
+    respond_to do |format|
+      format.html { redirect_to request.referrer }
+      format.json { render :json => { :result => 'success' }}
+    end
   end
 
   private

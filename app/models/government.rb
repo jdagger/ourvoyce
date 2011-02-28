@@ -98,7 +98,7 @@ class Government < ActiveRecord::Base
     # It DOES NOT apply paging (limit, offset)
     def do_search(params={})
       records = Government.where('1=1')
-      select = ['governments.id as id', 'governments.name as name', 'governments.first_name as first_name', 'governments.last_name as last_name', 'governments.title as title', 'governments.office as office', 'governments.government_type_id as government_type_id', 'governments.chamber_id as chamber_id', 'governments.logo as logo', 'governments.social_score as social_score', 'governments.participation_rate as participation_rate', 'governments.district as district', 'governments.data1 as data1', 'governments.data2 as data2']
+      select = ['governments.id as id', 'governments.name as name', 'governments.first_name as first_name', 'governments.last_name as last_name', 'governments.title as title', 'governments.office as office', 'governments.government_type_id as government_type_id', 'governments.chamber_id as chamber_id', 'governments.logo as logo', 'governments.social_score as social_score', 'governments.participation_rate as participation_rate', 'governments.district as district', 'governments.data1 as data1', 'governments.data2 as data2', 'governments.website as website', 'governments.wikipedia as wikipedia']
 
       #If the user_id is specified, load the vote data
       if params.key? :user_id

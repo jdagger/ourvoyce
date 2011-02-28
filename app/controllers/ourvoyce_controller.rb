@@ -19,10 +19,15 @@ class OurvoyceController < ApplicationController
 			support_type = 0
 		elsif (!params[:neutral].nil?)
 			support_type = 2
+    elsif (!params[:clear].nil?)
+      support_type = -1
 		end
 
 		CurrentQuestionSupport.change_support(params[:item_id], session[:user_id], support_type)
 
-		redirect_to request.referrer
+    respond_to do |format|
+      format.html { redirect_to request.referrer }
+      format.json { render :json => { :result => 'success' }}
+    end
 	end
 end

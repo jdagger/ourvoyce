@@ -45,7 +45,7 @@ class Corporation < ActiveRecord::Base
     # It DOES NOT apply paging (limit, offset)
     def do_search(params={})
       records = Corporation.where('1=1')
-      select = ['corporations.id as id', 'corporations.name as name', 'corporations.logo as logo', 'corporations.revenue as revenue', 'corporations.profit as profit', 'corporations.social_score as social_score', 'corporations.participation_rate as participation_rate']
+      select = ['corporations.id as id', 'corporations.name as name', 'corporations.logo as logo', 'corporations.revenue as revenue', 'corporations.profit as profit', 'corporations.social_score as social_score', 'corporations.participation_rate as participation_rate', 'corporations.wikipedia_url as wikipedia_url', 'corporations.corporate_url as corporate_url']
 
       #If the user_id is specified, load the vote data
       if params.key? :user_id
