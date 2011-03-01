@@ -1,12 +1,11 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
 
-= render :partial => "shared/government_menu"
-
 .left-content
-  
-  %div.vote-table-wrap
-    %h4 Senate
+  = render :partial => "shared/government_menu"
+  %h4 Senate
+  %div.vote-table-top-cap
+  %div.tiny-table-wrap
     %table.vote-table
       %thead
         %tr
@@ -32,10 +31,14 @@
                 = senator.first_name + " " + senator.last_name
             %td= senator.title
             %td
-              = senator.social_score
-              %img{ :src => participation_rate_image(senator.participation_rate), :alt => senator.participation_rate }
-    %h4 House of Representatives
-    %table.vote-table
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(senator.participation_rate)})", :alt => senator.participation_rate}
+                = senator.social_score
+  %div.vote-table-cap
+  
+  %h4 House of Representatives
+  %div.vote-table-top-cap
+  %div.vote-table-wrap
+    %table.vote-table.house-of-representatives
       %thead
         %tr
           %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -62,7 +65,8 @@
             %td= rep.title
             %td= rep.district
             %td
-              = rep.social_score
-              %img{ :src => participation_rate_image(rep.participation_rate), :alt => rep.participation_rate }
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(rep.participation_rate)})", :alt => rep.participation_rate}
+                = rep.social_score
+  %div.vote-table-cap
 .graph-contents
   = render :partial => "shared/map_graph", :locals => { :id => nil, :model => "government", :title => "", :wikipedia => '', :website => '' }

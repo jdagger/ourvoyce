@@ -1,10 +1,5 @@
-#government-navigation.prepend-3.last
-  .span-6
-    .link-box
-      = link_to "Executive", :executive
-  .span-6
-    .link-box
-      = link_to "Legislative", :legislative_state
-  .span-6.last
-    .link-box
-      = link_to "Agency", :agency
+%div.government-navigation.section-nav
+  = link_to "Executive", :executive, :class=> "link-box"
+  = link_to "Legislative", :legislative_state, :class=> "link-box"
+  = link_to "Agency", :agency, :class=> "link-box"
+  %div.clear

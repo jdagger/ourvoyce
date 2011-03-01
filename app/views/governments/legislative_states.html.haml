@@ -1,6 +1,6 @@
-= render :partial => "shared/government_menu"
-
 .left-content
+  = render :partial => "shared/government_menu"
+  %div.vote-table-top-cap
   %div.vote-table-wrap
     %table.vote-table
       %thead
@@ -19,6 +19,8 @@
               %br
               = state.name
             %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(senator.participation_rate)})", :alt => senator.participation_rate}
+                = senator.social_score
               = state.social_score
               %img{ :src => participation_rate_image(state.participation_rate), :alt => state.participation_rate }
             %td
