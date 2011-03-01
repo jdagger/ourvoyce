@@ -1,6 +1,6 @@
 module ParticipationRateHelper
 	def participation_rate_image(participation_rate)
-		logo_base = "#{Rails.configuration.logos_domain}/images/participation_rates/"
+		logo_base = "/images/participation_rates/"
 		participation_rate ||= 0
 
     participation_rate = participation_rate.to_i

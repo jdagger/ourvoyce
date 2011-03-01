@@ -22,6 +22,14 @@ b, strong{
   color: #000000;
 }
 
+h1{
+  font-size:22px;
+  color: #666;
+  font-weight: bold;
+  line-height: 29.19px;
+  padding-bottom: 15px;
+}
+
 h2{
   font-size: 19.46px;
   color: #113376;
@@ -403,33 +411,38 @@ h2{
 /* thumb placement */
 
 .thumbs-up, .thumbs-up-selected, .thumbs-up-not-selected, .thumbs-down, .thumbs-down-selected, .thumbs-down-not-selected, .neutral, .neutral-selected, .neutral-not-selected {
-  display:block;
+/*  display:block;*/
 }
 
 .support{
   display:none;
 }
 
-table.vote-table th{
+/* table styles */
+table.head th, table.vote-table th{
   background: url(/images/graph-top.gif) repeat-x top;
   height:20px;
   padding-top:7px;
-  padding-left:5px;
-  padding-right:5px;
-  padding-bottom:10px;
+  padding-left:4px;
+  padding-right:4px;
+  padding-bottom:6px;
   text-align: center;
+  color:#fff;
 }
 
-table.vote-table th a{
+table.head th a, table.vote-table th a{
   color:#ffffff;
   font-weight:bold;
 }
 
 table.vote-table{
-  width:600px;
+  width:535px;
 }
 
-
+table.head{
+  width:550px;
+  padding-right:18px;
+}
 
 table.vote-table td{
   text-align:center;
@@ -437,11 +450,12 @@ table.vote-table td{
 
 table.vote-table tr td{
   padding-bottom:3px;
+  padding-top:3px;
   margin-bottom:15px;
   padding-left:5px;
   padding-right:5px;
   vertical-align: middle;
-  border-bottom: 1px dashed #ddd;
+  border-bottom:1px dashed #ddd
 }
 
 table.vote-table tr{
@@ -453,17 +467,23 @@ table.vote-table .jq-corporation{
 }
 
 table.vote-table tr.selected{
-  border-bottom: 2px dashed #174694;
-  border-top: 2px dashed #174694;
+  border-bottom: 2px solid #cb2124;
+  border-top: 2px solid #cb2124;
 }
 
+.vote-table-wrap div.ui-widget-content{
+  overflow-x:hidden;
+}
 .vote-table-wrap{
-  height:500px;
-  width:600px;
-  margin-top:15px;
-  margin-bottom:25px;
-  overflow-x: hidden;
-  overflow-y: scroll;
+  clear:both;
+  height:430px;
+  border-left:1px solid #1B3E80;
+}
+
+.vote-table-cap{
+   background:url(/images/bottom-cap.gif) repeat-x;
+   width:550px;
+   height:10px;
 }
 
 .vote-table-wrap h4{
@@ -471,6 +491,7 @@ table.vote-table tr.selected{
   margin-bottom:0;
   font-size:18px;
   color: #1B3E80;
+  text-align:center;
 }
 
 .vote-table-wrap.small{
@@ -483,17 +504,17 @@ table.vote-table tr.selected{
 
 .left-content{
   float:left;
-  width:600px;
+  width:550px;
 }
 
 .graph-contents{
-  width:350px;
-  float:right;
 }
 
 #map{
   float:right;
   margin-top:8px;
+  margin-right:10px;
+  margin-bottom:10px;
 }
 
 #bar-graph{
@@ -510,9 +531,10 @@ table.vote-table tr.selected{
 }
 
 .maps-container{
+  padding-top:10px;
+  width:370px;
   float:right;
-  width:320px;
-  margin-top:20px;
+  background:url(/images/map-rounded-back.gif) no-repeat top right;
 }
 
 .maps-container h4{
@@ -520,19 +542,19 @@ table.vote-table tr.selected{
   float:right;
   text-align:center;
   font-size:18px;
-  width:320px;
+  width:370px;
   font-weight:bold;
 }
 
 .maps-container div.corp-title h4{
   float:left;
-  width:256px;
-  text-align:left;
+  width:240px;
+  padding-left:50px;
 }
 
 .maps-container div.corp-title a{
   float:right;
-  margin-left:10px;
+  margin-right:5px;
 }
 
 th.limit {
@@ -540,13 +562,78 @@ th.limit {
 }
 
 a.sort-button{
-  width:90px;
-  height:22px;
+  width:88px;
+  height:20px;
   text-align:center;
   display:block;
   float:left;
-  padding-top:5px; 
-  margin-right:5px;
+  padding-top:6px; 
+  margin-right:1px;
+  color:#333;
+  background: url(/images/sort-tab-off.gif) no-repeat;
+}
+
+a.sort-button:hover{
   color:#ffffff;
-  background: url(/images/button-bg.gif) no-repeat;
+  background: url(/images/sort-tab-on.gif) no-repeat;
+}
+
+
+a.sort-button.selected{
+  color:#ffffff;
+  background: url(/images/sort-tab-on.gif) no-repeat;
+}
+
+.page-title{
+  width:550px;
+}
+
+.page-title h1{
+  float:left;
+}
+
+.page-title form{
+  float:right;
+}
+
+.filtering{
+  width:550px;
+  height:25px;
+  padding-bottom:4px;
+  background:url(/images/top-cap.gif) bottom right no-repeat;
+}
+
+div.paging{
+  height:25px;
+  margin-top:10px;
+  margin-bottom:10px;
+}
+
+div.paging a, div.paging b{
+  border:1px solid #aaa;
+  background:#eee;
+  padding:4px;
+  padding-left:5px;
+  padding-right:5px;
+}
+
+div.pr-pie{
+  width:49px;
+  height:41px;
+  text-align:center;
+  font-weight:bold;
+  padding-top:9px;
+  padding-left:1px;
+  font-size:26px;
+}
+
+#wikipedia{
+}
+
+#website{
+}
+
+.clear{
+  width:100%;
+  clear:both;
 }

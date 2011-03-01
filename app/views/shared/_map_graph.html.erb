@@ -25,7 +25,7 @@
 	  
 	  //alert("ready!");
 	  $("a.dataset").click(function(){
-	    $(".selected").removeClass("selected");  //remove the selected items
+	    $(".vote-table .selected").removeClass("selected");  //remove the selected items
 	    $(this).parent().parent().addClass("selected");  //add selected to the clicked item
 	    
 	    //var text = $(this).text();
@@ -34,17 +34,19 @@
       var website_url = $(this).children('.jq-website').val();
 
       if(wikipedia_url == null) {
-        $("div.wikipedia").html("");
+        $("div.wikipedia").hide();
       }
       else{
-        $("div.wikipedia").html("<a target='_blank' href='" + wikipedia_url + "'>wikipedia</a>");
+        $("div.wikipedia").show();
+        $("div.wikipedia a").attr("href", wikipedia_url );
       }
 
       if(website_url == null) {
-        $("div.website").html("");
+        $("div.website").hide();
       }
       else{
-        $("div.website").html("<a target='_blank' href='" + website_url + "'>website</a>");
+        $("div.website").show();
+        $("div.website a").attr("href", website_url );
       }
 
 	    //fade the text
@@ -91,21 +93,22 @@
   };
   var attributes = {
     allowfullscreen: "true",
-    allowscriptaccess: "always"
+    allowscriptaccess: "always",
+    wmode: "transparent"
   };
 
-  swfobject.embedSWF("/swf/map.swf", "map", "300", "250","10.0.0", params, mapvars, attributes);
-  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "315", "250","10.0.0", params, agevars, attributes);
+  swfobject.embedSWF("/swf/map.swf", "map", "350", "270","10.0.0", params, mapvars, attributes);
+  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "350", "200","10.0.0", params, agevars, attributes);
 
 </script>
 
 <div class="maps-container">
   <div class="corp-title"><h4 class="map-title"><%= title %></h4>
     <div class="wikipedia">
-      <%= wikipedia.blank? ? "" : "<a target='_blank' href='#{wikipedia}'>wikipedia</a>".html_safe %>
+      <%= wikipedia.blank? ? "" : "<a href='#{wikipedia}'><img src=\"/images/wikipedia.png\" alt=\"wikipedia\" /></a>".html_safe %>
     </div>
     <div class="website">
-      <%= website.blank? ? "" : "<a target='_blank' href='#{website}'>website</a>".html_safe %>
+      <%= website.blank? ? "" : "<a href='#{website}'><img src=\"/images/website.png\" alt=\"wikipedia\" /></a>".html_safe %>
     </div>
   </div>
   <div id="map"></div>

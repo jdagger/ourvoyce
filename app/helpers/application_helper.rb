@@ -58,4 +58,12 @@ module ApplicationHelper
       link_to "Link", val, :target => '_blank'
     end
   end
+  
+  def filter_is_selected(filter, params)
+    if filter == params[:filter]
+      return "selected"
+    else
+      return ""
+    end
+  end
 end

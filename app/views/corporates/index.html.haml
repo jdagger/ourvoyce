@@ -2,29 +2,34 @@
   = javascript_include_tag "change_support.js"
 
 .left-content
-  %fieldset
-    %legend Filtering:
-    =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'Neutral', {:filter => 'vote=neutral', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'Voted', {:filter => 'vote=vote', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'All Records', {:filter => 'vote=all', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-
+  %div.page-title
+    %h1 Corporate
+    = form_tag :corporates_index do
+      =text_field_tag :search_filter, @presenter.search_text
+      =image_submit_tag("search-button.gif")
+    %div.clear
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+  
+  %div.filtering
+    =link_to 'All Records', {:filter => 'vote=all', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
+    =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
+    =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=thumbsdown', params) }"
+    =link_to 'Neutral', {:filter => 'vote=neutral', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=neutral', params) }"
+    =link_to 'Voted', {:filter => 'vote=vote', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=vote', params) }"
+    =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=novote', params) }"
+
   %div.vote-table-wrap
     %table.vote-table
       %thead
         %tr
           %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
           %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th= table_sort_header_link :header => "Profit", :sort_column => 'profit', :link_params => {:filter => params[:filter], :page => params[:page] }
           %th= table_sort_header_link :header => "Revenue", :sort_column => 'revenue', :link_params => {:filter => params[:filter], :page => params[:page] }
+          %th= table_sort_header_link :header => "Profit", :sort_column => 'profit', :link_params => {:filter => params[:filter], :page => params[:page] }
           %th
             = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => {:filter => params[:filter], :page => params[:page] }
             = '/'
             = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
-          %th -
       %tbody
         - count = 0
         - @presenter.corporations.each do |c|
@@ -42,21 +47,16 @@
                 %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
                 %br
                 = c.name
-            %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false)}"
-            %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false)}"
+            %td= "$#{number_to_human(c.revenue, :precision => 1, :significant => false )}"
+            %td= "$#{number_to_human(c.profit, :precision => 1, :significant => false )}"
             %td
-              = c.social_score
-              %img{:src => participation_rate_image(c.participation_rate), :alt => c.participation_rate}
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(c.participation_rate)})", :alt => c.participation_rate}
+                = c.social_score
+  %div.vote-table-cap
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
-.graph-contents
-  %div.map-search
-    Search:
-    = form_tag :corporates_index do
-      =text_field_tag :search_filter, @presenter.search_text
-      =submit_tag 'Search'
-  - selected_corp = @presenter.corporations.first
-  - default_id = selected_corp.nil? ? '' : selected_corp.id
-  - default_title = selected_corp.nil? ? '' : selected_corp.name
-  - default_wikipedia = selected_corp.nil? ? '' : selected_corp.wikipedia_url
-  - default_website = selected_corp.nil? ? '' : selected_corp.corporate_url
-  = render :partial => "shared/map_graph", :locals => { :id => default_id, :model => "corporate", :title => default_title, :wikipedia => default_wikipedia, :website => default_website}
+- selected_corp = @presenter.corporations.first
+- default_id = selected_corp.nil? ? '' : selected_corp.id
+- default_title = selected_corp.nil? ? '' : selected_corp.name
+- default_wikipedia = selected_corp.nil? ? '' : selected_corp.wikipedia_url
+- default_website = selected_corp.nil? ? '' : selected_corp.corporate_url
+= render :partial => "shared/map_graph", :locals => { :id => default_id, :model => "corporate", :title => default_title, :wikipedia => default_wikipedia, :website => default_website}
