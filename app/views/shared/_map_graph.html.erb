@@ -34,17 +34,19 @@
       var website_url = $(this).children('.jq-website').val();
 
       if(wikipedia_url == null) {
-        $("div.wikipedia").html("");
+        $("div.wikipedia").hide();
       }
       else{
-        $("div.wikipedia").html("<a href='" + wikipedia_url + "'>wikipedia</a>");
+        $("div.wikipedia").show();
+        $("div.wikipedia a").attr("href", wikipedia_url );
       }
 
       if(website_url == null) {
-        $("div.website").html("");
+        $("div.website").hide();
       }
       else{
-        $("div.website").html("<a href='" + website_url + "'>website</a>");
+        $("div.website").show();
+        $("div.website a").attr("href", website_url );
       }
 
 	    //fade the text
