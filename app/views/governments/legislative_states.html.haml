@@ -22,6 +22,9 @@
               = state.social_score
               %img{ :src => participation_rate_image(state.participation_rate), :alt => state.participation_rate }
             %td
-              %a{:class => 'jq-media dataset', :href=> "#{state.id}_legislativestate"}= "Graph"
+              %a{:href => url_for(:sort => params[:sort], :id => state.id), :class => 'dataset' }
+                = 'Graph'
+                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{state.id}_legislativestate"}
+                %input{:type => :hidden, :class => 'jq-title', :value =>  state.name }
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "legislativestate", :title => ""}
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "legislativestate", :title => "", :wikipedia => '', :website => ''}

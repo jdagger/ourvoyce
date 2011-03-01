@@ -1,0 +1,24 @@
+%h1 Current Questions
+
+%table.admin.admin-current-questions
+  %tr
+    %th
+    %th Title
+    %th Start
+    %th End
+    %th Active
+  
+
+  - @current_questions.each do |current_question|
+    %tr
+      %td
+        %b
+          = link_to 'Edit', edit_current_question_path(current_question)
+          = link_to 'Delete', current_question_path(current_question), :confirm => 'Are you sure?', :method => :delete
+
+      %td= highlight_or_value current_question.question_title
+      %td= highlight_or_value current_question.start_date
+      %td= highlight_or_value current_question.end_date
+      %td= highlight_or_value current_question.active
+  %br
+  = link_to 'New Question', new_current_question_path

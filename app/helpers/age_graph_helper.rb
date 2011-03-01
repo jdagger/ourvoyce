@@ -7,7 +7,7 @@ module AgeGraphHelper
 
   def age_lookups
     lookups = {}
-    lookups['1-19'] = 0..19
+    lookups['13-19'] = 13..19
     lookups['20-29'] = 20..29
     lookups['30-39'] = 30..39
     lookups['40-49'] = 40..49

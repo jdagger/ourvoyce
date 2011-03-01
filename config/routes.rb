@@ -14,11 +14,12 @@ Production::Application.routes.draw do
     match "/myvoyce/account" => :new
     match "/myvoyce/authenticate" => :authenticate
     match "/myvoyce/create" => :create
-    match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => :index, :defaults => {:barcode => '', :page => '', :sort => '', :filter => ''}, :as => :myvoyce
+    match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => :index, :as => :myvoyce
     match "/logout" => :logout, :as => :logout
   end
 
-  match "/ourvoyce(/:state)" => "ourvoyce#index", :as => :ourvoyce
+  match "/ourvoyce/vote" => "ourvoyce#vote", :as => :current_question_vote
+  match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
 
   controller :stats do
     match "/stats(/:action)", :defaults => {:action => "index"}
@@ -30,23 +31,25 @@ Production::Application.routes.draw do
 		resources :states, :corporations, :users, :products, :medias, :governments
 	end
 
+  resources :current_questions
+
 	#resources :account, :only => [:create, :update, :edit]
 
   match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
-	match "/corporate(/:filter(/:sort(/:page)))" => "corporates#index", :defaults => {:filter => '', :sort => '', :page => 1}, :as => :corporates_index
+	match "/corporate(/:filter(/:sort(/:page(/:id))))" => "corporates#index", :as => :corporates_index
 
   match "/products/vote" => "products#vote", :as => :product_vote
 
   match "/media/vote" => "medias#vote", :as => :media_vote
-	match "/media(/:media_type(/:network(/:filter(/:sort(/:page)))))" => "medias#index", :as => :media_index
+	match "/media(/:media_type(/:network(/:filter(/:sort(/:page(/:id))))))" => "medias#index", :as => :media_index
 
   match "/government/vote" => "governments#vote", :as => :government_vote
 	match '/government' => 'governments#index', :as => :government_index
 	scope "/government" do
-		match 'executive(/:sort)' => 'governments#executive', :as => :executive, :defaults => {:sort => ''}
-		match 'legislative/:state(/:sort)' => 'governments#legislative', :as => :legislative
-		match 'legislative_state(/:sort)' => 'governments#legislative_state', :as => :legislative_state
-		match 'agency(/:filter(/:sort(/:page)))' => 'governments#agency', :defaults => {:filter => '', :sort => '', :page => 1}, :as => :agency
+		match 'executive(/:sort(/:id))' => 'governments#executive', :as => :executive, :defaults => {:sort => ''}
+		match 'legislative/:state(/:sort(/:id))' => 'governments#legislative', :as => :legislative
+		match 'legislative_state(/:sort(/:id))' => 'governments#legislative_state', :as => :legislative_state
+		match 'agency(/:filter(/:sort(/:page(/:id))))' => 'governments#agency', :as => :agency
 	end
 
 	match "services/website/corporate/map/:corporation_id" => "services#corporate_map_all"

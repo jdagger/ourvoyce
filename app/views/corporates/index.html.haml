@@ -39,8 +39,11 @@
               = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
               = c.updated_at
             %td
-              %a{:class => 'jq-corporation dataset', :href=> "#{c.id}_corporate"}
-                %input{:type => :hidden, :class => 'jq-corporation-id', :value =>  c.id}
+              %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => c.id), :class => 'dataset' }
+                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{c.id}_corporate"}
+                %input{:type => :hidden, :class => 'jq-title', :value => c.name }
+                %input{:type => :hidden, :class => 'jq-wikipedia', :value => c.wikipedia_url }
+                %input{:type => :hidden, :class => 'jq-website', :value => c.corporate_url }
                 %img{:src => get_corporate_image_128(c.logo), :alt => c.name}
                 %br
                 = c.name
@@ -51,5 +54,9 @@
                 = c.social_score
   %div.vote-table-cap
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
-.graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => @presenter.corporations.first.id, :model => "corporate", :title=> @presenter.corporations.first.name }
+  - selected_corp = @presenter.corporations.first
+  - default_id = selected_corp.nil? ? '' : selected_corp.id
+  - default_title = selected_corp.nil? ? '' : selected_corp.name
+  - default_wikipedia = selected_corp.nil? ? '' : selected_corp.wikipedia_url
+  - default_website = selected_corp.nil? ? '' : selected_corp.corporate_url
+  = render :partial => "shared/map_graph", :locals => { :id => default_id, :model => "corporate", :title => default_title, :wikipedia => default_wikipedia, :website => default_website}

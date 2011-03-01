@@ -28,16 +28,38 @@
 	    $(".selected").removeClass("selected");  //remove the selected items
 	    $(this).parent().parent().addClass("selected");  //add selected to the clicked item
 	    
-	    var text = $(this).text();
-	    
+	    //var text = $(this).text();
+      var title = $(this).children('.jq-title').val();
+      var wikipedia_url = $(this).children('.jq-wikipedia').val();
+      var website_url = $(this).children('.jq-website').val();
+
+      if(wikipedia_url == null) {
+        $("div.wikipedia").html("");
+      }
+      else{
+        $("div.wikipedia").html("<a href='" + wikipedia_url + "'>wikipedia</a>");
+      }
+
+      if(website_url == null) {
+        $("div.website").html("");
+      }
+      else{
+        $("div.website").html("<a href='" + website_url + "'>website</a>");
+      }
+
 	    //fade the text
 	    $("h4.map-title").fadeOut(500, function(){
-	      $(this).text(text);
+	      $(this).text(title);
 	      $(this).fadeIn(500);
 	    });
+
+
+      map_data = $(this).children('.jq-map-data').val();
 	    
-      curID = $(this).attr("href").split('_')[0]
-      model = $(this).attr("href").split('_')[1]
+      //curID = $(this).attr("href").split('_')[0]
+      //model = $(this).attr("href").split('_')[1]
+      curID = map_data.split('_')[0]
+      model = map_data.split('_')[1]
 	    
 	    sendToMap(model + "/map/" + curID + "/");  //send to the map
 	    sendToGraph(model + "/age/" + curID + "/" + state);  //send to the graph
@@ -81,8 +103,13 @@
 </script>
 
 <div class="maps-container">
-  <div class="corp-title"><h4 class="map-title"><%= title.nil? ? "" : title %></h4>
-    <a id="wikipedia" href="http://wikipedia.com"><img src="/images/wikipedia.png" alt="wikipedia" /></a><a id="website" href="#corporate"><img src="/images/website.png" alt="wikipedia" /></a>
+  <div class="corp-title"><h4 class="map-title"><%= title %></h4>
+    <div class="wikipedia">
+      <%= wikipedia.blank? ? "" : "<a href='#{wikipedia}'>wikipedia</a>".html_safe %>
+    </div>
+    <div class="website">
+      <%= website.blank? ? "" : "<a href='#{website}'>website</a>".html_safe %>
+    </div>
   </div>
   <div id="map"></div>
   <h4>Who’s Being Counted?</h4>

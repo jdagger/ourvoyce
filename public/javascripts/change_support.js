@@ -1,38 +1,65 @@
 $(document).ready(function(){
-	$(".support-item-thumbs-up").live("click", function(event){
+	$(".thumbs-up").live("click", function(event){
 		event.preventDefault();
 		thumbs_up_clicked($(this));
 	});
 
-	$(".support-item-thumbs-up-not-selected").live("click", function(event){
+	$(".thumbs-up-not-selected").live("click", function(event){
 		event.preventDefault();
 		thumbs_up_clicked($(this));
 	});
 
-	$(".support-item-thumbs-down").live("click", function(event){
+	$(".thumbs-up-selected").live("click", function(event){
+		event.preventDefault();
+	});
+
+	$(".thumbs-down").live("click", function(event){
 		event.preventDefault();
 		thumbs_down_clicked($(this));
 	});
 
-	$(".support-item-thumbs-down-not-selected").live("click", function(event){
+	$(".thumbs-down-not-selected").live("click", function(event){
 		event.preventDefault();
 		thumbs_down_clicked($(this));
 	});
 
-	$(".support-item-thumbs-up-selected").live("click", function(event){
+	$(".thumbs-down-selected").live("click", function(event){
 		event.preventDefault();
 	});
 
-	$(".support-item-thumbs-down-selected").live("click", function(event){
+	$(".neutral").live("click", function(event){
 		event.preventDefault();
+		neutral_clicked($(this));
+	});
+
+	$(".neutral-not-selected").live("click", function(event){
+		event.preventDefault();
+		neutral_clicked($(this));
+	});
+
+	$(".neutral-selected").live("click", function(event){
+		event.preventDefault();
+	});
+
+	$(".clear-vote").live("click", function(event){
+		event.preventDefault();
+		clear_clicked($(this));
 	});
 
 });
 
+function get_id(obj){
+  return obj.siblings(':hidden').val();
+}
+
+function get_url(obj){
+  return obj.parent().parent('form').attr('action');
+}
+
 function thumbs_up_clicked(obj){
 	//Id of the selected item
-	var $id = obj.siblings(':hidden').val();
-	var $url = obj.parent('form').attr('action');
+	var $id = get_id(obj);
+	var $url = get_url(obj);
 
 	$.ajax({
 		url: $url,
@@ -44,13 +71,13 @@ function thumbs_up_clicked(obj){
 		success: function(data){
 			if(data["result"])
 			{
-				$('.thumbs-down-' + $id).removeClass('support-item-thumbs-down').removeClass('support-item-thumbs-down-selected').addClass('support-item-thumbs-down-not-selected');
-				$('.thumbs-up-' + $id).removeClass('support-item-thumbs-up').removeClass('support-item-thumbs-up-not-selected').addClass('support-item-thumbs-up-selected');
-				$('.support-item-header-' + $id).removeClass('support-item-header').removeClass('support-item-thumbs-down-header').addClass('support-item-thumbs-up-header');
+				$('.jq-thumbs-down-' + $id).removeClass('thumbs-down').removeClass('thumbs-down-selected').addClass('thumbs-down-not-selected');
+				$('.jq-thumbs-up-' + $id).removeClass('thumbs-up').removeClass('thumbs-up-not-selected').addClass('thumbs-up-selected');
+				$('.jq-neutral-' + $id).removeClass('neutral').removeClass('neutral-selected').addClass('neutral-not-selected');
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
-			alert('error experienced')
+			alert('Error encountered when recording vote.');
 		}
 
 	});
@@ -58,9 +85,8 @@ function thumbs_up_clicked(obj){
 
 function thumbs_down_clicked(obj){
 	//Id of the selected item
-	var $id = obj.siblings(':hidden').val();
-
-	var $url = obj.parent('form').attr('action');
+  $id = get_id(obj);
+  $url = get_url(obj);
 
 	$.ajax({
 		url: $url,
@@ -72,13 +98,67 @@ function thumbs_down_clicked(obj){
 		success: function(data){
 			if(data["result"])
 			{
-				$('.thumbs-up-' + $id).removeClass('support-item-thumbs-up').removeClass('support-item-thumbs-up-selected').addClass('support-item-thumbs-up-not-selected');
-				$('.thumbs-down-' + $id).removeClass('support-item-thumbs-down').removeClass('support-item-thumbs-down-not-selected').addClass('support-item-thumbs-down-selected');
-				$('.support-item-header-' + $id).removeClass('support-item-header').removeClass('support-item-thumbs-up-header').addClass('support-item-thumbs-down-header');
+				$('.jq-thumbs-up-' + $id).removeClass('thumbs-up').removeClass('thumbs-up-selected').addClass('thumbs-up-not-selected');
+				$('.jq-thumbs-down-' + $id).removeClass('thumbs-down').removeClass('thumbs-down-not-selected').addClass('thumbs-down-selected');
+				$('.jq-neutral-' + $id).removeClass('neutral').removeClass('neutral-selected').addClass('neutral-not-selected');
 			}
 		},
 		error: function(XMLHttpRequest, textStatus, errorThrown){
-			alert('error experienced')
+			alert('Error encountered when recording vote.');
+		}
+
+	});
+}
+
+function neutral_clicked(obj){
+	//Id of the selected item
+	var $id = get_id(obj);
+	var $url = get_url(obj);
+
+	$.ajax({
+		url: $url,
+		dataType: 'json',
+		type: 'post',
+		data: "item_id=" + $id + "&neutral=true",
+		beforeSend: function(){
+		},
+		success: function(data){
+			if(data["result"])
+			{
+				$('.jq-thumbs-down-' + $id).removeClass('thumbs-down').removeClass('thumbs-down-selected').addClass('thumbs-down-not-selected');
+				$('.jq-thumbs-up-' + $id).removeClass('thumbs-up').removeClass('thumbs-up-selected').addClass('thumbs-up-not-selected');
+				$('.jq-neutral-' + $id).removeClass('neutral').removeClass('neutral-not-selected').addClass('neutral-selected');
+			}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown){
+			alert('Error encountered when recording vote.');
+		}
+
+	});
+}
+
+function clear_clicked(obj){
+	//Id of the selected item
+	var $id = get_id(obj);
+	var $url = get_url(obj);
+
+	$.ajax({
+		url: $url,
+		dataType: 'json',
+		type: 'post',
+		data: "item_id=" + $id + "&clear=true",
+		beforeSend: function(){
+		},
+		success: function(data){
+			if(data["result"])
+			{
+				$('.jq-thumbs-down-' + $id).removeClass('thumbs-down-not-selected').removeClass('thumbs-down-selected').addClass('thumbs-down');
+				$('.jq-thumbs-up-' + $id).removeClass('thumbs-up-selected').removeClass('thumbs-up-not-selected').addClass('thumbs-up');
+				$('.jq-neutral-' + $id).removeClass('neutral-not-selected').removeClass('neutral-selected').addClass('neutral');
+			}
+		},
+		error: function(XMLHttpRequest, textStatus, errorThrown){
+			alert('Error encountered when recording vote.');
 		}
 
 	});

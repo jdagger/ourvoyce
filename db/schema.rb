@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110211180151) do
+ActiveRecord::Schema.define(:version => 20110220155644) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -79,6 +79,24 @@ ActiveRecord::Schema.define(:version => 20110211180151) do
     t.string   "profit_text"
     t.string   "keywords"
     t.text     "generated_indexes"
+  end
+
+  create_table "current_question_supports", :force => true do |t|
+    t.integer  "current_question_id"
+    t.integer  "user_id"
+    t.integer  "support_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "current_questions", :force => true do |t|
+    t.string   "question_text"
+    t.string   "question_title"
+    t.integer  "active"
+    t.datetime "start_date"
+    t.datetime "end_date"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "error_logs", :force => true do |t|

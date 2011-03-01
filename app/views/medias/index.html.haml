@@ -15,7 +15,10 @@
           %td= media_type.social_score
           %td= media_type.participation_rate
           %td
-            %a{:class => 'jq-media dataset', :href=> "#{media_type.id}_mediatype"}= "Graph"
+            %a{:href => url_for(:media_type => params[:media_type]), :class => 'dataset' }
+              = 'Graph'
+              %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{media_type.id}_mediatype"}
+              %input{:type => :hidden, :class => 'jq-title', :value => media_type.name }
 
 
   - if @presenter.networks.count > 0
@@ -34,7 +37,12 @@
             %td= network.social_score 
             %td= network.participation_rate
             %td
-              %a{:class => 'jq-media dataset', :href=> "#{network.id}_network"}= "Graph"
+              %a{:href => url_for(:media_type => params[:media_type], :network => params[:network]), :class => 'dataset' }
+                = "Graph"
+                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{network.id}_network"}
+                %input{:type => :hidden, :class => 'jq-title', :value => network.name }
+                %input{:type => :hidden, :class => 'jq-wikipedia', :value => network.wikipedia }
+                %input{:type => :hidden, :class => 'jq-website', :value => network.website }
 
 
   - if @presenter.shows.count > 0 || @presenter.force_display_shows
@@ -63,8 +71,11 @@
             %tr
               %td= render :partial => 'shared/vote_control', :object =>{:id => show.id, :support_type => show.support_type, :post_url => :media_vote}, :as => :d
               %td
-                %a{:class => 'jq-media dataset', :href=> "#{show.id}_media"}
-                  %input{:type => :hidden, :class => 'jq-media-id', :value =>  show.id}
+                %a{:href => url_for(:media_type => params[:media_type], :network => params[:network], :filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => params[:id]), :class => 'dataset' }
+                  %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{show.id}_media"}
+                  %input{:type => :hidden, :class => 'jq-title', :value => show.name }
+                  %input{:type => :hidden, :class => 'jq-wikipedia', :value => show.wikipedia }
+                  %input{:type => :hidden, :class => 'jq-website', :value => show.website }
                   %img{:src => get_media_image_128(show.logo)}
                   %br
                   = show.name
@@ -72,4 +83,4 @@
                 = show.social_score
                 %img{:src => participation_rate_image(show.participation_rate), :alt => show.participation_rate}
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "media", :title => ""}
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "media", :title => "", :website => '', :wikipedia => ''}

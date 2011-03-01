@@ -26,7 +26,7 @@ class MyvoyceController < ApplicationController
 
 
     #If no filter was supplied, specify all records should be returned
-    if params[:filter].empty?
+    if params[:filter].blank?
       params[:filter] = 'vote=voted'
     else
       #filters have form 'key1=value1;key2=value2'

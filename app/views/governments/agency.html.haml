@@ -33,8 +33,11 @@
         %tr
           %td= render :partial => "shared/vote_control", :object =>{:id => agency.id, :support_type => agency.support_type, :post_url => :government_vote}, :as => :d
           %td
-            %a{:class => 'jq-government dataset', :href=> "#{agency.id}_government"}
-              %input{:type => :hidden, :class => 'jq-media-id', :value =>  agency.id}
+            %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => agency.id), :class => 'dataset' }
+              %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{agency.id}_government"}
+              %input{:type => :hidden, :class => 'jq-title', :value => agency.name }
+              %input{:type => :hidden, :class => 'jq-wikipedia', :value => agency.wikipedia }
+              %input{:type => :hidden, :class => 'jq-website', :value => agency.website }
               %img{:src => get_government_image_64(agency.logo, 1), :alt => 'logo'}
               %br
               = agency.name
@@ -42,4 +45,4 @@
             = agency.social_score
             %img{:src => participation_rate_image(agency.participation_rate), :alt => agency.participation_rate}
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => ""}
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => "", :wikipedia => '', :website => ''}
