@@ -25,7 +25,7 @@
 	  
 	  //alert("ready!");
 	  $("a.dataset").click(function(){
-	    $(".selected").removeClass("selected");  //remove the selected items
+	    $(".vote-table .selected").removeClass("selected");  //remove the selected items
 	    $(this).parent().parent().addClass("selected");  //add selected to the clicked item
 	    
 	    //var text = $(this).text();
@@ -105,10 +105,10 @@
 <div class="maps-container">
   <div class="corp-title"><h4 class="map-title"><%= title %></h4>
     <div class="wikipedia">
-      <%= wikipedia.blank? ? "" : "<a href='#{wikipedia}'>wikipedia</a>".html_safe %>
+      <%= wikipedia.blank? ? "" : "<a href='#{wikipedia}'><img src=\"/images/wikipedia.png\" alt=\"wikipedia\" /></a>".html_safe %>
     </div>
     <div class="website">
-      <%= website.blank? ? "" : "<a href='#{website}'>website</a>".html_safe %>
+      <%= website.blank? ? "" : "<a href='#{website}'><img src=\"/images/website.png\" alt=\"wikipedia\" /></a>".html_safe %>
     </div>
   </div>
   <div id="map"></div>

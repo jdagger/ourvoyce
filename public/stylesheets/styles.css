@@ -450,6 +450,7 @@ table.vote-table td{
 
 table.vote-table tr td{
   padding-bottom:3px;
+  padding-top:3px;
   margin-bottom:15px;
   padding-left:5px;
   padding-right:5px;
@@ -507,9 +508,6 @@ table.vote-table tr.selected{
 }
 
 .graph-contents{
-  width:400px;
-  float:right;
-  background:url(/images/map-rounded-back.gif) no-repeat top right;
 }
 
 #map{
@@ -531,9 +529,10 @@ table.vote-table tr.selected{
 }
 
 .maps-container{
+  padding-top:10px;
+  width:370px;
   float:right;
-  width:320px;
-  margin-top:20px;
+  background:url(/images/map-rounded-back.gif) no-repeat top right;
 }
 
 .maps-container h4{
@@ -548,6 +547,7 @@ table.vote-table tr.selected{
 .maps-container div.corp-title h4{
   float:left;
   width:240px;
+  padding-left:50px;
 }
 
 .maps-container div.corp-title a{

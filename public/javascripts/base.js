@@ -20,7 +20,7 @@ $(document).ready(function() {
       height      : 400,
       width       : 550,
       minColWidth : 100,
-      colratio    : [50, 230, 90, 90, 90],
+      colratio    : [110, 230, 60, 60, 90], //totals up to 550 wich is the width of the vote table
       wrapper     : false
   });
   
