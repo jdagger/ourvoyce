@@ -15,7 +15,6 @@ class Media < ActiveRecord::Base
   end
 
 
-
   def age_all media_id
     generate_age_all :base_object_name => 'media', :base_object_id => media_id
   end

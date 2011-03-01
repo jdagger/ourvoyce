@@ -28,6 +28,7 @@ Production::Application.routes.draw do
   match "/log" => "error_logs#index", :as => :error_log
 
 	namespace :admin do
+    match 'products/filter/:filter' => 'products#index'
 		resources :states, :corporations, :users, :products, :medias, :governments
 	end
 

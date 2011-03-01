@@ -3,6 +3,13 @@ class Product < ActiveRecord::Base
   has_many :users, :through => :product_supports
   has_many :product_audits
 
+  scope :default_include, where("default_include = 1")
+  scope :pending, where("pending = 1")
+
+  index do
+    description
+  end
+
   class << self
     def upc_lookup(options = {})
       raise "UPC not specified" if options[:upc].nil?

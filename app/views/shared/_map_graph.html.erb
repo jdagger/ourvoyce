@@ -37,14 +37,14 @@
         $("div.wikipedia").html("");
       }
       else{
-        $("div.wikipedia").html("<a href='" + wikipedia_url + "'>wikipedia</a>");
+        $("div.wikipedia").html("<a target='_blank' href='" + wikipedia_url + "'>wikipedia</a>");
       }
 
       if(website_url == null) {
         $("div.website").html("");
       }
       else{
-        $("div.website").html("<a href='" + website_url + "'>website</a>");
+        $("div.website").html("<a target='_blank' href='" + website_url + "'>website</a>");
       }
 
 	    //fade the text
@@ -56,8 +56,6 @@
 
       map_data = $(this).children('.jq-map-data').val();
 	    
-      //curID = $(this).attr("href").split('_')[0]
-      //model = $(this).attr("href").split('_')[1]
       curID = map_data.split('_')[0]
       model = map_data.split('_')[1]
 	    
@@ -104,10 +102,10 @@
 <div class="maps-container">
   <div class="corp-title"><h4 class="map-title"><%= title %></h4>
     <div class="wikipedia">
-      <%= wikipedia.blank? ? "" : "<a href='#{wikipedia}'>wikipedia</a>".html_safe %>
+      <%= wikipedia.blank? ? "" : "<a target='_blank' href='#{wikipedia}'>wikipedia</a>".html_safe %>
     </div>
     <div class="website">
-      <%= website.blank? ? "" : "<a href='#{website}'>website</a>".html_safe %>
+      <%= website.blank? ? "" : "<a target='_blank' href='#{website}'>website</a>".html_safe %>
     </div>
   </div>
   <div id="map"></div>

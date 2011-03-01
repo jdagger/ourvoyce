@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110220155644) do
+ActiveRecord::Schema.define(:version => 20110301165035) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -394,6 +394,7 @@ ActiveRecord::Schema.define(:version => 20110220155644) do
     t.integer  "social_score"
     t.integer  "participation_rate"
     t.integer  "pending"
+    t.integer  "default_include"
   end
 
   create_table "state_age_lookups", :force => true do |t|
