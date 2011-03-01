@@ -513,6 +513,8 @@ table.vote-table tr.selected{
 #map{
   float:right;
   margin-top:8px;
+  margin-right:10px;
+  margin-bottom:10px;
 }
 
 #bar-graph{
