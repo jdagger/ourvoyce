@@ -71,7 +71,8 @@
   };
   var attributes = {
     allowfullscreen: "true",
-    allowscriptaccess: "always"
+    allowscriptaccess: "always",
+    wmode: "transparent"
   };
 
   swfobject.embedSWF("/swf/map.swf", "map", "370", "270","10.0.0", params, mapvars, attributes);
@@ -81,7 +82,7 @@
 
 <div class="maps-container">
   <div class="corp-title"><h4 class="map-title"><%= title.nil? ? "" : title %></h4>
-    <a href="http://wikipedia.com">wikipedia</a><a href="#corporate">website</a>
+    <a id="wikipedia" href="http://wikipedia.com"><img src="/images/wikipedia.png" alt="wikipedia" /></a><a id="website" href="#corporate"><img src="/images/website.png" alt="wikipedia" /></a>
   </div>
   <div id="map"></div>
   <h4>Who’s Being Counted?</h4>

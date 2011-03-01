@@ -23,7 +23,7 @@ b, strong{
 }
 
 h1{
-  font-size:28px;
+  font-size:22px;
   color: #666;
   font-weight: bold;
   line-height: 29.19px;
@@ -419,8 +419,7 @@ h2{
 }
 
 /* table styles */
-
-table.vote-table th{
+table.head th, table.vote-table th{
   background: url(/images/graph-top.gif) repeat-x top;
   height:20px;
   padding-top:7px;
@@ -431,14 +430,18 @@ table.vote-table th{
   color:#fff;
 }
 
-table.vote-table th a{
+table.head th a, table.vote-table th a{
   color:#ffffff;
   font-weight:bold;
 }
 
 table.vote-table{
-  width:470px;
-  height:500px;
+  width:535px;
+}
+
+table.head{
+  width:550px;
+  padding-right:18px;
 }
 
 table.vote-table td{
@@ -463,27 +466,21 @@ table.vote-table .jq-corporation{
 }
 
 table.vote-table tr.selected{
-  border-bottom: 2px dashed #174694;
-  border-top: 2px dashed #174694;
+  border-bottom: 2px solid #cb2124;
+  border-top: 2px solid #cb2124;
 }
 
-table.vote-table tbody{
-  overflow-x: hidden;
-  width:550px;
-  overflow-y: auto;
-  height:450px;
+.vote-table-wrap div.ui-widget-content{
+  overflow-x:hidden;
 }
-
-table.vote-table thead{
-}
-
 .vote-table-wrap{
-  margin-top:15px;
-  height:480px;
+  clear:both;
+  height:430px;
+  border-left:1px solid #1B3E80;
 }
 
 .vote-table-cap{
-   background:url(/images/graph-top.gif) repeat-x;
+   background:url(/images/bottom-cap.gif) repeat-x;
    width:550px;
    height:10px;
 }
@@ -504,68 +501,6 @@ table.vote-table thead{
   height:150px;
 }
 
-/* new table styles */
-  
-table.vote-table-new{
-  margin: 0;
-  padding: 0;
-	border-bottom: 1px solid #999;
-	border-left: 1px solid #999;
-}
-
-table.vote-table-new th{
-  margin: 0;
-	border-right: 1px solid #999;
-	border-top: 1px solid #999;
-	font-weight: normal;
-	padding: 4px 3px 3px 4px;
-	background: #ccc;
-	font-weight: bold;
-}
-
-table.vote-table-new td{
-  margin: 0;
-	border-right: 1px solid #999;
-	border-top: 1px solid #999;	
-  padding: 2px 3px 3px 4px
-}
-
-div.vote-table-wrap-new{
-  height: 285px;	
-  overflow: auto;
-	width: 500px;
-	margin: 15px 0 0 0;
-	position: relative;
-}
-
-
-/* All browsers accept this, but we are targeting IE with this rule */
-div.vote-table-wrap-new table {
-	width: 452px;
-}
-
-/* Modern browsers accept this (not IE) and we are targetting firefox */
-html>/**/body div.vote-table-wrap-new table {
-    width: 470px;
-}
-
-/* Modern browsers accept this (not IE) and we are targetting firefox */
-html>/**/body div.vote-table-wrap-new table>tbody	{  
-    overflow: auto; 
-    height: 250px;
-    overflow-x: hidden;
-}
-
-div.vote-table-wrap-new thead tr	{
-
-}
-
-/*prevent Mozilla scrollbar from hiding cell content*/
-div.vote-table-wrap-new td:last-child {padding-right: 20px;}
-
-
-/*  */
-
 .left-content{
   float:left;
   width:550px;
@@ -574,6 +509,7 @@ div.vote-table-wrap-new td:last-child {padding-right: 20px;}
 .graph-contents{
   width:400px;
   float:right;
+  background:url(/images/map-rounded-back.gif) no-repeat top right;
 }
 
 #map{
@@ -605,18 +541,18 @@ div.vote-table-wrap-new td:last-child {padding-right: 20px;}
   float:right;
   text-align:center;
   font-size:18px;
-  width:320px;
+  width:370px;
   font-weight:bold;
 }
 
 .maps-container div.corp-title h4{
   float:left;
-  width:256px;
+  width:240px;
 }
 
 .maps-container div.corp-title a{
   float:right;
-  margin-left:10px;
+  margin-right:5px;
 }
 
 th.limit {
@@ -624,20 +560,30 @@ th.limit {
 }
 
 a.sort-button{
-  width:90px;
-  height:22px;
+  width:88px;
+  height:20px;
   text-align:center;
   display:block;
   float:left;
-  padding-top:5px; 
-  margin-right:5px;
+  padding-top:6px; 
+  margin-right:1px;
+  color:#333;
+  background: url(/images/sort-tab-off.gif) no-repeat;
+}
+
+a.sort-button:hover{
   color:#ffffff;
-  background: url(/images/button-bg.gif) no-repeat;
+  background: url(/images/sort-tab-on.gif) no-repeat;
+}
+
+
+a.sort-button.selected{
+  color:#ffffff;
+  background: url(/images/sort-tab-on.gif) no-repeat;
 }
 
 .page-title{
   width:550px;
-  clear:both;
 }
 
 .page-title h1{
@@ -649,9 +595,10 @@ a.sort-button{
 }
 
 .filtering{
-  width:600px;
+  width:550px;
   height:25px;
-  clear:both;
+  padding-bottom:4px;
+  background:url(/images/top-cap.gif) bottom right no-repeat;
 }
 
 div.paging{
@@ -669,9 +616,22 @@ div.paging a, div.paging b{
 }
 
 div.pr-pie{
-  width:50px;
-  height:32px;
+  width:49px;
+  height:41px;
   text-align:center;
   font-weight:bold;
-  padding-top:18px;
+  padding-top:9px;
+  padding-left:1px;
+  font-size:26px;
+}
+
+#wikipedia{
+}
+
+#website{
+}
+
+.clear{
+  width:100%;
+  clear:both;
 }

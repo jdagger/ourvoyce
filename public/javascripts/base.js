@@ -16,4 +16,12 @@ $(document).ready(function() {
   // add dividers to top and footer navigation
   $('#header-nav ul li:not(:first)').before('<li>|</li>');
   
+  $('.vote-table').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [50, 230, 90, 90, 90],
+      wrapper     : false
+  });
+  
 }); //end document.ready
