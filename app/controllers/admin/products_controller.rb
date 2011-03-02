@@ -1,4 +1,4 @@
-class Admin::ProductsController < ApplicationController
+class Admin::ProductsController < AdminController
   skip_before_filter :basic_authentication, :only => [:show]
   skip_before_filter :authorize, :only => [:show]
 

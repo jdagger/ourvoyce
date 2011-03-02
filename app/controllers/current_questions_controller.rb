@@ -1,4 +1,4 @@
-class CurrentQuestionsController < ApplicationController
+class CurrentQuestionsController < AdminController
 
   # GET /current_questions
   def index
