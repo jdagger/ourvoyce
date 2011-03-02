@@ -31,7 +31,9 @@ class Product < ActiveRecord::Base
       if params.key? :user_id
         select << 'product_supports.support_type as support_type'
         select << 'product_supports.updated_at as votedate'
-        records = records.joins("LEFT OUTER JOIN product_supports ON products.id=product_supports.product_id AND user_id=#{params[:user_id].to_i}")
+        select << 'pending_products.description as pending_product_description'
+        records = records.joins("LEFT OUTER JOIN product_supports ON products.id=product_supports.product_id AND product_supports.user_id=#{params[:user_id].to_i}")
+        records = records.joins("LEFT OUTER JOIN pending_products ON products.id=pending_products.product_id AND pending_products.user_id=#{params[:user_id].to_i}")
       end
 
       #Only apply text filter or thumbs up/thumbs down filter

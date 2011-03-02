@@ -1,6 +1,5 @@
 class SiteController < ApplicationController
   skip_before_filter :authorize
-  skip_before_filter :basic_authentication
 
   def help
   end
@@ -18,5 +17,10 @@ class SiteController < ApplicationController
   end
   
   def work
+  end
+
+  def donate
+    redirect_to 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YL99BHV7HWQCG'
+    
   end
 end

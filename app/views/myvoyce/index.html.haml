@@ -60,7 +60,7 @@
       %td= render :partial => 'shared/vote_control', :object => {:id => product.id, :support_type => product.support_type, :post_url => :product_vote}, :as => :d
       %td
         %img{:src => get_product_image_128(product.logo), :alt => product.description}
-      %td= product.description
+      %td= product.pending ? product.pending_product_description : product.description
       %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''
       %td
         = product.social_score

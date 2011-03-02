@@ -7,7 +7,7 @@ class CorporatesController < ApplicationController
     end
 
     if params[:sort].blank?
-      params[:sort] = 'name_asc'
+      params[:sort] = 'revenue_desc'
     end
 
     #Set up the presenter

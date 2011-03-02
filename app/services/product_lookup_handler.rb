@@ -31,10 +31,13 @@ class ProductLookupHandler < LookupHandlerBase
 
         #If pending product, load user's description
         if(self.item.pending)
-            pp = PendingProduct.where(:product_id => self.item.id).first
+            pp = PendingProduct.where(:product_id => self.item.id, :user_id => self.user.id).first
             if !pp.nil?
               self.item.name = pp.name
               self.item.description = pp.description
+            else
+              #Product exists, but user has not provide a description, so allow them to enter a description
+              self.status = 0
             end
         end
 			end

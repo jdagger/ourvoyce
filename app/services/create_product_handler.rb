@@ -24,13 +24,17 @@ class CreateProductHandler < HandlerBase
     super
 
     #Try to load to product to see if it exists
-		product = Product.where("upc = ? OR ean = ?", self.upc, self.upc)
-		if(product.count > 0)
+		product = Product.where("upc = ? OR ean = ?", self.upc, self.upc).first
+    
+    #If the product was found and is not in a pending state, don't allow a new description to be entered
+		if ! product.nil? && ! product.pending
 			self.status = 0
     else
-      #Product not found, so create and mark as pending
-      product = Product.new(:upc => self.upc, :ean => self.upc, :pending => 1)
-      product.save
+      if product.nil?
+        #Product not found, so create and mark as pending
+        product = Product.new(:upc => self.upc, :ean => self.upc, :pending => 1)
+        product.save
+      end
 
       #If user is authenticated, store vote and description
 			user_id = nil
@@ -42,8 +46,9 @@ class CreateProductHandler < HandlerBase
         pending_product = PendingProduct.new(:product_id => product.id, :name => self.name, :description => self.description, :user_id => user_id)
         pending_product.save
 
-				ps = ProductScan.new(:user_id => user_id, :product_id => product.id)
-        ps.save
+        #I think product scans are already recorded on the product lookup page.  Double check --Ryan
+				#ps = ProductScan.new(:user_id => user_id, :product_id => product.id)
+        #ps.save
 			end
 
 			self.status = 1

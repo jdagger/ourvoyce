@@ -50,8 +50,8 @@ class ProductSearchHandler < SearchHandlerBase
 				prod_hash.push(p)
 				p["ProductId"] = product.id
         if product.pending
-          p["Name"] = "Pending"
-          p["Description"] = "Pending"
+          p["Name"] = product.pending_product_description.blank? ? "Pending" : product.pending_product_description
+          p["Description"] = product.pending_product_description.blank? ? "Pending" : product.pending_product_description
         else
           p["Name"] = product.name
           p["Description"] = product.description
