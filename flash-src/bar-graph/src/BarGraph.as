@@ -176,8 +176,14 @@ package
 		  for(var j:int = 0; j<numberOfLines+1; j++){
 		    var lineY = j * (barHeight/numberOfLines);
 		    var labelNumber = j * (availableScale/numberOfLines);
-
-		    var line = new LabelLine(scaleBottom + labelNumber, stage.stageWidth - graph_holder.bars_holder.x - stagePadding);
+        
+        if(labelNumber%1 != 0){
+          labelNumber = "";
+        }else{
+          labelNumber = scaleBottom + labelNumber;
+        }
+        
+		    var line = new LabelLine(String(labelNumber), stage.stageWidth - graph_holder.bars_holder.x - stagePadding);
 		    graph_holder.grid_holder.addChild(line);
 		    line.y = -lineY
 		  }

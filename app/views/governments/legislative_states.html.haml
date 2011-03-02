@@ -1,8 +1,8 @@
-= render :partial => "shared/government_menu"
-
 .left-content
+  = render :partial => "shared/government_menu"
+  %div.vote-table-top-cap
   %div.vote-table-wrap
-    %table.vote-table
+    %table.vote-table.legislative-state
       %thead
         %tr
           %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -19,12 +19,13 @@
               %br
               = state.name
             %td
-              = state.social_score
-              %img{ :src => participation_rate_image(state.participation_rate), :alt => state.participation_rate }
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(state.participation_rate)})", :alt => state.participation_rate}
+                = state.social_score
             %td
               %a{:href => url_for(:sort => params[:sort], :id => state.id), :class => 'dataset' }
-                = 'Graph'
+                = 'View Graph'
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{state.id}_legislativestate"}
                 %input{:type => :hidden, :class => 'jq-title', :value =>  state.name }
+  %div.vote-table-cap
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "legislativestate", :title => "", :wikipedia => '', :website => ''}

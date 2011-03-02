@@ -16,11 +16,43 @@ $(document).ready(function() {
   // add dividers to top and footer navigation
   $('#header-nav ul li:not(:first)').before('<li>|</li>');
   
-  $('.vote-table').fixheadertable({ 
+  $('.vote-table.corporate').fixheadertable({ 
       height      : 400,
       width       : 550,
       minColWidth : 100,
-      colratio    : [110, 230, 60, 60, 90], //totals up to 550 wich is the width of the vote table
+      colratio    : [109, 230, 55, 55, 100], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
+  $('.vote-table.executive').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [109, 150, 150, 140], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
+  $('.vote-table.house-of-representatives').fixheadertable({ 
+      height      : 250,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [109, 120, 120, 90, 110], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
+  $('.vote-table.legislative-state').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [190, 190, 169], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
+  $('.vote-table.agency').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [109, 340, 100], //totals up to 549 wich is the width of the vote table
       wrapper     : false
   });
   

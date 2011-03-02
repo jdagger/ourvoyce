@@ -19,7 +19,7 @@
     =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=novote', params) }"
 
   %div.vote-table-wrap
-    %table.vote-table
+    %table.vote-table.corporate
       %thead
         %tr
           %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }

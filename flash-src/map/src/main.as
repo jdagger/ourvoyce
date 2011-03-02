@@ -31,6 +31,7 @@ package
 		public var stagePadding:Number = 10;
 		public var viewState:String = "us";
 		public var USStates:Array = ["al", "ak", "az", "ar", "ca", "co", "ct", "de", "fl", "ga", "hi", "id", "il", "in", "ia", "ks", "ky", "la", "me", "md", "ma", "mi", "mn", "ms", "mo", "mt", "ne", "nv", "nh", "nj", "nm", "ny", "nc", "nd", "oh", "ok", "or", "pa", "ri", "sc", "sd", "tn", "tx", "ut", "vt", "va", "wa", "wv", "wi", "wy"];
+	  public var SmallStates:Array = ["me", "nh", "vt", "ct", "ma", "ri", "nj", "de", "md", "dc"];
 	  public var restRoute:String = "corporate/map/85/";
 	  public var baseURL:String = "http://www.directeddata.com/services/website/";
 	  public var curState:String = "";
@@ -89,6 +90,7 @@ package
       //create the state clicks
       //click_map_mc.nc_mc.addEventListener(MouseEvent.CLICK, stateClick);
       setupStateButtons();
+      setupInitialButtons();
       
       geo_map_mc.visible = false;
       zoom_mc.visible = false;
@@ -109,14 +111,14 @@ package
       var scalePercent:Number = 0;
       
       if(hpercent >= wpercent){
-        scalePercent = (stage.stageHeight-(stagePadding*2))/click_map_mc.height;
+        scalePercent = (stage.stageHeight-(stagePadding*2 ))/click_map_mc.height;
         
         //for horizontal centering
         xoffset = ((stage.stageWidth - (click_map_mc.width*scalePercent))/2) - stagePadding;
       }
       
       if(wpercent >= hpercent){
-        scalePercent = (stage.stageWidth-(stagePadding*2))/click_map_mc.width;
+        scalePercent = (stage.stageWidth-(stagePadding*2 + state_initials.width))/click_map_mc.width;
         
         //for vetical centering
         yoffset = ((stage.stageHeight - (click_map_mc.height*scalePercent))/2) - stagePadding;
@@ -128,6 +130,8 @@ package
       click_map_mc.x = stagePadding + xoffset;
       click_map_mc.y = stagePadding + yoffset;
       
+      state_initials.y = click_map_mc.y;
+      state_initials.x = click_map_mc.x + click_map_mc.width;
     }
     
     public function zoomOut(e:Event):void{
@@ -135,6 +139,7 @@ package
       zoom_mc.visible = false;
       click_map_mc.visible = true;
       dot_holder.visible = false;
+      state_initials.visible = true;
       
       //remove the dots this second
       removeDotsNow();
@@ -178,6 +183,13 @@ package
       }
     }
     
+    public function setupInitialButtons():void{
+      for(var i:int = 0; i<SmallStates.length; i++){
+        var stateMC = state_initials[SmallStates[i] + "_mc"];
+        stateMC.addEventListener(MouseEvent.CLICK, stateClick);
+      }
+    }
+    
     public function stateClick(e:Event):void{
       var stateMC = e.target.name;
       curState = stateMC.split("_")[0];
@@ -185,6 +197,7 @@ package
       click_map_mc.visible = false;
       zoom_mc.visible = true;
       dot_holder.visible = true;
+      state_initials.visible = false;
       
       placeState(stateMC);
       

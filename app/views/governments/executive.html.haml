@@ -1,11 +1,13 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
 
-= render :partial => "shared/government_menu"
-
 .left-content
+  %div.page-title
+    %h1 Executive
+  = render :partial => "shared/government_menu"
+  %div.vote-table-top-cap
   %div.vote-table-wrap
-    %table.vote-table
+    %table.vote-table.executive
       %thead
         %tr
           %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -31,7 +33,8 @@
                 = "#{executive.first_name} #{executive.last_name}"
             %td= executive.title
             %td
-              = executive.social_score
-              %img{:src => participation_rate_image(executive.participation_rate), :alt => executive.participation_rate}
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(executive.participation_rate)})", :alt => executive.participation_rate}
+                = executive.social_score
+  %div.vote-table-cap
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => "", :website => '', :wikipedia => ''}

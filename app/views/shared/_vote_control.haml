@@ -4,4 +4,5 @@
     %input{:type => "submit", :class => "jq-thumbs-up-#{d[:id]} #{thumbs_up_support_class(d[:support_type])}", :name => "thumbs_up", :value => ""}
     %input{:type => "submit", :class => "jq-neutral-#{d[:id]} #{neutral_support_class(d[:support_type])}", :name => "neutral", :value => ""}
     %input{:type => "submit", :class => "jq-thumbs-down-#{d[:id]} #{thumbs_down_support_class(d[:support_type])}", :name => "thumbs_down", :value => ""}
-    /%input{:type => "submit", :class => "jq-clear-vote-#{d[:id]} clear-vote", :name => "clear_vote", :value => "Clear"}
+    %br
+    %input{:type => "submit", :class => "jq-clear-vote-#{d[:id]} clear-vote", :name => "clear_vote", :value => "Clear"}

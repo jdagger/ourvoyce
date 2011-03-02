@@ -439,6 +439,10 @@ table.vote-table{
   width:535px;
 }
 
+.tiny-table-wrap table.vote-table{
+  width:549px;
+}
+
 table.head{
   width:550px;
   padding-right:18px;
@@ -476,14 +480,26 @@ table.vote-table tr.selected{
 }
 .vote-table-wrap{
   clear:both;
-  height:430px;
   border-left:1px solid #1B3E80;
 }
 
+.tiny-table-wrap{
+  clear:both;
+  border-left:1px solid #1B3E80;
+  border-right:1px solid #1B3E80;
+}
+
+.vote-table-top-cap{
+   background:url(/images/top-full-cap.gif) bottom no-repeat;
+   width:550px;
+   height:3px;
+}
+
 .vote-table-cap{
-   background:url(/images/bottom-cap.gif) repeat-x;
+   background:url(/images/bottom-cap.gif) no-repeat;
    width:550px;
    height:10px;
+   margin-bottom:10px;
 }
 
 .vote-table-wrap h4{
@@ -505,6 +521,11 @@ table.vote-table tr.selected{
 .left-content{
   float:left;
   width:550px;
+}
+
+.left-content h4{
+  font-size:18px;
+  color:#333;
 }
 
 .graph-contents{
@@ -619,12 +640,13 @@ div.paging a, div.paging b{
 
 div.pr-pie{
   width:49px;
-  height:41px;
+  height:38px;
   text-align:center;
   font-weight:bold;
-  padding-top:9px;
+  padding-top:12px;
   padding-left:1px;
-  font-size:26px;
+  font-size:20px;
+  display:inline-block;
 }
 
 #wikipedia{
@@ -636,4 +658,33 @@ div.pr-pie{
 .clear{
   width:100%;
   clear:both;
+}
+
+.link-box{
+  width:105px;
+  height:28px;
+  color:#333 !important;
+  text-align:center;
+  font-size:18px;
+  font-weight:bold;
+  padding-top:6px;
+  background:url(/images/type-off.png);
+  display:block;
+}
+
+.link-box.selected{
+  color:#fff;
+  background:url(/images/type-on.png);
+}
+
+.section-nav{
+  width:550px;
+  height:36px;
+  clear:both;
+  margin-bottom:10px;
+}
+
+.section-nav a{
+  float:left;
+  margin-right:5px;
 }

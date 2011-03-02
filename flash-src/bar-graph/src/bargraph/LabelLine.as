@@ -20,9 +20,9 @@ package bargraph
 	public class LabelLine extends MovieClip
 	{
 		
-		public function LabelLine(num:Number, lineWidth:Number)
+		public function LabelLine(num:String, lineWidth:Number)
 		{
-		  label_txt.text = String(num);
+		  label_txt.text = num;
 		  line_mc.mask = line_mask;
 		  line_mc.width = lineWidth;
 		  line_mask.mask_middle.width = line_mc.width - (line_mask.mask_left.width*2);
