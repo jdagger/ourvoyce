@@ -1,0 +1,22 @@
+- content_for :scripts do
+  = javascript_include_tag "change_support.js"
+
+.left-content
+  .current_question
+    = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
+    = @current_question.question_text
+  %table
+    %thead
+      %tr
+        %th State
+        %th # of Users
+        %th % of Population
+    %tbody
+      - @states.each do |state|
+        %tr
+          %td= state.name
+          %td= state.user_count
+          %td= number_with_precision(100 * state.user_count.to_f / state.population, :precision => 2).to_s + '%'
+
+.graph-contents
+  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "ourvoyce", title:'', website:'', wikipedia:''}
