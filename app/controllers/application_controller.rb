@@ -1,5 +1,5 @@
 class ApplicationController < ActionController::Base
-	before_filter :basic_authentication
+	#before_filter :basic_authentication
 	before_filter :authorize
 
 	protect_from_forgery
@@ -9,7 +9,8 @@ class ApplicationController < ActionController::Base
 		begin
 			User.find(session[:user_id])
 		rescue
-			redirect_to myvoyce_account_path
+			#redirect_to myvoyce_account_path
+      redirect_to root_path
 		end
 	end
 
@@ -21,9 +22,9 @@ class ApplicationController < ActionController::Base
 		session[:user_id]
 	end
 
-	def basic_authentication
-		authenticate_or_request_with_http_basic do |username, password|
-			username=='ourvoyce' && password=='elab321'
-		end
-	end
+	#def basic_authentication
+		#authenticate_or_request_with_http_basic do |username, password|
+			#username=='ourvoyce' && password=='elab321'
+		#end
+	#end
 end

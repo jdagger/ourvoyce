@@ -82,6 +82,7 @@ class MyvoyceController < ApplicationController
     @presenter.products = records
   end
 
+=begin
   def logout
     session[:user_id] = nil
     redirect_to :action => :new, :notice => 'Logged out'
@@ -117,5 +118,6 @@ class MyvoyceController < ApplicationController
       render :action => :new
     end
   end
+=end
 
 end

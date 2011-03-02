@@ -4,4 +4,31 @@
     %title OurVoyce
     = csrf_meta_tag
   %body
-    Testing!
+    %div{:style => 'text-align: center;'}
+      %img{:src => '/images/ourvoYce_big.png'}
+      = form_for @authenticate_user, :html => {:class => 'login'}, :url => authenticate_path(@authenticate_user) do |f|
+        .flash-message= flash[:notice]
+        %table{:style => "margin: auto; text-align: left;"}
+          %tr
+            %td= label_tag :username, "Username:" 
+            %td= text_field_tag :username, @authenticate_user.username
+          %tr
+            %td= label_tag :password, "Password:"
+            %td= password_field_tag :password, ""
+          %tr
+            %td
+            %td= submit_tag "Login"
+
+      %div{:style => "border: solid 0px black; margin-right: auto; margin-left: auto; margin-top: 150px; text-align: center; padding-left: 60px"}
+      %table{:border => "0", :style => "margin: auto;"}
+        %tr
+          %td{:style => "width: 185px; text-align: left"}
+            %a{:href => "http://www.twitter.com/ourvoYce"}
+              %img{:src => "http://twitter-badges.s3.amazonaws.com/follow_us-b.png", :alt => "Follow ourvoYce on Twitter"}
+          %td{ :style => "width: 140px; text-align: center"}
+            %a{ :href => "http://wikimediafoundation.org/wiki/Support_Wikipedia/en"}
+              %img{:border => "0", :alt => "Support Wikipedia", :src => "http://upload.wikimedia.org/wikipedia/commons/2/26/Fundraising_2009-square-thanks-en.png"}
+          %td{ :style => "text-align: right"}
+            = '<script src="http://connect.facebook.net/en_US/all.js#xfbml=1"></script>'.html_safe
+            = '<fb:like-box href="http://www.facebook.com/pages/ourvoYce/106886149350027" width="240" connections="0" stream="false" header="false"></fb:like-box>'.html_safe
+
