@@ -56,4 +56,28 @@ $(document).ready(function() {
       wrapper     : false
   });
   
+  $('.vote-table.media-show').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [109, 340, 100], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
+  $('.vote-table.media-list').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [340, 109, 100], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
+  $('.vote-table.myvoyce').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [109, 70, 160, 100, 110], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
 }); //end document.ready

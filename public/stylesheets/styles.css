@@ -436,7 +436,7 @@ table.head th a, table.vote-table th a{
 }
 
 table.vote-table{
-  width:535px;
+  width:534px;
 }
 
 .tiny-table-wrap table.vote-table{
@@ -481,6 +481,7 @@ table.vote-table tr.selected{
 .vote-table-wrap{
   clear:both;
   border-left:1px solid #1B3E80;
+  border-right:1px solid #1B3E80;
 }
 
 .tiny-table-wrap{
@@ -687,4 +688,47 @@ div.pr-pie{
 .section-nav a{
   float:left;
   margin-right:5px;
+}
+
+.singlet-left{
+  background:url(/images/rounded-left.gif) left top no-repeat;
+  height:75px;
+  width:8px;
+  float:left;
+}
+
+.singlet-right{
+  background:url(/images/rounded-right.gif) left top no-repeat;
+  height:75px;
+  width:8px;
+  float:right;
+}
+
+.singlet{
+  background:url(/images/rounded-middle.gif) top repeat-x;
+  height:75px;
+  width:400px;
+  margin-bottom:12px;
+}
+
+.singlet-table-wrap{
+  width:370px;
+  padding-left:14px;
+  padding-top:5px;
+  float:left;
+}
+
+table.singlet-table{
+  width:370px;
+}
+
+table.singlet-table tr td{
+  text-align:center;
+  vertical-align:middle;
+}
+
+table.singlet-table tr td.outlet{
+  width:200px;
+  padding-left:5px;
+  padding-right:5px;
 }

@@ -19,45 +19,86 @@
               = 'Graph'
               %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{media_type.id}_mediatype"}
               %input{:type => :hidden, :class => 'jq-title', :value => media_type.name }
-
-
-  - if @presenter.networks.count > 0
-    %table
-      %thead
-        %tr
-      %tbody
-        - @presenter.networks.each do |network|
+  
+  - if @presenter.networks.count == 1
+    %div.singlet
+      %div.singlet-left
+        %div.singlet-table-wrap
+          %table.singlet-table
+            %tbody
+              - @presenter.networks.each do |network|
+                %tr
+                  %td.outlet
+                    - if @presenter.networks.count == 1
+                      %a{:href => url_for(:media_type => @presenter.media_types[0].name) }
+                        %img{:src => get_media_image_128(network.logo), :alt => 'logo'}
+                        %br
+                        = network.name
+                    - else
+                      %a{:href => url_for(:media_type => @presenter.media_types[0].name, :network => network.name) }
+                        %img{:src => get_media_image_128(network.logo), :alt => 'logo'}
+                        %br
+                        = network.name
+                  %td
+                    %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(network.participation_rate)})", :alt => network.participation_rate}
+                      = network.social_score
+                  %td
+                    %a{:href => url_for(:media_type => params[:media_type], :network => params[:network]), :class => 'dataset' }
+                      = "Graph"
+                      %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{network.id}_network"}
+                      %input{:type => :hidden, :class => 'jq-title', :value => network.name }
+                      %input{:type => :hidden, :class => 'jq-wikipedia', :value => network.wikipedia }
+                      %input{:type => :hidden, :class => 'jq-website', :value => network.website }
+      %div.singlet-right
+  
+  - if @presenter.networks.count > 1
+    %div.vote-table-top-cap
+    %div.vote-table-wrap
+      %table.vote-table.media-list
+        %thead
           %tr
-            %td
-              %img{:src => get_media_image_128(network.logo), :alt => 'logo'}
-            - if @presenter.networks.count == 1
-              %td= link_to network.name, :media_type => @presenter.media_types[0].name
-            - else
-              %td= link_to network.name, :media_type => @presenter.media_types[0].name, :network => network.name
-            %td= network.social_score 
-            %td= network.participation_rate
-            %td
-              %a{:href => url_for(:media_type => params[:media_type], :network => params[:network]), :class => 'dataset' }
-                = "Graph"
-                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{network.id}_network"}
-                %input{:type => :hidden, :class => 'jq-title', :value => network.name }
-                %input{:type => :hidden, :class => 'jq-wikipedia', :value => network.wikipedia }
-                %input{:type => :hidden, :class => 'jq-website', :value => network.website }
+            %th
+            %th
+            %th
+            %th
+        %tbody
+          - @presenter.networks.each do |network|
+            %tr
+              %td
+                - if @presenter.networks.count == 1
+                  %a{:href => url_for(:media_type => @presenter.media_types[0].name) }
+                    %img{:src => get_media_image_128(network.logo), :alt => 'logo'}
+                    %br
+                    = network.name
+                - else
+                  %a{:href => url_for(:media_type => @presenter.media_types[0].name, :network => network.name) }
+                    %img{:src => get_media_image_128(network.logo), :alt => 'logo'}
+                    %br
+                    = network.name
+              %td
+                %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(network.participation_rate)})", :alt => network.participation_rate}
+                  = network.social_score
+              %td
+                %a{:href => url_for(:media_type => params[:media_type], :network => params[:network]), :class => 'dataset' }
+                  = "Graph"
+                  %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{network.id}_network"}
+                  %input{:type => :hidden, :class => 'jq-title', :value => network.name }
+                  %input{:type => :hidden, :class => 'jq-wikipedia', :value => network.wikipedia }
+                  %input{:type => :hidden, :class => 'jq-website', :value => network.website }
+    %div.vote-table-cap
 
 
   - if @presenter.shows.count > 0 || @presenter.force_display_shows
-    %fieldset
-      %legend Filtering:
-      =link_to 'Thumbs Up', {:media_type => params[:media_type], :network => params[:network], :filter => 'thumbsup', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-      =link_to 'Thumbs Down', {:media_type => params[:media_type], :network => params[:network], :filter => 'thumbsdown', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-      =link_to 'Neutral', {:media_type => params[:media_type], :network => params[:network], :filter => 'neutral', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-      =link_to 'Voted', {:media_type => params[:media_type], :network => params[:network], :filter => 'vote', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-      =link_to 'No Vote', {:media_type => params[:media_type], :network => params[:network], :filter => 'novote', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-      =link_to 'All Records', {:media_type => params[:media_type], :network => params[:network], :filter => 'all', :sort => params[:sort], :page => 1}, :class=> "sort-button"
+    %div.filtering
+      =link_to 'All Records', {:media_type => params[:media_type], :network => params[:network], :filter => 'all', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('all', params) }"
+      =link_to 'Thumbs Up', {:media_type => params[:media_type], :network => params[:network], :filter => 'thumbsup', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('thumbsup', params) }"
+      =link_to 'Thumbs Down', {:media_type => params[:media_type], :network => params[:network], :filter => 'thumbsdown', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('thumbsdown', params) }"
+      =link_to 'Neutral', {:media_type => params[:media_type], :network => params[:network], :filter => 'neutral', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('neutral', params) }"
+      =link_to 'Voted', {:media_type => params[:media_type], :network => params[:network], :filter => 'vote', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote', params) }"
+      =link_to 'No Vote', {:media_type => params[:media_type], :network => params[:network], :filter => 'novote', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('novote', params) }"
 
-    = render :partial => "shared/paging", :object => @paging, :as => :paging_data
     %div.vote-table-wrap
-      %table.vote-table
+      %table.vote-table.media-show
         %thead
           %tr
             %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -80,7 +121,11 @@
                   %br
                   = show.name
               %td
-                = show.social_score
-                %img{:src => participation_rate_image(show.participation_rate), :alt => show.participation_rate}
+                %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(show.participation_rate)})", :alt => show.participation_rate}
+                  = show.social_score
+    %div.vote-table-cap
+
+    = render :partial => "shared/paging", :object => @paging, :as => :paging_data
+    
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "media", :title => "", :website => '', :wikipedia => ''}
