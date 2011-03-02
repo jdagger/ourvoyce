@@ -1,64 +1,91 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
-  
-%div
-  Stats:
-  %br
-  = "Username: #{@stats[:username]}"
-  %br
-  = "Member since: #{@stats[:member_since]}"
-  %br
-  = "Total: #{@stats[:total_scans]}"
-  %br
-  = "This year: #{@stats[:this_year_scans]}"
-  %br
-  = "This month: #{@stats[:this_month_scans]}"
-  %br
-  = "This week: #{@stats[:this_week_scans]}"
-  %br
-  = "Today: #{@stats[:today_scans]}"
-%fieldset
-  %legend Enter item identification number: (Test with 067933136480 )
-  = form_tag request.fullpath do
-    = text_field_tag :barcode_lookup, params[:barcode]
-    %input{:type => 'submit', :name => 'lookup_submit', :value => 'Lookup'}
-  %br
-  = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
-  %img{:src => get_product_image_128(@current_product_image) }
-  = @current_product_description || 'Enter a barcode'
 
-= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+%h1
+  myvoYce
 
-%div.filtering
-  =link_to 'All', {:filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
-  =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
-  =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsdown', params) }"
-  =link_to 'Neutral', {:filter => 'vote=neutral', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=neutral', params) }"
-  =link_to 'Voted', {:filter => 'vote=voted', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=voted', params) }"
-  =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=novote', params) }"
+.left-content  
+  %div.singlet.myvoyce
+    %div.singlet-left
+      %div.singlet-table-wrap
+        %table.singlet-table
+          %tbody
+            %tr
+              %td
+                = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
+              %td
+                %img{:src => get_product_image_128(@current_product_image) }
+              %td
+                = @current_product_description || 'Enter a barcode'
+              %td
+                %div.mvform
+                  %h5 Enter item identification number:
+                  = form_tag request.fullpath do
+                    = text_field_tag :barcode_lookup, params[:barcode]
+                    %input{:type => 'submit', :name => 'lookup_submit', :value => 'Lookup'}
+          
+    %div.singlet-right
 
-%div.vote-table-wrap
-  %table.vote-table.myvoyce
-    %thead
-      %tr
-        %th Vote
-        %th Photo
-        %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
-        %th= table_sort_header_link :header => "Date", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
-        %th
-          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
-          = '/'
-          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
-    %tbody
-      - @presenter.products.each do |product|
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+
+  %div.filtering
+    =link_to 'All', {:filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
+    =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
+    =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsdown', params) }"
+    =link_to 'Neutral', {:filter => 'vote=neutral', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=neutral', params) }"
+    =link_to 'Voted', {:filter => 'vote=voted', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=voted', params) }"
+    =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=novote', params) }"
+
+  %div.vote-table-wrap
+    %table.vote-table.myvoyce
+      %thead
         %tr
-          %td= render :partial => 'shared/vote_control', :object => {:id => product.id, :support_type => product.support_type, :post_url => :product_vote}, :as => :d
-          %td
-            %img{:src => get_product_image_128(product.logo), :alt => product.description}
-          %td= product.pending ? (product.pending_product_description.blank? ? "Pending" : product.pending_product_description) : product.description
-          %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''
-          %td
-            %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(product.participation_rate)})", :alt => product.participation_rate}
-            = product.social_score
-%div.vote-table-cap
-= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+          %th Vote
+          %th Photo
+          %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
+          %th= table_sort_header_link :header => "Date", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
+      %tbody
+        - @presenter.products.each do |product|
+          %tr
+            %td= render :partial => 'shared/vote_control', :object => {:id => product.id, :support_type => product.support_type, :post_url => :product_vote}, :as => :d
+            %td
+              %img{:src => get_product_image_128(product.logo), :alt => product.description}
+            %td= product.pending ? (product.pending_product_description.blank? ? "Pending" : product.pending_product_description) : product.description
+            %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(product.participation_rate)})", :alt => product.participation_rate}
+                = product.social_score
+  %div.vote-table-cap
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+
+
+.user-stats
+  %p
+    %span.username
+      = "#{@stats[:username]}"
+    %br
+    = "Member since: #{@stats[:member_since]}"
+    
+  %h3
+    Stats:
+
+  %ul.stats
+    %li
+      %span Total:  
+      = "#{@stats[:total_scans]}"
+    %li
+      %span This year: 
+      = "#{@stats[:this_year_scans]}"
+    %li
+      %span This month: 
+      = "#{@stats[:this_month_scans]}"
+    %li
+      %span This week: 
+      = "#{@stats[:this_week_scans]}"
+    %li
+      %span Today: 
+      = "#{@stats[:today_scans]}"
