@@ -160,7 +160,7 @@ module AgeGraphHelper
     end
 
 
-    #self.age_data.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
+    self.age_data.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
 
 
     #set scale
