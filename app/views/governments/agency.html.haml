@@ -1,25 +1,28 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
 
-= render :partial => "shared/government_menu"
 .left-content
-  %fieldset
-    %legend Search:
+  %div.page-title
+    %h1 Agency
     = form_tag :agency do
       =text_field_tag :search_filter, @presenter.search_text
-      =submit_tag 'Search'
-  %fieldset
-    %legend Filtering:
-    =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'Neutral', {:filter => 'vote=neutral', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'Voted', {:filter => 'vote=vote', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1}, :class=> "sort-button"
-    =link_to 'All Records', {:filter => 'vote=all', :sort => params[:sort], :page => 1}, :class=> "sort-button"
+      =image_submit_tag("search-button.gif")
+    %div.clear
+  
+  = render :partial => "shared/government_menu"
+    
+  /= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+  
+  %div.filtering
+    =link_to 'All Records', {:filter => 'vote=all', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
+    =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
+    =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=thumbsdown', params) }"
+    =link_to 'Neutral', {:filter => 'vote=neutral', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=neutral', params) }"
+    =link_to 'Voted', {:filter => 'vote=vote', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=vote', params) }"
+    =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=novote', params) }"
 
-  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
   %div.vote-table-wrap
-    %table.vote-table
+    %table.vote-table.agency
       %thead
         %tr
           %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -42,7 +45,9 @@
               %br
               = agency.name
           %td
-            = agency.social_score
-            %img{:src => participation_rate_image(agency.participation_rate), :alt => agency.participation_rate}
+            %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(agency.participation_rate)})", :alt => agency.participation_rate}
+              = agency.social_score
+  %div.vote-table-cap
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => "", :wikipedia => '', :website => ''}

@@ -40,4 +40,20 @@ $(document).ready(function() {
       wrapper     : false
   });
   
+  $('.vote-table.legislative-state').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [190, 190, 169], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
+  $('.vote-table.agency').fixheadertable({ 
+      height      : 400,
+      width       : 550,
+      minColWidth : 100,
+      colratio    : [109, 340, 100], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+  
 }); //end document.ready
