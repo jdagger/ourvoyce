@@ -66,6 +66,11 @@
         <div class="label">Pending:</div>
         <div class="value"><%= @product.pending %></div>
     </div>
+
+    <div class="container">
+        <div class="label">Default Include:</div>
+        <div class="value"><%= @product.default_include %></div>
+    </div>
 </div>
 <%= link_to "Edit", edit_admin_product_path(@product) %>
 

@@ -3,7 +3,7 @@
     
     <div class="counter-area">
       <p>SEED MONEY RAISED</p>
-      <div class="counter"><p>$1,000.00</p></div>
+      <div class="counter"><p>$1,000</p></div>
     </div>
     
     <div class="counter-area">
@@ -14,8 +14,8 @@
     <div id="header-nav">
       <ul>
         <% if session[:user_id].nil? %>
-          <li><%= link_to "SIGN IN",  :myvoyce_account        %></li>
-          <li><%= link_to "CREATE ACCOUNT",  :myvoyce_account %></li>
+          <li><%= link_to "SIGN IN",  :root        %></li>
+          <li><%= link_to "CREATE ACCOUNT",  :root %></li>
         <% else %>
           <li><%= link_to "LOGOUT",  :logout %></li>
         <% end %>
@@ -24,8 +24,12 @@
     </div>
     
     <div id="donate">
-      <a href="/donate"><img src="/images/donate.png" /></a>
+      <form action="https://www.paypal.com/cgi-bin/webscr" method="post">
+        <input type="hidden" name="cmd" value="_s-xclick">
+        <input type="hidden" name="hosted_button_id" value="YL99BHV7HWQCG">
+        <input type="image" src="/images/donate.png" border="0" name="submit" alt="Please donate to ourvoYce. We're giving it all back!" title="Please donate to ourvoYce. We're giving it all back!">
+        <img alt="" border="0" src="https://www.paypal.com/en_US/i/scr/pixel.gif" width="1" height="1">
+      </form>
     </div>
-
   </div>
 </div>

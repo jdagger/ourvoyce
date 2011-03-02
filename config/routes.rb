@@ -11,11 +11,11 @@ Production::Application.routes.draw do
   end
 
   controller :myvoyce do
-    match "/myvoyce/account" => :new
-    match "/myvoyce/authenticate" => :authenticate
-    match "/myvoyce/create" => :create
+    #match "/myvoyce/account" => :new
+    #match "/myvoyce/authenticate" => :authenticate
+    #match "/myvoyce/create" => :create
     match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => :index, :as => :myvoyce
-    match "/logout" => :logout, :as => :logout
+    #match "/logout" => :logout, :as => :logout
   end
 
   match "/ourvoyce/vote" => "ourvoyce#vote", :as => :current_question_vote
@@ -28,6 +28,7 @@ Production::Application.routes.draw do
   match "/log" => "error_logs#index", :as => :error_log
 
 	namespace :admin do
+    match 'products/filter/:filter' => 'products#index'
 		resources :states, :corporations, :users, :products, :medias, :governments
 	end
 
@@ -88,6 +89,10 @@ Production::Application.routes.draw do
 	match "services/website/ourvoyce/map/:state" => "services#ourvoyce_map_state"
 
 	match "services/:action" => "services#:action"
+
+
+  match "/authenticate" => "home#authenticate", :as => :authenticate
+  match "/logout" => "home#logout", :as => :logout
 
 	root :to => "home#index"
 

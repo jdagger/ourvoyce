@@ -47,6 +47,8 @@ class User < ActiveRecord::Base
   has_many :current_question_supports
   has_many :current_questions, :through => :current_question_supports
 
+  after_create :add_default_products_to_user
+
   def user_stats user_id
     user = User.find user_id
 
@@ -59,6 +61,13 @@ class User < ActiveRecord::Base
       :this_month_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_month).count,
       :this_year_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_year).count
     }
+  end
+
+  #Record a -1 (Cleared) vote for all default products.  This will cause the product to show up on newly created user screens
+  def add_default_products_to_user
+    Product.default_include.each do |product|
+      ProductSupport.change_support product.id, self.id, -1
+    end
   end
 
 
@@ -164,6 +173,7 @@ class User < ActiveRecord::Base
 
     return self.state_map_stats
   end
+
 
   class << self
     def authenticate(username, password)

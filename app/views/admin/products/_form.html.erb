@@ -68,10 +68,15 @@
 		<div class="value"><%= f.text_field :logo %></div>
 	</div>
 
-      <div class="container">
-        <div class="label"><%= f.label :pending, "Pending: (1 for pending, 0 for not pending)" %></div>
-        <div class="value"><%= f.text_field :pending %></div>
-      </div>
+  <div class="container">
+    <div class="label"><%= f.label :pending, "Pending: (1 for pending, 0 for not pending)" %></div>
+    <div class="value"><%= f.text_field :pending %></div>
+  </div>
+
+  <div class="container">
+    <div class="label"><%= f.label :default_include, "Default include?: (1 to include product, 0 to not include)" %></div>
+    <div class="value"><%= f.text_field :default_include %></div>
+  </div>
 
 		<div class="actions">
 			<%= f.submit %>
