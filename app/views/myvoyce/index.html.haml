@@ -27,41 +27,38 @@
   %img{:src => get_product_image_128(@current_product_image) }
   = @current_product_description || 'Enter a barcode'
 
-%fieldset
-  %legend Filtering:
-  =link_to 'Thumbs Up', :filter => 'vote=thumbsup', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
-  |
-  =link_to 'Thumbs Down', :filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
-  |
-  =link_to 'Neutral', :filter => 'vote=neutral', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
-  |
-  =link_to 'All Votes', :filter => 'vote=voted', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
-  |
-  =link_to 'No Vote', :filter => 'vote=novote', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
-  |
-  =link_to '**All**', :filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]
-
 = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-%table
-  %thead
-    %tr
-      %th
-      %th
+%div.filtering
+  =link_to 'All', {:filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
+  =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
+  =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsdown', params) }"
+  =link_to 'Neutral', {:filter => 'vote=neutral', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=neutral', params) }"
+  =link_to 'Voted', {:filter => 'vote=voted', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=voted', params) }"
+  =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=novote', params) }"
+
+%div.vote-table-wrap
+  %table.vote-table.myvoyce
+    %thead
+      %tr
+        %th Vote
+        %th Photo
         %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
-      %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
-      %th
-        = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
-        = '/'
-        = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
-  %tbody
-  - @presenter.products.each do |product|
-    %tr
-      %td= render :partial => 'shared/vote_control', :object => {:id => product.id, :support_type => product.support_type, :post_url => :product_vote}, :as => :d
-      %td
-        %img{:src => get_product_image_128(product.logo), :alt => product.description}
-      %td= product.pending ? product.pending_product_description : product.description
-      %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''
-      %td
-        = product.social_score
-        %img{:src => participation_rate_image(product.participation_rate), :alt => product.participation_rate}
+        %th= table_sort_header_link :header => "Date", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
+        %th
+          = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
+          = '/'
+          = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
+    %tbody
+      - @presenter.products.each do |product|
+        %tr
+          %td= render :partial => 'shared/vote_control', :object => {:id => product.id, :support_type => product.support_type, :post_url => :product_vote}, :as => :d
+          %td
+            %img{:src => get_product_image_128(product.logo), :alt => product.description}
+          %td= product.pending ? product.pending_product_description : product.description
+          %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''
+          %td
+            %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(product.participation_rate)})", :alt => product.participation_rate}
+            = product.social_score
+%div.vote-table-cap
+= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
