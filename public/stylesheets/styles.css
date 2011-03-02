@@ -613,6 +613,7 @@ a.sort-button.selected{
 
 .page-title h1{
   float:left;
+  padding-bottom:5px;
 }
 
 .page-title form{
@@ -717,7 +718,6 @@ div.pr-pie{
   height:75px;
   width:400px;
   margin-bottom:15px;
-  margin-top:10px;
 }
 
 .singlet-table-wrap{
