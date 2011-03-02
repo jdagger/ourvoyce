@@ -1,4 +1,4 @@
-class Admin::GovernmentsController < ApplicationController
+class Admin::GovernmentsController < AdminController
 
   # GET /governments
   def index

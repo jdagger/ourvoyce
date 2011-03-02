@@ -1,4 +1,4 @@
-class Admin::CorporationsController < ApplicationController
+class Admin::CorporationsController < AdminController
 
   # GET /corporations
   def index

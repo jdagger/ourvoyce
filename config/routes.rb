@@ -94,6 +94,7 @@ Production::Application.routes.draw do
   match "/authenticate" => "home#authenticate", :as => :authenticate
   match "/logout" => "home#logout", :as => :logout
 
+	match '/' => "home#index", :as => :home
 	root :to => "home#index"
 
 	# The priority is based upon order of creation:

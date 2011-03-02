@@ -9,8 +9,7 @@ class ApplicationController < ActionController::Base
 		begin
 			User.find(session[:user_id])
 		rescue
-			#redirect_to myvoyce_account_path
-      redirect_to root_path
+      redirect_to logout_url
 		end
 	end
 

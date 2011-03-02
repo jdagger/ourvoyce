@@ -1,4 +1,4 @@
-class Admin::MediasController < ApplicationController
+class Admin::MediasController < AdminController
 
   # GET /medias
   def index
