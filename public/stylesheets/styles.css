@@ -38,6 +38,12 @@ h2{
   padding-bottom: 15px;
 }
 
+h3{
+  font-weight:bold;
+  font-size:16px;
+  color: #113376;
+}
+
 /***************************************************************** main div styles */
 #main{
   background: url(../images/main-background.jpg) no-repeat top center;
