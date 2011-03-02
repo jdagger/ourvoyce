@@ -2,23 +2,32 @@
   = javascript_include_tag "change_support.js"
 
 .left-content
-  %table
-    %caption
-      Media Type
-    %tbody
-      - @presenter.media_types.each do |media_type|
-        %tr
-          - if @presenter.media_types.count == 1
-            %td= link_to media_type.name
-          - else
-            %td= link_to media_type.name, :media_type => media_type.name
-          %td= media_type.social_score
-          %td= media_type.participation_rate
-          %td
-            %a{:href => url_for(:media_type => params[:media_type]), :class => 'dataset' }
-              = 'Graph'
-              %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{media_type.id}_mediatype"}
-              %input{:type => :hidden, :class => 'jq-title', :value => media_type.name }
+  
+  %h1
+    -if @presenter.media_types.count == 1
+      = @presenter.media_types.first.name
+  
+  = render :partial => "shared/media_menu"
+  
+  - if @presenter.media_types.count > 1
+    - @presenter.media_types.each do |media_type|
+      %div.singlet
+        %div.singlet-left
+          %div.singlet-table-wrap
+            %table.singlet-table
+              %tbody
+                %tr
+                  %td.outlet.landing 
+                    = link_to media_type.name, :media_type => media_type.name
+                  %td
+                    %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(media_type.participation_rate)})", :alt => media_type.participation_rate}
+                      = media_type.social_score
+                  %td
+                    %a{:href => url_for(:media_type => params[:media_type]), :class => 'dataset' }
+                      = 'Graph'
+                      %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{media_type.id}_mediatype"}
+                      %input{:type => :hidden, :class => 'jq-title', :value => media_type.name }
+        %div.singlet-right
   
   - if @presenter.networks.count == 1
     %div.singlet
