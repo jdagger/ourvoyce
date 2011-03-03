@@ -1,6 +1,11 @@
 %h1 Error Log
 - @errors.each do |error|
   = "#{error.created_at} (#{error.source}):"
-  .error= error.message
-  %br
+  = error.message
+  = error.ip
+  = error.request
+  = error.response
+  = error.device_type
+  = error.user
+
 
