@@ -2,7 +2,29 @@ class Admin::UsersController < AdminController
 
 	# GET admin/users
 	def index
-		@users = User.all
+
+    if ! params[:filter_username].blank?
+      redirect_to :filter => "#{params[:username]}"
+    end
+
+    if params[:filter].blank?
+      @users = User.where("1=1")
+    else
+      @users = User.where(:username => params[:filter])
+    end
+    @user_count = @users.count
+
+    page_size = 100 
+    page = [params[:page].to_i, 1].max
+    @users = @users.offset((page - 1) * page_size).limit(page_size)
+
+    @paging = PagingHelper::PagingData.new
+    @paging.total_pages = (@user_count.to_f / page_size).ceil
+    @paging.current_page = page
+    (1..@paging.total_pages).each do |count|
+      link = {:link_url => url_for(:controller => "admin/users", :action => 'index', :page => count), :page => count}
+      @paging.links << link
+    end
 	end
 
 	# GET /users/1

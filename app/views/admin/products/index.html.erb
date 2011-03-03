@@ -8,7 +8,7 @@
 <%= link_to 'Pending', :filter => 'pending' %>
 &nbsp;&nbsp;
 <%= link_to 'Default', :filter => 'default_include' %>
-<% form_tag do %>
+<% form_tag "/admin/products/filter/blank" do %>
   Text Search:&nbsp;
   <input type="text" name="text" />
   <input type="submit" name="filter_text" value="Apply" />
@@ -24,7 +24,6 @@
 <%= @product_count %> products
 <br />
 <%= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data %>
-<%= @page_links %>
 <table>
 	<tr>
 		<th>UPC</th>

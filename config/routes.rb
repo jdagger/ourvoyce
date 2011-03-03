@@ -29,6 +29,7 @@ Production::Application.routes.draw do
 
 	namespace :admin do
     match 'products/filter/:filter' => 'products#index'
+    match 'users/filter/:filter' => 'users#index'
 		resources :states, :corporations, :users, :products, :medias, :governments
 	end
 
