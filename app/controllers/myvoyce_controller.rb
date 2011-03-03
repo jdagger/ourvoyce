@@ -87,12 +87,13 @@ class MyvoyceController < ApplicationController
     session[:user_id] = nil
     redirect_to :action => :new, :notice => 'Logged out'
   end
+=end
 
   def new
-    if !session[:user_id].nil?
-      redirect_to :action => :index
-      return
-    end
+    #if !session[:user_id].nil?
+      #redirect_to :action => :index
+      #return
+    #end
     @create_user = User.new
     @authenticate_user = User.new
   end
@@ -118,6 +119,5 @@ class MyvoyceController < ApplicationController
       render :action => :new
     end
   end
-=end
 
 end
