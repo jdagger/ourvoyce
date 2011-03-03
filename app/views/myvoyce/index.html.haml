@@ -4,7 +4,7 @@
 %h1
   myvoYce
 
-.left-content  
+.mv-content 
   %div.singlet.myvoyce
     %div.singlet-left
       %div.singlet-table-wrap
@@ -16,6 +16,9 @@
               %td
                 %img{:src => get_product_image_128(@current_product_image) }
               %td
+                %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(100)})", :alt => 100}
+                  = 100
+              %td.description
                 = @current_product_description || 'Enter a barcode'
               %td
                 %div.mvform
@@ -28,7 +31,7 @@
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-  %div.filtering
+  %div.filtering.myvoyce
     =link_to 'All', {:filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
     =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
     =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsdown', params) }"
@@ -36,7 +39,7 @@
     =link_to 'Voted', {:filter => 'vote=voted', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=voted', params) }"
     =link_to 'No Vote', {:filter => 'vote=novote', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=novote', params) }"
 
-  %div.vote-table-wrap
+  %div.vote-table-wrap.myvoyce
     %table.vote-table.myvoyce
       %thead
         %tr
@@ -59,7 +62,7 @@
             %td
               %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(product.participation_rate)})", :alt => product.participation_rate}
                 = product.social_score
-  %div.vote-table-cap
+  %div.vote-table-cap.myvoyce
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
 
