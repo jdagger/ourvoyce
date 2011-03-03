@@ -798,12 +798,19 @@ table.singlet-table{
   padding-right:5px;
 }
 
+.singlet.myvoyce table.singlet-table tr td.description{
+  width:38%;
+  padding-left:20px;
+  padding-right:0px;
+  text-align:left;
+}
+
 .singlet.myvoyce .singlet-table-wrap{
-  width:534px;
+  width:684px;
 }
 
 .singlet.myvoyce table.singlet-table{
-  width:534px;
+  width:684px;
 }
 
 table.singlet-table tr td{
