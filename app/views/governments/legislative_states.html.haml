@@ -15,7 +15,7 @@
           %th
       %tbody
         - @presenter.states.each do |state|
-          %tr
+          %tr{:class => (state.id == @default_map[:id] ? 'selected' : '')}
             %td
               = link_to "<img src='#{get_state_image_128(state.logo)}' />".html_safe, :action => :legislative, :state => state.abbreviation
               %br
@@ -30,4 +30,4 @@
                 %input{:type => :hidden, :class => 'jq-title', :value =>  state.name }
   %div.vote-table-cap
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "legislativestate", :title => "", :wikipedia => '', :website => ''}
+  = render :partial => "shared/map_graph", :locals => {:id => @default_map[:id], :model => "legislativestate", :title => @default_map[:title], :wikipedia => @default_map[:wikipedia], :website => @default_map[:website]}

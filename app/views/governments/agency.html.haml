@@ -33,7 +33,7 @@
             = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
       %tbody
       - @presenter.agencies.each do |agency|
-        %tr
+        %tr{:class => (agency.id == @default_map[:id] ? 'selected' : '')}
           %td= render :partial => "shared/vote_control", :object =>{:id => agency.id, :support_type => agency.support_type, :post_url => :government_vote}, :as => :d
           %td
             %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => agency.id), :class => 'dataset' }
@@ -50,4 +50,4 @@
   %div.vote-table-cap
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => "", :wikipedia => '', :website => ''}
+  = render :partial => "shared/map_graph", :locals => {:id => @default_map[:id], :model => "government", :title => @default_map[:title], :wikipedia => @default_map[:wikipedia], :website => @default_map[:website]}

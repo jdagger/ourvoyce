@@ -24,13 +24,18 @@
       var isIE = navigator.appName.indexOf("Microsoft") != -1;
       return (isIE) ? window[movieName] : document[movieName];
     }
+
+    if($("div.website a").attr("href") == ""){
+      $("div.website").hide();
+    }
+    if($("div.wikipedia a").attr("href") == ""){
+      $("div.wikipedia").hide();
+    }
 	  
-	  //alert("ready!");
 	  $("a.dataset").click(function(){
 	    $(".vote-table .selected").removeClass("selected");  //remove the selected items
 	    $(this).parent().parent().addClass("selected");  //add selected to the clicked item
 	    
-	    //var text = $(this).text();
       var title = $(this).children('.jq-title').val();
       var wikipedia_url = $(this).children('.jq-wikipedia').val();
       var website_url = $(this).children('.jq-website').val();
@@ -125,10 +130,10 @@
 <div class="maps-container">
   <div class="corp-title"><h4 class="map-title"><%= title %></h4>
     <div class="wikipedia">
-      <%= wikipedia.blank? ? "" : "<a href='#{wikipedia}' target='_blank'><img src=\"/images/wikipedia.png\" alt=\"wikipedia\" /></a>".html_safe %>
+      <a href='<%= wikipedia %>' target='_blank'><img src="/images/wikipedia.png" alt="wikipedia" /></a>
     </div>
     <div class="website">
-      <%= website.blank? ? "" : "<a href='#{website}' target='_blank'><img src=\"/images/website.png\" alt=\"wikipedia\" /></a>".html_safe %>
+      <a href='<%= website %>' target='_blank'><img src="/images/website.png" alt="website" /></a>
     </div>
   </div>
   <div id="map"></div>

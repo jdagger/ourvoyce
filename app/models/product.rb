@@ -58,8 +58,9 @@ class Product < ActiveRecord::Base
           records = records.where("support_type >= 0")
         when "NOVOTE"
           records = records.where("support_type = -1")
-        #when "ALL"
+        when "ALL"
           #records = records
+          records = records.where("support_type >= -1")
          else #All records
             records = records.where("support_type >= -1")
         end

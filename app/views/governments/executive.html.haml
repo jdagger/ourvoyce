@@ -20,7 +20,7 @@
             = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
         %tbody
         - @presenter.executives.each do |executive|
-          %tr
+          %tr{:class => (executive.id == @default_map[:id] ? 'selected' : '')}
             %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
             %td
               %a{:href => url_for(:sort => params[:sort], :id => executive.id), :class => 'dataset' }
@@ -37,4 +37,4 @@
                 = executive.social_score
   %div.vote-table-cap
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "government", :title => "", :website => '', :wikipedia => ''}
+  = render :partial => "shared/map_graph", :locals => {:id => @default_map[:id], :model => "government", :title => @default_map[:title], :website => @default_map[:website], :wikipedia => @default_map[:wikipedia]}

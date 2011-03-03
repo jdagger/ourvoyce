@@ -4,6 +4,9 @@ class MediasController < ApplicationController
 
     @presenter = MediaPresenter.new
 
+    #Set the defaults for the current map
+    @default_map = {:id => '', :model => '', :title => '', :wikipedia => '', :website => ''}
+
     populate_media_types
     populate_networks
     populate_shows
@@ -35,7 +38,7 @@ class MediasController < ApplicationController
     #Check if media type was selected
     if ! params.key? :media_type
       #Media type not selected, so provide default list of media types
-      @presenter.media_types = MediaType.where(:level => 1).order(:display_order)
+      @presenter.media_types = MediaType.where(:level => 1).order(:display_order).to_a
     else #media type selected
 
       #Load the media type,
@@ -52,6 +55,16 @@ class MediasController < ApplicationController
 
       # Add the selected media type to the list
       @presenter.media_types << type  
+    end
+
+    #Default graph to first media type.  This might get overridden if a network or show is selected
+    if @presenter.media_types.count > 0
+      current = @presenter.media_types[0]
+      @default_map[:id] = current.id
+      @default_map[:model] = 'mediatype'
+      @default_map[:title] = current.name
+      @default_map[:website] = ''
+      @default_map[:wikipedia] = ''
     end
   end
 
@@ -78,7 +91,7 @@ class MediasController < ApplicationController
       search_options = {}
       search_options[:user_id] = self.user_id
       search_options[:media_type_id] = media_type.id
-      @presenter.networks = Media.do_search search_options
+      @presenter.networks = Media.do_search(search_options).to_a
     else
       #Network specified, so try to load it
       network = Media.where(:name => params[:network]).first
@@ -93,6 +106,16 @@ class MediasController < ApplicationController
       end
 
       @presenter.networks << network
+    end
+
+    #Default graph to first network.  This might get overridden if a show is selected
+    if @presenter.networks.count > 0
+      current = @presenter.networks[0]
+      @default_map[:id] = current.id
+      @default_map[:model] = 'network'
+      @default_map[:title] = current.name
+      @default_map[:website] = current.website
+      @default_map[:wikipedia] = current.wikipedia
     end
   end
 
@@ -140,10 +163,20 @@ class MediasController < ApplicationController
     if do_search
       @presenter.force_display_shows = true #Make sure the shows section is displayed, even if a filter eliminates all results
       records = Media.do_search search_options
-      page_size = 28
+      page_size = Rails.configuration.default_page_size
       populate_paging records, page_size
       records = records.offset((@paging.current_page - 1) * page_size).limit(page_size)
-      @presenter.shows = records
+      @presenter.shows = records.to_a
+    end
+
+    #Default graph to first network.  This might get overridden if a show is selected
+    if @presenter.shows.count > 0
+      current = @presenter.shows[0]
+      @default_map[:id] = current.id
+      @default_map[:model] = 'media'
+      @default_map[:title] = current.name
+      @default_map[:website] = current.website
+      @default_map[:wikipedia] = current.wikipedia
     end
   end
 

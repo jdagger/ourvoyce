@@ -1,6 +1,7 @@
 class MyvoyceController < ApplicationController
 
-  skip_before_filter :authorize, :only => [:new, :create, :authenticate]
+  #skip_before_filter :authorize, :only => [:new, :create, :authenticate]
+  skip_before_filter :authorize, :only => [:authenticate]
 
   def index
     search_params = {}
@@ -20,14 +21,14 @@ class MyvoyceController < ApplicationController
     @presenter = ProductsIndexPresenter.new
     @stats = User.new.user_stats self.user_id
 
-    page_size = 15
+    page_size = Rails.configuration.default_page_size
     current_page = [params[:page].to_i, 1].max
 
 
 
     #If no filter was supplied, specify all records should be returned
     if params[:filter].blank?
-      params[:filter] = 'vote=voted'
+      params[:filter] = 'vote=all'
     else
       #filters have form 'key1=value1;key2=value2'
       params[:filter].split(';').each do |part|
@@ -51,16 +52,22 @@ class MyvoyceController < ApplicationController
 
 
     if ! params[:barcode].blank?
+      @show_current_product = true
       product = Product.upc_lookup :upc => params[:barcode]
       if product.nil?
-        @current_product_description = 'Product could not be found'
+        @product_found = false
       else
+        @product_found = true
         support = ProductSupport.where(:user_id => self.user_id, :product_id => product.id).first
         @current_product_description = product.description
         @current_product_image = product.logo
         @current_product_id = product.id
         @current_product_support = support.support_type rescue -1
+        @current_product_ss = product.social_score
+        @current_product_pr = product.participation_rate
       end
+    else
+      @show_current_product = false
     end
 
 
