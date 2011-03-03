@@ -1,11 +1,61 @@
+:css
+  div.error{
+    border: solid 1px #FF3333;
+    margin-bottom: 4em;
+    padding: 1em;
+    background-color: #FFaaaa;
+  }
+
+  div.error div{
+    background-color: #eee;
+    padding: 1em;
+    margin: 0em;
+    font-family: courier;
+  }
+
+  div.error p{
+    margin-bottom: 0em;
+    padding: 0px;
+    color: #000;
+    font-family: verdana;
+  }
+
 %h1 Error Log
+%p= "#{@error_count} total errors"
+
+= render :partial => "shared/paging", :object => @paging, :as => :paging_data
+
 - @errors.each do |error|
-  = "#{error.created_at} (#{error.source}):"
-  = error.message
-  = error.ip
-  = error.request
-  = error.response
-  = error.device_type
-  = error.user
+  = error.created_at
+  .error
+    %table
+      %tr
+        %td= "Message:"
+        %td= error.message
+        %td= "Device Type:"
+        %td= error.device_type
+      %tr
+        %td= "IP:"
+        %td= error.ip
+        %td= "Source:"
+        %td= error.source
+      %tr
+        %td= "User:"
+        %td= error.user
+        %td{:colspan => 2}
+      %tr
+        %td{:colspan => 4}
+          %br
+          = "Request:"
+      %tr
+        %td{:colspan => 4}
+          %div=error.request
+      %tr
+        %td{:colspan => 4}
+          %br
+          = "Response:"
+      %tr
+        %td{:colspan => 4}
+          %div= error.response
 
 
