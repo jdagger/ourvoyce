@@ -16,7 +16,7 @@
                   %td
                     = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
                   %td
-                    %img{:src => get_product_image_128(@current_product_image) }
+                    %img{:src => get_product_image_128(@current_product_image), :alt => @current_product_description }
                   %td
                     %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(@current_product_pr)})", :alt => @current_product_pr}
                       = @current_product_ss
