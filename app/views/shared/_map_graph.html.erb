@@ -2,7 +2,9 @@
 	var state = "";
   var model = '<%= model %>';
 	var curID = "<%= id %>";
-
+	var mapLoaded = false;
+  var barLoaded = false;
+  
 	function setState(st){
 	  state = st;
 	  sendToGraph(model + "/age/" + curID + "/" + state);
@@ -66,6 +68,10 @@
 	    
 	    return false;
 	  });
+	  
+	  <% if id.blank? %>
+      //$("a.dataset:first").click();
+    <% end %>
 	});
 
   function thisMovie(movieName) {
@@ -73,6 +79,20 @@
       return window[movieName];
     } else {
       return document[movieName];
+    }
+  }
+	
+	function mapEmbedded(e){
+    mapLoaded = true;
+    
+    if( mapLoaded && barLoaded){
+    }
+  }
+  
+  function barEmbedded(e){
+    barLoaded = true;
+    
+    if( mapLoaded && barLoaded){
     }
   }
 	
@@ -97,9 +117,9 @@
     wmode: "transparent"
   };
 
-  swfobject.embedSWF("/swf/map.swf", "map", "350", "270","10.0.0", params, mapvars, attributes);
-  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "350", "200","10.0.0", params, agevars, attributes);
-
+  swfobject.embedSWF("/swf/map.swf", "map", "350", "270","10.0.0", "", params, mapvars, attributes, barEmbedded);
+  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "350", "200","10.0.0", "", params, agevars, attributes, mapEmbedded);     
+  
 </script>
 
 <div class="maps-container">
