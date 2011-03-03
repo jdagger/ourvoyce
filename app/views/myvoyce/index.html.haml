@@ -11,15 +11,21 @@
         %table.singlet-table
           %tbody
             %tr
-              %td
-                = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
-              %td
-                %img{:src => get_product_image_128(@current_product_image) }
-              %td
-                %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(100)})", :alt => 100}
-                  = 100
-              %td.description
-                = @current_product_description || 'Enter a barcode'
+              - if @show_current_product
+                - if @product_found
+                  %td
+                    = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
+                  %td
+                    %img{:src => get_product_image_128(@current_product_image) }
+                  %td
+                    %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(@current_product_pr)})", :alt => @current_product_pr}
+                      = @current_product_ss
+                  %td.description
+                    = @current_product_description
+                -else
+                  %td= 'Product could not be found.'
+              - else
+                %td= 'Enter a product to lookup.'
               %td
                 %div.mvform
                   %h5 Enter item identification number:
