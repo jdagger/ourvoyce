@@ -280,14 +280,14 @@ h3{
 /***************************************************************** footer styles */
 #footer{
   background: url(../images/footer-repeat.jpg) repeat-x top center;
-  height: 255px;
+  height: 120px;
   position: relative;
   background-color: #a3b7ca;
 }
 
 #footer-center{
   background: url(../images/footer-bg.jpg) no-repeat top center;
-  height: 255px;
+  height: 120px;
   position: relative;
 }
 
@@ -445,6 +445,14 @@ table.vote-table{
   width:534px;
 }
 
+table.vote-table.myvoyce{
+  width:700px;
+}
+
+.vote-table-wrap.myvoyce{
+  width:699px;
+}
+
 table.vote-table.home-page{
   width:330px;
 }
@@ -526,6 +534,11 @@ table.vote-table tr.selected{
    padding-bottom:10px;
 }
 
+.vote-table-cap.myvoyce{
+   background:url(/images/bottom-cap-myvoyce.gif) no-repeat;
+   width:700px;
+}
+
 .home-vote-table-top-cap{
    background:url(/images/home-top-full-cap.gif) bottom no-repeat;
    width:330px;
@@ -558,6 +571,11 @@ table.vote-table tr.selected{
 .left-content{
   float:left;
   width:550px;
+}
+
+.mv-content{
+  float:left;
+  width:700px;
 }
 
 .left-content h4{
@@ -662,6 +680,11 @@ a.sort-button.selected{
   background:url(/images/top-cap.gif) bottom right no-repeat;
 }
 
+.filtering.myvoyce{
+  width:700px;
+  background:url(/images/top-cap-myvoyce.gif) bottom right no-repeat;
+}
+
 div.paging{
   height:25px;
   margin-top:10px;
@@ -756,7 +779,7 @@ div.pr-pie{
 }
 
 .singlet.myvoyce{
-  width:550px;
+  width:700px;
 }
 
 .singlet-table-wrap{
@@ -832,10 +855,10 @@ table.singlet-table tr td.outlet.landing a{
 }
 
 .user-stats {
-  background: url("/images/map-rounded-back.gif") no-repeat scroll right top transparent;
+  background: url("/images/myvoyce-rounded-back.gif") no-repeat scroll right top transparent;
   float: right;
   padding-top: 10px;
-  width: 330px;
+  width: 170px;
   padding-left:20px;
   padding-right:20px;
 }

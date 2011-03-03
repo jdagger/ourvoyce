@@ -74,9 +74,9 @@ $(document).ready(function() {
   
   $('.vote-table.myvoyce').fixheadertable({ 
       height      : 400,
-      width       : 550,
+      width       : 700,
       minColWidth : 100,
-      colratio    : [109, 70, 160, 100, 110], //totals up to 549 wich is the width of the vote table
+      colratio    : [109, 140, 160, 180, 110], //totals up to 549 wich is the width of the vote table
       wrapper     : false
   });
   
