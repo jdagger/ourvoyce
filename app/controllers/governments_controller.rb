@@ -85,7 +85,7 @@ class GovernmentsController < ApplicationController
 
   def agency
 
-    page_size = 15
+    page_size = Rails.configuration.default_page_size
     current_page = [params[:page].to_i, 1].max
 
     @presenter = AgencyPresenter.new

@@ -20,7 +20,7 @@ class MyvoyceController < ApplicationController
     @presenter = ProductsIndexPresenter.new
     @stats = User.new.user_stats self.user_id
 
-    page_size = 15
+    page_size = Rails.configuration.default_page_size
     current_page = [params[:page].to_i, 1].max
 
 

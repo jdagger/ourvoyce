@@ -13,7 +13,7 @@ class CorporatesController < ApplicationController
     #Set up the presenter
     @presenter = CorporationsIndexPresenter.new
 
-    page_size = 15
+    page_size = Rails.configuration.default_page_size
     current_page = [params[:page].to_i, 1].max
 
     search_params = {}
@@ -58,6 +58,15 @@ class CorporatesController < ApplicationController
     records = records.offset((current_page - 1) * page_size).limit(page_size)
 
     @presenter.corporations = records
+
+    @default_map = {:id => '', :title => '', :website => '', :wikipedia => ''}
+    if @presenter.corporations.count > 0
+      current = @presenter.corporations[0]
+      @default_map[:id] = current.id
+      @default_map[:title] = current.name
+      @default_map[:website] = current.corporate_url
+      @default_map[:wikipedia] = current.wikipedia_url
+    end
   end
 
 

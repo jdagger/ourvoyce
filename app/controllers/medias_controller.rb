@@ -140,7 +140,7 @@ class MediasController < ApplicationController
     if do_search
       @presenter.force_display_shows = true #Make sure the shows section is displayed, even if a filter eliminates all results
       records = Media.do_search search_options
-      page_size = 28
+      page_size = Rails.configuration.default_page_size
       populate_paging records, page_size
       records = records.offset((@paging.current_page - 1) * page_size).limit(page_size)
       @presenter.shows = records
