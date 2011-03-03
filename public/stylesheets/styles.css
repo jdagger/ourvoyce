@@ -38,6 +38,12 @@ h2{
   padding-bottom: 15px;
 }
 
+h3{
+  font-weight:bold;
+  font-size:16px;
+  color: #113376;
+}
+
 /***************************************************************** main div styles */
 #main{
   background: url(../images/main-background.jpg) no-repeat top center;
@@ -439,6 +445,18 @@ table.vote-table{
   width:534px;
 }
 
+table.vote-table.home-page{
+  width:330px;
+}
+
+table.vote-table.home-page tr td{
+  background:#cdd9e7;
+}
+
+table.vote-table.home-page tr.even td{
+  background:#e6ecf3;
+}
+
 .tiny-table-wrap table.vote-table{
   width:549px;
 }
@@ -480,8 +498,13 @@ table.vote-table tr.selected{
 }
 .vote-table-wrap{
   clear:both;
+  width:548px;
   border-left:1px solid #1B3E80;
   border-right:1px solid #1B3E80;
+}
+
+.vote-table-wrap.home-page{
+  width:329px;
 }
 
 .tiny-table-wrap{
@@ -499,6 +522,19 @@ table.vote-table tr.selected{
 .vote-table-cap{
    background:url(/images/bottom-cap.gif) no-repeat;
    width:550px;
+   height:10px;
+   padding-bottom:10px;
+}
+
+.home-vote-table-top-cap{
+   background:url(/images/home-top-full-cap.gif) bottom no-repeat;
+   width:330px;
+   height:3px;
+}
+
+.home-vote-table-cap{
+   background:url(/images/home-bottom-cap.gif) no-repeat;
+   width:330px;
    height:10px;
    padding-bottom:10px;
 }
@@ -527,7 +563,6 @@ table.vote-table tr.selected{
 .left-content h4{
   font-size:18px;
   color:#333;
-  margin-top:10px;
 }
 
 .graph-contents{
@@ -720,6 +755,10 @@ div.pr-pie{
   margin-bottom:15px;
 }
 
+.singlet.myvoyce{
+  width:550px;
+}
+
 .singlet-table-wrap{
   width:370px;
   padding-left:14px;
@@ -729,6 +768,19 @@ div.pr-pie{
 
 table.singlet-table{
   width:370px;
+}
+
+.singlet.myvoyce table.singlet-table tr td{
+  padding-left:5px;
+  padding-right:5px;
+}
+
+.singlet.myvoyce .singlet-table-wrap{
+  width:534px;
+}
+
+.singlet.myvoyce table.singlet-table{
+  width:534px;
 }
 
 table.singlet-table tr td{
@@ -747,4 +799,62 @@ table.singlet-table tr td.outlet.landing a{
   margin-top:20px;
   margin-bottom:20px;
   display:block;
+}
+
+.mvform{
+  float:right;
+  height:45px;
+  width:185px;
+}
+
+.mvform h5{
+  color:#CB2124;
+  padding-bottom:4px;
+}
+
+.mv-image{
+  width:64px;
+  height:64px;
+  float:left;
+  padding-left:8px;
+  padding-top:3px;
+}
+
+.mv-vote{
+  width:100px;
+  height:44px;
+  padding-top:12px;
+  float:left;
+}
+
+#barcode_lookup{
+  width:106px;
+}
+
+.user-stats {
+  background: url("/images/map-rounded-back.gif") no-repeat scroll right top transparent;
+  float: right;
+  padding-top: 10px;
+  width: 330px;
+  padding-left:20px;
+  padding-right:20px;
+}
+
+.user-stats h3{
+  font-weight:bold;
+  font-size:18px;
+  color:#666;
+}
+
+span.username {
+  color:#1B3E80;
+  font-weight:bold;
+  font-size:20px;
+}
+ul.stats li{
+  font-weight:bold;
+}
+ul.stats span{
+  font-weight:normal;
+  color:#666;
 }
