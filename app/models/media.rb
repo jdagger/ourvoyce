@@ -136,7 +136,7 @@ class Media < ActiveRecord::Base
     # It DOES NOT apply paging (limit, offset)
     def do_search(params={})
       records = Media.where('1=1')
-      select = ['medias.id as id', 'medias.name as name', 'medias.media_type_id as media_type_id', 'medias.parent_media_id as parent_media_id', 'medias.logo as logo', 'medias.social_score as social_score', 'medias.participation_rate as participation_rate', 'medias.data1', 'medias.data2', 'medias.website', 'medias.wikipedia']
+      select = ['medias.id as id', 'medias.name as name', 'medias.media_type_id as media_type_id', 'medias.parent_media_id as parent_media_id', 'medias.logo as logo', 'medias.social_score as social_score', 'medias.participation_rate as participation_rate', 'medias.data1', 'medias.data2', 'medias.website as website', 'medias.wikipedia as wikipedia']
 
       #If the user_id is specified, load the vote data
       if params.key? :user_id

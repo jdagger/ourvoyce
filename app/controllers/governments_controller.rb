@@ -16,7 +16,16 @@ class GovernmentsController < ApplicationController
     end
 
     @presenter = ExecutivePresenter.new
-    @presenter.executives = Government.do_search search_options
+    @presenter.executives = Government.do_search(search_options).to_a
+
+    @default_map = {:id => '', :title => '', :website => '', :wikipedia => ''}
+    if @presenter.executives.count > 0
+      current = @presenter.executives[0]
+      @default_map[:id] = current.id
+      @default_map[:title] = "#{current.first_name} #{current.last_name}"
+      @default_map[:website] = current.website
+      @default_map[:wikipedia] = current.wikipedia
+    end
   end
 
   def legislative_state
@@ -44,8 +53,17 @@ class GovernmentsController < ApplicationController
                                    :select => ["states.id as id, states.name as name", "states.logo as logo", "states.abbreviation as abbreviation", "legislative_states.social_score as social_score", "legislative_states.participation_rate as participation_rate"],
                                    :joins => ["left outer join legislative_states on legislative_states.state_id = states.id"],
                                    :order => sort
-                                  )
-                                  render 'governments/legislative_states'
+                                  ).to_a
+    @default_map = {:id => '', :title => '', :website => '', :wikipedia => ''}
+    #First, try to select the first senator
+    if @presenter.states.count > 0
+      current = @presenter.states[0]
+      @default_map[:id] = current.id
+      @default_map[:title] = current.name
+      @default_map[:website] = ''
+      @default_map[:wikipedia] = ''
+    end
+    render 'governments/legislative_states'
   end
 
   def legislative
@@ -72,7 +90,7 @@ class GovernmentsController < ApplicationController
       search_options[:sort] = params[:sort]
     end
 
-    results = Government.do_search search_options
+    results = Government.do_search(search_options).to_a
     results.each do |leg|
       if leg.chamber_id == 1
         @presenter.representatives << leg
@@ -80,6 +98,24 @@ class GovernmentsController < ApplicationController
         @presenter.senators << leg
       end
     end
+
+    @default_map = {:id => '', :title => '', :website => '', :wikipedia => ''}
+    #First, try to select the first senator
+    if @presenter.senators.count > 0
+      current = @presenter.senators[0]
+      @default_map[:id] = current.id
+      @default_map[:title] = "#{current.first_name} #{current.last_name}"
+      @default_map[:website] = current.website
+      @default_map[:wikipedia] = current.wikipedia
+    #If senator not available (DC), select the first representative
+    elsif @presenter.representatives.count > 0
+      current = @presenter.representatives[0]
+      @default_map[:id] = current.id
+      @default_map[:title] = "#{current.first_name} #{current.last_name}"
+      @default_map[:website] = current.website
+      @default_map[:wikipedia] = current.wikipedia
+    end
+
     render 'governments/legislative'
   end
 
@@ -135,7 +171,16 @@ class GovernmentsController < ApplicationController
     end
 
     records = records.offset((current_page - 1) * page_size).limit(page_size)
-    @presenter.agencies = records
+    @presenter.agencies = records.to_a
+
+    @default_map = {:id => '', :title => '', :website => '', :wikipedia => ''}
+    if @presenter.agencies.count > 0
+      current = @presenter.agencies[0]
+      @default_map[:id] = current.id
+      @default_map[:title] = current.name
+      @default_map[:website] = current.website
+      @default_map[:wikipedia] = current.wikipedia
+    end
   end
 
   def vote

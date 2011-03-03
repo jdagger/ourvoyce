@@ -23,8 +23,12 @@
       return (isIE) ? window[movieName] : document[movieName];
     }
 
-    $("div.website").hide();
-    $("div.wikipedia").hide();
+    if($("div.website a").attr("href") == ""){
+      $("div.website").hide();
+    }
+    if($("div.wikipedia a").attr("href") == ""){
+      $("div.wikipedia").hide();
+    }
 	  
 	  $("a.dataset").click(function(){
 	    $(".vote-table .selected").removeClass("selected");  //remove the selected items

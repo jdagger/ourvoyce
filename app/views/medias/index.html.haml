@@ -16,7 +16,7 @@
           %div.singlet-table-wrap
             %table.singlet-table
               %tbody
-                %tr
+                %tr{:class => (media_type.id == @default_map[:id] && @default_map[:model] == 'mediatype' ? 'selected' : '')}
                   %td.outlet.landing 
                     = link_to media_type.name, :media_type => media_type.name
                   %td
@@ -36,7 +36,7 @@
           %table.singlet-table
             %tbody
               - @presenter.networks.each do |network|
-                %tr
+                %tr{:class => (network.id == @default_map[:id] && @default_map[:model] == 'network' ? 'selected' : '')}
                   %td.outlet
                     - if @presenter.networks.count == 1
                       %a{:href => url_for(:media_type => @presenter.media_types[0].name) }
@@ -72,7 +72,7 @@
             %th
         %tbody
           - @presenter.networks.each do |network|
-            %tr
+            %tr{:class => (network.id == @default_map[:id] && @default_map[:model] == 'network' ? 'selected' : '')}
               %td
                 - if @presenter.networks.count == 1
                   %a{:href => url_for(:media_type => @presenter.media_types[0].name) }
@@ -118,7 +118,7 @@
               = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
         %tbody
           - @presenter.shows.each do |show|
-            %tr
+            %tr{:class => (show.id == @default_map[:id] && @default_map[:model] == 'media' ? 'selected' : '')}
               %td= render :partial => 'shared/vote_control', :object =>{:id => show.id, :support_type => show.support_type, :post_url => :media_vote}, :as => :d
               %td
                 %a{:href => url_for(:media_type => params[:media_type], :network => params[:network], :filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => params[:id]), :class => 'dataset' }
@@ -137,4 +137,4 @@
     = render :partial => "shared/paging", :object => @paging, :as => :paging_data
     
 .graph-contents
-  = render :partial => "shared/map_graph", :locals => {:id => nil, :model => "media", :title => "", :website => '', :wikipedia => ''}
+  = render :partial => "shared/map_graph", :locals => {:id => @default_map[:id], :model => @default_map[:model], :title => @default_map[:title], :website => @default_map[:website], :wikipedia => @default_map[:wikipedia]}

@@ -57,7 +57,7 @@ class CorporatesController < ApplicationController
 
     records = records.offset((current_page - 1) * page_size).limit(page_size)
 
-    @presenter.corporations = records
+    @presenter.corporations = records.to_a
 
     @default_map = {:id => '', :title => '', :website => '', :wikipedia => ''}
     if @presenter.corporations.count > 0
