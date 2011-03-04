@@ -106,6 +106,7 @@ class MyvoyceController < ApplicationController
   end
 
   def create
+    return
     @user = User.new(:username => params[:username], :password => params[:password], :zip_code => params[:zip_code], :birth_year => params[:birth_year], :email => params[:email])
     if @user.save
       session[:user_id] = @user.id
