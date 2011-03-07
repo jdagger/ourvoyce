@@ -31,7 +31,7 @@
     .home-headline
       %img{:src => "images/wheredoyoustand.png", :alt =>"where do you stand?"}
       %p= @current_question.question_text
-      .current_question
-        = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
+  #home-vote
+    = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
 
 = render :partial => "shared/ourvoyce_javascript", :locals => {:id => nil, :model => "ourvoyce", :title => '', :website => '', :wikipedia => ''}

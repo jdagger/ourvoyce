@@ -901,7 +901,7 @@ ul.stats span{
 
 /* home giant button styles */
 
-.current_question .thumbs-up {
+#home-vote .thumbs-up {
   width: 67px;
   height: 76px;
   border: solid 0px black;
@@ -909,7 +909,7 @@ ul.stats span{
   background: url(/images/vote-thumbsup.png);
 }
 
-.current_question .thumbs-up-selected {
+#home-vote .thumbs-up-selected {
   width: 67px;
   height: 76px;
   border: solid 0px black;
@@ -917,7 +917,7 @@ ul.stats span{
   background: url(/images/vote-thumbsup.png);
 }
 
-.current_question .thumbs-up-not-selected {
+#home-vote .thumbs-up-not-selected {
   width: 67px;
   height: 76px;
   border: solid 0px black;
@@ -925,7 +925,7 @@ ul.stats span{
   background: url(/images/vote-thumbsup-gray.png);
 }
 
-.current_question .thumbs-down {
+#home-vote .thumbs-down {
   width: 69px;
   height: 76px;
   border: solid 0px black;
@@ -933,7 +933,7 @@ ul.stats span{
   background: url(/images/vote-thumbsdown.png);
 }
 
-.current_question .thumbs-down-selected {
+#home-vote .thumbs-down-selected {
   width: 69px;
   height: 76px;
   border: solid 0px black;
@@ -941,7 +941,7 @@ ul.stats span{
   background: url(/images/vote-thumbsdown.png);
 }
 
-.current_question .thumbs-down-not-selected {
+#home-vote .thumbs-down-not-selected {
   width: 69px;
   height: 76px;
   border: solid 0px black;
@@ -949,7 +949,7 @@ ul.stats span{
   background: url(/images/vote-thumbsdown-gray.png);
 }
 
-.current_question .neutral {
+#home-vote .neutral {
   width: 61px;
   height: 76px;
   border: solid 0px black;
@@ -957,7 +957,7 @@ ul.stats span{
   background: url(/images/vote-n.png);
 }
 
-.current_question .neutral-selected {
+#home-vote .neutral-selected {
   width: 61px;
   height: 76px;
   border: solid 0px black;
@@ -965,7 +965,7 @@ ul.stats span{
   background: url(/images/vote-n.png);
 }
 
-.current_question .neutral-not-selected {
+#home-vote .neutral-not-selected {
   width: 61px;
   height: 76px;
   border: solid 0px black;
