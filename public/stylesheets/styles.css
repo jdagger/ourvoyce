@@ -346,7 +346,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/thumbs_up.png);
+  background-image: url(/images/site/thumbs_up.png);
 }
 
 .thumbs-up-selected {
@@ -354,7 +354,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/thumbs_up_selected.png);
+  background-image: url(/images/site/thumbs_up_selected.png);
 }
 
 .thumbs-up-not-selected {
@@ -362,7 +362,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/thumbs_up_not_selected.png);
+  background-image: url(/images/site/thumbs_up_not_selected.png);
 }
 
 .thumbs-down {
@@ -370,7 +370,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/thumbs_down.png);
+  background-image: url(/images/site/thumbs_down.png);
 }
 
 .thumbs-down-selected {
@@ -378,7 +378,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/thumbs_down_selected.png);
+  background-image: url(/images/site/thumbs_down_selected.png);
 }
 
 .thumbs-down-not-selected {
@@ -386,7 +386,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/thumbs_down_not_selected.png);
+  background-image: url(/images/site/thumbs_down_not_selected.png);
 }
 
 .neutral {
@@ -394,7 +394,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/neutral.png);
+  background-image: url(/images/site/neutral.png);
 }
 
 .neutral-selected {
@@ -402,7 +402,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/neutral.png);
+  background-image: url(/images/site/neutral.png);
 }
 
 .neutral-not-selected {
@@ -410,7 +410,7 @@ h3{
   height: 30px;
   border: solid 0px black;
   cursor: pointer;
-  background-image: url(../../images/site/neutral_not_selected.png);
+  background-image: url(/images/site/neutral_not_selected.png);
 }
 
 
@@ -887,4 +887,96 @@ ul.stats li{
 ul.stats span{
   font-weight:normal;
   color:#666;
+}
+
+#bar-graph-wrap{
+  width:350px;
+  height:200px;
+}
+
+#home-graph-wrap{
+  width:350px;
+  float:left;
+}
+
+/* home giant button styles */
+
+.current_question .thumbs-up {
+  width: 67px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-thumbsup.png);
+}
+
+.current_question .thumbs-up-selected {
+  width: 67px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-thumbsup.png);
+}
+
+.current_question .thumbs-up-not-selected {
+  width: 67px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-thumbsup-gray.png);
+}
+
+.current_question .thumbs-down {
+  width: 69px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-thumbsdown.png);
+}
+
+.current_question .thumbs-down-selected {
+  width: 69px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-thumbsdown.png);
+}
+
+.current_question .thumbs-down-not-selected {
+  width: 69px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-thumbsdown-gray.png);
+}
+
+.current_question .neutral {
+  width: 61px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-n.png);
+}
+
+.current_question .neutral-selected {
+  width: 61px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-n.png);
+}
+
+.current_question .neutral-not-selected {
+  width: 61px;
+  height: 76px;
+  border: solid 0px black;
+  cursor: pointer;
+  background: url(/images/vote-n-gray.png);
+}
+
+.vote{
+  text-align:center;
+}
+
+.clear-vote{
+  margin-top:5px;
 }

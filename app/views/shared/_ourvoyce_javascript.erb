@@ -1,0 +1,31 @@
+<script type="text/javascript">
+	var state = "";
+  var model = "ourvoyce";
+	var curID = "";
+	
+	var mapvars = {
+	  xmlpath: model + "/map/",
+	  baseURL:"/services/website/"
+	};
+	
+	var agevars = {
+	  xmlpath: model + "/age/",
+	  baseURL:"/services/website/",
+	  barwidth: 25
+	};
+	
+  var params = {
+      menu: "false",
+      wmode: "transparent"
+  };
+  
+  var attributes = {
+    allowfullscreen: "true",
+    allowscriptaccess: "always",
+    wmode: "transparent"
+  };
+
+  swfobject.embedSWF("/swf/map.swf", "home-map", "567", "350","10.0.0", "", mapvars, params, attributes);
+  swfobject.embedSWF("/swf/bar-graph.swf", "bar-graph", "350", "200","10.0.0", "", agevars, params, attributes);     
+  
+</script>
