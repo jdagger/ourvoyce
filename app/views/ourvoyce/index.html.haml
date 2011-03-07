@@ -1,5 +1,3 @@
-
-
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
 
@@ -31,6 +29,7 @@
     .home-headline
       %img{:src => "images/wheredoyoustand.png", :alt =>"where do you stand?"}
       %p= @current_question.question_text
+      %h2 Vote Now. Be counted.
   #home-vote
     = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
 
