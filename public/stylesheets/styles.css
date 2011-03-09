@@ -980,3 +980,131 @@ ul.stats span{
 .clear-vote{
   margin-top:5px;
 }
+
+/* form styles */
+
+.login-form, .new-account-form{
+  margin-top:20px;
+}
+
+.login-form{
+  width:300px;
+  float:left;
+}
+
+.or-middle{
+  margin-top:200px;
+  width:40px;
+  float:left;
+  margin-left:70px;
+}
+
+.new-account-form{
+  width:450px;
+  float:left;
+}
+
+.or-middle span{
+  font-size:22px;
+  color:#666;
+}
+
+.new-account-form h2{
+  margin-left:174px;
+}
+
+.new-account-form input, .new-account-form select{
+  float:right;
+  width:270px;
+  font-size:18px;
+}
+
+.new-account-form input[type="submit"] {
+ width:276px;
+}
+
+.new-account-form label{
+  float:left;
+  width:160px;
+  font-size:14px;
+  text-align:right;
+  padding-top:6px;
+}
+
+.new-account-form .small{
+  font-size:11px;
+  color:#666;
+  width:270px;
+  text-align:right;
+  float:right;
+  display:block;
+  clear:right;
+}
+
+.new-account-form .input{
+  margin-top:10px;
+}
+
+.new-account-form .input.create{
+  margin-top:30px;
+}
+
+.new-account-form .messages span{
+  color:#d00;
+  font-size:13px;
+  width:270px;
+  text-align:right;
+  float:right;
+  display:block;
+  clear:right;
+}
+
+.login-form h2{
+  margin-left:125px;
+}
+
+.login-form input, .login-form select{
+  float:right;
+  width:170px;
+  font-size:18px;
+}
+
+.login-form input[type="submit"] {
+ width:176px;
+}
+
+.login-form label{
+  float:left;
+  width:110px;
+  font-size:14px;
+  text-align:right;
+  padding-top:6px;
+}
+
+.login-form .small{
+  font-size:11px;
+  color:#666;
+  width:170px;
+  text-align:right;
+  float:right;
+  display:block;
+  clear:right;
+}
+
+.login-form .messages{
+  color:#d00;
+  font-size:13px;
+  width:180px;
+  text-align:right;
+  float:right;
+  display:block;
+  clear:right;
+}
+
+.login-form .input{
+  margin-top:10px;
+}
+
+.login-form .input.create{
+  margin-top:30px;
+}
