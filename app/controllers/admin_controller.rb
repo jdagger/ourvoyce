@@ -5,7 +5,7 @@ class AdminController < ApplicationController
   def check_admin
     begin
       user = User.find(@current_user.id)
-      if ! ['jdagger', 'rcalvert'].include?(user.username)
+      if ! ['jdagger', 'rcalvert'].include?(user.login)
         redirect_to logout_url
       end
     rescue
