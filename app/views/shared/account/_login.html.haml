@@ -1,0 +1,9 @@
+= form_tag :login do
+  = flash[:notice]
+  %p 
+    = label_tag :login, "Username:"
+    = text_field_tag :login, @user_session.login
+  %p
+    = label_tag :password, "Password:"
+    = password_field_tag :password
+  = submit_tag "Login"

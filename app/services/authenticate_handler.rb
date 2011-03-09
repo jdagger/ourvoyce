@@ -11,14 +11,17 @@ class AuthenticateHandler < HandlerBase
 
 	def handle_request
     super
-		user = User.authenticate(self.username, self.password)
+		#user = User.authenticate(self.username, self.password)
+    user_session = UserSession.new(:login => self.username, :password => self.password)
 
-		if user.nil?
+    #if user.nil?
+    if ! user_session.save
 			self.status = 0
 			self.authentication_token = ''
 		else
 			token = AuthenticationToken.new
-			token.user_id = user.id
+      token.user_id = user_session.user.id
+			#token.user_id = user.id
 			token.persist = true
 			token.save
 			self.authentication_token = token.uuid

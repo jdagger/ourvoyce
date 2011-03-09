@@ -1,11 +1,11 @@
 class MyvoyceController < ApplicationController
 
   #skip_before_filter :authorize, :only => [:new, :create, :authenticate]
-  skip_before_filter :authorize, :only => [:authenticate]
+#  skip_before_filter :authorize, :only => [:authenticate]
 
   def index
     search_params = {}
-    search_params[:user_id] = self.user_id
+    search_params[:user_id] = @current_user.id
 
     if params[:sort].blank?
       params[:sort] = 'description_asc'
@@ -19,7 +19,7 @@ class MyvoyceController < ApplicationController
     end
 
     @presenter = ProductsIndexPresenter.new
-    @stats = User.new.user_stats self.user_id
+    @stats = User.new.user_stats @current_user.id
 
     page_size = Rails.configuration.default_page_size
     current_page = [params[:page].to_i, 1].max
@@ -58,7 +58,7 @@ class MyvoyceController < ApplicationController
         @product_found = false
       else
         @product_found = true
-        support = ProductSupport.where(:user_id => self.user_id, :product_id => product.id).first
+        support = ProductSupport.where(:user_id => @current_user.id, :product_id => product.id).first
         @current_product_description = product.description
         @current_product_image = product.logo
         @current_product_id = product.id
@@ -96,36 +96,36 @@ class MyvoyceController < ApplicationController
   end
 =end
 
-  def new
+#  def new
     #if !session[:user_id].nil?
       #redirect_to :action => :index
       #return
     #end
-    @create_user = User.new
-    @authenticate_user = User.new
-  end
+#    @create_user = User.new
+#    @authenticate_user = User.new
+#  end
 
-  def create
-    return
-    @user = User.new(:username => params[:username], :password => params[:password], :zip_code => params[:zip_code], :birth_year => params[:birth_year], :email => params[:email])
-    if @user.save
-      session[:user_id] = @user.id
-      redirect_to :action => :index
-    else
-      render :action => :new
-    end
-  end
+#  def create
+#    return
+#    @user = User.new(:username => params[:username], :password => params[:password], :zip_code => params[:zip_code], :birth_year => params[:birth_year], :email => params[:email])
+#    if @user.save
+#      session[:user_id] = @user.id
+#      redirect_to :action => :index
+#    else
+#      render :action => :new
+#    end
+#  end
 
-  def authenticate
-    @create_user = User.new
-    @authenticate_user = User.new(:username => params[:username], :password => params[:password])
-    if user = User.authenticate(@authenticate_user.username, @authenticate_user.password)
-      session[:user_id] = user.id
-      redirect_to :action => :index
-    else
-      flash[:login_message] = "Invalid username or password."
-      render :action => :new
-    end
-  end
+#  def authenticate
+#    @create_user = User.new
+#    @authenticate_user = User.new(:username => params[:username], :password => params[:password])
+#    if user = User.authenticate(@authenticate_user.username, @authenticate_user.password)
+#      session[:user_id] = user.id
+#      redirect_to :action => :index
+#    else
+#      flash[:login_message] = "Invalid username or password."
+#      render :action => :new
+#    end
+#  end
 
 end

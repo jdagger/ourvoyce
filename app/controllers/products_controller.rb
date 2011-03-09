@@ -12,7 +12,7 @@ class ProductsController < ApplicationController
       support_type = -1
 		end
 
-		ProductSupport.change_support(params[:item_id], session[:user_id], support_type)
+		ProductSupport.change_support(params[:item_id], @current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }

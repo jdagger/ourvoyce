@@ -10,13 +10,24 @@ Production::Application.routes.draw do
     match "/how-does-this-work" => :work
   end
 
-  controller :myvoyce do
-    match "/myvoyce/account" => :new
-    match "/myvoyce/authenticate" => :authenticate
-    match "/myvoyce/create" => :create
-    match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => :index, :as => :myvoyce
+  match "/login" => "users#login", :as => :login
+  match "/logout" => "users#logout", :as => :logout
+  match "/account" => "users#edit", :as => :edit_account
+  match "/" => "users#new", :as => :edit_account
+  match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => "users#show", :as => :myvoyce
+  #resources :account, :controller => :users
+  #resources :users
+
+	resources :reset_passwords #, :only => [:new, :create, :index, :edit, :create]
+
+
+  #controller :myvoyce do
+    #match "/myvoyce/account" => :new
+    #match "/myvoyce/authenticate" => :authenticate
+    #match "/myvoyce/create" => :create
+  #  match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => :index, :as => :myvoyce
     #match "/logout" => :logout, :as => :logout
-  end
+  #end
 
   match "/ourvoyce/vote" => "ourvoyce#vote", :as => :current_question_vote
   match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
@@ -92,8 +103,8 @@ Production::Application.routes.draw do
 	match "services/:action" => "services#:action"
 
 
-  match "/authenticate" => "home#authenticate", :as => :authenticate
-  match "/logout" => "home#logout", :as => :logout
+  #match "/authenticate" => "home#authenticate", :as => :authenticate
+  #match "/logout" => "home#logout", :as => :logout
 
 	match '/' => "home#index", :as => :home
 	root :to => "home#index"

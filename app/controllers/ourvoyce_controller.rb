@@ -3,7 +3,7 @@ class OurvoyceController < ApplicationController
     @states = State.find(:all, :order => "name")
     @current_question = CurrentQuestion.where("start_date < ?", Time.now).where("end_date > ?" , Time.now).where("active = ?", 1).first
     if ! @current_question.nil?
-      support = CurrentQuestionSupport.where("current_question_id" => @current_question.id, "user_id" => self.user_id).first
+      support = CurrentQuestionSupport.where("current_question_id" => @current_question.id, "user_id" => @current_user.id).first
       if ! support.nil?
         @current_question_support = support.support_type
       end
@@ -26,7 +26,7 @@ class OurvoyceController < ApplicationController
       support_type = -1
 		end
 
-		CurrentQuestionSupport.change_support(params[:item_id], session[:user_id], support_type)
+		CurrentQuestionSupport.change_support(params[:item_id], @current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }

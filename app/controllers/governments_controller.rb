@@ -5,7 +5,7 @@ class GovernmentsController < ApplicationController
 
   def executive
     search_options = {}
-    search_options[:user_id] = self.user_id
+    search_options[:user_id] = @current_user.id
     search_options[:branch] = 'executive' 
 
     if params[:sort].blank?
@@ -79,7 +79,7 @@ class GovernmentsController < ApplicationController
     @presenter = LegislativePresenter.new
     search_options = {}
 
-    search_options[:user_id] = self.user_id
+    search_options[:user_id] = @current_user.id
     search_options[:branch] = 'legislative'
     search_options[:state] = state.id
 
@@ -135,7 +135,7 @@ class GovernmentsController < ApplicationController
     end
 
     search_options = {}
-    search_options[:user_id] = self.user_id
+    search_options[:user_id] = @current_user.id
     search_options[:branch] = 'agency'
     search_options[:sort] = params[:sort]
 
@@ -196,7 +196,7 @@ class GovernmentsController < ApplicationController
       support_type = -1
     end
 
-    GovernmentSupport.change_support(params[:item_id], session[:user_id], support_type)
+    GovernmentSupport.change_support(params[:item_id], @current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }

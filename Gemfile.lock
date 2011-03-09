@@ -29,6 +29,8 @@ GEM
       activesupport (= 3.0.3)
     activesupport (3.0.3)
     arel (2.0.7)
+    authlogic (2.1.6)
+      activesupport
     builder (2.1.2)
     compass (0.10.6)
       haml (>= 3.0.4)
@@ -90,6 +92,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  authlogic
   compass (>= 0.10.6)
   haml
   heroku_backup_task

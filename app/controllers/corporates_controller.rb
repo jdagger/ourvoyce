@@ -17,7 +17,7 @@ class CorporatesController < ApplicationController
     current_page = [params[:page].to_i, 1].max
 
     search_params = {}
-    search_params[:user_id] = self.user_id
+    search_params[:user_id] = @current_user.id
 
     search_params[:sort] = params[:sort]
 

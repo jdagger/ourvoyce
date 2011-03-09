@@ -1,27 +1,27 @@
-require 'digest/sha2'
+#require 'digest/sha2'
 require 'email_validator'
 
 class User < ActiveRecord::Base
   include AgeGraphHelper
   include MapGraphHelper
 
-  validates_presence_of :username, :message => "Username is required"
-  validates_length_of :username, :minimum => 4, :maximum => 10, :too_short => "Username must be at least four characters long", :too_long => "Username must have 10 or fewer characters"
-  validates_uniqueness_of :username, :message => "Username already taken"
+  #validates_presence_of :login, :message => "Username is required"
+  #validates_length_of :login, :minimum => 4, :maximum => 10, :too_short => "Username must be at least four characters long", :too_long => "Username must have 10 or fewer characters"
+  #validates_uniqueness_of :login, :message => "Username already taken"
 
-  validates_length_of :password, :minimum => 6, :maximum => 20, :message => "Password must have between 6 and 20 characters"
-  validate :password_must_be_present
-  validates_confirmation_of :password, :message => "Passwords do not match"
+  #validates_length_of :password, :minimum => 6, :maximum => 20, :message => "Password must have between 6 and 20 characters"
+  #validate :password_must_be_present
+  #validates_confirmation_of :password, :message => "Passwords do not match"
 
-  validates_numericality_of :zip_code, :message => "Zip code must be a number"
-  validates_length_of :zip_code, :is => 5, :message => "Invalid zip code length"
+  #validates_numericality_of :zip_code, :message => "Zip code must be a number"
+  #validates_length_of :zip_code, :is => 5, :message => "Invalid zip code length"
 
-  validates_numericality_of :birth_year, :message => "Year of birth must be a number"
-  validates_format_of  :birth_year, :with => /^(19|20)\d{2}$/ , :message => "Invalid year"
+  #validates_numericality_of :birth_year, :message => "Year of birth must be a number"
+  #validates_format_of  :birth_year, :with => /^(19|20)\d{2}$/ , :message => "Invalid year"
 
-  validates_presence_of :email, :message => "Email is required"
-  validates_length_of :email, :minimum => 5, :maximum => 80, :message => "Invalid email length"
-  validates :email, :email => true
+  #validates_presence_of :email, :message => "Email is required"
+  #validates_length_of :email, :minimum => 5, :maximum => 80, :message => "Invalid email length"
+  #validates :email, :email => true
 
   attr_accessor :password_confirmation
   attr_reader :password
@@ -49,12 +49,19 @@ class User < ActiveRecord::Base
 
   after_create :add_default_products_to_user
 
+  acts_as_authentic
+
+  def deliver_password_reset_instructions!
+    reset_perishable_token!
+    AccountMailer.password_reset_email(self)
+  end
+
   def user_stats user_id
     user = User.find user_id
 
     {
 		  :member_since => user.created_at.strftime("%B %d, %Y"),
-		  :username => user.username,
+		  :username => user.login,
 		  :total_scans => ProductScan.where(:user_id => user.id).count,
       :today_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_day).count,
       :this_week_scans => ProductScan.where("user_id = ? AND updated_at > ?", user.id, Time.now.beginning_of_week).count,
@@ -175,35 +182,4 @@ class User < ActiveRecord::Base
   end
 
 
-  class << self
-    def authenticate(username, password)
-      if user = find_by_username(username)
-        if user.hashed_password == encrypt_password(password, user.salt)
-          user
-        end
-      end
-    end
-
-    def encrypt_password(password, salt)
-      Digest::SHA2.hexdigest(password + "#8jz_Fz" + salt)
-    end
-  end
-
-  def password=(password)
-    @password = password
-
-    if password.present?
-      generate_salt
-      self.hashed_password = self.class.encrypt_password(password, salt)
-    end
-  end
-
-  private
-  def password_must_be_present
-    errors.add(:password, "Password is required") unless hashed_password.present?
-  end
-
-  def generate_salt
-    self.salt = self.object_id.to_s + rand.to_s
-  end
 end

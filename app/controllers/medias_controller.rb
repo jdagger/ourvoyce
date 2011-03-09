@@ -25,7 +25,7 @@ class MediasController < ApplicationController
       support_type = -1
     end
 
-    MediaSupport.change_support(params[:item_id].to_i, session[:user_id].to_i, support_type)
+    MediaSupport.change_support(params[:item_id].to_i, @current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }
@@ -89,7 +89,7 @@ class MediasController < ApplicationController
     if params[:network].blank?
       #Network not yet selected, so display a list of networks for the media type
       search_options = {}
-      search_options[:user_id] = self.user_id
+      search_options[:user_id] = @current_user.id
       search_options[:media_type_id] = media_type.id
       @presenter.networks = Media.do_search(search_options).to_a
     else
@@ -133,7 +133,7 @@ class MediasController < ApplicationController
 
     
     search_options = {}
-    search_options[:user_id] = self.user_id
+    search_options[:user_id] = @current_user.id
 
     if params[:sort].blank? 
       params[:sort] = 'name_asc'

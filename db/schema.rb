@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110301165035) do
+ActiveRecord::Schema.define(:version => 20110308145147) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -397,6 +397,16 @@ ActiveRecord::Schema.define(:version => 20110301165035) do
     t.integer  "default_include"
   end
 
+  create_table "sessions", :force => true do |t|
+    t.string   "session_id", :null => false
+    t.text     "data"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "sessions", ["session_id"], :name => "index_sessions_on_session_id"
+  add_index "sessions", ["updated_at"], :name => "index_sessions_on_updated_at"
+
   create_table "state_age_lookups", :force => true do |t|
     t.integer "state_id"
     t.integer "age_1"
@@ -511,18 +521,30 @@ ActiveRecord::Schema.define(:version => 20110301165035) do
   end
 
   create_table "users", :force => true do |t|
-    t.string   "username"
-    t.string   "hashed_password"
+    t.string   "login"
     t.integer  "birth_year"
     t.string   "gender"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "email"
-    t.string   "salt"
+    t.string   "password_salt"
     t.string   "zip_code"
+    t.string   "crypted_password"
+    t.string   "persistence_token"
+    t.string   "perishable_token"
+    t.integer  "login_count",        :default => 0, :null => false
+    t.integer  "failed_login_count", :default => 0, :null => false
+    t.datetime "last_request_at"
+    t.datetime "current_login_at"
+    t.datetime "last_login_at"
+    t.string   "current_login_ip"
+    t.string   "last_login_ip"
   end
 
   add_index "users", ["birth_year"], :name => "index_users_on_birth_year"
+  add_index "users", ["last_request_at"], :name => "index_users_on_last_request_at"
+  add_index "users", ["login"], :name => "index_users_on_login"
+  add_index "users", ["persistence_token"], :name => "index_users_on_persistence_token"
 
   create_table "zip_age_lookups", :force => true do |t|
     t.string  "zip"
