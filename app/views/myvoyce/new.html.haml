@@ -5,13 +5,14 @@
 
 .new-account-form
   %h2 Create a new account
-  = form_for @create_user, :html => {:class => 'signup'}, :url => myvoyce_create_path(@create_user) do |f|
+  //= form_for @create_user, :html => {:class => 'signup'}, :url => myvoyce_create_path(@create_user) do |f|
+  = form_for @create_user, :html => {:class => 'signup'}, :url => register_path(@create_user) do |f|
     .input
-      = label_tag :username, "Select a username:"
-      = text_field_tag :username, @create_user.username
+      = label_tag :login, "Select a username:"
+      = text_field_tag :login, @create_user.login
       .small You will use the username when logging on to the site.
       .messages
-        %span#username_messages= @create_user.errors[:username].first
+        %span#username_messages= @create_user.errors[:login].first
     .clear
 
     .input
@@ -62,11 +63,12 @@
 
 .login-form
   %h2 Log In
-  = form_for @authenticate_user, :html => {:class => 'login'}, :url => myvoyce_authenticate_path(@authenticate_user) do |f|
+  //= form_for @authenticate_user, :html => {:class => 'login'}, :url => myvoyce_authenticate_path(@authenticate_user) do |f|
+  = form_for @authenticate_user, :html => {:class => 'login'}, :url => login_path(@authenticate_user) do |f|
 
     .input
-      = label_tag :username, "Username:"
-      = text_field_tag :username, @authenticate_user.username
+      = label_tag :login, "Username:"
+      = text_field_tag :login, @authenticate_user.login
       .small
     .messages
       #username_messages

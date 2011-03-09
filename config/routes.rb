@@ -13,7 +13,10 @@ Production::Application.routes.draw do
   match "/login" => "users#login", :as => :login
   match "/logout" => "users#logout", :as => :logout
   match "/account" => "users#edit", :as => :edit_account
-  match "/" => "users#new", :as => :edit_account
+  match "/save_account" => "users#update", :as => :update_account
+  match "/register" => "users#new", :as => :register
+  match "/create_account" => "users#create", :as => :create_account
+  #match "/register" => "myvoyce#new", :as => :register
   match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => "users#show", :as => :myvoyce
   #resources :account, :controller => :users
   #resources :users

@@ -1,0 +1,56 @@
+- content_for :scripts do
+  =	javascript_include_tag "signup.js"
+  = javascript_include_tag "jquery.password_strength.js"
+  %script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?sensor=false"}
+
+= form_tag :html => {:class => 'signup'}, :url => :create_account do
+  .input
+    = label_tag :login, "Select a username:"
+    = text_field_tag :login, @user.login
+    .small You will use the username when logging on to the site.
+    .messages
+      %span#username_messages= @user.errors[:login].first
+  .clear
+
+  .input
+    = label_tag :password, "Create a password:"
+    = password_field_tag :password
+    .small Pick a strong password with letters and numbers.
+  .clear
+  
+  .input
+    = label_tag :password_confirmation, "Retype your password:"
+    = password_field_tag :password_confirmation
+    .small Password must be at least 6 characters.
+    .messages
+      %span#password_messages= @user.errors[:password].first
+  .clear
+  
+  .input
+    = label_tag :zip_code, "Enter your zip code:"
+    = text_field_tag :zip_code, @user.zip_code
+    .small The zip code will be used for...
+    .messages
+      %span#zip_code_messages= @user.errors[:zip_code].first
+  .clear
+
+
+  .input
+    = label_tag :birth_year, "Year you were born:"
+    = select_tag :birth_year, options_for_select((1910..Time.now.year).to_a.reverse, @user.birth_year)
+    .small You age will determine...
+    .messages
+      %span#birth_year_messages= @user.errors[:birth_year].first
+  .clear
+
+  .input
+    = label_tag :email, "Enter your email address:"
+    = text_field_tag :email, @user.email
+    .small You will need a valid email for account creation.
+    .messages
+      %span#email_message= @user.errors[:email].first
+  .clear
+
+  .input.create
+    = submit_tag "Create Account"
+  .clear

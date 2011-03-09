@@ -1,6 +1,7 @@
 class UsersController < ApplicationController
-  before_filter :require_no_user, :only => [:new, :create, :login]
-  before_filter :require_user, :only => [:show, :edit, :update, :logout]
+  #before_filter :require_no_user, :only => [:new, :create, :login]
+  skip_before_filter :require_user, :only => [:login]
+  #before_filter :require_user, :only => [:show, :edit, :update, :logout, :new, :create]
 
   def new
     @user = User.new
@@ -119,14 +120,19 @@ class UsersController < ApplicationController
   end
 
   def login
-    @user_session = UserSession.new(params[:user_session])
+    #@user_session = UserSession.new(params[:user_session])
+    @user_session = UserSession.new(:login => params[:login], :password => params[:password])
     if @user_session.save
       flash[:notice] = "Login successful!"
       redirect_back_or_default myvoyce_url
-    elsif ActionController::Routing::Routes.recognize_path(request.referrer)[:controller] == 'home'
+    #elsif ActionController::Routing::Routes.recognize_path(request.referrer)[:controller] == 'home'
+    elsif Rails.application.routes.recognize_path(request.referrer)[:controller] == 'home'
       #This is a temporary conditional to handle the login-only home page
+      flash[:notice] = "Unable to login user"
       redirect_to root_url
     else
+      flash[:notice] = "Unable to login user"
+      @user = User.new #needed for new
       render :action => :new
     end
   end

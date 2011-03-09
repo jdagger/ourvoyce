@@ -1,7 +1,7 @@
 class MyvoyceController < ApplicationController
 
   #skip_before_filter :authorize, :only => [:new, :create, :authenticate]
-#  skip_before_filter :authorize, :only => [:authenticate]
+  #skip_before_filter :authorize, :only => [:authenticate]
 
   def index
     search_params = {}
@@ -96,14 +96,14 @@ class MyvoyceController < ApplicationController
   end
 =end
 
-#  def new
+  def new
     #if !session[:user_id].nil?
       #redirect_to :action => :index
       #return
     #end
-#    @create_user = User.new
-#    @authenticate_user = User.new
-#  end
+    @create_user = User.new
+    @authenticate_user = User.new
+  end
 
 #  def create
 #    return
