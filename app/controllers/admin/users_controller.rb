@@ -10,7 +10,7 @@ class Admin::UsersController < AdminController
     if params[:filter].blank?
       @users = User.where("1=1")
     else
-      @users = User.where(:username => params[:filter])
+      @users = User.where(:login => params[:filter])
     end
     @user_count = @users.count
 

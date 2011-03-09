@@ -87,6 +87,8 @@ function validate_zip(zip){
 }
 
 function validate_email(email) {
+  return true;
+
 	var reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 	if(reg.test(email) == false) {
 		$("#email_message").html('Invalid email address');

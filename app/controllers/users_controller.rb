@@ -1,7 +1,8 @@
 class UsersController < ApplicationController
   #before_filter :require_no_user, :only => [:new, :create, :login]
   skip_before_filter :require_user, :only => [:login]
-  #before_filter :require_user, :only => [:show, :edit, :update, :logout, :new, :create]
+  before_filter :require_no_user, :only => [:create]
+  #before_filter :require_user, :only => [:show, :edit, :update, :logout, :new]
 
   def new
     @user = User.new
@@ -14,6 +15,7 @@ class UsersController < ApplicationController
       flash[:notice] = "Account registered!"
       redirect_back_or_default myvoyce_url
     else
+      @user_session = UserSession.new #Needed for login portion of screen
       render :action => :new
     end
   end
