@@ -3,13 +3,13 @@
   = javascript_include_tag "jquery.password_strength.js"
   %script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?sensor=false"}
 
-= form_for :user, @user, :html => {:class => 'signup'}, :url => (['new', 'create'].include?(action_name) ? :create_account : :update_account) do |f|
+= form_for :user, @new_user, :html => {:class => 'signup'}, :url => (['new', 'create'].include?(action_name) ? :create_account : :update_account) do |f|
   .input
     = f.label :login, "Select a username:"
     = f.text_field :login
     .small You will use the username when logging on to the site.
     .messages
-      %span#username_messages= @user.errors[:login].first
+      %span#username_messages= @new_user.errors[:login].first
   .clear
 
   .input
@@ -23,7 +23,7 @@
     = f.password_field :password_confirmation
     .small Password must be at least 6 characters.
     .messages
-      %span#password_messages= @user.errors[:password].first
+      %span#password_messages= @new_user.errors[:password].first
   .clear
   
   .input
@@ -31,16 +31,16 @@
     = f.text_field :zip_code
     .small The zip code will be used for...
     .messages
-      %span#zip_code_messages= @user.errors[:zip_code].first
+      %span#zip_code_messages= @new_user.errors[:zip_code].first
   .clear
 
 
   .input
     = f.label :birth_year, "Year you were born:"
-    = f.select :birth_year, options_for_select((1910..Time.now.year).to_a.reverse, @user.birth_year)
+    = f.select :birth_year, options_for_select((1910..Time.now.year).to_a.reverse, @new_user.birth_year)
     .small You age will determine...
     .messages
-      %span#birth_year_messages= @user.errors[:birth_year].first
+      %span#birth_year_messages= @new_user.errors[:birth_year].first
   .clear
 
   .input
@@ -48,9 +48,9 @@
     = f.text_field :email
     .small You will need a valid email for account creation.
     .messages
-      %span#email_message= @user.errors[:email].first
+      %span#email_message= @new_user.errors[:email].first
   .clear
 
   .input.create
-    = f.submit "Create Account"
+    = f.submit "#{['new', 'create'].include?(action_name) ? 'Create' : 'Update'} Account"
   .clear

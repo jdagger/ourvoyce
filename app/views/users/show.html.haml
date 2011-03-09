@@ -4,6 +4,8 @@
 %h1
   myvoYce
 
+= "<div>#{flash[:notice]}</div>".html_safe unless flash[:notice].blank?
+
 .mv-content 
   %div.singlet.myvoyce
     %div.singlet-left

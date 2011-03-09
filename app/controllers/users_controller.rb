@@ -1,19 +1,20 @@
 class UsersController < ApplicationController
   #before_filter :require_no_user, :only => [:new, :create, :login]
   skip_before_filter :require_user, :only => [:login]
-  before_filter :require_no_user, :only => [:create]
+  #before_filter :require_no_user, :only => [:create]
   #before_filter :require_user, :only => [:show, :edit, :update, :logout, :new]
 
   def new
-    @user = User.new
+    @new_user = User.new
     @user_session = UserSession.new
   end
 
   def create
-    @user = User.new(params[:user])
-    if @user.save
+    @new_user = User.new(params[:user])
+    if @new_user.save
       flash[:notice] = "Account registered!"
-      redirect_back_or_default myvoyce_url
+      redirect_to :myvoyce
+      #redirect_back_or_default myvoyce_url
     else
       @user_session = UserSession.new #Needed for login portion of screen
       render :action => :new
@@ -108,12 +109,12 @@ class UsersController < ApplicationController
   end
 
   def edit
-    @user = @current_user
+    @new_user = @current_user
   end
 
   def update
-    @user = @current_user # makes our views "cleaner" and more consistent
-    if @user.update_attributes(params[:user])
+    @new_user = @current_user # makes our views "cleaner" and more consistent
+    if @new_user.update_attributes(params[:user])
       flash[:notice] = "Account updated!"
       redirect_to myvoyce_url
     else
@@ -134,7 +135,7 @@ class UsersController < ApplicationController
       redirect_to root_url
     else
       flash[:notice] = "Unable to login user"
-      @user = User.new #needed for new
+      @new_user = User.new #needed for new
       render :action => :new
     end
   end
