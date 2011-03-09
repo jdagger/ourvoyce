@@ -16,21 +16,9 @@ Production::Application.routes.draw do
   match "/save_account" => "users#update", :as => :update_account
   match "/register" => "users#new", :as => :register
   match "/create_account" => "users#create", :as => :create_account
-  #match "/register" => "myvoyce#new", :as => :register
   match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => "users#show", :as => :myvoyce
-  #resources :account, :controller => :users
-  #resources :users
+	resources :reset_passwords
 
-	resources :reset_passwords #, :only => [:new, :create, :index, :edit, :create]
-
-
-  #controller :myvoyce do
-    #match "/myvoyce/account" => :new
-    #match "/myvoyce/authenticate" => :authenticate
-    #match "/myvoyce/create" => :create
-  #  match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => :index, :as => :myvoyce
-    #match "/logout" => :logout, :as => :logout
-  #end
 
   match "/ourvoyce/vote" => "ourvoyce#vote", :as => :current_question_vote
   match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
