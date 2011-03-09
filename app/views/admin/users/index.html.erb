@@ -3,9 +3,9 @@
 <br />
 <%= link_to 'All Records', admin_users_path %>
 <% form_tag "/admin/users/filter/blank" do %>
-  Username:&nbsp;
+  Username or Email:&nbsp;
   <input type="text" name="username" />
-  <input type="submit" name="filter_username" value="Apply" />
+  <input type="submit" name="filter_username" value="Search" />
 <% end %>
 <br />
 <%= @user_count %> total records.

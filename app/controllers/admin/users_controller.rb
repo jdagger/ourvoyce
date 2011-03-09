@@ -1,8 +1,6 @@
 class Admin::UsersController < AdminController
-
 	# GET admin/users
 	def index
-
     if ! params[:filter_username].blank?
       redirect_to :filter => "#{params[:username]}"
     end
@@ -10,7 +8,7 @@ class Admin::UsersController < AdminController
     if params[:filter].blank?
       @users = User.where("1=1")
     else
-      @users = User.where(:login => params[:filter])
+      @users = User.where('login = ? OR email = ?', params[:filter], params[:filter])
     end
     @user_count = @users.count
 
