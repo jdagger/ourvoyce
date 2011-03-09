@@ -1,3 +1,11 @@
 #logo{
   padding-bottom: 9px;
 }
+
+.input{
+  height:30px;
+}
+
+.login-form .input{
+  height:20px;
+}
