@@ -1,6 +1,7 @@
 source 'http://rubygems.org'
 
-gem 'rails', '3.0.3'
+#gem 'rails', '3.0.3'
+gem 'rails'
 
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,7 +16,7 @@ end
 
 gem 'authlogic'
 #gem "authlogic", :git => "git://github.com/binarylogic/authlogic.git"
-gem 'heroku_backup_task'
+#gem 'heroku_backup_task'
 gem 'texticle'
 gem 'uuidtools'
 gem 'simple-navigation', '3.2.0'
