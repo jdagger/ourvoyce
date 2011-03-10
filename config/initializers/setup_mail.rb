@@ -1,5 +1,5 @@
 ActionMailer::Base.delivery_method = :smtp
-ActionMailer::Base.default_url_options[:host] = "www.directeddata.com"
+ActionMailer::Base.default_url_options[:host] = "www.ourvoyce.com"
 
 ActionMailer::Base.smtp_settings = {
   :address              => "mail.ourvoyce.com",
