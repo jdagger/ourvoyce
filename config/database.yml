@@ -51,7 +51,7 @@ test:
 production:
   adapter: postgresql
   encoding: utf8
-  host: 50.56.91.54
+  host: 10.181.166.104
   username: postgres
   password: VX8dFZH2
   template: template0
