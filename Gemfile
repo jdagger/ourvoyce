@@ -14,8 +14,8 @@ group :development, :test do
   gem "compass", ">= 0.10.6"
 end
 
-gem 'authlogic'
-#gem "authlogic", :git => "git://github.com/binarylogic/authlogic.git"
+#gem 'authlogic'
+gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
 #gem 'heroku_backup_task'
 gem 'texticle'
 gem 'uuidtools'
