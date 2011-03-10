@@ -51,9 +51,9 @@ test:
 production:
   adapter: postgresql
   encoding: utf8
-  host: localhost
+  host: 50.56.91.54
   username: postgres
-  password: abcd1234
+  password: VX8dFZH2
   template: template0
   database: ourvoyce_production
   #adapter: mysql2
