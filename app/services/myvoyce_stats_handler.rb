@@ -24,7 +24,7 @@ class MyvoyceStatsHandler < HandlerBase
     stats = User.new.user_stats self.user.id
 
 		self.member_since = stats[:member_since]
-		self.username = self.user.username
+		self.username = self.user.login
 
 		self.total_votes = stats[:total_scans]
 		self.today_votes = stats[:today_scans]
