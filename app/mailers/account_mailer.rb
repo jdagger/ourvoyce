@@ -1,6 +1,5 @@
 class AccountMailer < ActionMailer::Base
-  default_url_options[:host] = "ourvoyce.com"
-  default :from => "accounts@ourvoyce.com"
+  default :from => "accounts@ourvoyce.com", :host => "ourvoyce.com"
 
   def password_reset_email(user)
     #@user = user
