@@ -145,7 +145,7 @@ package
       removeDotsNow();
       
       viewState = "us"
-      getDataString(restRoute);
+      //getDataString(restRoute);
       
       //set the state to empty
       ExternalInterface.call("setState", "");
@@ -181,6 +181,14 @@ package
         stateMC.buttonMode = true;
         stateMC.mouseChildren = false;
       }
+      
+      for(var i:int = 0; i<USStates.length; i++){
+        trace("state is " + USStates[i]);
+        var stateMC = geo_map_mc[USStates[i] + "_mc"];
+        stateMC.addEventListener(MouseEvent.CLICK, stateClick);
+        stateMC.buttonMode = true;
+        stateMC.mouseChildren = false;
+      }
     }
     
     public function setupInitialButtons():void{
@@ -191,6 +199,7 @@ package
     }
     
     public function stateClick(e:Event):void{
+      removeDotsNow();
       var stateMC = e.target.name;
       curState = stateMC.split("_")[0];
       geo_map_mc.visible = true;
@@ -217,8 +226,23 @@ package
       viewState = "state";
     }
     
+    public function enableGeoClicks(){
+      for(var i:int = 0; i<USStates.length; i++){
+        var stateMC = geo_map_mc[USStates[i] + "_mc"];
+        stateMC.buttonMode = true;
+        stateMC.mouseChildren = false;
+      }
+    }
+    
     public function placeState(mc){
+      //enable the buttons on all states
+      enableGeoClicks();
+      
       mc = geo_map_mc[mc];
+      
+      //remove the button functionality on the selected state
+      mc.buttonMode = false;
+      mc.enabled = false;
       
       var wpercent:Number = mc.width/stage.stageWidth;
       var hpercent:Number = mc.height/stage.stageHeight;

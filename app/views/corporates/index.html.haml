@@ -3,8 +3,9 @@
 
 .left-content
   %div.page-title
-    %h1 Corporate
     = form_tag :corporates_index do
+      %h4
+        Search Corporate:
       =text_field_tag :search_filter, @presenter.search_text
       =image_submit_tag("search-button.gif")
     %div.clear

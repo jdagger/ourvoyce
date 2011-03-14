@@ -665,7 +665,9 @@ a.sort-button.selected{
 }
 
 .page-title{
-  width:550px;
+  width:190px;
+  float:right;
+  margin-bottom:20px;
 }
 
 .page-title h1{
@@ -673,11 +675,16 @@ a.sort-button.selected{
   padding-bottom:5px;
 }
 
+.page-title h4{
+  font-size:15px;
+}
+
 .page-title form{
   float:right;
 }
 
 .filtering{
+  clear:both;
   width:550px;
   height:25px;
   padding-bottom:4px;
@@ -691,8 +698,15 @@ a.sort-button.selected{
 
 div.paging{
   height:25px;
+  margin-bottom:10px;
+}
+
+div.paging{
+  height:25px;
   margin-top:10px;
   margin-bottom:10px;
+  width:300px;
+  float:left;
 }
 
 div.paging a, div.paging b{
@@ -750,10 +764,19 @@ div.pr-pie{
 
 .government-navigation{
   padding-bottom:15px;
+  width:350px;
+  float:left;
+  clear:none;
+  margin-top:10px;
 }
 
 .media-navigation{
   padding-bottom:15px;
+}
+
+.letter-filter{
+  clear:both;
+  padding-bottom:12px;
 }
 
 .section-nav a{

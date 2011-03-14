@@ -3,8 +3,9 @@
 
 .left-content
   %div.page-title
-    %h1 Agency
     = form_tag :agency do
+      %h4
+        Search Agency:
       =text_field_tag :search_filter, @presenter.search_text
       =image_submit_tag("search-button.gif")
     %div.clear
@@ -13,7 +14,7 @@
     
   /= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-  %div
+  .letter-filter
     - ('A'..'Z').each do |letter|
       = link_to letter, {:filter => "starts_with=#{letter}", :sort => params[:sort], :page => 1}
   %div.filtering
