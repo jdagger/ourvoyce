@@ -128,6 +128,8 @@ class Government < ActiveRecord::Base
         when "NOVOTE"
           records = records.where("support_type IS NULL OR support_type = -1")
         end
+      elsif params.key? :starts_with
+        records = records.where("name like ?", "#{params[:starts_with].upcase}%")
       end
 
       if params.key? :state

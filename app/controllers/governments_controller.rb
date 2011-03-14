@@ -152,6 +152,8 @@ class GovernmentsController < ApplicationController
           search_options[:text] = value
         when 'vote'
           search_options[:vote] = value
+        when 'starts_with'
+          search_options[:starts_with] = value
         end
       end
     end
