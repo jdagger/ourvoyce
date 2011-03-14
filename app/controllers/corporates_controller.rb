@@ -83,7 +83,7 @@ class CorporatesController < ApplicationController
       support_type = -1
     end
 
-    CorporationSupport.change_support(params[:item_id], session[:user_id], support_type)
+    CorporationSupport.change_support(params[:item_id], @current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }
