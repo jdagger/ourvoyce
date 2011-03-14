@@ -1,9 +1,6 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
 
-%h1
-  myvoYce
-
 = "<div>#{flash[:notice]}</div>".html_safe unless flash[:notice].blank?
 
 .mv-content 
@@ -30,7 +27,7 @@
                 %td= 'Enter a product to lookup.'
               %td
                 %div.mvform
-                  %h5 Enter item identification number:
+                  %h5 Enter a code:
                   = form_tag request.fullpath do
                     = text_field_tag :barcode_lookup, params[:barcode]
                     %input{:type => 'submit', :name => 'lookup_submit', :value => 'Lookup'}
@@ -84,19 +81,33 @@
   %h3
     Stats:
 
-  %ul.stats
-    %li
-      %span Total:  
-      = "#{@stats[:total_scans]}"
-    %li
-      %span This year: 
-      = "#{@stats[:this_year_scans]}"
-    %li
-      %span This month: 
-      = "#{@stats[:this_month_scans]}"
-    %li
-      %span This week: 
-      = "#{@stats[:this_week_scans]}"
-    %li
-      %span Today: 
-      = "#{@stats[:today_scans]}"
+  %table.stats
+    %thead
+      %th.label
+      %th.number
+    %tbody
+      %tr
+        %td
+          Total:
+        %td.stat  
+          = "#{@stats[:total_scans]}"
+      %tr
+        %td
+          This year: 
+        %td.stat
+          = "#{@stats[:this_year_scans]}"
+      %tr
+        %td
+          This month: 
+        %td.stat
+          = "#{@stats[:this_month_scans]}"
+      %tr
+        %td
+          This week: 
+        %td.stat
+          = "#{@stats[:this_week_scans]}"
+      %tr
+        %td
+          Today: 
+        %td.stat
+          = "#{@stats[:today_scans]}"

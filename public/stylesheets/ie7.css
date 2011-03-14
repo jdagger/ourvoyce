@@ -9,3 +9,31 @@
 .login-form .input{
   height:20px;
 }
+
+table.vote-table th{
+  padding-top:4px;
+  padding-left:4px;
+  padding-right:4px;
+  padding-bottom:4px;
+  margin-bottom:-5px;
+}
+
+.body{
+  margin-top:-3px;
+  height:420px !important;
+}
+
+.vote-table-wrap{
+  min-height:400px;
+}
+
+.vote-table-cap{
+  margin-top:-17px;
+  background: #ffffff url("/images/bottom-cap.gif") no-repeat top left;
+}
+
+.paging a, .paging b{
+  display:inline;
+  margin-right:3px;
+  height:7px;
+}

@@ -432,10 +432,10 @@ h3{
 table.head th, table.vote-table th{
   background: url(/images/graph-top.gif) repeat-x top;
   height:20px;
-  padding-top:7px;
+  padding-top:5px;
   padding-left:4px;
   padding-right:4px;
-  padding-bottom:6px;
+  padding-bottom:5px;
   text-align: center;
   color:#fff;
 }
@@ -489,7 +489,7 @@ table.vote-table tr td{
   padding-left:5px;
   padding-right:5px;
   vertical-align: middle;
-  border-bottom:1px dashed #ddd
+  border-bottom:2px dashed #ddd
 }
 
 table.vote-table tr{
@@ -501,8 +501,8 @@ table.vote-table .jq-corporation{
 }
 
 table.vote-table tr.selected{
-  border-bottom: 2px solid #cb2124;
-  border-top: 2px solid #cb2124;
+  border-bottom: 2px solid #cb2124 !important;
+  border-top: 2px solid #cb2124 !important;
 }
 
 .vote-table-wrap div.ui-widget-content{
@@ -788,8 +788,9 @@ div.pr-pie{
 
 .singlet-table-wrap{
   width:370px;
+  height:72px;
   padding-left:14px;
-  padding-top:2px;
+  padding-top:3px;
   float:left;
 }
 
@@ -842,7 +843,8 @@ table.singlet-table tr td.outlet.landing a{
 }
 
 .mvform h5{
-  color:#CB2124;
+  color:#000;
+  font-weight:bold;
   padding-bottom:4px;
 }
 
@@ -869,7 +871,7 @@ table.singlet-table tr td.outlet.landing a{
   background: url("/images/myvoyce-rounded-back.gif") no-repeat scroll right top transparent;
   float: right;
   padding-top: 10px;
-  width: 170px;
+  width: 190px;
   padding-left:20px;
   padding-right:20px;
 }
@@ -1111,4 +1113,17 @@ ul.stats span{
 
 .login-form .input.create{
   margin-top:30px;
+}
+
+table.stats{
+  color:#666;
+}
+
+table.stats th.label{
+  width:90px;
+}
+
+table td.stat{
+  color:#000;
+  font-weight:bold;
 }
