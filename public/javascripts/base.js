@@ -84,7 +84,7 @@ $(document).ready(function() {
       height      : 300,
       width       : 330,
       minColWidth : 100,
-      colratio    : [110, 110, 110], //totals up to 549 wich is the width of the vote table
+      colratio    : [150, 70, 110], //totals up to 549 wich is the width of the vote table
       wrapper     : false,
       zebraClass  : 'even',
       zebra       : true

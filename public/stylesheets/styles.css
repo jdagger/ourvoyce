@@ -229,6 +229,10 @@ h3{
   position: relative;
 }
 
+#content-left h2{
+  text-align:center;
+}
+
 #content-right{
   float: left;
   width: 570px;
