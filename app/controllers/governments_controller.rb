@@ -150,10 +150,10 @@ class GovernmentsController < ApplicationController
         when 'text'
           @presenter.search_text = value
           search_options[:text] = value
-        when 'vote'
-          search_options[:vote] = value
         when 'starts_with'
           search_options[:starts_with] = value
+        when 'vote'
+          search_options[:vote] = value
         end
       end
     end
