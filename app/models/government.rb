@@ -106,7 +106,6 @@ class Government < ActiveRecord::Base
         records = records.joins("LEFT OUTER JOIN government_supports ON governments.id=government_supports.government_id AND user_id=#{params[:user_id].to_i}")
       end
 
-      #Only apply text filter or thumbs up/thumbs down filter
       if params.key? :text
         #Get a list of government ids that match the search text
         records_to_include = Government.search params[:text].strip
@@ -115,7 +114,9 @@ class Government < ActiveRecord::Base
           r
         end
         records = records.where("governments.id in (?)", government_ids)
-      elsif params.key? :vote
+      end
+
+      if params.key? :vote
         case params[:vote].strip.upcase
         when "THUMBSUP"
           records = records.where("support_type = 1")
@@ -128,7 +129,9 @@ class Government < ActiveRecord::Base
         when "NOVOTE"
           records = records.where("support_type IS NULL OR support_type = -1")
         end
-      elsif params.key? :starts_with
+      end
+
+      if params.key? :starts_with
         records = records.where("name like ?", "#{params[:starts_with].upcase}%")
       end
 
