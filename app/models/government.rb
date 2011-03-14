@@ -114,9 +114,7 @@ class Government < ActiveRecord::Base
           r
         end
         records = records.where("governments.id in (?)", government_ids)
-      end
-
-      if params.key? :vote
+      elsif params.key? :vote
         case params[:vote].strip.upcase
         when "THUMBSUP"
           records = records.where("support_type = 1")
