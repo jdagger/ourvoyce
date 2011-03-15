@@ -59,7 +59,7 @@ namespace :deploy do
 end
 
 
-#namespace :nginx do 
+namespace :nginx do 
   desc "Start Nginx on the app server."
   task :start do
     run "/etc/init.d/nginx start"
