@@ -33,8 +33,17 @@
     }
 	  
 	  $("a.dataset").click(function(){
-	    $(".vote-table .selected").removeClass("selected");  //remove the selected items
-	    $(this).parent().parent().addClass("selected");  //add selected to the clicked item
+	    var tableParent = $(this).parent().parent().parent().parent();
+	    
+	    if(tableParent.hasClass("singlet-table")){
+	      $(".singlet.selected").removeClass("selected");
+  	    $(".vote-table .selected").removeClass("selected");  //remove the selected items
+	      tableParent.parent().parent().addClass("selected");  //add the selected class to the singlet
+	    }else{
+	      $(".singlet.selected").removeClass("selected");
+  	    $(".vote-table .selected").removeClass("selected");  //remove the selected items
+  	    $(this).parent().parent().addClass("selected");  //add selected to the clicked item
+	    }
 	    
       var title = $(this).children('.jq-title').val();
       var wikipedia_url = $(this).children('.jq-wikipedia').val();

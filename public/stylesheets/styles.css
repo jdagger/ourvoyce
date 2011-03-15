@@ -529,6 +529,7 @@ table.vote-table tr.selected{
    background:url(/images/top-full-cap.gif) bottom no-repeat;
    width:550px;
    height:3px;
+   clear:both;
 }
 
 .vote-table-cap{
@@ -744,7 +745,7 @@ div.pr-pie{
   height:28px;
   color:#333 !important;
   text-align:center;
-  font-size:18px;
+  font-size:16px;
   font-weight:bold;
   padding-top:6px;
   background:url(/images/type-off.png);
@@ -782,6 +783,27 @@ div.pr-pie{
 .section-nav a{
   float:left;
   margin-right:5px;
+}
+
+.singlet.selected .singlet-left{
+  background:url(/images/rounded-left-selected.gif) left top no-repeat;
+  height:75px;
+  width:8px;
+  float:left;
+}
+
+.singlet.selected .singlet-right{
+  background:url(/images/rounded-right-selected.gif) left top no-repeat;
+  height:75px;
+  width:8px;
+  float:right;
+}
+
+.singlet.selected {
+  background:url(/images/rounded-middle-selected.gif) top repeat-x;
+  height:75px;
+  width:400px;
+  margin-bottom:15px;
 }
 
 .singlet-left{

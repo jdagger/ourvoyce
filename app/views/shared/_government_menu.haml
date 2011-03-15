@@ -1,5 +1,5 @@
 %div.government-navigation.section-nav
-  = link_to "Executive", :executive, :class=> "link-box"
-  = link_to "Legislative", :legislative_state, :class=> "link-box"
-  = link_to "Agency", :agency, :class=> "link-box"
+  = link_to "executive", :executive, :class=> "link-box #{params[:action] == "executive" ? "selected" : ""}"
+  = link_to "legislative", :legislative_state, :class=> "link-box #{params[:action] == "legislative" || params[:action] == "legislative_state" ? "selected" : ""}"
+  = link_to "agency", :agency, :class=> "link-box #{params[:action] == "agency" ? "selected" : ""}"
   %div.clear
