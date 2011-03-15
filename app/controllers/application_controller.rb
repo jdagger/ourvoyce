@@ -52,22 +52,6 @@ class ApplicationController < ActionController::Base
       else
         false
       end
-
-    #result = authenticate_or_request_with_http_basic do |username, password|
-      #return false
-#
-      #format_exp = /^\*.*/
-      #if ! username.match(format_exp) || ! password.match(format_exp)
-        #return false
-      ##end
-
-      #username = username.slice(0)
-      #password = password.slice(0)
-      #if user = User.find_by_login(username) 
-        #user.valid_password?(password)
-      #else
-        #false
-      #end
     end
   end
   
