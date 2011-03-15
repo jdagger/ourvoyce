@@ -97,8 +97,9 @@ Production::Application.routes.draw do
   #match "/authenticate" => "home#authenticate", :as => :authenticate
   #match "/logout" => "home#logout", :as => :logout
 
-	match '/' => "home#index", :as => :home
-	root :to => "home#index"
+	#match '/' => "home#index", :as => :home
+	#root :to => "home#index"
+  root :to => "ourvoyce#index"
 
 	# The priority is based upon order of creation:
 	# first created -> highest priority.

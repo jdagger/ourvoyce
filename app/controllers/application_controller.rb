@@ -1,7 +1,7 @@
 class ApplicationController < ActionController::Base
-  filter_parameter_logging :password, :password_confirmation
   helper_method :current_user_session, :current_user
 
+  before_filter :basic_authentication
   before_filter :require_user
 
   protect_from_forgery
@@ -21,7 +21,7 @@ class ApplicationController < ActionController::Base
     unless current_user
       store_location
       flash[:notice] = "You must be logged in to access this page"
-      redirect_to root_url
+      redirect_to register_url
       return false
     end
   end
@@ -30,7 +30,7 @@ class ApplicationController < ActionController::Base
     if current_user
       store_location
       flash[:notice] = "You must be logged out to access this page"
-      redirect_to myvoyce_url
+      redirect_to root_url
       return false
     end
   end
@@ -43,4 +43,16 @@ class ApplicationController < ActionController::Base
     redirect_to(session[:return_to] || default)
     session[:return_to] = nil
   end
+
+
+  def basic_authentication
+    authenticate_or_request_with_http_basic do |username, password|
+      if user = User.find_by_login(username) 
+        user.valid_password?(password)
+      else
+        false
+      end
+    end
+  end
+  
 end
