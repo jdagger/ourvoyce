@@ -15,7 +15,7 @@ class ResetPasswordsController < ApplicationController
     if @user
       @user.deliver_password_reset_instructions!  
       flash[:notice] = "Instructions to reset your password have been sent. Please check your email. (<a href='#{edit_reset_password_url(@user.perishable_token)}'>Click Here</a>)".html_safe  
-      redirect_to root_url  
+      redirect_to :register  
     else  
       flash[:notice] = "No user was found with that email address"  
       render :action => :new  
@@ -30,7 +30,7 @@ class ResetPasswordsController < ApplicationController
     @user.password_confirmation = params[:user][:password_confirmation]
     if @user.save
       flash[:notice] = "Password successfully updated"
-      redirect_to myvoyce_url
+      redirect_to :root
     else
       render :action => :edit
     end
@@ -44,8 +44,7 @@ class ResetPasswordsController < ApplicationController
         "If you are having issues try copying and pasting the URL " +
         "from your email into your browser or restarting the " +
         "reset password process."
-      redirect_to root_url
+      redirect_to :register
     end
   end
-
 end
