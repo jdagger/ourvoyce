@@ -14,7 +14,7 @@ class ResetPasswordsController < ApplicationController
     @user = User.find_by_email params[:email]
     if @user
       @user.deliver_password_reset_instructions!  
-      flash[:notice] = "Instructions to reset your password have been sent. Please check your email. (<a href='#{edit_reset_password_url(@user.perishable_token)}'>Click Here</a>)".html_safe  
+      flash[:notice] = "Instructions to reset your password have been sent. Please check your email."
       redirect_to :register  
     else  
       flash[:notice] = "No user was found with that email address"  
