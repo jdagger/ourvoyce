@@ -20,7 +20,11 @@
       %tbody
         - @presenter.senators.each do |senator|
           %tr{:class => (senator.id == @default_map[:id] ? 'selected' : '')}
-            %td= render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
+            %td
+              - if @current_user.nil?
+                = render :partial => 'shared/vote_control_no_access'
+              - else
+                = render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
             %td
               %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => senator.id), :class => 'dataset' }
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{senator.id}_government"}
@@ -53,7 +57,11 @@
       %tbody
         - @presenter.representatives.each do |rep|
           %tr{:class => (rep.id == @default_map[:id] ? 'selected' : '')}
-            %td= render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
+            %td
+              - if @current_user.nil?
+                = render :partial => 'shared/vote_control_no_access'
+              - else
+                = render :partial => 'shared/vote_control', :object =>{:id => rep.id, :support_type => rep.support_type, :post_url => :government_vote}, :as => :d
             %td
               %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => rep.id), :class => 'dataset' }
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{rep.id}_government"}

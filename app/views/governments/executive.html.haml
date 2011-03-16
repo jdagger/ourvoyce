@@ -19,7 +19,11 @@
         %tbody
         - @presenter.executives.each do |executive|
           %tr{:class => (executive.id == @default_map[:id] ? 'selected' : '')}
-            %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
+            %td
+              - if @current_user.nil?
+                = render :partial => 'shared/vote_control_no_access'
+              - else
+                = render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
             %td
               %a{:href => url_for(:sort => params[:sort], :id => executive.id), :class => 'dataset' }
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{executive.id}_government"}

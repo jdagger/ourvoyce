@@ -1,47 +1,47 @@
 $(document).ready(function(){
-	$(".thumbs-up").live("click", function(event){
+	$(".vote > thumbs-up").live("click", function(event){
 		event.preventDefault();
 		thumbs_up_clicked($(this));
 	});
 
-	$(".thumbs-up-not-selected").live("click", function(event){
+	$(".vote > .thumbs-up-not-selected").live("click", function(event){
 		event.preventDefault();
 		thumbs_up_clicked($(this));
 	});
 
-	$(".thumbs-up-selected").live("click", function(event){
+	$(".vote > .thumbs-up-selected").live("click", function(event){
 		event.preventDefault();
 	});
 
-	$(".thumbs-down").live("click", function(event){
-		event.preventDefault();
-		thumbs_down_clicked($(this));
-	});
-
-	$(".thumbs-down-not-selected").live("click", function(event){
+	$(".vote > .thumbs-down").live("click", function(event){
 		event.preventDefault();
 		thumbs_down_clicked($(this));
 	});
 
-	$(".thumbs-down-selected").live("click", function(event){
+	$(".vote > .thumbs-down-not-selected").live("click", function(event){
+		event.preventDefault();
+		thumbs_down_clicked($(this));
+	});
+
+	$(".vote > .thumbs-down-selected").live("click", function(event){
 		event.preventDefault();
 	});
 
-	$(".neutral").live("click", function(event){
+	$(".vote > .neutral").live("click", function(event){
 		event.preventDefault();
 		neutral_clicked($(this));
 	});
 
-	$(".neutral-not-selected").live("click", function(event){
+	$(".vote > .neutral-not-selected").live("click", function(event){
 		event.preventDefault();
 		neutral_clicked($(this));
 	});
 
-	$(".neutral-selected").live("click", function(event){
+	$(".vote > .neutral-selected").live("click", function(event){
 		event.preventDefault();
 	});
 
-	$(".clear-vote").live("click", function(event){
+	$(".vote > .clear-vote").live("click", function(event){
 		event.preventDefault();
 		clear_clicked($(this));
 	});

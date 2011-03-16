@@ -1,11 +1,7 @@
 class ServicesController < ApplicationController
-  #skip_before_filter :authorize, :basic_authentication
-	#skip_before_filter :authorize, :only => [:check_unique_user, :xml, :corporate]
-	#skip_before_filter :basic_authentication, :only => [:xml, :corporate]
   skip_before_filter :basic_authentication, :only => [:xml, :check_unique_user]
-  skip_before_filter :require_user, :only => [:check_unique_user, :xml]
+  skip_before_filter :require_user #, :only => [:check_unique_user, :xml]
   
-	#protect_from_forgery :except => [:xml, :corporate]
 	protect_from_forgery :except => [:xml]
 
 	def check_unique_user

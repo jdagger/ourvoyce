@@ -33,6 +33,9 @@
       %p= @current_question.question_text
       %h2 Vote Now. Be counted.
   #home-vote
-    = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
+    - if @current_user.nil?
+      = render :partial => 'shared/vote_control_no_access'
+    - else
+      = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
 
 = render :partial => "shared/ourvoyce_javascript", :locals => {:id => nil, :model => "ourvoyce", :title => '', :website => '', :wikipedia => ''}

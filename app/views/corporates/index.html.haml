@@ -37,8 +37,11 @@
           - count = count + 1
           %tr{:class => "#{c.id == @default_map[:id] ? 'selected' : ''} #{count%2 == 1 ? 'even' : 'odd'}", :valign => "middle"}
             %td
-              = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
-              = c.updated_at
+              - if @current_user.nil?
+                = render :partial => "shared/vote_control_no_access"
+              -else
+                = render :partial => "shared/vote_control", :object =>{:id => c.id, :support_type => c.support_type, :post_url => :corporate_vote}, :as => :d
+                = c.updated_at
             %td
               %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => c.id), :class => 'dataset' }
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{c.id}_corporate"}

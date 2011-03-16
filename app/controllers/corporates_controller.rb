@@ -1,4 +1,5 @@
 class CorporatesController < ApplicationController
+  skip_before_filter :require_user, :only => :index
 
   def index
     #Check if form was submitted with a new text filter
@@ -17,7 +18,10 @@ class CorporatesController < ApplicationController
     current_page = [params[:page].to_i, 1].max
 
     search_params = {}
-    search_params[:user_id] = @current_user.id
+    if ! current_user.nil?
+      search_params[:user_id] = current_user.id
+      @current_user = current_user
+    end
 
     search_params[:sort] = params[:sort]
 
@@ -83,7 +87,7 @@ class CorporatesController < ApplicationController
       support_type = -1
     end
 
-    CorporationSupport.change_support(params[:item_id], @current_user.id, support_type)
+    CorporationSupport.change_support(params[:item_id], current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }

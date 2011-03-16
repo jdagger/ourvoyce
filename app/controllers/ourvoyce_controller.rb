@@ -1,11 +1,16 @@
 class OurvoyceController < ApplicationController
+  skip_before_filter :require_user, :only => [:index]
+
   def index
     @states = State.find(:all, :order => "name")
     @current_question = CurrentQuestion.where("start_date < ?", Time.now).where("end_date > ?" , Time.now).where("active = ?", 1).first
+    @current_user = current_user
     if ! @current_question.nil?
-      support = CurrentQuestionSupport.where("current_question_id" => @current_question.id, "user_id" => @current_user.id).first
-      if ! support.nil?
-        @current_question_support = support.support_type
+      if ! current_user.nil?
+        support = CurrentQuestionSupport.where("current_question_id" => @current_question.id, "user_id" => @current_user.id).first
+        if ! support.nil?
+          @current_question_support = support.support_type
+        end
       end
     else
       @current_question = CurrentQuestion.new :question_text => 'No question selected'
