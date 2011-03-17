@@ -23,10 +23,10 @@ package bargraph
 		public function LabelLine(num:String, lineWidth:Number)
 		{
 		  if(Number(num) > 1000 && Number(num) < 1000000){
-		    num = (Number(num)/1000).toFixed(1) + " K"
+		    num = (Number(num)/1000).toFixed(1) + "K"
 		  }
 		  if(Number(num) >= 1000000){
-		    num = (Number(num)/1000000).toFixed(1) + " M"
+		    num = (Number(num)/1000000).toFixed(1) + "M"
 		  }
 		  
 		  label_txt.text = num;
