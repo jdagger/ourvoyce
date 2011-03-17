@@ -16,8 +16,9 @@ group :development, :test do
   gem "compass", ">= 0.10.6"
 end
 
-gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
-#gem 'texticle'
+#gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
+gem "authlogic"
+
 gem 'uuidtools'
 gem 'simple-navigation', '3.2.0'
 
