@@ -40,6 +40,10 @@ GEM
     builder (2.1.2)
     compass (0.10.6)
       haml (>= 3.0.4)
+    daemons (1.1.0)
+    delayed_job (2.1.4)
+      activesupport (~> 3.0)
+      daemons
     erubis (2.6.6)
       abstract (>= 1.0.0)
     haml (3.0.25)
@@ -86,6 +90,7 @@ PLATFORMS
 DEPENDENCIES
   authlogic!
   compass (>= 0.10.6)
+  delayed_job
   haml
   pg
   rails

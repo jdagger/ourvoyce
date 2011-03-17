@@ -1,8 +1,11 @@
 class MediasController < ApplicationController
+  skip_before_filter :require_user
+
   #Url: /media/:media_type/:network
   def index
 
     @presenter = MediaPresenter.new
+    @current_user = current_user
 
     #Set the defaults for the current map
     @default_map = {:id => '', :model => '', :title => '', :wikipedia => '', :website => ''}
@@ -89,7 +92,11 @@ class MediasController < ApplicationController
     if params[:network].blank?
       #Network not yet selected, so display a list of networks for the media type
       search_options = {}
-      search_options[:user_id] = @current_user.id
+
+      if ! current_user.nil?
+        search_options[:user_id] = @current_user.id
+      end
+
       search_options[:media_type_id] = media_type.id
       @presenter.networks = Media.do_search(search_options).to_a
     else
@@ -133,7 +140,10 @@ class MediasController < ApplicationController
 
     
     search_options = {}
-    search_options[:user_id] = @current_user.id
+
+    if ! current_user.nil?
+      search_options[:user_id] = @current_user.id
+    end
 
     if params[:sort].blank? 
       params[:sort] = 'name_asc'

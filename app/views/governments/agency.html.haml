@@ -12,8 +12,6 @@
   
   = render :partial => "shared/government_menu"
     
-  /= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
-
   .letter-filter
     - ('A'..'Z').each do |letter|
       = link_to letter, {:filter => "starts_with=#{letter}", :sort => params[:sort], :page => 1}
@@ -29,7 +27,7 @@
     %table.vote-table.agency
       %thead
         %tr
-          %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= "Vote"
           %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
           %th
             = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -38,7 +36,11 @@
       %tbody
       - @presenter.agencies.each do |agency|
         %tr{:class => (agency.id == @default_map[:id] ? 'selected' : '')}
-          %td= render :partial => "shared/vote_control", :object =>{:id => agency.id, :support_type => agency.support_type, :post_url => :government_vote}, :as => :d
+          %td
+            - if @current_user.nil?
+              = render :partial => "shared/vote_control_no_access"
+            - else
+              = render :partial => "shared/vote_control", :object =>{:id => agency.id, :support_type => agency.support_type, :post_url => :government_vote}, :as => :d
           %td
             %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => agency.id), :class => 'dataset' }
               %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{agency.id}_government"}

@@ -98,6 +98,7 @@ module AgeGraphHelper
       add_age_hash_entry :age => Time.now.year - element.birth_year.to_i, :support_type => element.support_type.to_i, :count => element.count.to_i
     end
 
+
     generate_age_data
 
     return {:ages => self.age_data, :max => self.age_max_total}
@@ -135,6 +136,7 @@ module AgeGraphHelper
   end
 
   def generate_age_data params = {}
+
     self.age_stats.each do |label, value|
       #Find total number of votes
       negative = value[:negative].to_i
@@ -162,6 +164,11 @@ module AgeGraphHelper
 
     self.age_data.sort! { |a, b| a[:label].to_i <=> b[:label].to_i }
 
+    #Make max age a multiple of four.  This is so the graph breaks are whole numbers
+    while self.age_max_total % 4 != 0
+      self.age_max_total = self.age_max_total + 1
+    end
+
 
     #set scale
     self.age_data.each do |age|
@@ -171,10 +178,6 @@ module AgeGraphHelper
         age[:scale] = 0
       end
     end
-
-    self.age_data.each do |age|
-      #Rails.logger.error "Label: #{age[:label]}, Color: #{age[:color]}, Scale: #{age[:scale]}, Total: #{age[:total]}"
-   end
 
   end
 

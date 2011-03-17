@@ -8,7 +8,7 @@
     %table.vote-table.executive
       %thead
         %tr
-          %th= table_sort_header_link :header => "Vote", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page] }
+          %th= "Vote"
           %th= table_sort_header_link :header => "Name", :sort_column => 'name', :link_params => { :filter => params[:filter], :page => params[:page] }
           %th.limit 
             = table_sort_header_link :header => "Title", :sort_column => 'default', :link_params => { :filter => params[:filter], :page => params[:page] }
@@ -19,7 +19,11 @@
         %tbody
         - @presenter.executives.each do |executive|
           %tr{:class => (executive.id == @default_map[:id] ? 'selected' : '')}
-            %td= render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
+            %td
+              - if @current_user.nil?
+                = render :partial => 'shared/vote_control_no_access'
+              - else
+                = render :partial => 'shared/vote_control', :object =>{:id => executive.id, :support_type => executive.support_type, :post_url => :government_vote}, :as => :d
             %td
               %a{:href => url_for(:sort => params[:sort], :id => executive.id), :class => 'dataset' }
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{executive.id}_government"}

@@ -53,7 +53,8 @@ class User < ActiveRecord::Base
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    AccountMailer.password_reset_email(self)
+    #AccountMailer.password_reset_email(self).deliver
+    AccountMailer.delay.password_reset_email(self)
   end
 
   def user_stats user_id

@@ -1,11 +1,18 @@
 class GovernmentsController < ApplicationController
+  skip_before_filter :require_user, :only => [:index, :executive, :legislative_state, :legislative, :agency]
+
   def index
     redirect_to :action => :executive
   end
 
   def executive
     search_options = {}
-    search_options[:user_id] = @current_user.id
+    @current_user = current_user
+
+    if ! current_user.nil?
+      search_options[:user_id] = @current_user.id
+    end
+
     search_options[:branch] = 'executive' 
 
     if params[:sort].blank?
@@ -66,6 +73,8 @@ class GovernmentsController < ApplicationController
     render 'governments/legislative_states'
   end
 
+
+
   def legislative
 
     state = State.where(:abbreviation => params[:state]).first
@@ -79,7 +88,12 @@ class GovernmentsController < ApplicationController
     @presenter = LegislativePresenter.new
     search_options = {}
 
-    search_options[:user_id] = @current_user.id
+    @current_user = current_user
+
+    if ! current_user.nil?
+      search_options[:user_id] = @current_user.id
+    end
+
     search_options[:branch] = 'legislative'
     search_options[:state] = state.id
 
@@ -135,7 +149,11 @@ class GovernmentsController < ApplicationController
     end
 
     search_options = {}
-    search_options[:user_id] = @current_user.id
+    @current_user = current_user
+
+    if ! current_user.nil?
+      search_options[:user_id] = @current_user.id
+    end
     search_options[:branch] = 'agency'
     search_options[:sort] = params[:sort]
 
