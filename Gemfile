@@ -16,12 +16,12 @@ group :development, :test do
   gem "compass", ">= 0.10.6"
 end
 
-#gem 'authlogic'
 gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
-#gem 'heroku_backup_task'
-gem 'texticle'
+#gem 'texticle'
 gem 'uuidtools'
 gem 'simple-navigation', '3.2.0'
+
+gem 'thinking-sphinx', '>=2.0.0', :require => 'thinking_sphinx'
 
 # Use unicorn as the web server
 # gem 'unicorn'

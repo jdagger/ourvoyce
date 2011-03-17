@@ -9,11 +9,10 @@ class Media < ActiveRecord::Base
   has_many :children, :class_name => 'Media', :foreign_key => "parent_media_id"
   belongs_to :parent_media, :class_name => 'Media'
 
-  #used by texticle to define indexes
-  index do
-    generated_indexes
+  define_index do
+    indexes :name
+    indexes :keywords
   end
-
 
   def age_all media_id
     generate_age_all :base_object_name => 'media', :base_object_id => media_id
@@ -147,7 +146,7 @@ class Media < ActiveRecord::Base
       #Only apply text filter or thumbs up/thumbs down filter
       if params.key? :text
         #Get a list of media ids that match the search text
-        records_to_include = Media.search params[:text].strip
+        records_to_include = Media.search params[:text].strip, :star => true, :max_matches => 50
         media_ids = records_to_include.inject([]) do |r, element|
           r << element.id
           r

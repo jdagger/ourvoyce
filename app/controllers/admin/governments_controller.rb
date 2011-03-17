@@ -22,11 +22,6 @@ class Admin::GovernmentsController < AdminController
 
   # POST /governments
   def create
-    #If a legislative or executive, update the name with the last_name value
-    if ! params[:government][:government_type_id].blank? && [2,3].include?(params[:government][:government_type_id].to_i)
-      params[:government][:name] = params[:government][:last_name]
-    end
-
     @government = Government.new(params[:government])
 
     if @government.save
@@ -39,11 +34,6 @@ class Admin::GovernmentsController < AdminController
   # PUT /governments/1
   def update
     @government = Government.find(params[:id])
-
-    #If a legislative or executive, update the name with the last_name value
-    if ! params[:government][:government_type_id].blank? && [2,3].include?(params[:government][:government_type_id].to_i)
-      params[:government][:name] = params[:government][:last_name]
-    end
 
     if @government.update_attributes(params[:government])
       redirect_to(admin_government_path(@government), :notice => 'Government was successfully updated.')
