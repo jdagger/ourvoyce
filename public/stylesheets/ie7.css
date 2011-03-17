@@ -19,21 +19,26 @@ table.vote-table th{
 }
 
 .body{
-  margin-top:-3px;
-  height:420px !important;
+  margin-top:-0px;
+  height:400px !important;
 }
 
 .vote-table-wrap{
-  min-height:400px;
+  height:430px;
 }
 
 .vote-table-cap{
-  margin-top:-17px;
+  height:60px;
   background: #ffffff url("/images/bottom-cap.gif") no-repeat top left;
 }
 
-.paging a, .paging b{
-  display:inline;
-  margin-right:3px;
-  height:7px;
+.vote-table-cap.myvoyce{
+  width:702px;
+  height:60px;
+  background-color:#ffffff;
+}
+
+.paging{
+  padding-top:10px;
+  padding-bottom:10px;
 }

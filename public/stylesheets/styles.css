@@ -500,7 +500,7 @@ table.vote-table .jq-corporation{
   text-align:center;
 }
 
-table.vote-table tr.selected{
+table.vote-table tr.selected td{
   border-bottom: 2px solid #cb2124 !important;
   border-top: 2px solid #cb2124 !important;
 }
@@ -703,7 +703,7 @@ div.paging{
 }
 
 div.paging{
-  height:25px;
+  height:35px;
   margin-top:10px;
   margin-bottom:10px;
   width:300px;
