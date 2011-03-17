@@ -9,9 +9,10 @@ class Government < ActiveRecord::Base
   belongs_to :state
   belongs_to :chamber
 
-  #used by texticle to define indexes
-  index do
-    generated_indexes
+  define_index do
+    indexes :name
+    indexes [:first_name, :last_name], :as => :legislative_name
+    indexes :keywords
   end
 
   def government_type_from_text text
@@ -108,7 +109,7 @@ class Government < ActiveRecord::Base
 
       if params.key? :text
         #Get a list of government ids that match the search text
-        records_to_include = Government.search params[:text].strip
+        records_to_include = Government.search params[:text].strip, :star => true, :max_matches => 50
         government_ids = records_to_include.inject([]) do |r, element|
           r << element.id
           r

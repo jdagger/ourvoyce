@@ -7,8 +7,13 @@ class Corporation < ActiveRecord::Base
   has_many :corporation_audits
 
   #used by texticle to define indexes
-  index do
-    generated_indexes
+  #index do
+    #generated_indexes
+  #end
+
+  define_index do
+    indexes :name
+    indexes :keywords
   end
 
   def age_all corporation_id
@@ -46,6 +51,7 @@ class Corporation < ActiveRecord::Base
     def do_search(params={})
       records = Corporation.where('1=1')
       select = ['corporations.id as id', 'corporations.name as name', 'corporations.logo as logo', 'corporations.revenue as revenue', 'corporations.profit as profit', 'corporations.social_score as social_score', 'corporations.participation_rate as participation_rate', 'corporations.wikipedia_url as wikipedia_url', 'corporations.corporate_url as corporate_url']
+      corporate_ids = nil #If doing a search text, this will contained the record ids, ordered by match score
 
       #If the user_id is specified, load the vote data
       if params.key? :user_id
@@ -55,12 +61,14 @@ class Corporation < ActiveRecord::Base
 
       #Only apply text filter or thumbs up/thumbs down filter
       if params.key? :text
+        results = Corporation.search params[:text].strip, :star => true, :max_matches => 50
+
         #Get a list of corporation ids that match the search text
-        records_to_include = Corporation.search params[:text].strip
-        corporate_ids = records_to_include.inject([]) do |r, element|
+        corporate_ids = results.inject([]) do |r, element|
           r << element.id
           r
         end
+
         records = records.where("corporations.id in (?)", corporate_ids)
       elsif params.key? :vote
         case params[:vote].strip.upcase
@@ -128,8 +136,6 @@ class Corporation < ActiveRecord::Base
           else
             records = records.order('corporations.name asc')
           end
-
-          #records = records.order("#{column} #{direction}")
         rescue
         end
       end
