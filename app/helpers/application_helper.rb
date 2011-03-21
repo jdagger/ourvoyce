@@ -1,4 +1,5 @@
 module ApplicationHelper
+
   include ImageHelper
   include VoteCssHelper
 

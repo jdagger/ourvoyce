@@ -24,6 +24,11 @@ gem 'simple-navigation', '3.2.0'
 
 gem 'thinking-sphinx', '>=2.0.0', :require => 'thinking_sphinx'
 
+#gem 'redis'
+#gem 'redis-store', '1.0.0.beta4'
+gem 'memcached'
+gem 'memcache-client'
+
 # Use unicorn as the web server
 # gem 'unicorn'
 
