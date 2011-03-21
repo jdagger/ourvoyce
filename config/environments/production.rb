@@ -8,7 +8,13 @@ Production::Application.configure do
   # Full error reports are disabled and caching is turned on
   config.consider_all_requests_local       = false
   config.action_controller.perform_caching = true
-  config.cache_store = :compressed_mem_cache_store, "localhost"
+  config.cache_store = :mem_cache_store, '10.181.166.107:11211', {
+    :compression => true,
+    :debug => true,
+    :namespace => "mem-#{RAILS_ENV}",
+    :readonly => false,
+    :urlencode => false
+  }
 
   # Specifies the header that your server uses for sending files
   config.action_dispatch.x_sendfile_header = "X-Sendfile"
