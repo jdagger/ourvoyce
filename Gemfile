@@ -1,22 +1,17 @@
 source 'http://rubygems.org'
 
-#gem 'rails', '3.0.3'
 gem 'rails'
 
 gem 'delayed_job'
 
-# Bundle edge Rails instead:
-# gem 'rails', :git => 'git://github.com/rails/rails.git'
-
-#gem 'mysql2', '0.2.6'
 gem 'pg'
 
 gem 'haml'
+
 group :development, :test do
   gem "compass", ">= 0.10.6"
 end
 
-#gem "authlogic", :git => "git://github.com/odorcicd/authlogic.git", :branch => "rails3"
 gem "authlogic"
 
 gem 'uuidtools'
@@ -24,13 +19,11 @@ gem 'simple-navigation', '3.2.0'
 
 gem 'thinking-sphinx', '>=2.0.0', :require => 'thinking_sphinx'
 
-#gem 'redis'
-#gem 'redis-store', '1.0.0.beta4'
 gem 'memcached'
 gem 'memcache-client'
 
 # Use unicorn as the web server
-# gem 'unicorn'
+gem 'unicorn'
 
 # To use debugger
 # gem 'ruby-debug'
