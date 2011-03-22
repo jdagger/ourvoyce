@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     end
 
     @presenter = ProductsIndexPresenter.new
-    @stats = User.new.user_stats @user.id
+    @stats = User.new.user_stats @user.id unless fragment_exist?("user_stats_#{@user.id}")
 
     page_size = Rails.configuration.default_page_size
     current_page = [params[:page].to_i, 1].max

@@ -6,10 +6,12 @@
       <div class="counter"><p>$1,000</p></div>
     </div>
     
-    <div class="counter-area">
-      <p>OURVOYCE USERS</p>
-      <div class="counter"><p><%= number_with_delimiter(user_count) %></p></div>
-    </div>
+    <% cache("header_user_count", :expires_in => 10) do %>
+      <div class="counter-area">
+        <p>OURVOYCE USERS</p>
+        <div class="counter"><p><%= number_with_delimiter(user_count) %></p></div>
+      </div>
+    <% end %>
     
     <div id="header-nav">
       <ul>

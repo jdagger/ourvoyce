@@ -1,6 +1,8 @@
-xml.instruct!
-xml.states do
-  @states.each do |state|
-    xml.state "name" => state[:name], "color" => state[:color]
+cache(@cache_name, :expires_in => Rails.configuration.default_cache_expires_in) do
+  xml.instruct!
+  xml.states do
+    @states.each do |state|
+      xml.state "name" => state[:name], "color" => state[:color]
+    end
   end
 end

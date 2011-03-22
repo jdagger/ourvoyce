@@ -1,4 +1,5 @@
 class Media < ActiveRecord::Base
+  set_table_name :medias
   include AgeGraphHelper
   include MapGraphHelper
 
@@ -168,11 +169,11 @@ class Media < ActiveRecord::Base
       end
 
       if params.key? :parent_media_id
-        records = records.where("parent_media_id = ?", params[:parent_media_id])
+        records = records.where("parent_media_id = ?", params[:parent_media_id].to_i)
       end
 
       if params.key? :media_type_id
-        records = records.where("media_type_id = ?", params[:media_type_id])
+        records = records.where("media_type_id = ?", params[:media_type_id].to_i)
       end
 
 
@@ -218,6 +219,5 @@ class Media < ActiveRecord::Base
       end
       return records
     end
-
   end
 end

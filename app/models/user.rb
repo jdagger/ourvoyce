@@ -88,6 +88,10 @@ class User < ActiveRecord::Base
     max_total_element = self.age_stats.values.max { |a, b| a[:count].to_i <=> b[:count].to_i }
     self.age_max_total = max_total_element[:count]
 
+    while self.age_max_total % 4 != 0
+      self.age_max_total += 1
+    end
+
     self.age_stats.each do |key, value|
       self.age_data << {:label => key, :color => "00ff00", :scale => value[:count].to_f / self.age_max_total, :total => value.count }
     end
@@ -117,6 +121,9 @@ class User < ActiveRecord::Base
 
     max_total_element = self.age_stats.values.max { |a, b| a[:count].to_i <=> b[:count].to_i }
     self.age_max_total = max_total_element[:count]
+    while self.age_max_total % 4 != 0
+      self.age_max_total += 1
+    end
 
     self.age_stats.each do |key, value|
       self.age_data << {:label => key, :color => "00ff00", :scale => value[:count].to_f / self.age_max_total, :total => value.count }

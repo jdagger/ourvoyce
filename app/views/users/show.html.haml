@@ -70,44 +70,44 @@
   %div.vote-table-cap.myvoyce
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
+- cache("user_stats_#{@user.id}", :expires_in => Rails.configuration.default_cache_expires_in) do
+  .user-stats
+    %p
+      %span.username
+        = "#{@stats[:username]}"
+      %br
+      = "Member since: #{@stats[:member_since]}"
+      
+    %h3
+      Stats:
 
-.user-stats
-  %p
-    %span.username
-      = "#{@stats[:username]}"
-    %br
-    = "Member since: #{@stats[:member_since]}"
-    
-  %h3
-    Stats:
-
-  %table.stats
-    %thead
-      %th.label
-      %th.number
-    %tbody
-      %tr
-        %td
-          Total:
-        %td.stat  
-          = "#{@stats[:total_scans]}"
-      %tr
-        %td
-          This year: 
-        %td.stat
-          = "#{@stats[:this_year_scans]}"
-      %tr
-        %td
-          This month: 
-        %td.stat
-          = "#{@stats[:this_month_scans]}"
-      %tr
-        %td
-          This week: 
-        %td.stat
-          = "#{@stats[:this_week_scans]}"
-      %tr
-        %td
-          Today: 
-        %td.stat
-          = "#{@stats[:today_scans]}"
+    %table.stats
+      %thead
+        %th.label
+        %th.number
+      %tbody
+        %tr
+          %td
+            Total:
+          %td.stat  
+            = "#{@stats[:total_scans]}"
+        %tr
+          %td
+            This year: 
+          %td.stat
+            = "#{@stats[:this_year_scans]}"
+        %tr
+          %td
+            This month: 
+          %td.stat
+            = "#{@stats[:this_month_scans]}"
+        %tr
+          %td
+            This week: 
+          %td.stat
+            = "#{@stats[:this_week_scans]}"
+        %tr
+          %td
+            Today: 
+          %td.stat
+            = "#{@stats[:today_scans]}"
