@@ -25,8 +25,8 @@ package
 		public var graphXML:XML;
 		public var paramObj;
 		public var baseURL:String = "";
-    /*public var restRoute:String = "corporate/age/85/nc";*/
-		public var restRoute:String = "swearing.xml";
+    public var restRoute:String = "corporate/age/85/nc";
+    /*public var restRoute:String = "swearing.xml";*/
 		public var stagePadding:Number = 25;
 		public var barWidth:Number = 6;
 		public var barPadding:Number = 10;
