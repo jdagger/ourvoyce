@@ -160,7 +160,6 @@ class Government < ActiveRecord::Base
         records = records.where("participation_rate >= ?", params[:participation_rate].to_i)
       end
 
-
       records = records.select(select.join(", "))
 
       if params.key? :sort

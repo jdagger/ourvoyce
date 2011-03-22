@@ -27,7 +27,7 @@ module AgeGraphHelper
     end
 
     items = eval("#{params[:base_object_name].capitalize}Support")
-    if ! params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
+    if ! params.key? :skip_object_id_filter || ! params[:skip_object_id_filter]
       items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
     end
     items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
@@ -54,6 +54,7 @@ module AgeGraphHelper
     end
 
     generate_age_data
+
 
     return {:ages => self.age_data, :max => self.age_max_total}
   end
