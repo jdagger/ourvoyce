@@ -22,9 +22,18 @@ package bargraph
 		
 		public function LabelLine(num:String, lineWidth:Number)
 		{
-		  if(Number(num) > 1000 && Number(num) < 1000000){
+		  if(Number(num) > 1000 && Number(num) < 10000){
+		    //num = (Number(num)/1000).toFixed(1) + "K"
+		    var precomma = num.substring(0, 1);
+		    var postcomma = num.substring(num.length-3, 4);
+		    
+		    num = precomma + "," + postcomma;
+		  }
+		  
+		  if(Number(num) > 10000 && Number(num) < 1000000){
 		    num = (Number(num)/1000).toFixed(1) + "K"
 		  }
+		  
 		  if(Number(num) >= 1000000){
 		    num = (Number(num)/1000000).toFixed(1) + "M"
 		  }
