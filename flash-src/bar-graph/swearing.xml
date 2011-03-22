@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<ages scaletop="1200" scalebottom="150" ylabel="Occurances in a Day" xlabel="Matt's Curse Words">
+<ages scaletop="9999" scalebottom="150" ylabel="Occurances in a Day" xlabel="Matt's Curse Words">
   <age label="F***" scale=".8" color="ff0000"/>
   <age label="SH**" scale=".25" color="dfed03"/>
   <age label="ASS" scale=".5" color="0044f3"/>
