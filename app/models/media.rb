@@ -1,5 +1,4 @@
 class Media < ActiveRecord::Base
-  set_table_name :medias
   include AgeGraphHelper
   include MapGraphHelper
 
