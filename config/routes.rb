@@ -23,20 +23,6 @@ Production::Application.routes.draw do
   match "/ourvoyce/vote" => "ourvoyce#vote", :as => :current_question_vote
   match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
 
-  controller :stats do
-    match "/stats(/:action)", :defaults => {:action => "index"}
-  end
-
-  match "/log" => "error_logs#index", :as => :error_log
-
-  namespace :admin do
-    match 'products/filter/:filter' => 'products#index'
-    match 'users/filter/:filter' => 'users#index'
-    resources :states, :corporations, :users, :products, :medias, :governments
-  end
-
-  resources :current_questions
-
   match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
   match "/corporate(/:filter(/:sort(/:page(/:id))))" => "corporates#index", :as => :corporates_index
 
