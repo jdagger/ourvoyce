@@ -3,10 +3,7 @@
 
 # unicorn_rails -c /data/github/current/config/unicorn.rb -E production -D
 
-rails_env = ENV['RAILS_ENV'] || 'production'
-
-# 16 workers and 1 master
-worker_processes (rails_env == 'production' ? 16 : 4)
+worker_processes 8
 
 # Load rails+github.git into the master before forking workers
 # for super-fast worker spawn times
@@ -58,7 +55,7 @@ after_fork do |server, worker|
   # sockets, e.g. db connection
 
   ActiveRecord::Base.establish_connection
-  CHIMNEY.client.connect_to_server
+  #CHIMNEY.client.connect_to_server
   # Redis and Memcached would go here but their connections are established
   # on demand, so the master never opens a socket
 
@@ -69,7 +66,7 @@ after_fork do |server, worker|
 
   begin
     uid, gid = Process.euid, Process.egid
-    #user, group = 'git', 'git'
+    user, group = 'git', 'git'
     target_uid = Etc.getpwnam(user).uid
     target_gid = Etc.getgrnam(group).gid
     worker.tmp.chown(target_uid, target_gid)
