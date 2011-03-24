@@ -3,7 +3,7 @@
 
 # unicorn_rails -c /data/github/current/config/unicorn.rb -E production -D
 
-worker_processes 8
+worker_processes 2
 
 # Load rails+github.git into the master before forking workers
 # for super-fast worker spawn times
