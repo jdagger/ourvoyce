@@ -1,6 +1,6 @@
 body{
   background: url(../images/background.jpg) repeat-x top;
-  background-color: #0b2952;
+  background-color: #c6d0da;
   font-family: Helvetica, Verdana, Arial, sans-serif;
   font-size: 12px;
 }
@@ -284,14 +284,14 @@ h3{
 /***************************************************************** footer styles */
 #footer{
   background: url(../images/footer-repeat.jpg) repeat-x top center;
-  height: 120px;
+  height: 90px;
   position: relative;
   background-color: #a3b7ca;
 }
 
 #footer-center{
   background: url(../images/footer-bg.jpg) no-repeat top center;
-  height: 120px;
+  height: 90px;
   position: relative;
 }
 

@@ -16,14 +16,14 @@
     <div id="header-nav">
       <ul>
         <% if current_user_session.nil? %>
-          <li><%= link_to "SIGN IN",  :register %></li>
-          <li><%= link_to "CREATE ACCOUNT", :register %></li>
+          <li><%= link_to "Sign In",  :register %></li>
+          <li><%= link_to "Create Account", :register %></li>
         <% else %>
           <li><%= current_user.login %></li>
-          <li><%= link_to "UPDATE ACCOUNT", :edit_account %></li>
-          <li><%= link_to "LOGOUT",  :logout %></li>
+          <li><%= link_to "Update Account", :edit_account %></li>
+          <li><%= link_to "Logout",  :logout %></li>
         <% end %>
-        <li><a href="/help">HELP</a></li>
+        <li><a href="/help">Help</a></li>
       </ul>
     </div>
     
