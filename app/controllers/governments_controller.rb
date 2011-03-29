@@ -216,7 +216,10 @@ class GovernmentsController < ApplicationController
       support_type = -1
     end
 
-    GovernmentSupport.change_support(params[:item_id], @current_user.id, support_type)
+    gs = GovernmentSupport.new
+    gs.remote_ip = request.remote_ip
+    gs.change_support(params[:item_id], @current_user.id, support_type)
+
 
     respond_to do |format|
       format.html { redirect_to request.referrer }

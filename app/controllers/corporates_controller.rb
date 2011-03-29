@@ -87,7 +87,10 @@ class CorporatesController < ApplicationController
       support_type = -1
     end
 
-    CorporationSupport.change_support(params[:item_id], current_user.id, support_type)
+
+    corporation_support = CorporationSupport.new
+    corporation_support.remote_ip = request.remote_ip
+    corporation_support.change_support(params[:item_id], current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }

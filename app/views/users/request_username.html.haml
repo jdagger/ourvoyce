@@ -1,0 +1,12 @@
+%h1 Request Username
+%p Enter your email address.  Your username will to sent.
+
+= "<p>#{flash[:notice]}</p>".html_safe unless flash[:notice].blank?
+
+= form_tag '/request_username' do
+  %p
+    = label_tag :email
+    = text_field_tag :email
+  %p
+    = submit_tag "Request Username"
+

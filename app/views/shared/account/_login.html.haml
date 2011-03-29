@@ -7,5 +7,10 @@
     = label_tag :password, "Password:"
     = password_field_tag :password
   = submit_tag "Login"
-%div
+%div{:style => "clear: both;"}
+%p
   = link_to "Reset Password", :reset_passwords
+  %br
+  = link_to "Forgot Username", :request_username
+  %br
+  = link_to "Resend Account Verification", :verify

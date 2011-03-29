@@ -28,7 +28,10 @@ class MediasController < ApplicationController
       support_type = -1
     end
 
-    MediaSupport.change_support(params[:item_id].to_i, @current_user.id, support_type)
+    #MediaSupport.change_support(params[:item_id].to_i, current_user.id, support_type)
+    ms = MediaSupport.new
+    ms.remote_ip = request.remote_ip
+    ms.change_support(params[:item_id].to_i, current_user.id, support_type)
 
     respond_to do |format|
       format.html { redirect_to request.referrer }

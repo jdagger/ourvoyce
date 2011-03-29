@@ -1,18 +1,42 @@
 class ServicesController < ApplicationController
-  skip_before_filter :basic_authentication, :only => [:xml, :check_unique_user]
-  skip_before_filter :require_user #, :only => [:check_unique_user, :xml]
+  skip_before_filter :require_user
 
 	protect_from_forgery :except => [:xml]
 
 	def check_unique_user
 		username = params[:username]
-		render :json => {'username' => username, 'unique'=> !User.exists?(:username => username)}
+		render :json => {'username' => username, 'unique'=> !User.exists?(:login => username)}
+	end
+
+	def check_unique_email
+	  email = params[:email].strip
+		render :json => {'email' => email, 'unique'=> !User.exists?(:email => email)}
+	end
+
+	def validate_zip
+		zip_code = params[:zip].strip
+    city = ''
+    zip = nil
+    begin
+      zip = Zip.where(:zip => zip_code).first
+      if ! zip.nil?
+        city = zip.city
+      end
+    rescue
+      Rails.logger.error "Could not lookup zip: #{zip_code}"
+    end
+
+    if zip.nil?
+      Rails.logger.error "Zip could not be found: #{zip_code}"
+    end
+
+		render :json => {'zip' => zip_code, 'found' => !zip.nil?, 'city' => city}
 	end
 
 
 	def xml
 		handler = ServiceHandler.new
-		response = handler.handle_request(params[:Request])
+		response = handler.handle_request(params[:Request], request.remote_ip)
 		render :xml => response.to_xml({:skip_instruct => false, :root => "Response", :skip_types => true})
 	end
 

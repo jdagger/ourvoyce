@@ -1,54 +1,79 @@
 - content_for :scripts do
   =	javascript_include_tag "signup.js"
   = javascript_include_tag "jquery.password_strength.js"
-  %script{:type => "text/javascript", :src => "http://maps.google.com/maps/api/js?sensor=false"}
 
-= form_for :user, @new_user, :html => {:class => 'signup'}, :url => (['new', 'create'].include?(action_name) ? :create_account : :update_account) do |f|
+= form_for :user, @new_user, :html => {:class => 'account'}, :url => (['new', 'create'].include?(action_name) ? :create_account : :update_account) do |f|
   .input
     = f.label :login, "Select a username:"
     = f.text_field :login
-    .small You will use the username when logging on to the site.
+    .validation-indicator#user_login_indicator
+    .small Select a unique username.
     .messages
-      %span#username_messages= @new_user.errors[:login].first
+      %span#user_login_messages= @new_user.errors[:login].first
   .clear
 
   .input
     = f.label :password, "Create a password:"
     = f.password_field :password
+    .validation-indicator#user_password_indicator
     .small Pick a strong password with letters and numbers.
+    .messages
+      %span#user_password_messages= @new_user.errors[:password].first
   .clear
   
   .input
     = f.label :password_confirmation, "Retype your password:"
     = f.password_field :password_confirmation
+    .validation-indicator#user_password_confirmation_indicator
     .small Password must be at least 6 characters.
     .messages
-      %span#password_messages= @new_user.errors[:password].first
+      %span#user_password_confirmation_messages
+  .clear
+
+  .input
+    = f.label :country_id, "Country:"
+    = f.select :country_id, Country.all.collect {|c| [c.name, c.id]}
+    .validation-indicator#user_country_id_indicator
+    .small= "&nbsp;".html_safe
+    .messages
+      %span#user_country_id_messages= @new_user.errors[:country_id].first
   .clear
   
   .input
     = f.label :zip_code, "Enter your zip code:"
     = f.text_field :zip_code
-    .small The zip code will be used for...
+    .validation-indicator#user_zip_code_indicator
+    .small= "Five digit zip code."
     .messages
-      %span#zip_code_messages= @new_user.errors[:zip_code].first
+      %span#user_zip_code_messages= @new_user.errors[:zip_code].first
   .clear
 
 
   .input
     = f.label :birth_year, "Year you were born:"
     = f.select :birth_year, options_for_select((1910..Time.now.year).to_a.reverse, @new_user.birth_year)
-    .small You age will determine...
+    .validation-indicator#user_birth_year_indicator
+    .small= "You have to be at least 16."
     .messages
-      %span#birth_year_messages= @new_user.errors[:birth_year].first
+      %span#user_birth_year_messages= @new_user.errors[:birth_year].first
   .clear
 
   .input
-    = f.label :email, "Enter your email address:"
+    = f.label :email, "Enter your email:"
     = f.text_field :email
-    .small You will need a valid email for account creation.
+    .validation-indicator#user_email_indicator
+    .small You will need to verify your account.
     .messages
-      %span#email_message= @new_user.errors[:email].first
+      %span#user_email_messages= @new_user.errors[:email].first
+  .clear
+
+  .input
+    = f.label :agreed, "Membership Agreement:".html_safe
+    = f.check_box :agreed
+    .validation-indicator#user_agreed_indicator
+    .small= "<a href='/terms' target='_blank'>View the membership agreement.</a>".html_safe
+    .messages
+      %span#user_agreed_messages= @new_user.errors[:agreed].first
   .clear
 
   .input.create

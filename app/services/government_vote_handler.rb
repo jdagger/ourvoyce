@@ -7,7 +7,10 @@ class GovernmentVoteHandler < VoteHandlerBase
     super
 		self.status = 0
 		if(load_user)
-			GovernmentSupport.change_support(self.government_id, self.user.id, self.support_type)
+			#GovernmentSupport.change_support(self.government_id, self.user.id, self.support_type)
+      gs = GovernmentSupport.new
+      gs.remote_ip = request.remote_ip
+			gs.change_support(self.government_id, self.user.id, self.support_type)
 			self.status = 1
     end
   end

@@ -3,6 +3,7 @@ class GovernmentSupport < ActiveRecord::Base
 	belongs_to :user
 
   attr_accessor :bypass_audit
+  attr_accessor :remote_ip
 
   def bypass_audit?
     if self.bypass_audit.nil?
@@ -12,12 +13,15 @@ class GovernmentSupport < ActiveRecord::Base
     end
   end
 
-	class << self
+	#class << self
 		def change_support government_id, user_id, support_type
 			government = Government.find(government_id)
 			user = User.find(user_id)
 
 			government_support = GovernmentSupport.where("government_id = ? and user_id = ?", government.id, user.id).first
+      if ! government_support.nil?
+        government_support.remote_ip = self.remote_ip
+      end
 
 			#deleting
 			if(support_type.to_i < 0)
@@ -25,12 +29,12 @@ class GovernmentSupport < ActiveRecord::Base
 					government_support.destroy
 				end
 			elsif(government_support.nil?)
-				user.government_supports.create(:government => government, :support_type => support_type)
+				user.government_supports.create(:government => government, :support_type => support_type, :remote_ip => self.remote_ip)
 			else
 				#if already exists, update
 				government_support.support_type = support_type
 				government_support.save
 			end
 		end
-	end
+	#end
 end

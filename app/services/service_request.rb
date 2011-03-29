@@ -18,6 +18,8 @@ class ServiceRequest
 	attr_accessor :sort_direction
 	attr_accessor :filters
 
+  attr_accessor :remote_ip
+
 	def initialize
 		self.parameters = {}
 		self.filters = {}

@@ -25,6 +25,7 @@ class User < ActiveRecord::Base
 
   attr_accessor :password_confirmation
   attr_reader :password
+  attr_accessor :agreed
 
 
   has_many :product_supports
@@ -47,15 +48,31 @@ class User < ActiveRecord::Base
   has_many :current_question_supports
   has_many :current_questions, :through => :current_question_supports
 
+  belongs_to :country
+
   after_create :add_default_products_to_user
 
   acts_as_authentic
 
   def deliver_password_reset_instructions!
     reset_perishable_token!
-    #AccountMailer.password_reset_email(self).deliver
     AccountMailer.delay.password_reset_email(self)
   end
+
+  def deliver_username!
+    AccountMailer.delay.forgot_username_email(self)
+  end
+
+  def deliver_verification_instructions!
+    reset_perishable_token!
+    AccountMailer.delay.verification_email(self)
+  end
+
+  def verify!
+    self.verified = 1
+    self.save
+  end
+
 
   def user_stats user_id
     user = User.find user_id
@@ -188,6 +205,4 @@ class User < ActiveRecord::Base
 
     return self.state_map_stats
   end
-
-
 end

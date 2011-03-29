@@ -1,21 +1,19 @@
 class UsersController < ApplicationController
-  #before_filter :require_no_user, :only => [:new, :create, :login]
-  skip_before_filter :require_user, :only => [:login, :create, :new]
-  skip_before_filter :basic_authentication, :only => [:login, :create, :new]
-  #before_filter :require_no_user, :only => [:create]
-  #before_filter :require_user, :only => [:show, :edit, :update, :logout, :new]
+  skip_before_filter :require_user, :only => [:login, :create, :new, :verify, :request_username]
 
   def new
-    @new_user = User.new
+    @new_user = User.new :country_id => 242
     @user_session = UserSession.new
   end
 
   def create
     @new_user = User.new(params[:user])
     if @new_user.save
-      flash[:notice] = "Account registered!"
-      redirect_to :myvoyce
-      #redirect_back_or_default myvoyce_url
+      flash[:notice] = "Thank you for signing up!  Please check your email to verify your account before logging in."
+      #redirect_to :myvoyce
+      @new_user.deliver_verification_instructions!
+
+      redirect_to :root
     else
       @user_session = UserSession.new #Needed for login portion of screen
       render :action => :new
@@ -123,6 +121,41 @@ class UsersController < ApplicationController
     end
   end
 
+  def verify
+    if params[:email].blank? && !params[:id].blank?
+      @user = User.find_using_perishable_token(params[:id])
+      if @user
+        @user.verify!
+        flash[:notice] = "Thank you for verifying your account. You can now login to your account."
+        redirect_to :register
+      end
+    elsif ! params[:email].blank?
+      @user = User.find_by_email params[:email]
+      if @user
+        @user.deliver_verification_instructions!  
+        flash[:notice] = "Check your email for verification details."
+        redirect_to :register  
+      else  
+        flash[:notice] = "No user was found with that email address"  
+        render :action => :verify  
+      end
+    end
+  end
+
+  def request_username
+    if !params[:email].blank?
+      @user = User.find_by_email params[:email]
+      if @user
+        @user.deliver_username!  
+        flash[:notice] = "Check your email for your username."
+        redirect_to :register  
+      else  
+        flash[:notice] = "No user was found with that email address"  
+        render :action => :request_username  
+      end
+    end
+  end
+
   def login
     @user_session = UserSession.new(:login => params[:login], :password => params[:password])
     if @user_session.save
@@ -130,11 +163,11 @@ class UsersController < ApplicationController
       redirect_back_or_default myvoyce_url
     elsif Rails.application.routes.recognize_path(request.referrer)[:controller] == 'home'
       #This is a temporary conditional to handle the login-only home page
-      flash[:notice] = "Unable to login user"
+      flash[:notice] = "Unable to login. Make sure you have verified your account."
       redirect_to root_url
     else
-      flash[:notice] = "Unable to login user"
-      @new_user = User.new #needed for new
+      flash[:notice] = "Unable to login. Make sure you have verified your account."
+      @new_user = User.new :country_id => 242
       render :action => :new
     end
   end

@@ -3,6 +3,7 @@ class MediaSupport < ActiveRecord::Base
 	belongs_to :user
 
   attr_accessor :bypass_audit
+  attr_accessor :remote_ip
 
   def bypass_audit?
     if self.bypass_audit.nil?
@@ -12,12 +13,15 @@ class MediaSupport < ActiveRecord::Base
     end
   end
 
-  class << self
+  #class << self
     def change_support media_id, user_id, support_type
       media = Media.find(media_id)
       user = User.find(user_id)
 
       media_support = MediaSupport.where("media_id = ? and user_id = ?", media.id, user.id).first
+      if !media_support.nil?
+        media_support.remote_ip = self.remote_ip
+      end
 
       #deleting
       if(support_type.to_i < 0)
@@ -25,12 +29,12 @@ class MediaSupport < ActiveRecord::Base
           media_support.destroy
         end
         elsif(media_support.nil?)
-        user.media_supports.create(:media => media, :support_type => support_type)
+        user.media_supports.create(:media => media, :support_type => support_type, :remote_ip => self.remote_ip)
       else
         #if already exists, update
         media_support.support_type = support_type
         media_support.save
       end
-    end
+    #end
   end
 end

@@ -8,22 +8,25 @@ class MediaVoteHandler < VoteHandlerBase
 		self.status = 0
 
 		if(load_user)
-			media = Media.find(self.media_id)
+      ms = MediaSupport.new
+      ms.remote_ip = request.remote_ip
+      ms.change_support(self.media_id, self.user.id, self.support_type)
+			#media = Media.find(self.media_id)
 
-			media_support = MediaSupport.where("media_id = ? and user_id = ?", media.id, self.user.id).first
+			#media_support = MediaSupport.where("media_id = ? and user_id = ?", media.id, self.user.id).first
 
 			#deleting
-			if(self.support_type.to_i < 0)
-				if(!media_support.nil?)
-					media_support.destroy
-				end
-			elsif(media_support.nil?)
-				self.user.media_supports.create(:media => media, :support_type => self.support_type)
-			else
-				#if already exists, update
-				media_support.support_type = self.support_type
-				media_support.save
-			end
+			#if(self.support_type.to_i < 0)
+				#if(!media_support.nil?)
+					#media_support.destroy
+				#end
+			#elsif(media_support.nil?)
+				#self.user.media_supports.create(:media => media, :support_type => self.support_type)
+			#else
+				###if already exists, update
+				#media_support.support_type = self.support_type
+				#media_support.save
+			#end
 			self.status = 1
 		end
 	end

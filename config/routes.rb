@@ -12,6 +12,8 @@ Production::Application.routes.draw do
 
   match "/login" => "users#login", :as => :login
   match "/logout" => "users#logout", :as => :logout
+  match "/verify" => "users#verify", :as => :verify
+  match "/request_username" => "users#request_username", :as => :request_username
   match "/account" => "users#edit", :as => :edit_account
   match "/save_account" => "users#update", :as => :update_account
   match "/register" => "users#new", :as => :register

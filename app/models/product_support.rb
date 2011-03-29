@@ -3,6 +3,7 @@ class ProductSupport < ActiveRecord::Base
 	belongs_to :user
 
   attr_accessor :bypass_audit
+  attr_accessor :remote_ip
 
   def bypass_audit?
     if self.bypass_audit.nil?
@@ -12,12 +13,15 @@ class ProductSupport < ActiveRecord::Base
     end
   end
 
-	class << self
+	#class << self
 		def change_support product_id, user_id, support_type
 			product = Product.find(product_id)
 			user = User.find(user_id)
 
 			product_support = ProductSupport.where("product_id = ? and user_id = ?", product.id, user.id).first
+      if ! product_support.nil?
+        product_support.remote_ip = self.remote_ip
+      end
 
 			#deleting
 			#if(support_type.to_i < 0)
@@ -26,12 +30,12 @@ class ProductSupport < ActiveRecord::Base
 				#end
 			#elsif(product_support.nil?)
       if(product_support.nil?)
-				user.product_supports.create(:product => product, :support_type => support_type)
+				user.product_supports.create(:product => product, :support_type => support_type, :remote_ip => self.remote_ip)
 			else
 				#if already exists, update
 				product_support.support_type = support_type
 				product_support.save
 			end
-		end
+		#end
 	end
 end

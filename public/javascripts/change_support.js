@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$(".vote > thumbs-up").live("click", function(event){
+	$(".vote > .thumbs-up").live("click", function(event){
 		event.preventDefault();
 		thumbs_up_clicked($(this));
 	});

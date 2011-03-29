@@ -1,0 +1,12 @@
+%h1 Resend verification email
+%p Enter your email address and a new verification email will be sent.
+
+= "<p>#{flash[:notice]}</p>".html_safe unless flash[:notice].blank?
+
+= form_tag '/verify' do
+  %p
+    = label_tag :email
+    = text_field_tag :email
+  %p
+    = submit_tag "Send Email"
+

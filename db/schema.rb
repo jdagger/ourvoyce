@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110317150152) do
+ActiveRecord::Schema.define(:version => 20110329131658) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20110317150152) do
     t.integer  "support_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
   create_table "corporation_rank", :id => false, :force => true do |t|
@@ -78,6 +79,15 @@ ActiveRecord::Schema.define(:version => 20110317150152) do
     t.string   "revenue_text"
     t.string   "profit_text"
     t.string   "keywords"
+  end
+
+  create_table "countries", :force => true do |t|
+    t.string  "name"
+    t.string  "symbol"
+    t.integer "square_km"
+    t.integer "population"
+    t.integer "internet_users"
+    t.float   "internet_penetration"
   end
 
   create_table "current_question_supports", :force => true do |t|
@@ -131,6 +141,7 @@ ActiveRecord::Schema.define(:version => 20110317150152) do
     t.integer  "support_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
   create_table "government_supports", :force => true do |t|
@@ -198,6 +209,7 @@ ActiveRecord::Schema.define(:version => 20110317150152) do
     t.integer  "support_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
   create_table "media_states", :force => true do |t|
@@ -369,6 +381,7 @@ ActiveRecord::Schema.define(:version => 20110317150152) do
     t.integer  "support_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "ip"
   end
 
   create_table "product_scans", :force => true do |t|
@@ -551,6 +564,8 @@ ActiveRecord::Schema.define(:version => 20110317150152) do
     t.datetime "last_login_at"
     t.string   "current_login_ip"
     t.string   "last_login_ip"
+    t.integer  "country_id"
+    t.integer  "verified",           :default => 0
   end
 
   add_index "users", ["birth_year"], :name => "index_users_on_birth_year"

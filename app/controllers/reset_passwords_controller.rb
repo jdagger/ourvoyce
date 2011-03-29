@@ -1,6 +1,6 @@
 class ResetPasswordsController < ApplicationController
   before_filter :load_user_using_perishable_token, :only => [:edit, :update]
-  skip_before_filter :require_user #, :only => [:new, :create, :index, :edit]
+  skip_before_filter :require_user
   before_filter :require_no_user
 
   def index

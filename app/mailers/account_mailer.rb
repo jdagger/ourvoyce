@@ -6,4 +6,18 @@ class AccountMailer < ActionMailer::Base
     @password_reset_url = edit_reset_password_url(user.perishable_token)
     mail(:to => user.email, :subject => 'Password Reset')
   end
+
+  def verification_email(user)
+    subject "OurVoyce Email Verification"
+    recipients user.email
+    sent_on Time.now
+    body :verification_url => verification_url(user.perishable_token)
+  end
+
+  def forgot_username_email(user)
+    subject "OurVoyce Username"
+    recipients user.email
+    sent_on Time.now
+    body :username => user.login
+  end
 end
