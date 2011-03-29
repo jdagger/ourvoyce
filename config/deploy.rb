@@ -23,19 +23,19 @@ role :db,  "50.56.91.61", :primary => true # This is where Rails migrations will
 namespace :deploy do
   desc "Stopping server"
   task :stop do
-    find_and_execute_task("unicorn:stop")
+    #find_and_execute_task("unicorn:stop")
     find_and_execute_task("thinking_sphinx:stop")
   end
 
   desc "Starting server"
   task :start do
-    find_and_execute_task("unicorn:start")
+    #find_and_execute_task("unicorn:start")
     find_and_execute_task("thinking_sphinx:rebuild")
   end
 
   desc "Restarting server"
   task :restart do
-    find_and_execute_task("unicorn:restart")
+    #find_and_execute_task("unicorn:restart")
     find_and_execute_task("thinking_sphinx:rebuild")
   end
 
@@ -50,21 +50,17 @@ namespace :unicorn do
 
   desc "Restart the Unicorn processes on the app server by starting and stopping the cluster."
   task :restart do
-    #run "/etc/init.d/unicorn restart"
-    run "killall unicorn"
-    run "/etc/init.d/unicorn start"
+    run "/etc/init.d/unicorn restart"
   end
 
   desc "Stop the Unicorn processes on the app server."
   task :stop do
-    #run "/etc/init.d/unicorn stop"
-    run "killall unicorn"
+    run "/etc/init.d/unicorn stop"
   end
 
   desc "Stop the Unicorn processes on the app server."
   task :reload do
-    #run "/etc/init.d/unicorn stop"
-    run "killall unicorn"
+    run "/etc/init.d/unicorn stop"
   end
 
   #%w(start stop restart reload).each do |action|
