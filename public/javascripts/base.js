@@ -81,7 +81,7 @@ $(document).ready(function() {
   });
   
   $('.vote-table.home-page').fixheadertable({ 
-      height      : 300,
+      height      : 242,
       width       : 330,
       minColWidth : 100,
       colratio    : [150, 70, 110], //totals up to 549 wich is the width of the vote table

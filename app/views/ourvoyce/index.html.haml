@@ -2,7 +2,7 @@
   = javascript_include_tag "change_support.js"
 
 #content-left
-  %h2
+  %h3
     Who’s Being Counted?
   #bar-graph-wrap
     #bar-graph
@@ -28,11 +28,16 @@
   #home-map-wrap
     #home-map
   #home-copy
+    %br
+    %h3 Welcome to ourvoYce!
+    %p ourvoYce is a social tool that was created to give a voice to the people. The idea is simple. We the people should vote on everything and vote often. Your opinion does matter, so look around for a while and vote!
+    %p Visit the #{link_to 'How does this work?', '/how-does-this-work'} page any time you have questions.
+  -#home-copy-hide
     .home-headline
-      %img{:src => "images/wheredoyoustand.png", :alt =>"where do you stand?"}
+      %img{:src => "images/home_fade.png", :alt =>"where do you stand?"}
       %p= @current_question.question_text
       %h2 Vote Now. Be counted.
-  #home-vote
+  -#home-vote
     - if @current_user.nil?
       = render :partial => 'shared/vote_control_no_access'
     - else

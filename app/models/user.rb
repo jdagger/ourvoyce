@@ -110,7 +110,7 @@ class User < ActiveRecord::Base
     end
 
     self.age_stats.each do |key, value|
-      self.age_data << {:label => key, :color => "00ff00", :scale => value[:count].to_f / self.age_max_total, :total => value.count }
+      self.age_data << {:label => key, :color => "1d57af", :scale => value[:count].to_f / self.age_max_total, :total => value.count }
     end
 
 
@@ -143,7 +143,7 @@ class User < ActiveRecord::Base
     end
 
     self.age_stats.each do |key, value|
-      self.age_data << {:label => key, :color => "00ff00", :scale => value[:count].to_f / self.age_max_total, :total => value.count }
+      self.age_data << {:label => key, :color => "1d57af", :scale => value[:count].to_f / self.age_max_total, :total => value.count }
     end
 
     return {:ages => self.age_data, :max => self.age_max_total}
@@ -199,7 +199,7 @@ class User < ActiveRecord::Base
 
 
     self.state_map_collected_data.each do |key, value|
-      self.state_map_stats << {:name => key, :color => '00ff00', :scale => value[:count].to_f / max_count, :lat => value[:lat], :long => value[:long], :votes => value[:count] }
+      self.state_map_stats << {:name => key, :color => "1d57af", :scale => value[:count].to_f / max_count, :lat => value[:lat], :long => value[:long], :votes => value[:count] }
     end
     (self.state_map_stats.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
 
