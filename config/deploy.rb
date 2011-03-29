@@ -50,25 +50,29 @@ namespace :unicorn do
 
   desc "Restart the Unicorn processes on the app server by starting and stopping the cluster."
   task :restart do
-    run "/etc/init.d/unicorn restart"
+    #run "/etc/init.d/unicorn restart"
+    run "killall unicorn"
+    run "/etc/init.d/unicorn start"
   end
 
   desc "Stop the Unicorn processes on the app server."
   task :stop do
-    run "/etc/init.d/unicorn stop"
+    #run "/etc/init.d/unicorn stop"
+    run "killall unicorn"
   end
 
   desc "Stop the Unicorn processes on the app server."
   task :reload do
-    run "/etc/init.d/unicorn stop"
+    #run "/etc/init.d/unicorn stop"
+    run "killall unicorn"
   end
 
-  %w(start stop restart reload).each do |action|
-    desc "#{action} the Unicorn processes on the web server."
-    task action.to_sym , :roles => :web do
-      run "/etc/init.d/unicorn #{action}"
-    end
-  end
+  #%w(start stop restart reload).each do |action|
+    #desc "#{action} the Unicorn processes on the web server."
+    ##task action.to_sym , :roles => :web do
+      #run "/etc/init.d/unicorn #{action}"
+    #end
+  #end
 
 end
 
