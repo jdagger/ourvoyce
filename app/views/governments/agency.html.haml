@@ -15,6 +15,9 @@
   .letter-filter
     - ('A'..'Z').each do |letter|
       = link_to letter, {:filter => "starts_with=#{letter}", :sort => params[:sort], :page => 1}
+
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+
   %div.filtering
     =link_to 'All Records', {:filter => 'vote=all', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
     =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
@@ -54,6 +57,6 @@
             %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(agency.participation_rate)})", :alt => agency.participation_rate}
               = agency.social_score
   %div.vote-table-cap
-  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+
 .graph-contents
   = render :partial => "shared/map_graph", :locals => {:id => @default_map[:id], :model => "government", :title => @default_map[:title], :wikipedia => @default_map[:wikipedia], :website => @default_map[:website]}

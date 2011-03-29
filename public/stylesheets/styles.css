@@ -554,7 +554,7 @@ table.vote-table tr.selected td{
    background:url(/images/bottom-cap.gif) no-repeat;
    width:550px;
    height:10px;
-   padding-bottom:10px;
+   padding-bottom:0px;
 }
 
 .vote-table-cap.myvoyce{
@@ -592,6 +592,7 @@ table.vote-table tr.selected td{
 }
 
 .left-content{
+  /*border: solid 1px green;*/
   float:left;
   width:550px;
 }
@@ -611,9 +612,9 @@ table.vote-table tr.selected td{
 
 #map{
   float:right;
-  margin-top:8px;
+  margin-top:10px;
   margin-right:10px;
-  margin-bottom:10px;
+  margin-bottom:0px;
 }
 
 #bar-graph{
@@ -684,9 +685,30 @@ a.sort-button.selected{
 }
 
 .page-title{
+  border: solid 0px blue;
   width:190px;
   float:right;
-  margin-bottom:20px;
+  margin-bottom:0px;
+}
+
+.page-title.corporate{
+  border: solid 0px blue;
+  width:550px;
+  float:left;
+}
+
+.page-title.corporate.left{
+  border: solid 0px blue;
+  padding-top: 15px;
+  width: 200px;
+  float:left;
+}
+
+.page-title.corporate.right{
+  border: solid 0px blue;
+  width: 200px;
+  float:right;
+  margin-bottom:5px;
 }
 
 .page-title h1{
@@ -715,16 +737,19 @@ a.sort-button.selected{
   background:url(/images/top-cap-myvoyce.gif) bottom right no-repeat;
 }
 
+/*
 div.paging{
   height:25px;
   margin-bottom:10px;
 }
+*/
 
 div.paging{
-  height:35px;
-  margin-top:10px;
-  margin-bottom:10px;
-  width:300px;
+  border: solid 0px black;
+  height:25px;
+  margin-top:0px;
+  margin-bottom:5px;
+  width:600px;
   float:left;
 }
 
@@ -782,11 +807,11 @@ div.pr-pie{
 }
 
 .government-navigation{
-  padding-bottom:15px;
+  padding-bottom:10px;
   width:350px;
   float:left;
   clear:none;
-  margin-top:10px;
+  margin-top:0px;
 }
 
 .media-navigation{
@@ -846,10 +871,14 @@ div.pr-pie{
 }
 
 .singlet.myvoyce{
+  background: none;
+  border: solid 2px #ddd;
+  height: 85px;
   width:700px;
 }
 
 .singlet-table-wrap{
+  border: 0px solid blue;
   width:370px;
   height:72px;
   padding-left:14px;
