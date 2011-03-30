@@ -17,7 +17,7 @@ $(document).ready(function() {
   $('#header-nav ul li:not(:first)').before('<li>|</li>');
   
   $('.vote-table.corporate').fixheadertable({ 
-      height      : 400,
+      height      : 438,
       width       : 550,
       minColWidth : 100,
       colratio    : [109, 230, 70, 55, 85], //totals up to 549 wich is the width of the vote table
@@ -25,7 +25,7 @@ $(document).ready(function() {
   });
   
   $('.vote-table.executive').fixheadertable({ 
-      height      : 400,
+      height      : 460,
       width       : 550,
       minColWidth : 100,
       colratio    : [109, 150, 150, 140], //totals up to 549 wich is the width of the vote table
@@ -41,7 +41,7 @@ $(document).ready(function() {
   });
   
   $('.vote-table.legislative-state').fixheadertable({ 
-      height      : 400,
+      height      : 460,
       width       : 550,
       minColWidth : 100,
       colratio    : [190, 190, 169], //totals up to 549 wich is the width of the vote table
@@ -73,7 +73,7 @@ $(document).ready(function() {
   });
   
   $('.vote-table.myvoyce').fixheadertable({ 
-      height      : 400,
+      height      : 324,
       width       : 700,
       minColWidth : 100,
       colratio    : [109, 140, 160, 180, 110], //totals up to 549 wich is the width of the vote table
@@ -81,7 +81,7 @@ $(document).ready(function() {
   });
   
   $('.vote-table.home-page').fixheadertable({ 
-      height      : 300,
+      height      : 242,
       width       : 330,
       minColWidth : 100,
       colratio    : [150, 70, 110], //totals up to 549 wich is the width of the vote table

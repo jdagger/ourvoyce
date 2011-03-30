@@ -1,13 +1,13 @@
 %div.paging
   - final_index = paging_data.links.length - 1
   - current_index = paging_data.current_page - 1
-  - links_to_show = 7
+  - links_to_show = 12
   - last_index = [final_index, [links_to_show - 1, current_index + links_to_show / 2].max].min
   - start_index = [0, last_index - links_to_show + 1].max
 
   //Display quick link to page 1
   - if start_index > 0
-    %a{:href => paging_data.links[0][:link_url]}= "<<"
+    %a{:href => paging_data.links[0][:link_url]}= "<< First"
     = "&nbsp;".html_safe
 
   - if final_index > 0 || current_index > final_index #Display paging if multiple pages or beyond final index
@@ -21,4 +21,4 @@
   //Display quick link to last page
   - if last_index < final_index
     = "&nbsp;".html_safe
-    %a{:href => paging_data.links[final_index][:link_url]}= ">>"
+    %a{:href => paging_data.links[final_index][:link_url]}= "Last >>"

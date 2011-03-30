@@ -5,7 +5,7 @@
 
 .mv-content 
   %div.singlet.myvoyce
-    %div.singlet-left
+    %div.singlet-left-bogus
       %div.singlet-table-wrap
         %table.singlet-table
           %tbody
@@ -16,7 +16,7 @@
                     = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
                   %td
                     %img{:src => get_product_image_128(@current_product_image), :alt => @current_product_description }
-                  %td
+                  -#%td
                     %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(@current_product_pr)})", :alt => @current_product_pr}
                       = @current_product_ss
                   %td.description
@@ -32,7 +32,7 @@
                     = text_field_tag :barcode_lookup, params[:barcode]
                     %input{:type => 'submit', :name => 'lookup_submit', :value => 'Lookup'}
           
-    %div.singlet-right
+    %div.singlet-right-bogus
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
@@ -49,7 +49,7 @@
       %thead
         %tr
           %th Vote
-          %th Photo
+          %th Item
           %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
           %th= table_sort_header_link :header => "Date", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
           %th
@@ -68,7 +68,7 @@
               %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(product.participation_rate)})", :alt => product.participation_rate}
                 = product.social_score
   %div.vote-table-cap.myvoyce
-  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+  -#= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
 - cache("user_stats_#{@user.id}", :expires_in => Rails.configuration.default_cache_expires_in) do
   .user-stats

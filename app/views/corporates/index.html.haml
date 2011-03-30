@@ -2,14 +2,17 @@
   = javascript_include_tag "change_support.js"
 
 .left-content
-  %div.page-title
-    = form_tag :corporates_index do
-      %h4
-        Search Corporate:
-      =text_field_tag :search_filter, @presenter.search_text
-      =image_submit_tag("search-button.gif")
+  %div.page-title.corporate
+    %div.page-title.corporate.left
+      = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+    %div.page-title.corporate.right
+      = form_tag :corporates_index do
+        %h4
+          Search Corporate:
+        =text_field_tag :search_filter, @presenter.search_text
+        =image_submit_tag("search-button.gif")
     %div.clear
-  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+      
   
   %div.filtering
     =link_to 'All Records', {:filter => 'vote=all', :sort => params[:sort], :page => 1}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
@@ -57,5 +60,5 @@
               %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(c.participation_rate)})", :alt => c.participation_rate}
                 = c.social_score
   %div.vote-table-cap
-  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+
 = render :partial => "shared/map_graph", :locals => { :id => @default_map[:id], :model => "corporate", :title => @default_map[:title], :wikipedia => @default_map[:wikipedia], :website => @default_map[:website]}
