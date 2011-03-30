@@ -53,4 +53,6 @@ Production::Application.configure do
 
   # Send deprecation notices to registered listeners
   config.active_support.deprecation = :notify
+
+  config.middleware.use Rack::SslEnforcer, :only => ["/login", "/register", "/logout", "/account", "/save_account", "/create_account", "/reset_passwords"]
 end

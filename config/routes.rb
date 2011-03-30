@@ -10,16 +10,21 @@ Production::Application.routes.draw do
     match "/how-does-this-work" => :work
   end
 
-  match "/login" => "users#login", :as => :login #, :constraints => {:protocol => 'https' }
+
+  #SSL protected
+  #Need to update config/environements/production.rb if change any of these routes
+  match "/login" => "users#login", :as => :login
+  match "/register" => "users#new", :as => :register
   match "/logout" => "users#logout", :as => :logout
-  match "/verify(/:id)" => "users#verify", :as => :verify
-  match "/request_username" => "users#request_username", :as => :request_username
   match "/account" => "users#edit", :as => :edit_account
   match "/save_account" => "users#update", :as => :update_account
-  match "/register" => "users#new", :as => :register
   match "/create_account" => "users#create", :as => :create_account
-  match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => "users#show", :as => :myvoyce
   resources :reset_passwords
+  #END SSL protected
+
+  match "/verify(/:id)" => "users#verify", :as => :verify
+  match "/request_username" => "users#request_username", :as => :request_username
+  match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => "users#show", :as => :myvoyce
 
 
   match "/ourvoyce/vote" => "ourvoyce#vote", :as => :current_question_vote
