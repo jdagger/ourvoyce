@@ -1,6 +1,9 @@
 - content_for :scripts do
   = javascript_include_tag "change_support.js"
 
+- if ! flash[:notice].blank?
+  .flash= flash[:notice]
+
 #content-left
   %h3
     Who’s Being Counted?

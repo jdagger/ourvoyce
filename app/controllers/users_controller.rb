@@ -8,9 +8,9 @@ class UsersController < ApplicationController
 
   def create
     @new_user = User.new(params[:user])
+    @new_user.verified = 1
     if @new_user.save
       flash[:notice] = "Thank you for signing up!  Please check your email to verify your account before logging in."
-      #redirect_to :myvoyce
       @new_user.deliver_verification_instructions!
 
       redirect_to :register

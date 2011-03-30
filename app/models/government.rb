@@ -116,17 +116,22 @@ class Government < ActiveRecord::Base
         end
         records = records.where("governments.id in (?)", government_ids)
       elsif params.key? :vote
-        case params[:vote].strip.upcase
-        when "THUMBSUP"
-          records = records.where("support_type = 1")
-        when "THUMBSDOWN"
-          records = records.where("support_type = 0")
-        when "NEUTRAL"
-          records = records.where("support_type = 2")
-        when "VOTE"
-          records = records.where("support_type >= 0")
-        when "NOVOTE"
-          records = records.where("support_type IS NULL OR support_type = -1")
+        vote = params[:vote].strip.upcase
+        if params.key? :user_id
+          case vote
+          when "THUMBSUP"
+            records = records.where("support_type = 1")
+          when "THUMBSDOWN"
+            records = records.where("support_type = 0")
+          when "NEUTRAL"
+            records = records.where("support_type = 2")
+          when "VOTE"
+            records = records.where("support_type >= 0")
+          when "NOVOTE"
+            records = records.where("support_type IS NULL OR support_type = -1")
+          end
+        elsif vote != "ALL"
+          records = records.where("0 > 1")
         end
       end
 

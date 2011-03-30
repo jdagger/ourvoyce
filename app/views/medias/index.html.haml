@@ -112,25 +112,29 @@
               = '/'
               = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => {:filter => params[:filter], :page => params[:page] }
         %tbody
-          - @presenter.shows.each do |show|
-            %tr{:class => (show.id == @default_map[:id] && @default_map[:model] == 'media' ? 'selected' : '')}
-              %td
-                - if @current_user.nil?
-                  =render :partial => 'shared/vote_control_no_access'
-                - else
-                  =render :partial => 'shared/vote_control', :object =>{:id => show.id, :support_type => show.support_type, :post_url => :media_vote}, :as => :d
-              %td
-                %a{:href => url_for(:media_type => params[:media_type], :network => params[:network], :filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => params[:id]), :class => 'dataset' }
-                  %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{show.id}_media"}
-                  %input{:type => :hidden, :class => 'jq-title', :value => show.name }
-                  %input{:type => :hidden, :class => 'jq-wikipedia', :value => show.wikipedia }
-                  %input{:type => :hidden, :class => 'jq-website', :value => show.website }
-                  %img{:src => get_media_image_128(show.logo)}
-                  %br
-                  = show.name
-              %td
-                %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(show.participation_rate)})", :alt => show.participation_rate}
-                  = show.social_score
+          - if @presenter.shows.count > 0
+            - @presenter.shows.each do |show|
+              %tr{:class => (show.id == @default_map[:id] && @default_map[:model] == 'media' ? 'selected' : '')}
+                %td
+                  - if @current_user.nil?
+                    =render :partial => 'shared/vote_control_no_access'
+                  - else
+                    =render :partial => 'shared/vote_control', :object =>{:id => show.id, :support_type => show.support_type, :post_url => :media_vote}, :as => :d
+                %td
+                  %a{:href => url_for(:media_type => params[:media_type], :network => params[:network], :filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => params[:id]), :class => 'dataset' }
+                    %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{show.id}_media"}
+                    %input{:type => :hidden, :class => 'jq-title', :value => show.name }
+                    %input{:type => :hidden, :class => 'jq-wikipedia', :value => show.wikipedia }
+                    %input{:type => :hidden, :class => 'jq-website', :value => show.website }
+                    %img{:src => get_media_image_128(show.logo)}
+                    %br
+                    = show.name
+                %td
+                  %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(show.participation_rate)})", :alt => show.participation_rate}
+                    = show.social_score
+          - else
+            %tr
+              %td{:colspan => 3}= "No records found."
     %div.vote-table-cap
 
     = render :partial => "shared/paging", :object => @paging, :as => :paging_data

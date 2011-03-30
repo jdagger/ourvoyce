@@ -1,7 +1,8 @@
 %h1 Resend verification email
 %p Enter your email address and a new verification email will be sent.
 
-= "<p>#{flash[:notice]}</p>".html_safe unless flash[:notice].blank?
+- if ! flash[:notice].blank?
+  .flash= flash[:notice].html_safe
 
 = form_tag '/verify' do
   %p

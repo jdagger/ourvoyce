@@ -1111,7 +1111,7 @@ ul.stats span{
   margin-left:174px;
 }
 
-.new-account-form input, .new-account-form select{
+.new-account-form input[type="text"], .new-account-form input[type="password"], .new-account-form input[type="checkbox"], .new-account-form select{
   float:left;
   width:240px;
   margin-left: 20px;
@@ -1180,10 +1180,11 @@ ul.stats span{
   margin-left:125px;
 }
 
-.login-form input, .login-form select{
+.login-form input[type="text"], .login-form input[type="password"], .login-form select{
   float:right;
   width:170px;
   font-size:18px;
+  border: solid 1px #666;
 }
 
 .login-form input[type="submit"] {
@@ -1237,6 +1238,15 @@ table.stats th.label{
 table td.stat{
   color:#000;
   font-weight:bold;
+}
+
+div.flash{
+  color: #D0583F;
+  background-color: #FCE4DF;
+  border: 1px solid #F8C9BB;
+  padding: 3px;
+  margin-top: 3px;
+  margin-bottom: 3px;
 }
 
 .password_strength_1 {	background-color: #fcb6b1;	}
