@@ -91,7 +91,9 @@ class User < ActiveRecord::Base
   #Record a -1 (Cleared) vote for all default products.  This will cause the product to show up on newly created user screens
   def add_default_products_to_user
     Product.default_include.each do |product|
-      ProductSupport.change_support product.id, self.id, -1
+      #ProductSupport.change_support product.id, self.id, -1
+      ps = ProductSupport.new
+      ps.change_support product.id, self.id, -1
     end
   end
 

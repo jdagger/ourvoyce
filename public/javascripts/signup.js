@@ -113,9 +113,11 @@ $(document).ready(function(){
 function validate_agreed(){
   if($(agreed_field_accessor + ":checked").length == 0){
     set_invalid_field(agreed_field_accessor);
+    return false;
   }
   else{
     set_valid_field(agreed_field_accessor);
+    return true;
   }
 }
 

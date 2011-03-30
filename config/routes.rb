@@ -10,7 +10,7 @@ Production::Application.routes.draw do
     match "/how-does-this-work" => :work
   end
 
-  match "/login" => "users#login", :as => :login
+  match "/login" => "users#login", :as => :login #, :constraints => {:protocol => 'https' }
   match "/logout" => "users#logout", :as => :logout
   match "/verify" => "users#verify", :as => :verify
   match "/request_username" => "users#request_username", :as => :request_username
