@@ -13,7 +13,7 @@ class UsersController < ApplicationController
       #redirect_to :myvoyce
       @new_user.deliver_verification_instructions!
 
-      redirect_to :root
+      redirect_to :register
     else
       @user_session = UserSession.new #Needed for login portion of screen
       render :action => :new
