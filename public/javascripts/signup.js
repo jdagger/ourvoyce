@@ -258,7 +258,7 @@ function check_unique_username(username){
   type: 'post',
   data: "username=" + username,
   beforeSend: function(){
-    set_neutral_field(username_field_accessor);
+    //set_neutral_field(username_field_accessor);
   },
   success: function(data){
              var $current_username = $(username_field_accessor).val();
@@ -287,7 +287,7 @@ function check_unique_email(email){
   type: 'post',
   data: "email=" + email,
   beforeSend: function(){
-    set_neutral_field(email_field_accessor);
+    //set_neutral_field(email_field_accessor);
   },
   success: function(data){
              var $current_email = $(email_field_accessor).val();
@@ -316,7 +316,7 @@ function server_validate_zip(zip){
   type: 'post',
   data: "zip=" + zip,
   beforeSend: function(){
-    set_neutral_field(zip_field_accessor);
+    //set_neutral_field(zip_field_accessor);
   },
   success: function(data){
              var $current_zip = $(zip_field_accessor).val();
