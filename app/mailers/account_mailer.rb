@@ -12,7 +12,7 @@ class AccountMailer < ActionMailer::Base
     #recipients user.email
     #sent_on Time.now
     #body :verification_url => verification_url(user.perishable_token)
-    @verification_url = verification_url(user.perishable_token)
+    @verification_url = verify_url(user.perishable_token)
     mail(:to => user.email, :subject => 'OurVoyce Email Verification')
   end
 

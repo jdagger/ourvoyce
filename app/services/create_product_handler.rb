@@ -40,15 +40,14 @@ class CreateProductHandler < HandlerBase
 			user_id = nil
 			if(load_user)
 				user_id = self.user.id
-        ProductSupport.change_support(product.id, user_id, self.support_type)
+        #ProductSupport.change_support(product.id, user_id, self.support_type)
+        ps = ProductSupport.new
+        ps.remote_ip = request.remote_ip
+        ps.change_support(product.id, user_id, self.support_type)
 
         #Record the new product as being scaned
         pending_product = PendingProduct.new(:product_id => product.id, :name => self.name, :description => self.description, :user_id => user_id)
         pending_product.save
-
-        #I think product scans are already recorded on the product lookup page.  Double check --Ryan
-				#ps = ProductScan.new(:user_id => user_id, :product_id => product.id)
-        #ps.save
 			end
 
 			self.status = 1
