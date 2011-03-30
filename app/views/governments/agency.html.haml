@@ -37,25 +37,29 @@
             = '/'
             = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
       %tbody
-      - @presenter.agencies.each do |agency|
-        %tr{:class => (agency.id == @default_map[:id] ? 'selected' : '')}
-          %td
-            - if @current_user.nil?
-              = render :partial => "shared/vote_control_no_access"
-            - else
-              = render :partial => "shared/vote_control", :object =>{:id => agency.id, :support_type => agency.support_type, :post_url => :government_vote}, :as => :d
-          %td
-            %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => agency.id), :class => 'dataset' }
-              %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{agency.id}_government"}
-              %input{:type => :hidden, :class => 'jq-title', :value => agency.name }
-              %input{:type => :hidden, :class => 'jq-wikipedia', :value => agency.wikipedia }
-              %input{:type => :hidden, :class => 'jq-website', :value => agency.website }
-              %img{:src => get_government_image_64(agency.logo, 1), :alt => 'logo'}
-              %br
-              = agency.name
-          %td
-            %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(agency.participation_rate)})", :alt => agency.participation_rate}
-              = agency.social_score
+        - if @presenter.agencies.count > 0
+          - @presenter.agencies.each do |agency|
+            %tr{:class => (agency.id == @default_map[:id] ? 'selected' : '')}
+              %td
+                - if @current_user.nil?
+                  = render :partial => "shared/vote_control_no_access"
+                - else
+                  = render :partial => "shared/vote_control", :object =>{:id => agency.id, :support_type => agency.support_type, :post_url => :government_vote}, :as => :d
+              %td
+                %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => agency.id), :class => 'dataset' }
+                  %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{agency.id}_government"}
+                  %input{:type => :hidden, :class => 'jq-title', :value => agency.name }
+                  %input{:type => :hidden, :class => 'jq-wikipedia', :value => agency.wikipedia }
+                  %input{:type => :hidden, :class => 'jq-website', :value => agency.website }
+                  %img{:src => get_government_image_64(agency.logo, 1), :alt => 'logo'}
+                  %br
+                  = agency.name
+              %td
+                %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(agency.participation_rate)})", :alt => agency.participation_rate}
+                  = agency.social_score
+        - else
+          %tr
+            %td{:colspan => 3}= "No records found."
   %div.vote-table-cap
 
 .graph-contents

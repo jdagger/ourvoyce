@@ -1,7 +1,7 @@
 %h1 Request Username
 %p Enter your email address.  Your username will to sent.
-
-= "<p>#{flash[:notice]}</p>".html_safe unless flash[:notice].blank?
+- if ! flash[:notice].blank?
+  .flash= flash[:notice].html_safe
 
 = form_tag '/request_username' do
   %p

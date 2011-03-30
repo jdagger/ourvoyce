@@ -18,26 +18,30 @@
             = '/'
             = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] }
       %tbody
-        - @presenter.senators.each do |senator|
-          %tr{:class => (senator.id == @default_map[:id] ? 'selected' : '')}
-            %td
-              - if @current_user.nil?
-                = render :partial => 'shared/vote_control_no_access'
-              - else
-                = render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
-            %td
-              %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => senator.id), :class => 'dataset' }
-                %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{senator.id}_government"}
-                %input{:type => :hidden, :class => 'jq-title', :value => "#{senator.first_name} #{senator.last_name}" }
-                %input{:type => :hidden, :class => 'jq-wikipedia', :value => senator.wikipedia }
-                %input{:type => :hidden, :class => 'jq-website', :value => senator.website }
-                %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
-                %br
-                = senator.first_name + " " + senator.last_name
-            %td= senator.title
-            %td
-              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(senator.participation_rate)})", :alt => senator.participation_rate}
-                = senator.social_score
+        - if @presenter.senators.count > 0
+          - @presenter.senators.each do |senator|
+            %tr{:class => (senator.id == @default_map[:id] ? 'selected' : '')}
+              %td
+                - if @current_user.nil?
+                  = render :partial => 'shared/vote_control_no_access'
+                - else
+                  = render :partial => 'shared/vote_control', :object =>{:id => senator.id, :support_type => senator.support_type, :post_url => :government_vote}, :as => :d
+              %td
+                %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :id => senator.id), :class => 'dataset' }
+                  %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{senator.id}_government"}
+                  %input{:type => :hidden, :class => 'jq-title', :value => "#{senator.first_name} #{senator.last_name}" }
+                  %input{:type => :hidden, :class => 'jq-wikipedia', :value => senator.wikipedia }
+                  %input{:type => :hidden, :class => 'jq-website', :value => senator.website }
+                  %img{:src => get_government_image_64(senator.logo, senator.government_type_id, senator.chamber_id) , :alt => 'portrait'}
+                  %br
+                  = senator.first_name + " " + senator.last_name
+              %td= senator.title
+              %td
+                %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(senator.participation_rate)})", :alt => senator.participation_rate}
+                  = senator.social_score
+        - else
+          %tr
+            %td{:colspan => 4}="No records found."
   %div.vote-table-cap
   
   %h4 House of Representatives

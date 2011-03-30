@@ -1,5 +1,6 @@
 = form_tag :login do
-  = flash[:notice]
+  - if ! flash[:notice].blank?
+    .flash= flash[:notice]
   %p 
     = label_tag :login, "Username:"
     = text_field_tag :login, @user_session.login
