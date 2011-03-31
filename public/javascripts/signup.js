@@ -182,8 +182,8 @@ function validate_passwords_match(password, retype_password)
 function validate_birth_year(birth_year) {
   now = new Date;
   year = now.getFullYear();
-  if (year - birth_year < 16){
-    set_message(birth_year_field_accessor, 'You must be at least 16 to use the site.');
+  if (year - birth_year < 13){
+    set_message(birth_year_field_accessor, 'You must be at least 13 to use ourvoYce.');
     set_invalid_field(birth_year_field_accessor);
     return false;
   }
@@ -333,7 +333,7 @@ function server_validate_zip(zip){
              }
            },
   error: function(XMLHttpRequest, textStatus, errorThrown){
-           set_message(zip_field_accessor, "Error encountered when validating zip");
+           set_message(zip_field_accessor, "A problem was encountered when validating zip");
          }
   });
 }

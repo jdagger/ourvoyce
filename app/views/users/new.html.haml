@@ -1,11 +1,13 @@
 .new-account-form
-  %h2 Create a new account
-  =render :partial => 'shared/account/edit'
+  %h2 Create a New Account
+  .container
+    =render :partial => 'shared/account/edit'
 
 .or-middle
-  %span or
+  %span
 
 .login-form
   %h2 Log In
-  = render :partial => 'shared/account/login'
+  .container
+    = render :partial => 'shared/account/login'
 

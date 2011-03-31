@@ -51,9 +51,9 @@
 
   .input
     = f.label :birth_year, "Year you were born:"
-    = f.select :birth_year, options_for_select((1910..Time.now.year).to_a.reverse, @new_user.birth_year)
+    = f.select :birth_year, options_for_select((1910..Time.now.year-13).to_a.reverse, @new_user.birth_year)
     .validation-indicator#user_birth_year_indicator
-    .small= "You have to be at least 16."
+    .small= "You must be at least 13 years old."
     .messages
       %span#user_birth_year_messages= @new_user.errors[:birth_year].first
   .clear
@@ -62,16 +62,15 @@
     = f.label :email, "Enter your email:"
     = f.text_field :email
     .validation-indicator#user_email_indicator
-    .small You will need to verify your account.
+    .small You will recieve an email to verify your account.
     .messages
       %span#user_email_messages= @new_user.errors[:email].first
   .clear
 
   .input
-    = f.label :agreed, "Membership Agreement:".html_safe
+    = f.label :agreed, "I have read and agree to the <a href='/terms' target='_blank'>Terms of Service</a>:".html_safe
     = f.check_box :agreed
     .validation-indicator#user_agreed_indicator
-    .small= "<a href='/terms' target='_blank'>View the membership agreement.</a>".html_safe
     .messages
       %span#user_agreed_messages= @new_user.errors[:agreed].first
   .clear
