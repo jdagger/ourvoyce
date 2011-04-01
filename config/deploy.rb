@@ -24,23 +24,24 @@ namespace :deploy do
   desc "Stopping server"
   task :stop do
     #find_and_execute_task("unicorn:stop")
-    find_and_execute_task("thinking_sphinx:stop")
+    #find_and_execute_task("thinking_sphinx:stop")
   end
 
   desc "Starting server"
   task :start do
+    find_and_execute_task("unicorn:upgrade")
+
     #find_and_execute_task("unicorn:start")
-    find_and_execute_task("thinking_sphinx:rebuild")
+    #find_and_execute_task("thinking_sphinx:rebuild")
   end
 
   desc "Restarting server"
   task :restart do
     #find_and_execute_task("unicorn:restart")
-    find_and_execute_task("thinking_sphinx:rebuild")
+    #find_and_execute_task("thinking_sphinx:rebuild")
   end
 
 end
-
 
 namespace :unicorn do 
   desc "Start Unicorn on the app server."
@@ -56,6 +57,10 @@ namespace :unicorn do
   desc "Stop the Unicorn processes on the app server."
   task :stop do
     run "/etc/init.d/unicorn stop"
+  end
+
+  task :upgrade do
+    run "/etc/init.d/unicorn upgrade"
   end
 
   desc "Stop the Unicorn processes on the app server."

@@ -3,6 +3,7 @@
 # Load the rails application
 require File.expand_path('../application', __FILE__)
 
+require 'ssl_requirement'
 
 # Initialize the rails application
 Production::Application.initialize!
