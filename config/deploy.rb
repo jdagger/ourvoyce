@@ -24,6 +24,7 @@ namespace :deploy do
   desc "Stopping server"
   task :stop do
     find_and_execute_task("unicorn:stop")
+    find_and_execute_task("delayed_job:stop")
     #find_and_execute_task("unicorn:stop")
     #find_and_execute_task("thinking_sphinx:stop")
   end
@@ -31,6 +32,7 @@ namespace :deploy do
   desc "Starting server"
   task :start do
     find_and_execute_task("unicorn:start")
+    find_and_execute_task("delayed_job:start")
 
     #find_and_execute_task("unicorn:start")
     #find_and_execute_task("thinking_sphinx:rebuild")
@@ -38,7 +40,8 @@ namespace :deploy do
 
   desc "Restarting server"
   task :restart do
-    find_and_execute_task("unicorn:reload")
+    find_and_execute_task("unicorn:upgrade")
+    find_and_execute_task("delayed_job:restart")
     #find_and_execute_task("unicorn:restart")
     #find_and_execute_task("thinking_sphinx:rebuild")
   end
@@ -61,6 +64,7 @@ namespace :unicorn do
     run "/etc/init.d/unicorn stop"
   end
 
+  desc "Upgrading the Unicorn processes on the app server."
   task :upgrade do
     run "/etc/init.d/unicorn upgrade"
   end
@@ -76,6 +80,24 @@ namespace :unicorn do
       #run "/etc/init.d/unicorn #{action}"
     #end
   #end
+
+end
+
+namespace :delayed_job do 
+  desc "Start Delayed on the app server."
+  task :start do
+    run "/etc/init.d/delayed start"
+  end
+
+  desc "Restart delayed_job."
+  task :restart do
+    run "/etc/init.d/delayed_job restart"
+  end
+
+  desc "Stop the delayed_job processes on the app server."
+  task :stop do
+    run "/etc/init.d/delayed_job stop"
+  end
 
 end
 
