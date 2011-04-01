@@ -1,6 +1,8 @@
 worker_processes 2
-working_directory "/webapps/ourvoyce/current"
-shared_path "/webapps/ourvoyce/shared"
+root_directory = "/webapps/ourvoyce"
+shared_path="#{root_directory}/shared"
+
+working_directory "#{root_directory}/current"
 
 listen 8080
 
