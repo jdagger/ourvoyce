@@ -1,5 +1,17 @@
 Production::Application.configure do
   # Settings specified here will take precedence over those in config/environment.rb
+  #
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address              => "smtp.sendgrid.net",  
+    :port                 => 25,                 
+    :domain               => 'ourvoyce.com',  
+    :user_name            => 'mail@ourvoYce.com',      
+    :password             => 'oV11eM@iL',      
+    :authentication       => 'plain',             
+    #:enable_starttls_auto => true
+  }
+
 
   # The production environment is meant for finished, "live" apps.
   # Code is not reloaded between requests
@@ -13,7 +25,7 @@ Production::Application.configure do
     :debug => true,
     :namespace => "mem-#{RAILS_ENV}",
     :readonly => false,
-    :urlencode => false
+      :urlencode => false
   }
 
   # Specifies the header that your server uses for sending files
