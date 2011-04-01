@@ -38,7 +38,7 @@ namespace :deploy do
 
   desc "Restarting server"
   task :restart do
-    find_and_execute_task("unicorn:upgrade")
+    find_and_execute_task("unicorn:reload")
     #find_and_execute_task("unicorn:restart")
     #find_and_execute_task("thinking_sphinx:rebuild")
   end
@@ -65,9 +65,9 @@ namespace :unicorn do
     run "/etc/init.d/unicorn upgrade"
   end
 
-  desc "Stop the Unicorn processes on the app server."
+  desc "Reloading the Unicorn processes on the app server."
   task :reload do
-    run "/etc/init.d/unicorn stop"
+    run "/etc/init.d/unicorn reload"
   end
 
   #%w(start stop restart reload).each do |action|
