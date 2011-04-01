@@ -51,7 +51,7 @@
 
   .input
     = f.label :birth_year, "Year you were born:"
-    = f.select :birth_year, options_for_select((1910..Time.now.year-13).to_a.reverse, @new_user.birth_year)
+    = f.select :birth_year, options_for_select((100.years.ago.year .. 13.years.ago.year).to_a.reverse, @new_user.birth_year)
     .validation-indicator#user_birth_year_indicator
     .small= "You must be at least 13 years old."
     .messages
