@@ -75,30 +75,29 @@ namespace :unicorn do
   end
 
   #%w(start stop restart reload).each do |action|
-    #desc "#{action} the Unicorn processes on the web server."
-    ##task action.to_sym , :roles => :web do
-      #run "/etc/init.d/unicorn #{action}"
-    #end
+  #desc "#{action} the Unicorn processes on the web server."
+  ##task action.to_sym , :roles => :web do
+  #run "/etc/init.d/unicorn #{action}"
+  #end
   #end
 
 end
 
 namespace :delayed_job do 
   desc "Start Delayed on the app server."
-  task :start do
+  task :start, :roles => :app do
     run "/etc/init.d/delayed start"
   end
 
   desc "Restart delayed_job."
-  task :restart do
+  task :restart, :roles => :app do
     run "/etc/init.d/delayed_job restart"
   end
 
   desc "Stop the delayed_job processes on the app server."
-  task :stop do
+  task :stop, :roles => :app do
     run "/etc/init.d/delayed_job stop"
   end
 
 end
-
 after "deploy:setup", "thinking_sphinx:shared_sphinx_folder"
