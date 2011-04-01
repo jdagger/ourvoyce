@@ -5,45 +5,45 @@ module ParticipationRateHelper
 
     participation_rate = participation_rate.to_i
 
-		if(participation_rate > 97)
+		if(participation_rate >= 100)
 			logo_name = '100.png'
-		elsif(participation_rate > 92)
+		elsif(participation_rate >= 95)
 			logo_name = '95.png'
-		elsif(participation_rate > 87)
+		elsif(participation_rate >= 90)
 			logo_name = '90.png'
-		elsif(participation_rate > 82)
+		elsif(participation_rate >= 85)
 			logo_name = '85.png'
-		elsif(participation_rate > 77)
+		elsif(participation_rate >= 80)
 			logo_name = '80.png'
-		elsif(participation_rate > 72)
+		elsif(participation_rate >= 75)
 			logo_name = '75.png'
-		elsif(participation_rate > 67)
+		elsif(participation_rate >= 70)
 			logo_name = '70.png'
-		elsif(participation_rate > 62)
+		elsif(participation_rate >= 65)
 			logo_name = '65.png'
-		elsif(participation_rate > 57)
+		elsif(participation_rate >= 60)
 			logo_name = '60.png'
-		elsif(participation_rate > 52)
+		elsif(participation_rate >= 55)
 			logo_name = '55.png'
-		elsif(participation_rate > 47)
+		elsif(participation_rate >= 50)
 			logo_name = '50.png'
-		elsif(participation_rate > 42)
+		elsif(participation_rate >= 45)
 			logo_name = '45.png'
-		elsif(participation_rate > 37)
+		elsif(participation_rate >= 40)
 			logo_name = '40.png'
-		elsif(participation_rate > 32)
+		elsif(participation_rate >= 35)
 			logo_name = '35.png'
-		elsif(participation_rate > 27)
+		elsif(participation_rate >= 30)
 			logo_name = '30.png'
-		elsif(participation_rate > 22)
+		elsif(participation_rate >= 25)
 			logo_name = '25.png'
-		elsif(participation_rate > 17)
+		elsif(participation_rate >= 20)
 			logo_name = '20.png'
-		elsif(participation_rate > 12)
+		elsif(participation_rate >= 15)
 			logo_name = '15.png'
-		elsif(participation_rate > 7)
+		elsif(participation_rate >= 10)
 			logo_name = '10.png'
-		elsif(participation_rate > 2)
+		elsif(participation_rate >= 5)
 			logo_name = '5.png'
 		else
 			logo_name = '0.png'

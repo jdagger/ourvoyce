@@ -30,7 +30,7 @@ module AgeGraphHelper
     if ! params.key? :skip_object_id_filter || ! params[:skip_object_id_filter]
       items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
     end
-    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
+    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1, 2])
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.select("support_type, count(support_type) as count, users.birth_year")
     items = items.group("support_type, users.birth_year")
@@ -72,7 +72,7 @@ module AgeGraphHelper
     if ! params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
       items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
     end
-    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
+    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1, 2])
     items = items.where("states.abbreviation" => state)
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.joins("join zips on users.zip_code = zips.zip")
@@ -143,7 +143,7 @@ module AgeGraphHelper
       negative = value[:negative].to_i
       positive = value[:positive].to_i
       neutral = value[:neutral].to_i
-      total = negative + positive
+      total = negative + positive + neutral
 
       self.age_max_total = [self.age_max_total, total].max
 

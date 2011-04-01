@@ -1,17 +1,18 @@
 = form_tag :login do
   - if ! flash[:notice].blank?
     .flash= flash[:notice]
-  %p 
+  %div{:style => "text-align: center; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue; color: #666;"}
     = label_tag :login, "Username:"
     = text_field_tag :login, @user_session.login
-  %p
+  %div{:style => "text-align: center; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue; color: #666;"}
     = label_tag :password, "Password:"
     = password_field_tag :password
-  = submit_tag "Login"
+  %div{:style => "text-align: right; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue;"}
+    = submit_tag "Login"
 %div{:style => "clear: both;"}
-%p
-  = link_to "Reset Password", :reset_passwords
-  %br
-  = link_to "Forgot Username", :request_username
-  %br
-  = link_to "Resend Account Verification", :verify
+  %div{:style => "text-align: right; padding: 10px 10px 10px 0px; border: solid 0px blue;"}
+    = link_to "Reset Password", :reset_passwords
+    %br
+    = link_to "Forgot Username", :request_username
+    %br
+    = link_to "Resend Account Verification", :verify
