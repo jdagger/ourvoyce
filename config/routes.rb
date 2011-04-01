@@ -85,5 +85,7 @@ Production::Application.routes.draw do
   match "services/:action" => "services#:action"
 
 
+  match "/:id" => "products#lookup", :as => :product_lookup
+  #match "/ov/:id" => "products#lookup", :as => :product_lookup
   root :to => "ourvoyce#index"
 end

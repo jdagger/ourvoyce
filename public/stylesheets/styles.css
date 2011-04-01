@@ -1,6 +1,7 @@
 body{
   background: url(../images/background.jpg) repeat-x top;
-  background-color: #c6d0da;
+  /*background-color: #c6d0da;*/
+  background-color: #0c2951;
   font-family: Helvetica, Verdana, Arial, sans-serif;
   font-size: 12px;
 }
@@ -1268,3 +1269,22 @@ div.flash{
 .password_strength_3 {	background-color: #fcfbb1;	}
 .password_strength_4 {	background-color: #dafcb1;	}
 .password_strength_5 {	background-color: #bcfcb1;	}
+
+#how-does-this-work{
+  padding: 10px;
+  /*
+  height: 460px;
+  overflow: auto;
+  border: solid 2px #ddd;*/
+}
+
+#how-does-this-work h3 {
+  margin-bottom: 5px;
+  cursor: pointer;
+}
+
+#how-does-this-work p {
+  margin-left: 20px;
+  font-size: 14px;
+  border: solid 0px blue
+}

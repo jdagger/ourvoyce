@@ -84,6 +84,7 @@ class UsersController < ApplicationController
         @current_product_support = support.support_type rescue -1
         @current_product_ss = product.social_score
         @current_product_pr = product.participation_rate
+        @current_product_upc = product.upc
       end
     else
       @show_current_product = false
