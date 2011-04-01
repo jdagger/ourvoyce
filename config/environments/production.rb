@@ -4,11 +4,11 @@ Production::Application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address              => "smtp.sendgrid.net",  
-    :port                 => 25,                 
+    :port                 => '25',                 
     :domain               => 'ourvoyce.com',  
     :user_name            => 'mail@ourvoYce.com',      
     :password             => 'oV11eM@iL',      
-    :authentication       => 'plain',             
+    :authentication       => :plain,             
     #:enable_starttls_auto => true
   }
 
