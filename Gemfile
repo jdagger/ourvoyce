@@ -22,7 +22,7 @@ gem 'thinking-sphinx', '>=2.0.0', :require => 'thinking_sphinx'
 gem 'memcached'
 gem 'memcache-client'
 
-gem 'rack-ssl-enforcer'
+gem 'bartt-ssl_requirement'
 
 # Use unicorn as the web server
 gem 'unicorn'

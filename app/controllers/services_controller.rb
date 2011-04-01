@@ -3,6 +3,8 @@ class ServicesController < ApplicationController
 
 	protect_from_forgery :except => [:xml]
 
+  ssl_allowed :xml, :check_unique_user, :check_unique_email, :validate_zip
+
 	def check_unique_user
 		username = params[:username]
 		render :json => {'username' => username, 'unique'=> !User.exists?(:login => username)}

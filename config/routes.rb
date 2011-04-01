@@ -15,13 +15,13 @@ Production::Application.routes.draw do
   #Need to update config/environements/production.rb if change any of these routes
   match "/login" => "users#login", :as => :login
   match "/register" => "users#new", :as => :register
-  match "/logout" => "users#logout", :as => :logout
   match "/account" => "users#edit", :as => :edit_account
   match "/save_account" => "users#update", :as => :update_account
   match "/create_account" => "users#create", :as => :create_account
   resources :reset_passwords
   #END SSL protected
 
+  match "/logout" => "users#logout", :as => :logout
   match "/verify(/:id)" => "users#verify", :as => :verify
   match "/request_username" => "users#request_username", :as => :request_username
   match "/myvoyce(/:filter(/:sort(/:page(/:barcode))))" => "users#show", :as => :myvoyce

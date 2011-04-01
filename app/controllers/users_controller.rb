@@ -1,6 +1,8 @@
 class UsersController < ApplicationController
   skip_before_filter :require_user, :only => [:login, :create, :new, :verify, :request_username]
 
+  ssl_required :new, :create, :update, :edit, :login
+
   def new
     @new_user = User.new :country_id => 242
     @user_session = UserSession.new
@@ -8,7 +10,6 @@ class UsersController < ApplicationController
 
   def create
     @new_user = User.new(params[:user])
-    @new_user.verified = 1
     if @new_user.save
       flash[:notice] = "Thank you for signing up!  Please check your email to verify your account before logging in."
       @new_user.deliver_verification_instructions!

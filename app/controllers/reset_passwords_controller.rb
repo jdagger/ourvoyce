@@ -3,6 +3,9 @@ class ResetPasswordsController < ApplicationController
   skip_before_filter :require_user
   before_filter :require_no_user
 
+  ssl_required :all
+
+
   def index
     render :new
   end
