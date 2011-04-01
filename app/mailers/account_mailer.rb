@@ -14,6 +14,6 @@ class AccountMailer < ActionMailer::Base
 
   def forgot_username_email(user)
     @username = user.login
-    ail(:to => user.email, :subject => 'OurVoyce Username')
+    mail(:to => user.email, :subject => 'OurVoyce Username')
   end
 end
