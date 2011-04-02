@@ -96,9 +96,10 @@ h3{
 
 /************* header navigation */
 #header-nav{
+  border: solid 0px green;
   position: absolute;
   top: 23px;
-  right: 159px;
+  right: 270px;
 }
 
 #header-nav ul li{
@@ -121,7 +122,15 @@ h3{
 /************* donate */
 #donate{
   float: right;
-  padding-right: 8px;
+  padding-right: 20px;
+  position: relative;
+}
+
+/************* iphone */
+#iphone{
+  float: right;
+  padding-right: 0px;
+  padding-top: 8px;
   position: relative;
 }
 
@@ -1270,21 +1279,78 @@ div.flash{
 .password_strength_4 {	background-color: #dafcb1;	}
 .password_strength_5 {	background-color: #bcfcb1;	}
 
+
+/************* how-does-this-work */
 #how-does-this-work{
-  padding: 10px;
-  /*
-  height: 460px;
-  overflow: auto;
-  border: solid 2px #ddd;*/
+  margin-left: 0px;
+  border: solid 0px blue
 }
 
 #how-does-this-work h3 {
-  margin-bottom: 5px;
+  padding: 5px 0px 0px 10px;
+  margin: 0px 0px 10px 20px;
+  height: 30px;
+  width: 450px;
   cursor: pointer;
+  background: url(/images/help-button.png) no-repeat;
+  border: solid 0px blue
+}
+
+#how-does-this-work h3:hover {
+  background: url(/images/help-button-hover.png) no-repeat;
+  border: solid 0px blue
 }
 
 #how-does-this-work p {
-  margin-left: 20px;
+  margin-left: 40px;
   font-size: 14px;
   border: solid 0px blue
 }
+
+
+/************* Terms of Service */
+div.terms {
+  margin-left: 20px;
+  margin-bottom: 10px;
+  border: solid 0px blue
+}
+
+p.terms {
+  margin-bottom:-10px;
+}
+
+ol.number {
+  list-style-type:decimal;
+  margin-top: 0px;
+  margin-left: 15px;
+  color:#666;
+}
+
+ol.letter {
+  list-style-type:upper-alpha;
+  padding: 0px 0px 0px 30px;
+}
+
+ol.letter li, ol.number li {
+  padding: 10px 0px 0px 0px;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

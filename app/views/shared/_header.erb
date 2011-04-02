@@ -19,16 +19,19 @@
           <li><%= link_to "Sign In",  :register %></li>
           <li><%= link_to "Create Account", :register %></li>
         <% else %>
-          <li><%= current_user.login %></li>
           <li><%= link_to "Update Account", :edit_account %></li>
           <li><%= link_to "Logout",  :logout %></li>
         <% end %>
-        <li><a href="/help">Help</a></li>
       </ul>
     </div>
-    
+
+    <div id="iphone">
+      <a href="/iphone"><img src="/images/app-store.png" alt="app store" /></a>
+    </div>
+
     <div id="donate">
       <a href="/donate"><img src="/images/donate.png" alt="donate" /></a>
     </div>
+
   </div>
 </div>
