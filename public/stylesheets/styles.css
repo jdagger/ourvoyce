@@ -330,9 +330,9 @@ h3{
 }
 
 #footer-content a{
-  text-transform: uppercase;
+  /*text-transform: uppercase;*/
   color: #99ccff;
-  font-size: 9px;
+  font-size: 12px;
 }
 
 #footer-content a:hover{
@@ -1096,7 +1096,7 @@ ul.stats span{
 }
 
 .login-form{
-  width:300px;
+  width:315px;
   float:left;
 }
 
@@ -1108,7 +1108,7 @@ ul.stats span{
 }
 
 .new-account-form{
-  width:450px;
+  width:500px;
   float:left;
 }
 
@@ -1127,19 +1127,19 @@ ul.stats span{
 
 .new-account-form input[type="text"], .new-account-form input[type="password"], .new-account-form input[type="checkbox"], .new-account-form select{
   float:left;
-  width:240px;
+  width:260px;
   margin-left: 20px;
   font-size:18px;
   border: solid 1px #666;
 }
 
 .new-account-form input[type="submit"] {
- width:276px;
+ width:270px;
 }
 
 .new-account-form label{
   float:left;
-  width:160px;
+  width:190px;
   font-size:14px;
   color:#666;
   text-align:right;
