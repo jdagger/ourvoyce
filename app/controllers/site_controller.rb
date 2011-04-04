@@ -20,7 +20,6 @@ class SiteController < ApplicationController
   end
 
   def donate
-    redirect_to 'https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YL99BHV7HWQCG'
   end
 
   def iphone 

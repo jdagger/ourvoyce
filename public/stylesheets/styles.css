@@ -119,12 +119,6 @@ h3{
   color: #ffffff;
 }
 
-/************* donate */
-#donate{
-  float: right;
-  padding-right: 20px;
-  position: relative;
-}
 
 /************* iphone */
 #iphone{
@@ -340,8 +334,9 @@ h3{
 }
 
 #footer-left{
+  border: solid 0px red;
   float: left;
-  width: 455px;
+  width: 390px;
   padding-top: 20px;
   padding-right: 33px;
 }
@@ -356,10 +351,11 @@ h3{
 }
 
 #footer-right{
+  border: solid 0px red;
   float: left;
-  width: 455px;
-  padding-top: 20px;
-  padding-left: 57px;
+  width: 350px;
+  padding-top: 13px;
+  padding-left: 180px;
 }
 
 #footer-right ul{
@@ -368,7 +364,7 @@ h3{
 
 #footer-right ul li{
   float: left;
-  padding: 0 12px;
+  padding-left: 30px;
 }
 
 /* thumb styles */
@@ -1281,7 +1277,7 @@ div.flash{
 
 
 /************* help */
-#how-does-this-work{
+#how-does-this-work {
   margin-left: 0px;
   border: solid 0px blue
 }
@@ -1310,6 +1306,7 @@ div.flash{
 #how-does-this-work p.example {
   margin-left: 80px;
   height: 50px;
+  font-size: 14px;
   margin-bottom: 10px;
   width: 700px;
 }
@@ -1319,15 +1316,19 @@ div.flash{
   margin-right: 20px;
 }
 
-/************* Terms of Service */
-div.terms {
+/************* Legal Info: Privacy, Terms, Membership */
+div.legal {
   margin-left: 20px;
   margin-bottom: 10px;
   border: solid 0px blue
 }
 
-p.terms {
+p.legal {
   margin-bottom:-10px;
+}
+
+p.legal b {
+  color:#666;
 }
 
 ol.number {
@@ -1346,20 +1347,51 @@ ol.letter li, ol.number li {
   padding: 10px 0px 0px 0px;
 }
 
+ol.letter li b, ol.number li b {
+  color:#666;
+}
 
 
+/************* contact */
+#contact {
+  margin-left: 0px;
+  border: solid 0px blue
+}
 
+#contact p {
+  margin-left: 40px;
+  font-size: 14px;
+  border: solid 0px blue
+}
 
+/************* donate */
+#donate {
+  margin-left: 0px;
+  border: solid 0px blue
+}
 
+#donate-header {
+  float: right;
+  padding-right: 20px;
+  position: relative;
+}
 
+#donate p {
+  margin-left: 40px;
+  font-size: 14px;
+  border: solid 0px blue
+}
 
+#donate-button {
+  text-align: center;
+  border: solid 0px red;
+}
 
-
-
-
-
-
-
+#donate-button p {
+  text-align: center;
+  font-size: 14px;
+  border: solid 0px blue
+}
 
 
 

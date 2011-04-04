@@ -27,8 +27,8 @@ class UsersController < ApplicationController
     search_params[:user_id] = @user.id
 
     if params[:sort].blank?
-      params[:sort] = 'description_asc'
-      search_params[:sort] = 'description_asc'
+      params[:sort] = 'votedate_desc'
+      search_params[:sort] = 'votedate_desc'
     else
       search_params[:sort] = params[:sort]
     end

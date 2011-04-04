@@ -1,6 +1,6 @@
 class ProductsController < ApplicationController
   def lookup
-    redirect_to :controller => :users, :action => :show, :filter => 'vote=all', :sort => 'description_asc', :page => 1, :barcode => params[:id]
+    redirect_to :controller => :users, :action => :show, :filter => 'vote=all', :sort => 'votedate_desc', :page => 1, :barcode => params[:id]
   end
 
 	def vote
