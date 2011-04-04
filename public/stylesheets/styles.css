@@ -1280,7 +1280,7 @@ div.flash{
 .password_strength_5 {	background-color: #bcfcb1;	}
 
 
-/************* how-does-this-work */
+/************* help */
 #how-does-this-work{
   margin-left: 0px;
   border: solid 0px blue
@@ -1307,6 +1307,17 @@ div.flash{
   border: solid 0px blue
 }
 
+#how-does-this-work p.example {
+  margin-left: 80px;
+  height: 50px;
+  margin-bottom: 10px;
+  width: 700px;
+}
+
+#how-does-this-work img {
+  float: left;
+  margin-right: 20px;
+}
 
 /************* Terms of Service */
 div.terms {

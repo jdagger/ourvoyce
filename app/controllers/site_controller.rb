@@ -24,6 +24,6 @@ class SiteController < ApplicationController
   end
 
   def iphone 
-    redirect_to 'http://www.itunes.com'
+    redirect_to 'http://itunes.apple.com/us/app/ourvoyce/id427045482?mt=8'
   end
 end
