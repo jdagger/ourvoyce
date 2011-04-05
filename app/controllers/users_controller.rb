@@ -110,7 +110,7 @@ class UsersController < ApplicationController
 
     records = records.offset((current_page - 1) * page_size).limit(page_size)
 
-    @presenter.products = records
+    @presenter.products = records.to_a
   end
 
   def edit
