@@ -2,6 +2,7 @@ class Product < ActiveRecord::Base
   has_many :product_supports
   has_many :users, :through => :product_supports
   has_many :product_audits
+  belongs_to :category
 
   scope :default_include, where("default_include = 1")
   scope :pending, where("pending = 1")
@@ -10,6 +11,22 @@ class Product < ActiveRecord::Base
     def upc_lookup(options = {})
       raise "UPC not specified" if options[:upc].nil?
       Product.where("upc = ? OR ean = ?", options[:upc], options[:upc]).first
+    end
+
+    def all_records(records, params)
+      if ! params.key? :category
+        return records.where("support_type >= -1")
+      else
+        return records
+      end
+    end
+
+    def no_vote(records, params)
+      if ! params.key? :category
+        return records.where("support_type = -1")
+      else
+        return records.where("support_type is null")
+      end
     end
 
 
@@ -53,15 +70,21 @@ class Product < ActiveRecord::Base
         when "VOTED"
           records = records.where("support_type >= 0")
         when "NOVOTE"
-          records = records.where("support_type = -1")
+          records = no_vote(records, params)
         when "ALL"
-          #records = records
-          records = records.where("support_type >= -1")
+          records = records.all_records(records, params)
          else #All records
-            records = records.where("support_type >= -1")
+           records = records.all_records(records, params)
         end
       else
-        records = records.where("support_type >= -1")
+        if ! params.key? :category
+          records = records.where("support_type >= -1")
+         end
+      end
+
+      if params.key? :category
+        records = records.joins("JOIN categories ON categories.id = products.category_id")
+        records = records.where("categories.shortcut = ?", params[:category])
       end
 
       if params.key? :social_score

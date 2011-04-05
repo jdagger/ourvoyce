@@ -4,7 +4,7 @@ development:
   host: localhost
   username: postgres
   password: abcd1234
-  template: template0
+  template: template1
   database: ourvoyce_development
 
 # Warning: The database defined as "test" will be erased and

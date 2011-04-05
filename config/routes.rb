@@ -10,9 +10,9 @@ Production::Application.routes.draw do
     match "/iphone" => :iphone
     match "/members" => :members
     match "/how-does-this-work" => :help
-    match "/idol" => :idol
-    match "/mcdonalds" => :mcdonalds
-    match "/starbucks" => :starbucks
+    #match "/idol" => :idol
+    #match "/mcdonalds" => :mcdonalds
+    #match "/starbucks" => :starbucks
   end
 
 
@@ -33,7 +33,7 @@ Production::Application.routes.draw do
 
 
   match "/ourvoyce/vote" => "ourvoyce#vote", :as => :current_question_vote
-  match "/ourvoyce" => "ourvoyce#index", :as => :ourvoyce
+  match "/" => "ourvoyce#index", :as => :ourvoyce
 
   match "/corporate/vote" => "corporates#vote", :as => :corporate_vote
   match "/corporate(/:filter(/:sort(/:page(/:id))))" => "corporates#index", :as => :corporates_index
@@ -90,7 +90,11 @@ Production::Application.routes.draw do
   match "services/:action" => "services#:action"
 
 
-  match "/:id" => "products#lookup", :as => :product_lookup
+  #Constrain on numbers only (UPC lookups)
+  match "/:id" => "products#lookup", :as => :product_lookup, :constraints => {:id => /\d+/}
+
   #match "/ov/:id" => "products#lookup", :as => :product_lookup
+  match "/:id" => "products#category", :as => :product_category
+
   root :to => "ourvoyce#index"
 end

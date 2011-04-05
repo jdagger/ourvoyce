@@ -10,7 +10,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20110329131658) do
+ActiveRecord::Schema.define(:version => 20110405194328) do
 
   create_table "authentication_tokens", :id => false, :force => true do |t|
     t.string   "uuid",       :limit => 36
@@ -27,6 +27,19 @@ ActiveRecord::Schema.define(:version => 20110329131658) do
     t.datetime "updated_at"
   end
 
+  create_table "categories", :force => true do |t|
+    t.string   "name"
+    t.string   "shortcut"
+    t.string   "logo"
+    t.integer  "priority"
+    t.integer  "display_myvoyce"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "categories", ["display_myvoyce"], :name => "index_categories_on_display_myvoyce"
+  add_index "categories", ["shortcut"], :name => "index_categories_on_shortcut", :unique => true
+
   create_table "chambers", :id => false, :force => true do |t|
     t.integer "id"
     t.string  "name"
@@ -39,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20110329131658) do
     t.integer  "support_type"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "tmp"
     t.string   "ip"
   end
 
@@ -420,6 +434,7 @@ ActiveRecord::Schema.define(:version => 20110329131658) do
     t.integer  "participation_rate"
     t.integer  "pending"
     t.integer  "default_include"
+    t.integer  "category_id"
   end
 
   create_table "sessions", :force => true do |t|

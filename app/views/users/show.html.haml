@@ -77,14 +77,14 @@
   %div.vote-table-cap.myvoyce
   -#= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-- cache("user_stats_#{@user.id}", :expires_in => Rails.configuration.default_cache_expires_in) do
-  .user-stats
+.user-stats
+  - cache("user_stats_#{@user.id}", :expires_in => Rails.configuration.default_cache_expires_in) do
     %p
       %span.username
         = "#{@stats[:username]}"
       %br
       = "Member since: #{@stats[:member_since]}"
-      
+    
     %h3
       OV-Codes Entered:
 
@@ -120,12 +120,7 @@
             = "#{@stats[:today_scans]}"
 
 
-    %div.corporate.myvoyce
-      
-      %a{:href => "/idol"}
-        %img{:src => "/images/_AmericanIdol.png", :alt => "American Idol"}
-      %a{:href => "/mcdonalds"}
-        %img.adjust{:src => "/images/_McDonalds.png", :alt => "McDonald's"}
-      %a{:href => "/starbucks"}
-        %img{:src => "/images/_Starbucks.png", :alt => "Starbucks"}
-
+  %div.corporate.myvoyce
+    - @categories.each do |category|
+      %a{:href => "#{url_for(:action => :show, :filter => "category=#{category.shortcut}")}"}
+        %img{:src => "#{get_category_image(category.logo)}", :alt => "#{category.name}"}

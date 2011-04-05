@@ -5,7 +5,7 @@ SimpleNavigation::Configuration.run do |navigation|
   
   # Define the primary navigation
   navigation.items do |primary|
-    primary.item :ourvoyce, 'ourvoyce', ourvoyce_url, :class => 'ourvoyce', :highlights_on => /\/ourvoyce*/
+    primary.item :ourvoyce, 'ourvoyce', ourvoyce_url, :class => 'ourvoyce', :highlights_on => /^\/$/
     if ! current_user.nil?
       primary.item :myvoyce, 'aaamy voyce', myvoyce_url, :class => 'myvoyce', :highlights_on => /\/myvoyce*/
     end

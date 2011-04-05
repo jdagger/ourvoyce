@@ -37,6 +37,8 @@ class UsersController < ApplicationController
       params[:page] = 1
     end
 
+    @categories = Category.find(:all)
+
     @presenter = ProductsIndexPresenter.new
     @stats = User.new.user_stats @user.id unless fragment_exist?("user_stats_#{@user.id}")
 
@@ -58,6 +60,8 @@ class UsersController < ApplicationController
           case key
           when 'vote'
             search_params[:vote] = value
+          when 'category'
+            search_params[:category] = value
           end
         end
       end

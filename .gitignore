@@ -6,3 +6,4 @@ tmp
 nbproject
 .idea
 log/*.log
+*.*.swp

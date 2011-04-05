@@ -15,6 +15,14 @@ module ImageHelper
     end
   end
 
+  def get_category_image(image_name)
+    if(image_name.nil? || image_name.empty?)
+      "#{Rails.configuration.logos_domain}/images/category/not_found.png"
+    else
+      "#{Rails.configuration.logos_domain}/images/category/#{image_name}"
+    end
+  end
+
   def get_corporate_image_128(image_name)
     if(image_name.nil? || image_name.empty?)
         "#{Rails.configuration.logos_domain}/images/corporate_logos/128_128/not_found.gif"

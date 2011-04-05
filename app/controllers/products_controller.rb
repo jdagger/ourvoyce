@@ -3,6 +3,10 @@ class ProductsController < ApplicationController
     redirect_to :controller => :users, :action => :show, :filter => 'vote=all', :sort => 'votedate_desc', :page => 1, :barcode => params[:id]
   end
 
+  def category
+    redirect_to :controller => :users, :action => :show, :filter => "category=#{params[:id]}"
+  end
+
 	def vote
 		support_type = -1
 
