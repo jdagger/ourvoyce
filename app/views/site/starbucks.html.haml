@@ -1,0 +1,21 @@
+%div.contact
+  %h2 Starbucks
+
+  %h3 This table should contain UPC codes 101 through 140 and allow the user to submit votes. The default sort should be SS descending. The product images with code below should be shown just like the myvoYce screen.
+  %br
+
+  %div.vote-table-wrap.myvoyce
+    %table.vote-table.myvoyce
+      %thead
+        %tr
+          %th Vote
+          %th Item (Image)
+          %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
+          %th
+            = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
+            = '/'
+            = table_sort_header_link :header => "PR", :sort_column => 'participation', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
+      %tbody
+        %tr
+          %td
+  %div.vote-table-cap.myvoyce

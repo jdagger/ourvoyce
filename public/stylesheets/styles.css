@@ -965,6 +965,8 @@ table.singlet-table tr td.outlet.landing a{
   width:106px;
 }
 
+
+/************************ myvoYce - user stats */
 .user-stats {
   background: url("/images/myvoyce-rounded-back.gif") no-repeat scroll right top transparent;
   float: right;
@@ -985,13 +987,31 @@ span.username {
   font-weight:bold;
   font-size:20px;
 }
+
 ul.stats li{
   font-weight:bold;
 }
+
 ul.stats span{
   font-weight:normal;
   color:#666;
 }
+
+
+/************************ myvoYce - corporate group */
+div.corporate.myvoyce {
+  text-align: center;
+  margin-top: 0px;
+}
+
+div.corporate.myvoyce img{
+  margin-top: 10px;
+}
+
+div.corporate.myvoyce img.adjust{
+  padding-left: 10px;
+}
+
 
 #bar-graph-wrap{
   width:350px;

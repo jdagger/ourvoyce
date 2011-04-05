@@ -10,6 +10,9 @@ Production::Application.routes.draw do
     match "/iphone" => :iphone
     match "/members" => :members
     match "/how-does-this-work" => :help
+    match "/idol" => :idol
+    match "/mcdonalds" => :mcdonalds
+    match "/starbucks" => :starbucks
   end
 
 

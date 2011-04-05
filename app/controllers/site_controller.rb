@@ -28,5 +28,14 @@ class SiteController < ApplicationController
   
   def members
   end
+
+  def idol
+  end
+  
+  def mcdonalds
+  end
+  
+  def starbucks
+  end
   
 end
