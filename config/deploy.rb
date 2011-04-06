@@ -20,6 +20,8 @@ role :web, "50.56.91.61", "50.56.91.89"                          # Your HTTP ser
 role :app, "50.56.91.61"                          # This may be the same as your `Web` server
 role :db,  "50.56.91.61", :primary => true # This is where Rails migrations will run
 
+after "deploy", "deploy:cleanup"
+
 namespace :deploy do
   desc "Stopping server"
   task :stop do

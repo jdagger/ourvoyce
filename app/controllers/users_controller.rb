@@ -37,7 +37,7 @@ class UsersController < ApplicationController
       params[:page] = 1
     end
 
-    @categories = Category.find(:all)
+    @categories = Category.find(:all, :order => ["priority asc"], :conditions => ['display_myvoyce = 1'])
 
     @presenter = ProductsIndexPresenter.new
     @stats = User.new.user_stats @user.id unless fragment_exist?("user_stats_#{@user.id}")
