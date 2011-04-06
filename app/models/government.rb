@@ -179,20 +179,20 @@ class Government < ActiveRecord::Base
         when 'district_desc'
             records = records.order('governments.district desc')
         when 'social_asc'
-            records = records.order('governments.social_score asc')
+            records = records.order('governments.social_score asc, governments.participation_rate desc, governments.default_order asc')
         when 'social_desc'
-            records = records.order('governments.social_score desc')
+            records = records.order('governments.social_score desc, governments.participation_rate desc, governments.default_order asc')
         when 'participation_asc'
-            records = records.order('governments.participation_rate asc')
+            records = records.order('governments.participation_rate asc, governments.social_score desc, governments.default_order asc')
         when 'participation_desc'
-            records = records.order('governments.participation_rate desc')
+            records = records.order('governments.participation_rate desc, governments.social_score desc, governments.default_order asc')
         when 'votedate_asc'
           if params.key? :user_id
-            records = records.order('government_supports.updated_at asc')
+            records = records.order('government_supports.updated_at asc, governments.social_score desc, governments.participation_rate desc')
           end
         when 'votedate_desc'
           if params.key? :user_id
-            records = records.order('government_supports.updated_at desc')
+            records = records.order('government_supports.updated_at desc, governments.social_score desc, governments.participation_rate desc')
           end
         when 'default_asc'
           records = records.order('governments.default_order asc, governments.name asc')

@@ -117,13 +117,13 @@ class Corporation < ActiveRecord::Base
           when 'name_desc'
             records = records.order('corporations.name desc')
           when 'social_asc'
-            records = records.order('corporations.social_score asc')
+            records = records.order('corporations.social_score asc, corporations.participation_rate desc, corporations.name asc')
           when 'social_desc'
-            records = records.order('corporations.social_score desc')
+            records = records.order('corporations.social_score desc, corporations.participation_rate desc, corporations.name asc')
           when 'participation_asc'
-            records = records.order('corporations.participation_rate asc')
+            records = records.order('corporations.participation_rate asc, corporations.social_score desc, corporations.name asc')
           when 'participation_desc'
-            records = records.order('corporations.participation_rate desc')
+            records = records.order('corporations.participation_rate desc, corporations.social_score desc, corporations.name asc')
           when 'votedate_asc'
             if params.key? :user_id
               records = records.order('corporation_supports.updated_at asc')

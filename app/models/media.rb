@@ -198,20 +198,20 @@ class Media < ActiveRecord::Base
         when 'name_desc'
           records = records.order('medias.name desc')
         when 'social_asc'
-          records = records.order('medias.social_score asc')
+          records = records.order('medias.social_score asc, medias.participation_rate desc, medias.name asc')
         when 'social_desc'
-          records = records.order('medias.social_score desc')
+          records = records.order('medias.social_score desc, medias.participation_rate desc, medias.name asc')
         when 'participation_asc'
-          records = records.order('medias.participation_rate asc')
+          records = records.order('medias.participation_rate asc, medias.social_score desc, medias.name asc')
         when 'participation_desc'
-          records = records.order('medias.participation_rate desc')
+          records = records.order('medias.participation_rate desc, medias.social_score desc, medias.name asc')
         when 'votedate_asc'
           if params.key? :user_id
-            records = records.order('media_supports.updated_at asc')
+            records = records.order('media_supports.updated_at asc, medias.social_score desc, medias.participation_rate desc')
           end
         when 'votedate_desc'
           if params.key? :user_id
-            records = records.order('media_supports.updated_at desc')
+            records = records.order('media_supports.updated_at desc, medias.social_score desc, medias.participation_rate desc')
           end
         when 'default_asc'
           records = records.order('medias.default_order asc')
