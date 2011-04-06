@@ -99,6 +99,10 @@ class Product < ActiveRecord::Base
 
       if params.key? :sort
         case params[:sort].downcase
+        when 'code_asc'
+          records = records.order("products.upc asc")
+        when 'code_desc'
+          records = records.order("products.upc desc")
         when 'description_asc'
           records = records.order("products.description asc")
         when 'description_desc'

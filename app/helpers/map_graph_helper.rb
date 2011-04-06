@@ -20,7 +20,7 @@ module MapGraphHelper
     if ! params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
       items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
     end
-    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1, 2])
+    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.joins("join zips on users.zip_code = zips.zip")
     items = items.joins("join states on zips.state_id = states.id")
@@ -65,7 +65,7 @@ module MapGraphHelper
     if !params.key? :skip_object_id_filter || !params[:skip_object_id_filter]
       items = items.where("#{params[:base_object_name]}_id" => params[:base_object_id])
     end
-    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1, 2])
+    items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1])
     items = items.where("states.abbreviation" => state)
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.joins("join zips on users.zip_code = zips.zip")
@@ -118,8 +118,9 @@ module MapGraphHelper
       negative = self.national_map_collected_data[key][:negative].to_i
       positive = self.national_map_collected_data[key][:positive].to_i
       neutral = self.national_map_collected_data[key][:neutral].to_i
-      total = negative + positive + neutral
-
+      total = negative + positive
+      #total = negative + positive + neutral
+      
       #determine a score
       if total > 0
         score = positive * 100 / total
@@ -162,7 +163,8 @@ module MapGraphHelper
       negative = self.state_map_collected_data[key][:negative].to_i
       positive = self.state_map_collected_data[key][:positive].to_i
       neutral = self.state_map_collected_data[key][:neutral].to_i
-      total = negative + positive + neutral
+      total = negative + positive
+      #total = negative + positive + neutral
       self.state_max_total_votes = [self.state_max_total_votes, total].max
 
       #determine a score

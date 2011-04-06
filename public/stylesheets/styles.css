@@ -477,6 +477,10 @@ table.vote-table.myvoyce{
   width:700px;
 }
 
+table.vote-table.myvoyce td.left{
+  text-align: left;
+}
+
 .vote-table-wrap.myvoyce{
   width:699px;
 }
@@ -934,6 +938,13 @@ table.singlet-table tr td.outlet.landing a{
   display:block;
 }
 
+table.singlet-table td.instructions{
+  color: #666;
+  border: solid 0px red;
+  text-align: left;
+  font-size:12px;
+}
+
 .mvform{
   float:right;
   height:45px;
@@ -941,9 +952,10 @@ table.singlet-table tr td.outlet.landing a{
 }
 
 .mvform h5{
-  color:#000;
+  color:#666;
   font-weight:bold;
-  padding-bottom:4px;
+  font-size: 12px;
+  margin-top:10px;
 }
 
 .mv-image{
@@ -1335,6 +1347,26 @@ div.flash{
   float: left;
   margin-right: 20px;
 }
+
+#how-does-this-work ol {
+  margin-left: 55px;
+  margin-bottom: 15px;
+  font-size: 14px;
+  color: #666;
+  border: solid 0px blue
+}
+
+#how-does-this-work li {
+  margin-left: 0px;
+  margin-top: 10px;
+  font-size: 14px;
+  list-style-type: square;
+}
+
+#how-does-this-work li b{
+  color: #666;
+}
+
 
 /************* Legal Info: Privacy, Terms, Membership */
 div.legal {
