@@ -28,7 +28,7 @@ namespace :deploy do
     find_and_execute_task("unicorn:stop")
     find_and_execute_task("delayed_job:stop")
     #find_and_execute_task("unicorn:stop")
-    #find_and_execute_task("thinking_sphinx:stop")
+    find_and_execute_task("thinking_sphinx:stop")
   end
 
   desc "Starting server"
@@ -37,7 +37,7 @@ namespace :deploy do
     find_and_execute_task("delayed_job:start")
 
     #find_and_execute_task("unicorn:start")
-    #find_and_execute_task("thinking_sphinx:rebuild")
+    find_and_execute_task("thinking_sphinx:rebuild")
   end
 
   desc "Restarting server"
@@ -45,7 +45,7 @@ namespace :deploy do
     find_and_execute_task("unicorn:upgrade")
     find_and_execute_task("delayed_job:restart")
     #find_and_execute_task("unicorn:restart")
-    #find_and_execute_task("thinking_sphinx:rebuild")
+    find_and_execute_task("thinking_sphinx:rebuild")
   end
 
 end
