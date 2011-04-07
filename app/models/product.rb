@@ -108,23 +108,23 @@ class Product < ActiveRecord::Base
         when 'description_desc'
           records = records.order("products.description desc")
         when 'social_asc'
-          records = records.order("products.social_score asc")
+          records = records.order("products.social_score asc, products.participation_rate desc")
         when 'social_desc'
-          records = records.order("products.social_score desc")
+          records = records.order("products.social_score desc, products.participation_rate desc")
         when 'participation_asc'
-          records = records.order("products.participation_rate asc")
+          records = records.order("products.participation_rate asc, products.social_score desc")
         when 'participation_desc'
-          records = records.order("products.participation_rate desc")
+          records = records.order("products.participation_rate desc, products.social_score desc")
         when 'votedate_asc'
           if params.key? :user_id
-            records = records.order("product_supports.updated_at asc")
+            records = records.order("product_supports.updated_at asc, products.upc asc")
           end
         when 'votedate_desc'
           if params.key? :user_id
-            records = records.order("product_supports.updated_at desc")
+            records = records.order("product_supports.updated_at desc, products.upc asc")
           end
         else
-          records = records.order("product_supports.updated_at desc")
+          records = records.order("product_supports.updated_at desc, products.upc asc")
         end
       end
 
