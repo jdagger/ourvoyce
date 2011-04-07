@@ -23,7 +23,7 @@
                   %td.description
                     = @current_product_description
                 -else
-                  %td= 'Sorry, that code could not be found.'
+                  %td= 'Sorry, that code could not be found. You can use the iPhone app to add the code to the ourvoYce system.'
               - else
                 %td.instructions
                   %br
@@ -81,7 +81,8 @@
           %tr
             %td{:colspan => 5}= "No records found."
   %div.vote-table-cap.myvoyce
-  -#= render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+  %br
+  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
 .user-stats
   - cache("user_stats_#{@user.id}", :expires_in => Rails.configuration.default_cache_expires_in) do
@@ -125,6 +126,11 @@
           %td.stat
             = "#{@stats[:today_scans]}"
 
+  
+  %br
+  %br
+  %h3
+    Categories:
 
   %div.corporate.myvoyce
     - @categories.each do |category|
