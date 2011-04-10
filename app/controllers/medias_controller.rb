@@ -44,7 +44,7 @@ class MediasController < ApplicationController
     #Check if media type was selected
     if ! params.key? :media_type
       #Media type not selected, so provide default list of media types
-      @presenter.media_types = MediaType.where(:level => 1).order(:display_order).to_a
+      @presenter.media_types = MediaType.where(:level => 1).order(:social_score).to_a.reverse
     else #media type selected
 
       #Load the media type,
