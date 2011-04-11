@@ -32,13 +32,14 @@ class Media < ActiveRecord::Base
   end
 
   def translate_media_type media_type_id
-    if media_type_id == 3
+    if media_type_id == '3'
       return 6 #If Radio, look up records marked as radio show
-    elsif media_type_id == 4
+    elsif media_type_id == '4'
       return 5 #If Television, look up records marked as television show
     else
       return media_type_id
     end
+    #return media_type_id
   end
 
   def media_type_age_all media_type_id
@@ -53,6 +54,7 @@ class Media < ActiveRecord::Base
 
   def media_type_age_state media_type_id, state
     media_type_id = translate_media_type media_type_id
+    
     generate_age_state :base_object_name => 'media', 
       :state => state,
       :base_object_id => nil,
@@ -63,6 +65,7 @@ class Media < ActiveRecord::Base
 
   def media_type_map_all media_type_id
     media_type_id = translate_media_type media_type_id
+    
     generate_map_all :base_object_name => 'media', 
       :base_object_id => nil,
       :skip_object_id_filter => true,
@@ -72,6 +75,7 @@ class Media < ActiveRecord::Base
 
   def media_type_map_state media_type_id, state
     media_type_id = translate_media_type media_type_id
+    
     generate_map_state :base_object_name => 'media', 
       :state => state,
       :base_object_id => nil,

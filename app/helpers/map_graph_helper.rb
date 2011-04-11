@@ -24,7 +24,7 @@ module MapGraphHelper
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.joins("join zips on users.zip_code = zips.zip")
     items = items.joins("join states on zips.state_id = states.id")
-    items = items.select("support_type, count(support_type) as count, states.abbreviation as abbreviation")
+    items = items.select("support_type, count(distinct(support_type)) as count, states.abbreviation as abbreviation")
     items = items.group("support_type, states.abbreviation")
 
     if params.key? :joins
@@ -70,7 +70,7 @@ module MapGraphHelper
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.joins("join zips on users.zip_code = zips.zip")
     items = items.joins("join states on zips.state_id = states.id")
-    items = items.select("support_type, count(support_type) as count, zips.zip, zips.latitude, zips.longitude")
+    items = items.select("support_type, count(distinct(support_type)) as count, zips.zip, zips.latitude, zips.longitude")
     items = items.group("support_type, zips.zip, zips.latitude, zips.longitude")
 
     if params.key? :joins

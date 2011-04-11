@@ -12,7 +12,7 @@ SimpleNavigation::Configuration.run do |navigation|
     primary.item :corporate, 'corporate', corporates_index_url, :class => 'corporate', :highlights_on => /\/corporate*/
     primary.item :government, 'government', government_index_url, :class => 'government', :highlights_on => /\/government*/
     primary.item :media, 'media', media_index_url, :class => 'media', :highlights_on => /\/media*/
-    primary.item :work, 'how does this work?', "/help", :class => 'work', :highlights_on => /\/how-does-this-work*/
+    primary.item :work, 'how does this work?', "/help", :class => 'work', :highlights_on => /\/help*/
   end
 
 end

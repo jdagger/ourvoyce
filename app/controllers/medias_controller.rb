@@ -90,8 +90,7 @@ class MediasController < ApplicationController
       params[:network]  = 'all'
       return
     end
-
-
+    
     if params[:network].blank?
       #Network not yet selected, so display a list of networks for the media type
       search_options = {}
@@ -101,6 +100,14 @@ class MediasController < ApplicationController
       end
 
       search_options[:media_type_id] = media_type.id
+      
+      if params[:sort].blank? 
+        params[:sort] = 'social_desc'
+        search_options[:sort] = 'social_desc'
+      else
+        search_options[:sort] = params[:sort]
+      end
+      
       @presenter.networks = Media.do_search(search_options).to_a
     else
       #Network specified, so try to load it
