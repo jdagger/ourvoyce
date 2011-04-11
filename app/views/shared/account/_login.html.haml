@@ -1,10 +1,10 @@
 = form_tag :login do
   - if ! flash[:notice].blank?
     .flash= flash[:notice]
-  %div{:style => "text-align: center; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue; color: #666;"}
+  %div{:style => "text-align: center; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue; color: #333;"}
     = label_tag :login, "Username:"
     = text_field_tag :login, @user_session.login
-  %div{:style => "text-align: center; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue; color: #666;"}
+  %div{:style => "text-align: center; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue; color: #333;"}
     = label_tag :password, "Password:"
     = password_field_tag :password
   %div{:style => "text-align: right; padding: 10px 10px 20px 0px; height: 20px; border: solid 0px blue;"}
@@ -16,3 +16,19 @@
     = link_to "Forgot Username", :request_username
     %br
     = link_to "Resend Account Verification", :verify
+
+  %div{:style => "text-align: left; padding: 40px 10px 10px 10px; border: solid 0px blue; color: #333; font-size: 14px;"}
+    %h4{:style => "text-align: left; color: #113376; font-size: 16px;"}
+      Waiting for your verification email?
+    Check you email spam folder to see if it was delivered there.
+    %br
+    %br
+    %br
+    %h4{:style => "text-align: left; color: #113376; font-size: 16px;"}
+      Need help with your account?
+    Send an email to <a href="mailto:accounts@ourvoyce.com">accounts@ourvoyce.com</a> and we'll be glad to help.
+    %br
+    %br
+    %br
+    %h4{:style => "text-align: left; color: #113376; font-size: 16px;"}
+      Thank you for participating.
