@@ -13,7 +13,7 @@ a:link, a:visited{
 
 p{
   font-size: 12px;
-  color: #666666;
+  color: #333;
   line-height: 18px;
   padding-bottom: 15px;
 }
@@ -25,7 +25,7 @@ b, strong{
 
 h1{
   font-size:22px;
-  color: #666;
+  color: #333;
   font-weight: bold;
   line-height: 29.19px;
   padding-bottom: 15px;
@@ -939,7 +939,7 @@ table.singlet-table tr td.outlet.landing a{
 }
 
 table.singlet-table td.instructions{
-  color: #666;
+  color: #333;
   border: solid 0px red;
   text-align: left;
   font-size:12px;
@@ -952,7 +952,7 @@ table.singlet-table td.instructions{
 }
 
 .mvform h5{
-  color:#666;
+  color:#333;
   font-weight:bold;
   font-size: 12px;
   margin-top:10px;
@@ -991,7 +991,7 @@ table.singlet-table td.instructions{
 .user-stats h3{
   font-weight:bold;
   font-size:18px;
-  color:#666;
+  color:#333;
 }
 
 span.username {
@@ -1006,7 +1006,7 @@ ul.stats li{
 
 ul.stats span{
   font-weight:normal;
-  color:#666;
+  color:#333;
 }
 
 
@@ -1142,7 +1142,7 @@ div.corporate.myvoyce img.adjust{
 
 .or-middle span{
   font-size:22px;
-  color:#666;
+  color:#333;
 }
 
 .new-account-form h2{
@@ -1158,7 +1158,7 @@ div.corporate.myvoyce img.adjust{
   width:260px;
   margin-left: 20px;
   font-size:18px;
-  border: solid 1px #666;
+  border: solid 1px #333;
 }
 
 .new-account-form input[type="submit"] {
@@ -1169,7 +1169,7 @@ div.corporate.myvoyce img.adjust{
   float:left;
   width:190px;
   font-size:14px;
-  color:#666;
+  color:#333;
   text-align:right;
   padding-top:6px;
 }
@@ -1192,13 +1192,11 @@ div.corporate.myvoyce img.adjust{
 .new-account-form .small{
   border: solid 0px green;
   font-size:11px;
-  color:#666;
+  color:#333;
   width:270px;
   margin-right: 28px;
   text-align:right;
   float:right;
-  display:block;
-  clear:right;
 }
 
 .new-account-form .input{
@@ -1236,7 +1234,7 @@ div.corporate.myvoyce img.adjust{
   float:right;
   width:170px;
   font-size:18px;
-  border: solid 1px #666;
+  border: solid 1px #333;
 }
 
 .login-form input[type="submit"] {
@@ -1253,7 +1251,7 @@ div.corporate.myvoyce img.adjust{
 
 .login-form .small{
   font-size:11px;
-  color:#666;
+  color:#333;
   width:170px;
   text-align:right;
   float:right;
@@ -1280,7 +1278,7 @@ div.corporate.myvoyce img.adjust{
 }
 
 table.stats{
-  color:#666;
+  color:#333;
 }
 
 table.stats th.label{
@@ -1352,7 +1350,7 @@ div.flash{
   margin-left: 55px;
   margin-bottom: 15px;
   font-size: 14px;
-  color: #666;
+  color: #333;
   border: solid 0px blue
 }
 
@@ -1364,7 +1362,7 @@ div.flash{
 }
 
 #how-does-this-work li b{
-  color: #666;
+  color: #333;
 }
 
 
@@ -1380,14 +1378,14 @@ p.legal {
 }
 
 p.legal b {
-  color:#666;
+  color:#333;
 }
 
 ol.number {
   list-style-type:decimal;
   margin-top: 0px;
   margin-left: 15px;
-  color:#666;
+  color:#333;
 }
 
 ol.letter {
@@ -1400,7 +1398,7 @@ ol.letter li, ol.number li {
 }
 
 ol.letter li b, ol.number li b {
-  color:#666;
+  color:#333;
 }
 
 
