@@ -118,8 +118,8 @@ module MapGraphHelper
       negative = self.national_map_collected_data[key][:negative].to_i
       positive = self.national_map_collected_data[key][:positive].to_i
       neutral = self.national_map_collected_data[key][:neutral].to_i
-      #total = negative + positive
-      total = negative + positive + neutral
+      total = negative + positive
+      #total = negative + positive + neutral
       
       #determine a score
       if total > 0
@@ -163,8 +163,8 @@ module MapGraphHelper
       negative = self.state_map_collected_data[key][:negative].to_i
       positive = self.state_map_collected_data[key][:positive].to_i
       neutral = self.state_map_collected_data[key][:neutral].to_i
-      #total = negative + positive
-      total = negative + positive + neutral
+      total = negative + positive
+      #total = negative + positive + neutral
       self.state_max_total_votes = [self.state_max_total_votes, total].max
 
       #determine a score
