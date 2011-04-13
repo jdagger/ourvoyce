@@ -32,7 +32,7 @@ module AgeGraphHelper
     end
     items = items.where("#{params[:base_object_name]}_supports.support_type" => [0, 1, 2])
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
-    items = items.select("support_type, count(support_type) as count, users.birth_year")
+    items = items.select("support_type, count(distinct(users.id)) as count, users.birth_year")
     items = items.group("support_type, users.birth_year")
 
     if params.key? :joins
@@ -77,7 +77,7 @@ module AgeGraphHelper
     items = items.joins("join users on users.id = #{params[:base_object_name]}_supports.user_id")
     items = items.joins("join zips on users.zip_code = zips.zip")
     items = items.joins("join states on zips.state_id = states.id")
-    items = items.select("support_type, count(support_type) as count, users.birth_year")
+    items = items.select("support_type, count(distinct(users.id)) as count, users.birth_year")
     items = items.group("support_type, users.birth_year")
 
     if params.key? :joins

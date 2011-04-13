@@ -1,9 +1,9 @@
 module ColorHelper
   def color_from_social_score score
     color = 'ffffff'
-    if score < 35
+    if score < 40
       color = 'cb0223'
-    elsif score >= 35 && score <= 65
+    elsif score >= 40 && score <= 60
       color = 'F88017'
     else
       color = '23b62a'
