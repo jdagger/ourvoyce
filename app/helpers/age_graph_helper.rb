@@ -158,7 +158,8 @@ module AgeGraphHelper
       elsif params.key? :color_method
         color = eval("#{params[:color_method]} #{score}")
       else
-        color = color_from_social_score(score)
+        #color = color_from_social_score(score)
+        color = '1d57af'
       end
       self.age_data << {:label => label, :color => color, :scale => '1.0', :total => total}
     end
