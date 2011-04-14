@@ -143,8 +143,8 @@ module AgeGraphHelper
       negative = value[:negative].to_i
       positive = value[:positive].to_i
       neutral = value[:neutral].to_i
-      total = negative + positive
-      #total = negative + positive + neutral
+      #total = negative + positive
+      total = negative + positive + neutral
       
       self.age_max_total = [self.age_max_total, total].max
 

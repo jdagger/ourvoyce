@@ -52,6 +52,7 @@ module MapGraphHelper
     return self.national_map_stats
   end
 
+  
   def generate_map_state params
     [:base_object_name, :base_object_id, :state].each do |required_element|
       if ! params.key? required_element
@@ -96,12 +97,13 @@ module MapGraphHelper
 
   end
 
+  
   def init_national_map_stats
     self.national_map_collected_data = {}
     self.national_map_stats = []
   end
 
-
+  
   def add_national_map_element params
     if ! self.national_map_collected_data.key? params[:abbreviation]
       self.national_map_collected_data[params[:abbreviation]] = {:negative => 0, :neutral => 0, :positive => 0, :count => 0}
@@ -112,6 +114,7 @@ module MapGraphHelper
     record_support_type element, params[:support_type], params[:count]
   end
 
+  
   def calculate_national_map_stats params = {}
     self.national_map_collected_data.each do |key, value|
       #Find total number of votes
@@ -131,19 +134,20 @@ module MapGraphHelper
       if params.key? :color_method
         self.national_map_stats << { :name => key, :color => eval("#{params[:color_method]} #{score}") }
       else
-        self.national_map_stats << { :name => key, :color => color_from_social_score(score) }
+        self.national_map_stats << { :name => key, :color => color_from_vote_count(positive, neutral, negative) }
+        #self.national_map_stats << { :name => key, :color => color_from_social_score(score) }
       end
     end
   end
 
-
+  
   def init_state_map_stats
     self.state_map_collected_data = {}
     self.state_map_stats = []
     self.state_max_total_votes = 0
   end
 
-
+  
   def add_state_map_element params
     if ! self.state_map_collected_data.key? params[:zip]
       self.state_map_collected_data[params[:zip]] = {:negative => 0, :neutral => 0, :positive => 0, :lat => params[:lat], :long => params[:long], :count => 0}
@@ -155,8 +159,7 @@ module MapGraphHelper
     #Rails.logger.error "ZIP: #{params[:zip]}, Support Type: #{params[:support_type]}, Count: #{params[:count]}"
   end
 
-
-
+  
   def calculate_state_map_stats
     self.state_map_collected_data.each do |key, value|
       #Find total number of votes
@@ -173,7 +176,8 @@ module MapGraphHelper
       else
         score = 0
       end
-      self.state_map_stats << {:name => key, :color => color_from_social_score(score), :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
+      self.state_map_stats << {:name => key, :color => color_from_vote_count(positive, neutral, negative), :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
+      #self.state_map_stats << {:name => key, :color => color_from_social_score(score), :scale => '1.0', :lat => value[:lat], :long => value[:long], :votes => total }
 
       #Calculate the scale
       self.state_map_stats.each do |zip|
@@ -189,7 +193,7 @@ module MapGraphHelper
     end
   end
 
-
+  
   def record_support_type element, support_type, count
     element[:count] = element[:count] + count
     case support_type

@@ -10,6 +10,33 @@ module ColorHelper
     end
   end
 
+  #color is based on support type with most votes
+  def color_from_vote_count(positive, neutral, negative)
+  
+    #Rails.logger.error '**********BEGIN********'
+    #Rails.logger.error 'positive = %{u}' % { :u => positive }
+    #Rails.logger.error 'neutral= %{n}' % { :n => neutral }
+    #Rails.logger.error 'negative= %{d}' % { :d => negative }
+    
+    #set red as the default
+    color = 'cb0223' #red
+    
+    #neutral wins if greater or equal to negative
+    if neutral >= negative
+      color = 'F88017'
+    end
+    
+    #positive wins if great than neutral and greater or equal to negative
+    if positive > neutral and positive >= negative
+      color = '23b62a'
+    end      
+    
+    #Rails.logger.error 'color= %{c}' % { :c => color }
+    #Rails.logger.error '**********END********'
+    
+    return color
+  end  
+  
   #value is between 0 and 100.  100 represents darker, 0 represents lighter
   def shades_of_green value
       
