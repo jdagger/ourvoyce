@@ -58,6 +58,10 @@
     <img src="/images/help/sspr-1145.png" alt="SS PR: 11 45" />
     The number 11 in this example is the Social Score. This means that 11% percent of the people that voted on this item gave it a Thumbs Up vote. That's not so impressive.
 </p>
+<p>Neutral votes are not included in the Social Score. Here's the math.
+<br /><br />
+<b>SS = ( ThumbsUpVotes / ( ThumbsUpVotes + ThumbsDownVotes ) ) * 100</b>
+</p>
 </div>
 
 <h3 id="participation">What is a Participation Rate?</h3>
@@ -71,6 +75,10 @@
   <img src="/images/help/sspr-1145.png" alt="SS PR: 11 45" />
   In this example, the pie chart shows that 45% of the ourvoYce users voted on this item. Participation Rates are always shown as pie charts and the numbers are always shown in increments of 5.
 </p>
+<p>The Participation Rate includes Neutral votes. Here's the math.
+<br /><br />
+<b>PR = ( ( ThumbsUpVotes + NeutralVotes + ThumbsDownVotes ) / TotalNumberOfUsers ) * 100</b>
+</p>
 </div>
 
 <h3 id="sspr">What is an SS PR?</h3>
@@ -78,36 +86,30 @@
 <p>The Social Score and Participation Rate together make up the SS PR and are always shown as a number (SS) over a pie chart (PR). These numbers are one of the tools used to compare anything in the ourvoYce system. Let's look at the examples we've been working with so far and see how these numbers are used to compare the two items.</p>
 <p class="example">
   <img src="/images/help/sspr-8025.png" alt="SS PR: 80 25" />
-  The SS PR in this example is 80 25 which tells us that 25% of the ourvoYce users voted on this item by giving it a Thumbs Up, Thumbs Down or Neutral vote. 80% of those votes were Thumbs Up. In other words, only 1 in 4 users actually voted but 8 out of 10 gave it a Thumbs Up vote.
-</p>
+  The SS PR in this example is 80 25 which tells us that 25% of the ourvoYce users voted on this item by giving it a Thumbs Up, Thumbs Down or Neutral vote. The Social Score does not include Neutral votes, so we only count the Thumbs Up and Thumbs Down votes. 80% of those votes were Thumbs Up.</p>
 <p class="example">
   <img src="/images/help/sspr-1145.png" alt="SS PR: 11 45" />
-  The SS PR in this example is 11 45 which tells us that 45% of the ourvoYce users voted on this item. 11% of those votes were Thumbs Up. In other words, the Social Score for this item is much lower and is based on the opinions of a larger group of users.
+  The SS PR in this example is 11 45 which tells us that 45% of the ourvoYce users voted on this item. 11% of those votes were Thumbs Up when we ignore the Neutral votes. In other words, the Social Score for this item is much lower and is based on the opinions of a larger group of users.
 </p>
 <p>Understanding how these numbers relate to one another will allow you to compare and rank anything in the ourvoYce system. For example, a high SS with a low PR indicates something that is liked by a small group of users. On the other hand, a low SS with a high PR is something that is disliked by a large group of users. There are many possible combinations of these numbers and understanding how they work together will provide a new and interesting insight on how we feel about our Corporations, Government and the Media.</p>
 </div>
 
 
-<h3 id="legend">What do the colors mean on the maps and bar charts?</h3>
+<h3 id="legend">What do the different colors mean?</h3>
 <div id="legend_description">
-<p>The maps are provided to show the specific states and zip codes where ourvoYce users are located. The bar charts are used to show the number of ourvoYce users in each age group. The colors on the maps and bar charts are green, orange or red depending on the overal Social Score for the selected item in that state, zip code or age group. For each of these, an SS > 60 will be green, an SS < 40 will be red and an SS between 40 and 60 will be orange. Clicking on any of the votable items in ourvoYce will update the map and bar chart to show the specific opinion data for that item. Let's consider a few examples on the Corporate screen to help clarify this idea.</p>
-    
-    <p class="example">
-      <img src="/images/help/color-age.png" alt="Age Group with SS > 60" />
-      <b>Green Bar</b>: This shows that the collective SS in 30-39 and 40-49 age groups is > 60 for the selected item. The taller bar in the 30-39 age group also indicates that there are more opinions included in this group than in the 40-49 age group. Both age groups have an overal positive SS in this example, but different age groups will often have different opinions and be shown with different colors. There are no votes in the 20-29 age group for this item.</p>
-    <br /><br /><br />
-
+<p>The colors on the maps are green, orange or red depending on what kind of vote was the most common. Green means that the majority of votes were Thumbs Up, orange indicates that Neutral votes were the most common and Red means Thumbs Down votes were the majority.</p>
+<p>The maps are provided to show the specific states and zip codes where ourvoYce users are located. The bar charts are used to show the number of ourvoYce users in each age group.</p>
     <p class="example">    
-    <img src="/images/help/color-state.png" alt="State with SS > 40 and SS < 60" />
-    <b>Orange State</b>: This shows that the collective SS in North Carolina is between 40 and 60 for the selected item. You can click on any state to zoom in and see any zip codes in the state that contain opinion data. The fact that the surrounding states are not green, orange or red indicates that they do not have any opinion data for the selected item.</p>
+    <img src="/images/help/color-state.png" alt="State with Neutral majority" />
+    <b>Orange State</b>: This shows that Neutral had the most votes for the selected item in North Carolina. You can click on any state to zoom in and see all zip codes in the state that contain opinion data. The fact that the surrounding states are not green, orange or red indicates that they do not have any votes for the selected item.</p>
     <br /><br /><br />
 
     <p class="example">
-    <img src="/images/help/color-zip.png" alt="Zip Code with SS < 40" />
-    <b>Red Dot</b>: This shows that the overall SS in the zip code is < 40 for the selected item. The size of the zip code dot will vary depending on the Participation Rate with a larger dot indicating a higher PR. This example shows 2 zip codes near each other which causes them to overlap.</p>
+    <img src="/images/help/color-zip.png" alt="Zip Code with Thumbs Down majority" />
+    <b>Red Dot</b>: This shows two zip codes where the majority of the votes were Thumbs Down for the selected item. Each dot represents a single zip code. The zip code dots will overlap when zip codes are close together.</p>
     <br /><br /><br />
 
-<p>Note that the default ourvoYce page shows all states, zip codes and age groups in blue. This is because no opinions are being shown on this page. The purpose here is to show the location and ages of the entire group of ourvoYce users. This screen is unique because it gives an overview of the entire user base instead of providing information about specific opinions.</p>
+<p>Note that the bar charts are always in blue as well as all of the data on the main ourvoYce page. Bars, states and zip code dots in blue simply show the number and location of the users.</p>
 </div>
 
 

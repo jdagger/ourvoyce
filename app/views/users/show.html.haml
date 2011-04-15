@@ -30,7 +30,7 @@
                   = 'Enter a code here to look for it in the ourvoYce database and vote.'
                   %br
                   %br
-                  = 'Have the iPhone app? If so, you can create your own codes to track in ourvoYce.'
+                  = 'Have the iPhone app? Use it to create your own codes to track in ourvoYce.'
               %td
                 %div.mvform
                   %h5 Enter a code and click Lookup:
@@ -90,49 +90,49 @@
       %span.username
         = "#{@stats[:username]}"
       %br
-      = "Member since: #{@stats[:member_since]}"
+      = "Member since #{@stats[:member_since]}"
     
-    %h3
-      OV-Codes Entered:
+    -#%h3
+      -#OV-Codes Entered:
 
-    %table.stats
-      %thead
-        %th.label
-        %th.number
-      %tbody
-        %tr
-          %td
-            Total:
-          %td.stat  
-            = "#{@stats[:total_scans]}"
-        %tr
-          %td
-            This year: 
-          %td.stat
-            = "#{@stats[:this_year_scans]}"
-        %tr
-          %td
-            This month: 
-          %td.stat
-            = "#{@stats[:this_month_scans]}"
-        %tr
-          %td
-            This week: 
-          %td.stat
-            = "#{@stats[:this_week_scans]}"
-        %tr
-          %td
-            Today: 
-          %td.stat
-            = "#{@stats[:today_scans]}"
+    -#%table.stats
+      -#%thead
+        -#%th.label
+        -#%th.number
+      -#%tbody
+        -#%tr
+          -#%td
+            -#Total:
+          -#%td.stat  
+            -#= "#{@stats[:total_scans]}"
+        -#%tr
+          -#%td
+            -#This year: 
+          -#%td.stat
+            -#= "#{@stats[:this_year_scans]}"
+        -#%tr
+          -#%td
+            -#This month: 
+          -#%td.stat
+            -#= "#{@stats[:this_month_scans]}"
+        -#%tr
+          -#%td
+            -#This week: 
+          -#%td.stat
+            -#= "#{@stats[:this_week_scans]}"
+        -#%tr
+          -#%td
+            -#Today: 
+          -#%td.stat
+            -#= "#{@stats[:today_scans]}"
 
-  
-  %br
   %br
   %h3
-    Categories:
+    Click the images below to vote on the items in each group.
 
   %div.corporate.myvoyce
     - @categories.each do |category|
-      %a{:href => "#{url_for(:action => :show, :filter => "category=#{category.shortcut}", :sort => "code_asc")}"}
-        %img{:src => "#{get_category_image(category.logo)}", :alt => "#{category.name}"}
+      %div.corporate.myvoyce.category
+        %a{:href => "#{url_for(:action => :show, :filter => "category=#{category.shortcut}", :sort => "code_asc")}"}
+          %img{:src => "#{get_category_image(category.logo)}", :alt => "#{category.name}"}
+          = "#{category.name}"

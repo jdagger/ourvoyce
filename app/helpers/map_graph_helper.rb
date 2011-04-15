@@ -181,14 +181,15 @@ module MapGraphHelper
 
       #Calculate the scale
       self.state_map_stats.each do |zip|
-        if self.state_max_total_votes > 0
-          zip[:scale] = zip[:votes].to_f / self.state_max_total_votes
-        else
-          zip[:scale] = 0.0
-        end
+        #if self.state_max_total_votes > 0
+        #  zip[:scale] = zip[:votes].to_f / self.state_max_total_votes
+        #else
+          zip[:scale] = 0.5
+        #end
       end
 
-      (self.state_map_stats.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
+      (self.state_map_stats.sort! { |a, b| a[:color] <=> b[:color] }).reverse!
+      #(self.state_map_stats.sort! { |a, b| a[:scale] <=> b[:scale] }).reverse!
 
     end
   end
