@@ -22,17 +22,45 @@
             %th SS / PR
         %tbody
           %tr
+            - corp = Corporation.first(:order => 'participation_rate desc')
             %td
-              - if @current_user.nil?
-                = render :partial => 'shared/vote_control_no_access'
-              - else
-                authenticated
+              %img{:src => get_corporate_image_128(corp.logo), :alt => corp.name}
             %td
-              - gov = Government.find(512)
+              = corp.name
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(corp.participation_rate)})", :alt => corp.participation_rate}
+                = corp.social_score
+
+          %tr
+            - gov = Government.first(:order => 'participation_rate desc')
+            %td
+              %img{:src => get_government_image_64(gov.logo, gov.government_type_id), :alt => gov.name}
+            %td
               = gov.first_name + ' ' + gov.last_name
             %td
               %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(gov.participation_rate)})", :alt => gov.participation_rate}
                 = gov.social_score
+          
+          %tr
+            - media = Media.first(:order => 'participation_rate desc')
+            %td
+              %img{:src => get_media_image_128(media.logo), :alt => media.name}
+            %td
+              = media.name
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(media.participation_rate)})", :alt => media.participation_rate}
+                = media.social_score
+
+          %tr
+            - ov = Product.first(:order => 'participation_rate desc')
+            %td
+              %img{:src => get_product_image_128(ov.logo), :alt => ov.name}
+            %td
+              = ov.description
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(media.participation_rate)})", :alt => media.participation_rate}
+                = media.social_score
+
     %div.home-vote-table-cap
 
 
