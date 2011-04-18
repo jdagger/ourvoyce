@@ -2,7 +2,8 @@
   = javascript_include_tag "change_support.js"
 
 .left-content
-  = render :partial => "shared/media_menu"
+  - if @presenter.media_types.count <= 1
+    = render :partial => "shared/media_menu"
   
   - if @presenter.media_types.count > 1
     - @presenter.media_types.each do |media_type|
@@ -19,7 +20,7 @@
                     = media_type.social_score
                 %td
                   %a{:href => url_for(:media_type => params[:media_type]), :class => 'dataset' }
-                    = 'View Graph'
+                    = 'Show Me'
                     %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{media_type.id}_mediatype"}
                     %input{:type => :hidden, :class => 'jq-title', :value => media_type.name }
         %div.singlet-right
@@ -48,7 +49,7 @@
                     = network.social_score
                 %td
                   %a{:href => url_for(:media_type => params[:media_type], :network => params[:network]), :class => 'dataset' }
-                    = "View Graph"
+                    = 'Show Me'
                     %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{network.id}_network"}
                     %input{:type => :hidden, :class => 'jq-title', :value => network.name }
                     %input{:type => :hidden, :class => 'jq-wikipedia', :value => network.wikipedia }
@@ -86,7 +87,7 @@
                   = network.social_score
               %td
                 %a{:href => url_for(:media_type => params[:media_type], :network => params[:network]), :class => 'dataset' }
-                  = "View Graph"
+                  = 'Show Me'
                   %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{network.id}_network"}
                   %input{:type => :hidden, :class => 'jq-title', :value => network.name }
                   %input{:type => :hidden, :class => 'jq-wikipedia', :value => network.wikipedia }

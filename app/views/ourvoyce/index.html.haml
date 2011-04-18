@@ -6,10 +6,6 @@
 
 #content-left
   %h3
-    Who’s Being Counted?
-  #bar-graph-wrap
-    #bar-graph
-  %h3
     What's getting the most votes?
   #home-table-wrap
     %div.home-vote-table-top-cap
@@ -17,32 +13,28 @@
       %table.vote-table.home-page
         %thead
           %tr
-            %th Vote
-            %th Item
+            %th 
+            %th Description
             %th SS / PR
+            %th Show Me
         %tbody
-          %tr
-            - corp = Corporation.first(:order => 'participation_rate desc')
+          -# Are you happy? - myvoYce
+          - ov = Product.find(1634)          
+          %tr 
             %td
-              %img{:src => get_corporate_image_128(corp.logo), :alt => corp.name}
+              %img{:src => get_product_image_128(ov.logo), :alt => ov.description}
             %td
-              = corp.name
+              = ov.description
             %td
-              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(corp.participation_rate)})", :alt => corp.participation_rate}
-                = corp.social_score
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(ov.participation_rate)})", :alt => 'ov.participation_rate'}
+                = ov.social_score
+            %td
+              = link_to 'myvoYce', '/myvoyce/vote=all/participation_desc/1'
+              
 
+          -# All Things Considered - RadioShow
+          - media = Media.find(111)
           %tr
-            - gov = Government.first(:order => 'participation_rate desc')
-            %td
-              %img{:src => get_government_image_64(gov.logo, gov.government_type_id), :alt => gov.name}
-            %td
-              = gov.first_name + ' ' + gov.last_name
-            %td
-              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(gov.participation_rate)})", :alt => gov.participation_rate}
-                = gov.social_score
-          
-          %tr
-            - media = Media.first(:order => 'participation_rate desc')
             %td
               %img{:src => get_media_image_128(media.logo), :alt => media.name}
             %td
@@ -50,57 +42,104 @@
             %td
               %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(media.participation_rate)})", :alt => media.participation_rate}
                 = media.social_score
-
-          %tr
-            - ov = Product.first(:order => 'participation_rate desc')
             %td
-              %img{:src => get_product_image_128(ov.logo), :alt => ov.name}
+              = link_to 'Radio Show', '/media/Radio/National%20Public%20Radio/all/participation_desc'
+
+
+          -# Hillary Clinton - Executive
+          - gov = Government.find(514)
+          %tr
+            %td
+              %img{:src => get_government_image_64(gov.logo, gov.government_type_id), :alt => gov.name}
+            %td
+              = gov.first_name + ' ' + gov.last_name
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(gov.participation_rate)})", :alt => gov.participation_rate}
+                = gov.social_score
+            %td
+              = link_to 'Executive', '/government/executive/participation_desc'
+
+
+          -# Jif - myvoYce
+          - ov = Product.find(120)          
+          %tr 
+            %td
+              %img{:src => get_product_image_128(ov.logo), :alt => ov.description}
             %td
               = ov.description
             %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(ov.participation_rate)})", :alt => 'ov.participation_rate'}
+                = ov.social_score
+            %td
+              = link_to 'myvoYce', '/myvoyce/vote=all/participation_desc/1'
+
+
+          -# Barack Obama - Executive
+          - gov = Government.find(512)
+          %tr
+            %td
+              %img{:src => get_government_image_64(gov.logo, gov.government_type_id), :alt => gov.name}
+            %td
+              = gov.first_name + ' ' + gov.last_name
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(gov.participation_rate)})", :alt => gov.participation_rate}
+                = gov.social_score
+            %td
+              = link_to 'Executive', '/government/executive/participation_desc'
+
+
+          -# Walmart - Corporate
+          - corp = Corporation.find(2)
+          %tr
+            %td
+              %img{:src => get_corporate_image_128(corp.logo), :alt => corp.name}
+            %td
+              = corp.name
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(corp.participation_rate)})", :alt => corp.participation_rate}
+                = corp.social_score
+            %td
+              = link_to 'Corporate', '/corporate/vote=all/participation_desc'
+
+
+          -# Glenn Beck - TelevisionShow
+          - media = Media.find(32)
+          %tr
+            %td
+              %img{:src => get_media_image_128(media.logo), :alt => media.name}
+            %td
+              = media.name
+            %td
               %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(media.participation_rate)})", :alt => media.participation_rate}
                 = media.social_score
-
-    %div.home-vote-table-cap
-
-
+            %td
+              = link_to 'TV Show', '/media/Television/Fox%20News/all/participation_desc'
 
 
-  -#home-table-wrap
-    %div.home-vote-table-top-cap
-    %div.vote-table-wrap.home-page
-      %table.vote-table.home-page
-        %thead
+          -# Exxon - Corporate
+          - corp = Corporation.find(1)
           %tr
-            %th State
-            %th # of Users
-            %th % of Population
-        %tbody
-          - @states.each do |state|
-            %tr{:class => state.abbreviation.downcase }
-              %td= state.name
-              %td= state.user_count
-              %td= number_with_precision(100 * state.user_count.to_f / state.population, :precision => 2).to_s + '%'
+            %td
+              %img{:src => get_corporate_image_128(corp.logo), :alt => corp.name}
+            %td
+              = corp.name
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(corp.participation_rate)})", :alt => corp.participation_rate}
+                = corp.social_score
+            %td
+              = link_to 'Corporate', '/corporate/vote=all/participation_desc'
+
+
     %div.home-vote-table-cap
-  
+
 
 #content-right
+  %h3
+    Who’s Being Counted?
   #home-map-wrap
     #home-map
-  #home-copy
-    %br
-    %h3 Welcome to ourvoYce!
-    %p ourvoYce is a social tool that was created to give a voice to the people. The idea is simple. We the people should vote on everything and vote often. Your opinion does matter, so look around for a while and vote!
-    %p Visit the #{link_to 'How does this work?', '/help'} page any time you have questions.
-  -#home-copy-hide
-    .home-headline
-      %img{:src => "images/home_fade.png", :alt =>"where do you stand?"}
-      %p= @current_question.question_text
-      %h2 Vote Now. Be counted.
-  -#home-vote
-    - if @current_user.nil?
-      = render :partial => 'shared/vote_control_no_access'
-    - else
-      = render :partial => 'shared/vote_control', :object => {:id => @current_question.id, :support_type => @current_question_support, :post_url => :current_question_vote}, :as => :d
+
+  #bar-graph-wrap
+    #bar-graph
 
 = render :partial => "shared/ourvoyce_javascript", :locals => {:id => nil, :model => "ourvoyce", :title => '', :website => '', :wikipedia => ''}

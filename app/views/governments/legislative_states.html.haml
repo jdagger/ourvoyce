@@ -23,7 +23,7 @@
                 = state.social_score
             %td
               %a{:href => url_for(:sort => params[:sort], :id => state.id), :class => 'dataset' }
-                = 'View Graph'
+                = 'Show Me'
                 %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{state.id}_legislativestate"}
                 %input{:type => :hidden, :class => 'jq-title', :value =>  state.name }
   %div.vote-table-cap

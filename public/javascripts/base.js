@@ -11,7 +11,7 @@ $(document).ready(function() {
   /////////////////////////////////////////////////////////////// cufon
   
   // Subway Ticker Font
-  Cufon.replace('.counter p', {hover:true, fontFamily: 'Subway Ticker'});
+  //Cufon.replace('.counter p', {hover:true, fontFamily: 'Subway Ticker'});
 
   // add dividers to top and footer navigation
   $('#header-nav ul li:not(:first)').before('<li>|</li>');
@@ -80,13 +80,11 @@ $(document).ready(function() {
   });
   
   $('.vote-table.home-page').fixheadertable({ 
-      height      : 242,
-      width       : 330,
-      minColWidth : 100,
-      colratio    : [150, 70, 110], //totals up to 549 wich is the width of the vote table
-      wrapper     : false,
-      zebraClass  : 'even',
-      zebra       : true
+      height      : 520,
+      width       : 550,
+      minColWidth : 80,
+      colratio    : [230, 150, 80, 89], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
   });
   
 }); //end document.ready
