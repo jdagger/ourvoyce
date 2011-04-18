@@ -6,6 +6,13 @@
     = render :partial => "shared/media_menu"
   
   - if @presenter.media_types.count > 1
+
+    #home-copy
+      %br
+      %p Choose a media category by clicking its name below. 
+      %p Click the Show Me link to see where the participants are on the map and what their ages are on the graph.
+      %p You can return to this page any time by clicking the Media tab.
+
     - @presenter.media_types.each do |media_type|
       %div.singlet{ :class => "#{media_type == @presenter.media_types.first ? "selected" : ""}"}
         %div.singlet-left

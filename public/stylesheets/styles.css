@@ -243,7 +243,7 @@ h3{
 }
 
 #content-right{
-  /*border: solid 1px green;*/
+  border: solid 0px green;
   float: right;
   width: 350px;
   padding-left: 23px;
@@ -252,21 +252,23 @@ h3{
 
 #content-right h3{
   text-align:center;
+  padding-top: 10px;
 }
 
 
 /****************** home page copy*/
 #home-copy{
-  /*border: solid 1px green;*/
+  border: solid 0px green;
   background: url(../images/home_fade_box.png) no-repeat center bottom;
-  width: 570px;
+  width: 550px;
   min-height: 150px;
+  margin-bottom: 20px;
 }
 
 #home-copy .home-headline{
   position: relative;
   z-index: 15;
-  margin: -15px 0 0;
+  margin: 0px 0 0;
 }
 
 #home-copy p{
@@ -288,8 +290,8 @@ h3{
   border: solid 0px black;
   width: 514px;
   margin: 0 auto;
-  margin-top: -10px;
-  padding-bottom: 5px;
+  margin-top: 0px;
+  padding-top: 10px;
   text-align: center;
 }
 
@@ -933,9 +935,10 @@ div.pr-pie{
 
 .singlet.myvoyce{
   background: none;
+  padding: 10px;
   border: solid 2px #ddd;
-  height: 85px;
-  width:700px;
+  height: 100px;
+  width:680px;
 }
 
 .singlet-table-wrap{
@@ -1040,6 +1043,7 @@ table.singlet-table td.instructions{
 }
 
 .user-stats h3{
+  text-align: center;
   font-weight:bold;
   font-size:18px;
   color:#333;
@@ -1070,8 +1074,13 @@ div.corporate.myvoyce {
 }
 
 div.corporate.myvoyce.category{
-  margin-top: 10px;
+  float: left;
+  margin-top: 0px;
   border: solid 2px #fff;
+}
+
+div.category.myvoyce{
+  float: left;
 }
 
 div.corporate.myvoyce.category:hover{

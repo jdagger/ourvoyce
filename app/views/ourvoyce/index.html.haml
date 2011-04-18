@@ -5,6 +5,12 @@
   .flash= flash[:notice]
 
 #content-left
+
+  #home-copy
+    %h3 Welcome to ourvoYce!
+    %p ourvoYce is a social tool that was created to give a voice to the people. The idea is simple. We the people should vote on everything and vote often. Your opinion does matter, so look around for a while and vote!
+    %p Visit the #{link_to 'How does this work?', '/help'} page any time you have questions.
+
   %h3
     What's getting the most votes?
   #home-table-wrap
@@ -135,10 +141,12 @@
 
 #content-right
   %h3
-    Who’s Being Counted?
+    Where are the participants?
   #home-map-wrap
     #home-map
 
+  %h3
+    What are their ages?
   #bar-graph-wrap
     #bar-graph
 

@@ -6,7 +6,20 @@
 
 .mv-content 
   %div.singlet.myvoyce
-    %div.singlet-left-bogus
+
+    %h3
+      Click a category and vote!
+
+    %div.category.myvoyce
+      - @categories.each do |category|
+        %a{:href => "#{url_for(:action => :show, :filter => "category=#{category.shortcut}", :sort => "code_asc")}"}
+          %img{:src => "#{get_category_image(category.logo)}", :alt => "#{category.name}"}
+      = link_to 'Show All', '/myvoyce'
+
+
+
+
+    -#%div.singlet-left-bogus
       %div.singlet-table-wrap
         %table.singlet-table
           %tbody
@@ -42,7 +55,7 @@
 
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-  %div.filtering.myvoyce
+  -#%div.filtering.myvoyce
     =link_to 'All', {:filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"
     =link_to 'Thumbs Up', {:filter => 'vote=thumbsup', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsup', params) }"
     =link_to 'Thumbs Down', {:filter => 'vote=thumbsdown', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=thumbsdown', params) }"
@@ -128,9 +141,13 @@
 
   %br
   %h3
-    Click the images below to vote on the items in each group.
+    Users have been asking for the map and age graph to be added here. Good idea.
 
-  %div.corporate.myvoyce
+  %br
+  %h3
+    We are adding them to the myvoYce screen and they will be availiable soon. 
+
+  -#%div.corporate.myvoyce
     - @categories.each do |category|
       %div.corporate.myvoyce.category
         %a{:href => "#{url_for(:action => :show, :filter => "category=#{category.shortcut}", :sort => "code_asc")}"}
