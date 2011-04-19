@@ -65,10 +65,12 @@ h3{
 
 /************* counters */
 .counter-area{
+  border: solid 0px red;
   width: 144px;
   height: 54px;
+  margin-left: 145px;
   float: left;
-  padding: 0 50px 0 15px;
+  padding: 0px 50px 0px 15px;
 }
 
 .counter-area p{
@@ -76,7 +78,7 @@ h3{
   color: #a72020;
   font-weight: bold;
   font-size: 9px;
-  padding: 5px 0 0;
+  padding: 3px 0 0;
   letter-spacing: 0.17em;
 }
 
