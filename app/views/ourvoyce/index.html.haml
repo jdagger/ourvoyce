@@ -66,20 +66,6 @@
               = link_to 'Executive', '/government/executive/participation_desc'
 
 
-          -# Jif - myvoYce
-          - ov = Product.find(120)          
-          %tr 
-            %td
-              %img{:src => get_product_image_128(ov.logo), :alt => ov.description}
-            %td
-              = ov.description
-            %td
-              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(ov.participation_rate)})", :alt => 'ov.participation_rate'}
-                = ov.social_score
-            %td
-              = link_to 'myvoYce', '/myvoyce/vote=all/participation_desc/1'
-
-
           -# Barack Obama - Executive
           - gov = Government.find(512)
           %tr
@@ -120,6 +106,20 @@
                 = media.social_score
             %td
               = link_to 'TV Show', '/media/Television/Fox%20News/all/participation_desc'
+
+
+          -# Corporations influence government? - myvoYce
+          - ov = Product.find(1685)          
+          %tr 
+            %td
+              %img{:src => get_product_image_128(ov.logo), :alt => ov.description}
+            %td
+              = ov.description
+            %td
+              %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(ov.participation_rate)})", :alt => 'ov.participation_rate'}
+                = ov.social_score
+            %td
+              = link_to 'myvoYce', '/myvoyce/vote=all/participation_desc/1'
 
 
           -# Exxon - Corporate
