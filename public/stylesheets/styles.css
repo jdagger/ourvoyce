@@ -1436,6 +1436,10 @@ div.legal {
   border: solid 0px blue
 }
 
+div.legal b {
+  color:#333;
+}
+
 p.legal {
   margin-bottom:-10px;
 }
