@@ -1,9 +1,8 @@
 // This contains all base javascript (e.g. siFR, swfobject calls, etc)
-
+//
 //  base.js
 //  
-//  Created by Matt Dills on 2010-04-02.
-//  Copyright 2010 Scully Group. All rights reserved.
+//  Copyright 2010 EfficiencyLab. All rights reserved.
 // 
 
 $(document).ready(function() {
@@ -75,7 +74,7 @@ $(document).ready(function() {
   $('.vote-table.myvoyce').fixheadertable({ 
       width       : 700,
       minColWidth : 100,
-      colratio    : [109, 140, 160, 180, 110], //totals up to 549 wich is the width of the vote table
+      colratio    : [109, 150, 150, 140], //totals up to 549 wich is the width of the vote table
       wrapper     : false
   });
   

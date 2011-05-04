@@ -22,7 +22,7 @@
   %div{:style => "float: right;"}
     = form_tag request.fullpath do
       = text_field_tag :barcode_lookup, params[:barcode]
-      = submit_tag "Lookup Product", :name => "lookup_submit"
+      = submit_tag "Lookup", :name => "lookup_submit"
   %div{:style => "clear: both;"}
 
 
@@ -78,7 +78,6 @@
           %th Vote
           %th= table_sort_header_link :header => "Item", :sort_column => 'code', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
           %th= table_sort_header_link :header => "Description", :sort_column => 'description', :link_params => { :filter => params[:filter], :page => params[:page] , :barcode => params[:barcode]}
-          %th= table_sort_header_link :header => "Date", :sort_column => 'votedate', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
           %th
             = table_sort_header_link :header => "SS", :sort_column => 'social', :link_params => { :filter => params[:filter], :page => params[:page], :barcode => params[:barcode] }
             = '/'
@@ -103,7 +102,6 @@
                   = product.upc
               %td{:class => "left"}
                 = product.pending ? (product.pending_product_description.blank? ? "Pending" : product.pending_product_description) : product.description rescue product.description
-              %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''
               %td
                 %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(product.participation_rate)})", :alt => product.participation_rate}
                   = product.social_score
@@ -114,7 +112,7 @@
   %br
   = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
-.user-stats
+-#.user-stats
   - if ! @stats.nil?
     - cache("user_stats_#{@user.id}", :expires_in => Rails.configuration.default_cache_expires_in) do
       %p
@@ -157,18 +155,5 @@
             -#%td.stat
               -#= "#{@stats[:today_scans]}"
 
-  %br
-  %h3
-    Users have been asking for the map and age graph to be added here. Good idea.
 
-  %br
-  %h3
-    We are adding them to the myvoYce screen and they will be availiable soon. 
-
-  -#%div.corporate.myvoyce
-    - @categories.each do |category|
-      %div.corporate.myvoyce.category
-        %a{:href => "#{url_for(:action => :show, :filter => "category=#{category.shortcut}", :sort => "code_asc")}"}
-          %img{:src => "#{get_category_image(category.logo)}", :alt => "#{category.name}"}
-          = "#{category.name}"
 = render :partial => "shared/map_graph", :locals => { :id => @default_map[:id], :model => "product", :title => @default_map[:title], :wikipedia => @default_map[:wikipedia], :website => @default_map[:website]}

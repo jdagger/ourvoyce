@@ -490,7 +490,7 @@ table.vote-table.myvoyce td.left{
 }
 
 .vote-table-wrap.myvoyce{
-  width:699px;
+  width:549px;
 }
 
 table.vote-table.home-page{
@@ -578,7 +578,7 @@ table.vote-table tr.selected td{
 
 .vote-table-cap.myvoyce{
    background:url(/images/bottom-cap-myvoyce.gif) no-repeat;
-   width:700px;
+   width:550px;
 }
 
 .home-vote-table-top-cap{
@@ -618,7 +618,7 @@ table.vote-table tr.selected td{
 
 .mv-content{
   float:left;
-  width:700px;
+  width:555px;
 }
 
 .left-content h4{
@@ -939,8 +939,8 @@ div.pr-pie{
   background: none;
   padding: 10px;
   border: solid 2px #ddd;
-  height: 100px;
-  width:680px;
+  /* height: 200px; */
+  width:530px;
 }
 
 .singlet-table-wrap{
@@ -1067,7 +1067,15 @@ ul.stats span{
 }
 
 
-/************************ myvoYce - corporate group */
+/************************ myvoYce - category group */
+div.category.myvoyce{
+  border: solid 0px green;
+  float: left;
+  width: 530px;
+}
+
+
+/*
 div.corporate.myvoyce {
   text-align: center;
   margin-top: 0px;
@@ -1081,11 +1089,9 @@ div.corporate.myvoyce.category{
   border: solid 2px #fff;
 }
 
-div.category.myvoyce{
-  float: left;
-}
 
-div.corporate.myvoyce.category:hover{
+
+div.myvoyce.category:hover{
   border: solid 2px #ddd;
 }
 
@@ -1096,7 +1102,7 @@ div.corporate.myvoyce img{
 div.corporate.myvoyce img.adjust{
   padding-left: 10px;
 }
-
+*/
 
 /* home giant button styles */
 
