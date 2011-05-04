@@ -14,19 +14,21 @@ class Product < ActiveRecord::Base
     end
 
     def all_records(records, params)
-      if ! params.key? :category
-        return records.where("support_type >= -1")
-      else
-        return records
-      end
+      #if ! params.key? :category
+      #return records.where("support_type >= -1")
+      #else
+      return records
+      #end
     end
 
     def no_vote(records, params)
-      if ! params.key? :category
-        return records.where("support_type = -1")
-      else
-        return records.where("support_type is null")
-      end
+      #Originally, this would only return products taht had been voted for and cleared, unless voting for a category
+      #This should now return all unvoted for items
+      #if ! params.key? :category
+      #return records.where("support_type = -1")
+      #else
+      return records.where("support_type is null")
+      #end
     end
 
 
@@ -59,27 +61,29 @@ class Product < ActiveRecord::Base
       #  end
       #  records = records.where("products.id in (?)", product_ids)
       #elsif params.key? :vote
-      if params.key? :vote
-        case params[:vote].strip.upcase
-        when "THUMBSUP"
-          records = records.where("support_type = 1")
-        when "THUMBSDOWN"
-          records = records.where("support_type = 0")
-        when "NEUTRAL"
-          records = records.where("support_type = 2")
-        when "VOTED"
-          records = records.where("support_type >= 0")
-        when "NOVOTE"
-          records = no_vote(records, params)
-        when "ALL"
-          records = records.all_records(records, params)
-         else #All records
-           records = records.all_records(records, params)
+      if params.key? :user_id
+        if params.key? :vote
+          case params[:vote].strip.upcase
+          when "THUMBSUP"
+            records = records.where("support_type = 1")
+          when "THUMBSDOWN"
+            records = records.where("support_type = 0")
+          when "NEUTRAL"
+            records = records.where("support_type = 2")
+          when "VOTED"
+            records = records.where("support_type >= 0")
+          when "NOVOTE"
+            records = no_vote(records, params)
+          when "ALL"
+            records = records.all_records(records, params)
+          else #All records
+            records = records.all_records(records, params)
+          end
+        else
+          if ! params.key? :category
+            records = records.where("support_type >= -1")
+          end
         end
-      else
-        if ! params.key? :category
-          records = records.where("support_type >= -1")
-         end
       end
 
       if params.key? :category

@@ -1,4 +1,6 @@
 class ProductsController < ApplicationController
+  skip_before_filter :require_user, :only => [:category]
+
   def lookup
     redirect_to :controller => :users, :action => :show, :filter => 'vote=all', :sort => 'votedate_desc', :page => 1, :barcode => params[:id]
   end

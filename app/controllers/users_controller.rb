@@ -1,5 +1,5 @@
 class UsersController < ApplicationController
-  skip_before_filter :require_user, :only => [:login, :create, :new, :verify, :request_username]
+  skip_before_filter :require_user, :only => [:login, :create, :new, :verify, :request_username, :show]
 
   ssl_required :new, :create, :update, :edit, :login
 
@@ -22,9 +22,13 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = @current_user
     search_params = {}
-    search_params[:user_id] = @user.id
+    @user = nil
+    if ! @current_user.nil?
+      @user = @current_user
+      search_params[:user_id] = @user.id
+    end
+
 
     if params[:sort].blank?
       params[:sort] = 'votedate_desc'
@@ -40,7 +44,12 @@ class UsersController < ApplicationController
     @categories = Category.find(:all, :order => ["priority asc"], :conditions => ['display_myvoyce = 1'])
 
     @presenter = ProductsIndexPresenter.new
-    @stats = User.new.user_stats @user.id unless fragment_exist?("user_stats_#{@user.id}")
+
+    #THIS SHOULD BE REWORKED - the user_stats method is taxing on the database.  If full scan stats are not going to be displayed, 
+    #only retrieve what is required
+    if ! @user.nil?
+      @stats = User.new.user_stats @user.id unless fragment_exist?("user_stats_#{@user.id}") 
+    end
 
     page_size = Rails.configuration.default_page_size
     current_page = [params[:page].to_i, 1].max
@@ -81,11 +90,15 @@ class UsersController < ApplicationController
         @product_found = false
       else
         @product_found = true
-        support = ProductSupport.where(:user_id => @user.id, :product_id => product.id).first
         @current_product_description = product.description
         @current_product_image = product.logo
         @current_product_id = product.id
-        @current_product_support = support.support_type rescue -1
+        if ! @user.nil?
+          support = ProductSupport.where(:user_id => @user.id, :product_id => product.id).first
+          @current_product_support = support.support_type rescue -1
+        else
+          @current_product_support = -1
+        end
         @current_product_ss = product.social_score
         @current_product_pr = product.participation_rate
         @current_product_upc = product.upc
