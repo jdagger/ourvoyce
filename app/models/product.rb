@@ -52,7 +52,7 @@ class Product < ActiveRecord::Base
       #if ! params.key? :category
       #return records.where("support_type = -1")
       #else
-      return records.where("support_type is null")
+      return records.where("(support_type is null or support_type = -1)")
       #end
     end
 
@@ -96,7 +96,8 @@ class Product < ActiveRecord::Base
             when "NEUTRAL"
               records = records.where("support_type = 2")
             when "VOTED"
-              records = records.where("support_type >= 0")
+              #records = records.where("support_type >= 0")
+              records = records.where("support_type >= -1") #Temporary fix.  This is primarily used as the catch-all filter in iphone, but should include -1 support_type
             when "NOVOTE"
               records = no_vote(records, params)
             when "ALL"

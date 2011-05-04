@@ -25,8 +25,9 @@ class UsersController < ApplicationController
 
     search_params = {}
     @user = nil
-    if ! @current_user.nil?
-      @user = @current_user
+    if ! current_user.nil?
+      @user = current_user
+      @current_user = current_user
       search_params[:user_id] = @user.id
     end
 
