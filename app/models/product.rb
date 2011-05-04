@@ -148,14 +148,17 @@ class Product < ActiveRecord::Base
           records = records.order("products.participation_rate desc, products.social_score desc")
         when 'votedate_asc'
           if params.key? :user_id
+            #records = records.order("products.upc asc")
             records = records.order("product_supports.updated_at asc, products.upc asc")
           end
         when 'votedate_desc'
           if params.key? :user_id
-            records = records.order("product_supports.updated_at desc, products.upc asc")
+            records = records.order("products.upc asc")
+            #records = records.order("product_supports.updated_at desc, products.upc asc")
           end
         else
-          records = records.order("product_supports.updated_at desc, products.upc asc")
+          records = records.order("products.upc asc")
+          #records = records.order("product_supports.updated_at desc, products.upc asc")
         end
       end
 
