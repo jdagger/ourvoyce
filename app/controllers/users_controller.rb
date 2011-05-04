@@ -33,8 +33,8 @@ class UsersController < ApplicationController
 
 
     if params[:sort].blank?
-      params[:sort] = 'votedate_desc'
-      search_params[:sort] = 'votedate_desc'
+      params[:sort] = 'code_asc'
+      search_params[:sort] = 'code_asc'
     else
       search_params[:sort] = params[:sort]
     end
