@@ -22,6 +22,7 @@ class UsersController < ApplicationController
   end
 
   def show
+
     search_params = {}
     @user = nil
     if ! @current_user.nil?
@@ -82,7 +83,12 @@ class UsersController < ApplicationController
       return
     end
 
+    if ! params[:barcode].blank?
+      search_params[:text] = params[:barcode].strip
+    end
 
+
+=begin
     if ! params[:barcode].blank?
       @show_current_product = true
       product = Product.upc_lookup :upc => params[:barcode]
@@ -106,6 +112,8 @@ class UsersController < ApplicationController
     else
       @show_current_product = false
     end
+=end
+@show_current_product = false
 
 
     records = Product.do_search search_params

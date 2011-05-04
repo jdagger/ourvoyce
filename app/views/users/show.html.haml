@@ -16,6 +16,15 @@
           %img{:src => "#{get_category_image(category.logo)}", :alt => "#{category.name}"}
       = link_to 'Show All', '/myvoyce'
 
+  %div{:style => "float: left; width: 50%;"}
+    = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
+    %div{:style => "clear: both;"}
+  %div{:style => "float: right;"}
+    = form_tag request.fullpath do
+      = text_field_tag :barcode_lookup, params[:barcode]
+      = submit_tag "Lookup Product", :name => "lookup_submit"
+  %div{:style => "clear: both;"}
+
 
 
 
@@ -30,7 +39,7 @@
                     = render :partial => 'shared/vote_control', :object => {:id => @current_product_id, :support_type => @current_product_support, :post_url => :product_vote}, :as => :d
                   %td
                     %img{:src => get_product_image_128(@current_product_image), :alt => @current_product_description }
-                  -#%td
+                  #%td
                     %div{ :class=> "pr-pie", :style => "background: url(#{participation_rate_image(@current_product_pr)})", :alt => @current_product_pr}
                       = @current_product_ss
                   %td.description
@@ -53,7 +62,6 @@
           
     %div.singlet-right-bogus
 
-  = render :partial => "shared/paging", :object => @presenter.paging, :as => :paging_data
 
   -#%div.filtering.myvoyce
     =link_to 'All', {:filter => 'vote=all', :sort => params[:sort], :page => 1, :barcode => params[:barcode]}, :class=> "sort-button #{ filter_is_selected('vote=all', params) }"

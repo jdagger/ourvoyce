@@ -9,6 +9,12 @@ class Product < ActiveRecord::Base
   scope :default_include, where("default_include = 1")
   scope :pending, where("pending = 1")
 
+  define_index do
+    indexes :description
+    indexes :upc
+  end
+
+
   def age_all product_id
     generate_age_all :base_object_name => 'product', :base_object_id => product_id
   end
@@ -71,36 +77,37 @@ class Product < ActiveRecord::Base
       end
 
       #Only apply text filter or thumbs up/thumbs down filter
-      #if params.key? :text
-      #Get a list of product ids that match the search text
-      #  records_to_include = Product.search params[:text].strip
-      #  product_ids = records_to_include.inject([]) do |r, element|
-      #    r << element.id
-      #    r
-      #  end
-      #  records = records.where("products.id in (?)", product_ids)
-      #elsif params.key? :vote
-      if params.key? :user_id
-        if params.key? :vote
-          case params[:vote].strip.upcase
-          when "THUMBSUP"
-            records = records.where("support_type = 1")
-          when "THUMBSDOWN"
-            records = records.where("support_type = 0")
-          when "NEUTRAL"
-            records = records.where("support_type = 2")
-          when "VOTED"
-            records = records.where("support_type >= 0")
-          when "NOVOTE"
-            records = no_vote(records, params)
-          when "ALL"
-            records = records.all_records(records, params)
-          else #All records
-            records = records.all_records(records, params)
-          end
-        else
-          if ! params.key? :category
-            records = records.where("support_type >= -1")
+      if params.key? :text
+        #Get a list of product ids that match the search text
+        records_to_include = Product.search params[:text].strip, :star => true, :max_matches => 50
+        product_ids = records_to_include.inject([]) do |r, element|
+          r << element.id
+          r
+        end
+        records = records.where("products.id in (?)", product_ids)
+      else
+        if params.key? :user_id
+          if params.key? :vote
+            case params[:vote].strip.upcase
+            when "THUMBSUP"
+              records = records.where("support_type = 1")
+            when "THUMBSDOWN"
+              records = records.where("support_type = 0")
+            when "NEUTRAL"
+              records = records.where("support_type = 2")
+            when "VOTED"
+              records = records.where("support_type >= 0")
+            when "NOVOTE"
+              records = no_vote(records, params)
+            when "ALL"
+              records = records.all_records(records, params)
+            else #All records
+              records = records.all_records(records, params)
+            end
+          else
+            if ! params.key? :category
+              records = records.where("support_type >= -1")
+            end
           end
         end
       end
