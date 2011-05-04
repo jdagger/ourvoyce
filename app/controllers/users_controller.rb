@@ -59,20 +59,20 @@ class UsersController < ApplicationController
 
     #If no filter was supplied, specify all records should be returned
     if params[:filter].blank?
-      params[:filter] = 'vote=all'
-    else
-      #filters have form 'key1=value1;key2=value2'
-      params[:filter].split(';').each do |part|
-        key_value = part.split('=')
-        if key_value.length == 2
-          key = key_value[0].downcase
-          value = key_value[1].strip
-          case key
-          when 'vote'
-            search_params[:vote] = value
-          when 'category'
-            search_params[:category] = value
-          end
+      params[:filter] = 'category=questions'
+    end
+
+    #filters have form 'key1=value1;key2=value2'
+    params[:filter].split(';').each do |part|
+      key_value = part.split('=')
+      if key_value.length == 2
+        key = key_value[0].downcase
+        value = key_value[1].strip
+        case key
+        when 'vote'
+          search_params[:vote] = value
+        when 'category'
+          search_params[:category] = value
         end
       end
     end
