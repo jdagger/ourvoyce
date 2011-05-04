@@ -1,4 +1,6 @@
 class Product < ActiveRecord::Base
+  include AgeGraphHelper
+  include MapGraphHelper
   has_many :product_supports
   has_many :users, :through => :product_supports
   has_many :product_audits
@@ -6,6 +8,23 @@ class Product < ActiveRecord::Base
 
   scope :default_include, where("default_include = 1")
   scope :pending, where("pending = 1")
+
+  def age_all product_id
+    generate_age_all :base_object_name => 'product', :base_object_id => product_id
+  end
+
+
+  def age_state product_id, state
+    generate_age_state :base_object_name => 'product', :base_object_id => product_id, :state => state
+  end
+
+  def map_all product_id
+    generate_map_all :base_object_name => 'product', :base_object_id => product_id
+  end
+
+  def map_state product_id, state
+    generate_map_state :base_object_name => 'product', :base_object_id => product_id, :state => state
+  end
 
   class << self
     def upc_lookup(options = {})

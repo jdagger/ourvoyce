@@ -85,9 +85,14 @@
                 - else
                   = render :partial => 'shared/vote_control', :object => {:id => product.id, :support_type => product.support_type, :post_url => :product_vote}, :as => :d
               %td
-                %img{:src => get_product_image_128(product.logo), :alt => product.description}
-                %br
-                = product.upc
+                %a{:href => url_for(:filter => params[:filter], :sort => params[:sort], :page => params[:page], :barcode => params[:barcode], :id => product.id), :class => 'dataset' }
+                  %input{:type => :hidden, :class => 'jq-map-data', :value =>  "#{product.id}_product"}
+                  %input{:type => :hidden, :class => 'jq-title', :value => product.description }
+                  %input{:type => :hidden, :class => 'jq-wikipedia', :value => '' }
+                  %input{:type => :hidden, :class => 'jq-website', :value => '' }
+                  %img{:src => get_product_image_128(product.logo), :alt => product.description}
+                  %br
+                  = product.upc
               %td{:class => "left"}
                 = product.pending ? (product.pending_product_description.blank? ? "Pending" : product.pending_product_description) : product.description rescue product.description
               %td= product.votedate.to_date.strftime("%m/%d/%y") rescue ''
@@ -158,3 +163,4 @@
         %a{:href => "#{url_for(:action => :show, :filter => "category=#{category.shortcut}", :sort => "code_asc")}"}
           %img{:src => "#{get_category_image(category.logo)}", :alt => "#{category.name}"}
           = "#{category.name}"
+= render :partial => "shared/map_graph", :locals => { :id => @default_map[:id], :model => "product", :title => @default_map[:title], :wikipedia => @default_map[:wikipedia], :website => @default_map[:website]}

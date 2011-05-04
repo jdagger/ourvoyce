@@ -57,6 +57,11 @@ Production::Application.routes.draw do
   match "services/website/corporate/age/:corporation_id" => "services#corporate_age_all"
   match "services/website/corporate/age/:corporation_id/:state" => "services#corporate_age_state"
 
+  match "services/website/product/map/:product_id" => "services#product_map_all"
+  match "services/website/product/map/:product_id/:state" => "services#product_map_state"
+  match "services/website/product/age/:product_id" => "services#product_age_all"
+  match "services/website/product/age/:product_id/:state" => "services#product_age_state"
+
   match "services/website/government/map/:government_id" => "services#government_map_all"
   match "services/website/government/map/:government_id/:state" => "services#government_map_state"
   match "services/website/government/age/:government_id" => "services#government_age_all"

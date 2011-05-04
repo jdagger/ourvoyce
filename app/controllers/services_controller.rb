@@ -63,6 +63,27 @@ class ServicesController < ApplicationController
     render :template => 'services/graph/age'
   end
 
+  def product_map_all
+    @states = Product.new.map_all params[:product_id] unless cache_hit
+    render :template => 'services/map/national'
+  end
+
+  def product_map_state
+    @zips = Product.new.map_state params[:product_id], params[:state] unless cache_hit
+    render :template => 'services/map/state'
+  end
+
+  def product_age_all
+    @results = Product.new.age_all params[:product_id] unless cache_hit
+    render :template => 'services/graph/age'
+  end
+
+  def product_age_state
+    @results = Product.new.age_state params[:product_id], params[:state] unless cache_hit
+    render :template => 'services/graph/age'
+  end
+
+
   def ourvoyce_age_all
     @results = User.new.age_all unless cache_hit
     render :template => 'services/graph/age'

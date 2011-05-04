@@ -124,6 +124,13 @@ class UsersController < ApplicationController
     records = records.offset((current_page - 1) * page_size).limit(page_size)
 
     @presenter.products = records.to_a
+
+    @default_map = {:id => '', :title => '', :website => '', :wikipedia => ''}
+    if @presenter.products.count > 0
+      current = @presenter.products[0]
+      @default_map[:id] = current.id
+      @default_map[:title] = current.description
+    end
   end
 
   def edit
