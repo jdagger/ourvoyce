@@ -31,6 +31,14 @@ $(document).ready(function() {
       wrapper     : false
   });
   
+  $('.vote-table.senators').fixheadertable({ 
+      height      : 187,
+      width       : 558,
+      minColWidth : 100,
+      colratio    : [109, 120, 209, 110], //totals up to 549 wich is the width of the vote table
+      wrapper     : false
+  });
+
   $('.vote-table.house-of-representatives').fixheadertable({ 
       height      : 250,
       width       : 550,

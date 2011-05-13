@@ -101,7 +101,8 @@ h3{
   border: solid 0px green;
   position: absolute;
   top: 23px;
-  right: 270px;
+  right: 140px;
+  width: 200px;
 }
 
 #header-nav ul li{
@@ -121,6 +122,11 @@ h3{
   color: #ffffff;
 }
 
+#header-nav img{
+  border: solid 0px orange;
+  margin-top: -23px;
+  float: right;
+}
 
 /************* iphone */
 #iphone{
@@ -361,9 +367,9 @@ h3{
 #footer-right{
   border: solid 0px red;
   float: left;
-  width: 350px;
-  padding-top: 13px;
-  padding-left: 180px;
+  width: 450px;
+  padding-top: 6px;
+  margin-left: 110px;
 }
 
 #footer-right ul{
@@ -372,7 +378,7 @@ h3{
 
 #footer-right ul li{
   float: left;
-  padding-left: 30px;
+  padding-left: 20px;
 }
 
 /* thumb styles */
