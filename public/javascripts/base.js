@@ -80,7 +80,7 @@ $(document).ready(function() {
   });
   
   $('.vote-table.myvoyce').fixheadertable({ 
-      width       : 700,
+      width       : 550,
       minColWidth : 100,
       colratio    : [109, 150, 150, 140], //totals up to 549 wich is the width of the vote table
       wrapper     : false
