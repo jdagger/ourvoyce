@@ -124,8 +124,9 @@ h3{
 
 #header-nav img{
   border: solid 0px orange;
-  margin-top: -23px;
-  float: right;
+  position: absolute;
+  top: -23px;
+  right: -10px;
 }
 
 /************* iphone */
