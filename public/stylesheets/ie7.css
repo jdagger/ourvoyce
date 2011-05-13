@@ -24,7 +24,7 @@ table.vote-table th{
 }
 
 .vote-table-wrap{
-  height:430px;
+
 }
 
 .vote-table-cap{
@@ -33,7 +33,7 @@ table.vote-table th{
 }
 
 .vote-table-cap.myvoyce{
-  width:702px;
+  width: 549px;
   height:60px;
   background-color:#ffffff;
 }

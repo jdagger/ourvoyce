@@ -489,7 +489,8 @@ table.vote-table{
 }
 
 table.vote-table.myvoyce{
-  width:700px;
+  border: solid 0px red;
+  width:549px;
 }
 
 table.vote-table.myvoyce td.left{
